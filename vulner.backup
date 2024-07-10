@@ -1,0 +1,1802 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.4.26
+-- Dumped by pg_dump version 9.5.5
+
+-- Started on 2024-06-28 10:54:21
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 3855 (class 0 OID 7330031)
+-- Dependencies: 176
+-- Data for Name: Administracion_imhotep_sedesreportes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3997 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: Administracion_imhotep_sedesreportes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Administracion_imhotep_sedesreportes_id_seq"', 1, false);
+
+
+--
+-- TOC entry 3857 (class 0 OID 7330042)
+-- Dependencies: 178
+-- Data for Name: Administracion_mae_gruporeportes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3998 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: Administracion_mae_gruporeportes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Administracion_mae_gruporeportes_id_seq"', 1, false);
+
+
+--
+-- TOC entry 3865 (class 0 OID 7330081)
+-- Dependencies: 186
+-- Data for Name: Administracion_mae_subgruporeportes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3859 (class 0 OID 7330052)
+-- Dependencies: 180
+-- Data for Name: Administracion_mae_reportes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3999 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: Administracion_mae_reportes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Administracion_mae_reportes_id_seq"', 1, false);
+
+
+--
+-- TOC entry 3867 (class 0 OID 7330091)
+-- Dependencies: 188
+-- Data for Name: Administracion_mae_tiposcampo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3861 (class 0 OID 7330065)
+-- Dependencies: 182
+-- Data for Name: Administracion_mae_repparametros; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4000 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: Administracion_mae_repparametros_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Administracion_mae_repparametros_id_seq"', 1, false);
+
+
+--
+-- TOC entry 3863 (class 0 OID 7330073)
+-- Dependencies: 184
+-- Data for Name: Administracion_mae_repusuarios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4001 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: Administracion_mae_repusuarios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Administracion_mae_repusuarios_id_seq"', 1, false);
+
+
+--
+-- TOC entry 4002 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: Administracion_mae_subgruporeportes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Administracion_mae_subgruporeportes_id_seq"', 1, false);
+
+
+--
+-- TOC entry 4003 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: Administracion_mae_tiposcampo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Administracion_mae_tiposcampo_id_seq"', 1, false);
+
+
+--
+-- TOC entry 3889 (class 0 OID 7330320)
+-- Dependencies: 210
+-- Data for Name: clinico_diagnosticos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3893 (class 0 OID 7330336)
+-- Dependencies: 214
+-- Data for Name: clinico_especialidades; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO clinico_especialidades VALUES (1, 'ORTOPEDIA');
+INSERT INTO clinico_especialidades VALUES (2, 'NEUROCIRUGIA');
+INSERT INTO clinico_especialidades VALUES (3, 'ENDOCRINO');
+INSERT INTO clinico_especialidades VALUES (4, 'MEDICO GENERAL');
+INSERT INTO clinico_especialidades VALUES (5, 'GINECOLOGIA');
+
+
+--
+-- TOC entry 3901 (class 0 OID 7330368)
+-- Dependencies: 222
+-- Data for Name: clinico_estadossalida; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3925 (class 0 OID 7330470)
+-- Dependencies: 246
+-- Data for Name: clinico_servicios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO clinico_servicios VALUES (1, 'HOSPITALIZACION');
+INSERT INTO clinico_servicios VALUES (2, 'URGENCIAS');
+INSERT INTO clinico_servicios VALUES (3, 'AMBULATORIO');
+INSERT INTO clinico_servicios VALUES (4, 'CONSULTA EXTERNA');
+
+
+--
+-- TOC entry 3943 (class 0 OID 7330542)
+-- Dependencies: 264
+-- Data for Name: sitios_departamentos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO sitios_departamentos VALUES (1, 'CUNDINAMARCA', '2022-09-01 19:25:47.101358-05', 'A');
+INSERT INTO sitios_departamentos VALUES (2, 'BOYACA', '2022-09-01 19:25:50.661926-05', 'A');
+INSERT INTO sitios_departamentos VALUES (3, 'BOLIVAR', '2022-09-01 19:25:55.325842-05', 'A');
+INSERT INTO sitios_departamentos VALUES (4, 'ANTIOQUIA', '2022-09-01 19:25:59.071826-05', 'A');
+
+
+--
+-- TOC entry 3941 (class 0 OID 7330534)
+-- Dependencies: 262
+-- Data for Name: sitios_ciudades; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO sitios_ciudades VALUES (1, 'BOGOTA', '2022-09-01 19:26:12.326382-05', 'A', 1);
+INSERT INTO sitios_ciudades VALUES (2, 'CHIA', '2022-09-01 19:26:16.806869-05', 'A', 1);
+INSERT INTO sitios_ciudades VALUES (3, 'CAJICA', '2022-09-01 19:26:21.653846-05', 'A', 1);
+INSERT INTO sitios_ciudades VALUES (4, 'TUNJA', '2022-09-01 19:26:27.039892-05', 'A', 2);
+INSERT INTO sitios_ciudades VALUES (5, 'SOATA', '2022-09-01 19:26:31.558666-05', 'A', 1);
+INSERT INTO sitios_ciudades VALUES (6, 'MEDELLIN', '2022-09-01 19:26:37.534954-05', 'A', 4);
+
+
+--
+-- TOC entry 3953 (class 0 OID 7330582)
+-- Dependencies: 274
+-- Data for Name: sitios_sedesclinica; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO sitios_sedesclinica VALUES (1, 'SEDE KENEDY', 'CALLE 67 SUR', 'CALLE 67 SUR', '111', 'ALBERTO', '2022-09-01 19:27:58.401908-05', 'A', 1, 1);
+INSERT INTO sitios_sedesclinica VALUES (2, 'SEDE AMERICAS', 'CARRERA 43', 'CARRERA 43', '1212', 'ALBERTO', '2022-09-01 19:28:18.585913-05', 'A', 1, 1);
+INSERT INTO sitios_sedesclinica VALUES (3, 'SEDE TOBERIN', 'CRA', 'CRA', '2121', 'SENOR X', '2024-06-27 14:41:10.59628-05', 'A', 1, 1);
+
+
+--
+-- TOC entry 3959 (class 0 OID 7330648)
+-- Dependencies: 280
+-- Data for Name: usuarios_tiposdocumento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO usuarios_tiposdocumento VALUES (1, 'CC', 'Cedula de Ciudadania', '2022-09-01 19:24:01.361855-05', 'A');
+INSERT INTO usuarios_tiposdocumento VALUES (2, 'TI', 'Tarjeta de Identidad', '2022-09-01 19:24:14.398554-05', 'A');
+INSERT INTO usuarios_tiposdocumento VALUES (3, 'CE', 'Cedula de Extranjeria', '2022-09-01 19:24:29.438571-05', 'A');
+INSERT INTO usuarios_tiposdocumento VALUES (4, 'NN', 'Desconocido', '2022-09-01 19:24:41.49472-05', 'A');
+
+
+--
+-- TOC entry 3967 (class 0 OID 7330713)
+-- Dependencies: 288
+-- Data for Name: planta_planta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO planta_planta VALUES (1, '19465673', 'ALBERTO BERNAL TRABAJADOR', '123', 'M', 'CALL 67 NRO 34', '111', 'fotos/mbernalca_VIgwiYF_pGAxegV.jpg', '2022-09-01 19:46:52.284089-05', 'A', 1, 1);
+INSERT INTO planta_planta VALUES (2, '194656731', 'ALBERTO BERNAL TRABAJADOR AMERICAS', '123', 'M', 'CALLE', '221', 'fotos/TRIAGE.jpg', '2024-06-25 17:00:06.34383-05', 'A', 2, 1);
+INSERT INTO planta_planta VALUES (3, '55555', 'gonzalo bernal ferreira', '123', 'M', 'calle', '212', 'fotos/HOSPITALIZACION.JPG', '2024-06-27 15:43:01.676089-05', 'A', 1, 1);
+
+
+--
+-- TOC entry 3939 (class 0 OID 7330526)
+-- Dependencies: 260
+-- Data for Name: sitios_centros; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO sitios_centros VALUES (1, 'CENTRO LA MANUELITA BELTRAN', 'AL SUR', 'AL SIUR', '121', 'SUR', '2024-06-27 15:57:33.021757-05', 'A', 1, 1);
+INSERT INTO sitios_centros VALUES (2, 'HABITANTE CONDICION NORMAL', 'TODAS', 'TODAS', '1', 'TODAS', '2024-06-27 16:00:42.38171-05', 'A', 1, 1);
+
+
+--
+-- TOC entry 3949 (class 0 OID 7330566)
+-- Dependencies: 270
+-- Data for Name: sitios_dependenciastipo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO sitios_dependenciastipo VALUES (1, 'HABITACIONES');
+INSERT INTO sitios_dependenciastipo VALUES (2, 'OFICINAS');
+
+
+--
+-- TOC entry 3955 (class 0 OID 7330590)
+-- Dependencies: 276
+-- Data for Name: sitios_serviciossedes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO sitios_serviciossedes VALUES (1, 'HOSPITALIZACION kenedy', 'HOSPITALIZACION kenedy', 'A', 1, 1);
+INSERT INTO sitios_serviciossedes VALUES (2, 'URGENCIAS KENEDU', 'URGENCIAS KENEDU', 'A', 1, 2);
+
+
+--
+-- TOC entry 3957 (class 0 OID 7330598)
+-- Dependencies: 278
+-- Data for Name: sitios_subserviciossedes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO sitios_subserviciossedes VALUES (1, 'PISO 1', 'PISO 1', 'PISO 1', 'A', 1, 1);
+INSERT INTO sitios_subserviciossedes VALUES (2, 'PISO 2', 'PISO 2', 'PISO 2', 'A', 1, 1);
+
+
+--
+-- TOC entry 3945 (class 0 OID 7330550)
+-- Dependencies: 266
+-- Data for Name: sitios_dependencias; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO sitios_dependencias VALUES (1, '101', 'HABITACION 101', 'HABITACION 101', '2024-06-27 16:39:59.100257-05', 'A', 1, 1, 1, 1);
+INSERT INTO sitios_dependencias VALUES (2, '102', 'HABITACION 102', 'HABITACION 102', '2024-06-27 16:40:19.988571-05', 'A', 1, 1, 1, 2);
+
+
+--
+-- TOC entry 3961 (class 0 OID 7330656)
+-- Dependencies: 282
+-- Data for Name: usuarios_tiposusuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO usuarios_tiposusuario VALUES (1, 'PACIENTE COMUN', '2024-06-27 15:52:37.0384-05', 'A');
+INSERT INTO usuarios_tiposusuario VALUES (2, 'HABITANTE DE CALLE', '2024-06-27 15:54:09.83331-05', 'A');
+INSERT INTO usuarios_tiposusuario VALUES (3, 'RECLUIDO EN CENTRO', '2024-06-27 15:54:24.853558-05', 'A');
+
+
+--
+-- TOC entry 3963 (class 0 OID 7330664)
+-- Dependencies: 284
+-- Data for Name: usuarios_usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO usuarios_usuarios VALUES (1, '19465673', 'ALBERTO BERNAL PACIENTE', 'M', '2024-06-27 16:01:17.980912-05', 'CALLE 87', '322230', 'ALBERTO', 'fotos/ADMINISTRATIVO.JPG', '2024-06-27 16:01:17.980912-05', 'A', 2, 1, 1, 1, 1);
+
+
+--
+-- TOC entry 3947 (class 0 OID 7330558)
+-- Dependencies: 268
+-- Data for Name: sitios_dependenciasactual; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3971 (class 0 OID 7330732)
+-- Dependencies: 292
+-- Data for Name: admisiones_ingresos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4004 (class 0 OID 0)
+-- Dependencies: 291
+-- Name: admisiones_ingresos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('admisiones_ingresos_id_seq', 1, false);
+
+
+--
+-- TOC entry 3873 (class 0 OID 7330184)
+-- Dependencies: 194
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4005 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_group_id_seq', 1, false);
+
+
+--
+-- TOC entry 3869 (class 0 OID 7330166)
+-- Dependencies: 190
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO django_content_type VALUES (1, 'admin', 'logentry');
+INSERT INTO django_content_type VALUES (2, 'auth', 'permission');
+INSERT INTO django_content_type VALUES (3, 'auth', 'group');
+INSERT INTO django_content_type VALUES (4, 'auth', 'user');
+INSERT INTO django_content_type VALUES (5, 'contenttypes', 'contenttype');
+INSERT INTO django_content_type VALUES (6, 'sessions', 'session');
+INSERT INTO django_content_type VALUES (7, 'Administracion', 'imhotep_sedesreportes');
+INSERT INTO django_content_type VALUES (8, 'Administracion', 'mae_gruporeportes');
+INSERT INTO django_content_type VALUES (9, 'Administracion', 'mae_reportes');
+INSERT INTO django_content_type VALUES (10, 'Administracion', 'mae_repparametros');
+INSERT INTO django_content_type VALUES (11, 'Administracion', 'mae_repusuarios');
+INSERT INTO django_content_type VALUES (12, 'Administracion', 'mae_subgruporeportes');
+INSERT INTO django_content_type VALUES (13, 'Administracion', 'mae_tiposcampo');
+INSERT INTO django_content_type VALUES (14, 'usuarios', 'tiposdocumento');
+INSERT INTO django_content_type VALUES (15, 'usuarios', 'tiposusuario');
+INSERT INTO django_content_type VALUES (16, 'usuarios', 'usuarios');
+INSERT INTO django_content_type VALUES (17, 'sitios', 'centros');
+INSERT INTO django_content_type VALUES (18, 'sitios', 'ciudades');
+INSERT INTO django_content_type VALUES (19, 'sitios', 'departamentos');
+INSERT INTO django_content_type VALUES (20, 'sitios', 'dependencias');
+INSERT INTO django_content_type VALUES (21, 'sitios', 'dependenciasactual');
+INSERT INTO django_content_type VALUES (22, 'sitios', 'dependenciastipo');
+INSERT INTO django_content_type VALUES (23, 'sitios', 'historialdependencias');
+INSERT INTO django_content_type VALUES (24, 'sitios', 'sedesclinica');
+INSERT INTO django_content_type VALUES (25, 'sitios', 'serviciossedes');
+INSERT INTO django_content_type VALUES (26, 'sitios', 'subserviciossedes');
+INSERT INTO django_content_type VALUES (27, 'clinico', 'antecedentes');
+INSERT INTO django_content_type VALUES (28, 'clinico', 'causasexterna');
+INSERT INTO django_content_type VALUES (29, 'clinico', 'diagnosticos');
+INSERT INTO django_content_type VALUES (30, 'clinico', 'enfermedades');
+INSERT INTO django_content_type VALUES (31, 'clinico', 'especialidades');
+INSERT INTO django_content_type VALUES (32, 'clinico', 'especialidadesmedicos');
+INSERT INTO django_content_type VALUES (33, 'clinico', 'estadoexamenes');
+INSERT INTO django_content_type VALUES (34, 'clinico', 'estadosinterconsulta');
+INSERT INTO django_content_type VALUES (35, 'clinico', 'estadossalida');
+INSERT INTO django_content_type VALUES (36, 'clinico', 'examenes');
+INSERT INTO django_content_type VALUES (37, 'clinico', 'historia');
+INSERT INTO django_content_type VALUES (38, 'clinico', 'historiaexamenes');
+INSERT INTO django_content_type VALUES (39, 'clinico', 'historiaexamenescabezote');
+INSERT INTO django_content_type VALUES (40, 'clinico', 'historialantecedentes');
+INSERT INTO django_content_type VALUES (41, 'clinico', 'historialdiagnosticos');
+INSERT INTO django_content_type VALUES (42, 'clinico', 'historialdiagnosticoscabezote');
+INSERT INTO django_content_type VALUES (43, 'clinico', 'historiaresultados');
+INSERT INTO django_content_type VALUES (44, 'clinico', 'incapacidades');
+INSERT INTO django_content_type VALUES (45, 'clinico', 'interconsultas');
+INSERT INTO django_content_type VALUES (46, 'clinico', 'medicos');
+INSERT INTO django_content_type VALUES (47, 'clinico', 'servicios');
+INSERT INTO django_content_type VALUES (48, 'clinico', 'tiposantecedente');
+INSERT INTO django_content_type VALUES (49, 'clinico', 'tiposdiagnostico');
+INSERT INTO django_content_type VALUES (50, 'clinico', 'tiposexamen');
+INSERT INTO django_content_type VALUES (51, 'clinico', 'tiposfolio');
+INSERT INTO django_content_type VALUES (52, 'clinico', 'tiposincapacidad');
+INSERT INTO django_content_type VALUES (53, 'clinico', 'vias');
+INSERT INTO django_content_type VALUES (54, 'planta', 'perfilesplanta');
+INSERT INTO django_content_type VALUES (55, 'planta', 'planta');
+INSERT INTO django_content_type VALUES (56, 'planta', 'tiposplanta');
+INSERT INTO django_content_type VALUES (57, 'admisiones', 'ingresos');
+INSERT INTO django_content_type VALUES (58, 'contratacion', 'procedimientos');
+INSERT INTO django_content_type VALUES (59, 'seguridad', 'modulos');
+INSERT INTO django_content_type VALUES (60, 'seguridad', 'moduloselementos');
+INSERT INTO django_content_type VALUES (61, 'seguridad', 'moduloselementosdef');
+INSERT INTO django_content_type VALUES (62, 'seguridad', 'perfiles');
+INSERT INTO django_content_type VALUES (63, 'seguridad', 'perfilesclinica');
+INSERT INTO django_content_type VALUES (64, 'seguridad', 'perfilesclinicaopciones');
+INSERT INTO django_content_type VALUES (65, 'seguridad', 'perfilesgralusu');
+INSERT INTO django_content_type VALUES (66, 'seguridad', 'perfilesopciones');
+INSERT INTO django_content_type VALUES (67, 'seguridad', 'perfilesusu');
+
+
+--
+-- TOC entry 3871 (class 0 OID 7330176)
+-- Dependencies: 192
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO auth_permission VALUES (1, 'Can add log entry', 1, 'add_logentry');
+INSERT INTO auth_permission VALUES (2, 'Can change log entry', 1, 'change_logentry');
+INSERT INTO auth_permission VALUES (3, 'Can delete log entry', 1, 'delete_logentry');
+INSERT INTO auth_permission VALUES (4, 'Can view log entry', 1, 'view_logentry');
+INSERT INTO auth_permission VALUES (5, 'Can add permission', 2, 'add_permission');
+INSERT INTO auth_permission VALUES (6, 'Can change permission', 2, 'change_permission');
+INSERT INTO auth_permission VALUES (7, 'Can delete permission', 2, 'delete_permission');
+INSERT INTO auth_permission VALUES (8, 'Can view permission', 2, 'view_permission');
+INSERT INTO auth_permission VALUES (9, 'Can add group', 3, 'add_group');
+INSERT INTO auth_permission VALUES (10, 'Can change group', 3, 'change_group');
+INSERT INTO auth_permission VALUES (11, 'Can delete group', 3, 'delete_group');
+INSERT INTO auth_permission VALUES (12, 'Can view group', 3, 'view_group');
+INSERT INTO auth_permission VALUES (13, 'Can add user', 4, 'add_user');
+INSERT INTO auth_permission VALUES (14, 'Can change user', 4, 'change_user');
+INSERT INTO auth_permission VALUES (15, 'Can delete user', 4, 'delete_user');
+INSERT INTO auth_permission VALUES (16, 'Can view user', 4, 'view_user');
+INSERT INTO auth_permission VALUES (17, 'Can add content type', 5, 'add_contenttype');
+INSERT INTO auth_permission VALUES (18, 'Can change content type', 5, 'change_contenttype');
+INSERT INTO auth_permission VALUES (19, 'Can delete content type', 5, 'delete_contenttype');
+INSERT INTO auth_permission VALUES (20, 'Can view content type', 5, 'view_contenttype');
+INSERT INTO auth_permission VALUES (21, 'Can add session', 6, 'add_session');
+INSERT INTO auth_permission VALUES (22, 'Can change session', 6, 'change_session');
+INSERT INTO auth_permission VALUES (23, 'Can delete session', 6, 'delete_session');
+INSERT INTO auth_permission VALUES (24, 'Can view session', 6, 'view_session');
+INSERT INTO auth_permission VALUES (25, 'Can add imhotep_ sedes reportes', 7, 'add_imhotep_sedesreportes');
+INSERT INTO auth_permission VALUES (26, 'Can change imhotep_ sedes reportes', 7, 'change_imhotep_sedesreportes');
+INSERT INTO auth_permission VALUES (27, 'Can delete imhotep_ sedes reportes', 7, 'delete_imhotep_sedesreportes');
+INSERT INTO auth_permission VALUES (28, 'Can view imhotep_ sedes reportes', 7, 'view_imhotep_sedesreportes');
+INSERT INTO auth_permission VALUES (29, 'Can add mae_ grupo reportes', 8, 'add_mae_gruporeportes');
+INSERT INTO auth_permission VALUES (30, 'Can change mae_ grupo reportes', 8, 'change_mae_gruporeportes');
+INSERT INTO auth_permission VALUES (31, 'Can delete mae_ grupo reportes', 8, 'delete_mae_gruporeportes');
+INSERT INTO auth_permission VALUES (32, 'Can view mae_ grupo reportes', 8, 'view_mae_gruporeportes');
+INSERT INTO auth_permission VALUES (33, 'Can add mae_ reportes', 9, 'add_mae_reportes');
+INSERT INTO auth_permission VALUES (34, 'Can change mae_ reportes', 9, 'change_mae_reportes');
+INSERT INTO auth_permission VALUES (35, 'Can delete mae_ reportes', 9, 'delete_mae_reportes');
+INSERT INTO auth_permission VALUES (36, 'Can view mae_ reportes', 9, 'view_mae_reportes');
+INSERT INTO auth_permission VALUES (37, 'Can add mae_ rep parametros', 10, 'add_mae_repparametros');
+INSERT INTO auth_permission VALUES (38, 'Can change mae_ rep parametros', 10, 'change_mae_repparametros');
+INSERT INTO auth_permission VALUES (39, 'Can delete mae_ rep parametros', 10, 'delete_mae_repparametros');
+INSERT INTO auth_permission VALUES (40, 'Can view mae_ rep parametros', 10, 'view_mae_repparametros');
+INSERT INTO auth_permission VALUES (41, 'Can add mae_ rep usuarios', 11, 'add_mae_repusuarios');
+INSERT INTO auth_permission VALUES (42, 'Can change mae_ rep usuarios', 11, 'change_mae_repusuarios');
+INSERT INTO auth_permission VALUES (43, 'Can delete mae_ rep usuarios', 11, 'delete_mae_repusuarios');
+INSERT INTO auth_permission VALUES (44, 'Can view mae_ rep usuarios', 11, 'view_mae_repusuarios');
+INSERT INTO auth_permission VALUES (45, 'Can add mae_ sub grupo reportes', 12, 'add_mae_subgruporeportes');
+INSERT INTO auth_permission VALUES (46, 'Can change mae_ sub grupo reportes', 12, 'change_mae_subgruporeportes');
+INSERT INTO auth_permission VALUES (47, 'Can delete mae_ sub grupo reportes', 12, 'delete_mae_subgruporeportes');
+INSERT INTO auth_permission VALUES (48, 'Can view mae_ sub grupo reportes', 12, 'view_mae_subgruporeportes');
+INSERT INTO auth_permission VALUES (49, 'Can add mae_ tipos campo', 13, 'add_mae_tiposcampo');
+INSERT INTO auth_permission VALUES (50, 'Can change mae_ tipos campo', 13, 'change_mae_tiposcampo');
+INSERT INTO auth_permission VALUES (51, 'Can delete mae_ tipos campo', 13, 'delete_mae_tiposcampo');
+INSERT INTO auth_permission VALUES (52, 'Can view mae_ tipos campo', 13, 'view_mae_tiposcampo');
+INSERT INTO auth_permission VALUES (53, 'Can add tipos documento', 14, 'add_tiposdocumento');
+INSERT INTO auth_permission VALUES (54, 'Can change tipos documento', 14, 'change_tiposdocumento');
+INSERT INTO auth_permission VALUES (55, 'Can delete tipos documento', 14, 'delete_tiposdocumento');
+INSERT INTO auth_permission VALUES (56, 'Can view tipos documento', 14, 'view_tiposdocumento');
+INSERT INTO auth_permission VALUES (57, 'Can add tipos usuario', 15, 'add_tiposusuario');
+INSERT INTO auth_permission VALUES (58, 'Can change tipos usuario', 15, 'change_tiposusuario');
+INSERT INTO auth_permission VALUES (59, 'Can delete tipos usuario', 15, 'delete_tiposusuario');
+INSERT INTO auth_permission VALUES (60, 'Can view tipos usuario', 15, 'view_tiposusuario');
+INSERT INTO auth_permission VALUES (61, 'Can add usuarios', 16, 'add_usuarios');
+INSERT INTO auth_permission VALUES (62, 'Can change usuarios', 16, 'change_usuarios');
+INSERT INTO auth_permission VALUES (63, 'Can delete usuarios', 16, 'delete_usuarios');
+INSERT INTO auth_permission VALUES (64, 'Can view usuarios', 16, 'view_usuarios');
+INSERT INTO auth_permission VALUES (65, 'Can add centros', 17, 'add_centros');
+INSERT INTO auth_permission VALUES (66, 'Can change centros', 17, 'change_centros');
+INSERT INTO auth_permission VALUES (67, 'Can delete centros', 17, 'delete_centros');
+INSERT INTO auth_permission VALUES (68, 'Can view centros', 17, 'view_centros');
+INSERT INTO auth_permission VALUES (69, 'Can add ciudades', 18, 'add_ciudades');
+INSERT INTO auth_permission VALUES (70, 'Can change ciudades', 18, 'change_ciudades');
+INSERT INTO auth_permission VALUES (71, 'Can delete ciudades', 18, 'delete_ciudades');
+INSERT INTO auth_permission VALUES (72, 'Can view ciudades', 18, 'view_ciudades');
+INSERT INTO auth_permission VALUES (73, 'Can add departamentos', 19, 'add_departamentos');
+INSERT INTO auth_permission VALUES (74, 'Can change departamentos', 19, 'change_departamentos');
+INSERT INTO auth_permission VALUES (75, 'Can delete departamentos', 19, 'delete_departamentos');
+INSERT INTO auth_permission VALUES (76, 'Can view departamentos', 19, 'view_departamentos');
+INSERT INTO auth_permission VALUES (77, 'Can add dependencias', 20, 'add_dependencias');
+INSERT INTO auth_permission VALUES (78, 'Can change dependencias', 20, 'change_dependencias');
+INSERT INTO auth_permission VALUES (79, 'Can delete dependencias', 20, 'delete_dependencias');
+INSERT INTO auth_permission VALUES (80, 'Can view dependencias', 20, 'view_dependencias');
+INSERT INTO auth_permission VALUES (81, 'Can add dependencias actual', 21, 'add_dependenciasactual');
+INSERT INTO auth_permission VALUES (82, 'Can change dependencias actual', 21, 'change_dependenciasactual');
+INSERT INTO auth_permission VALUES (83, 'Can delete dependencias actual', 21, 'delete_dependenciasactual');
+INSERT INTO auth_permission VALUES (84, 'Can view dependencias actual', 21, 'view_dependenciasactual');
+INSERT INTO auth_permission VALUES (85, 'Can add dependencias tipo', 22, 'add_dependenciastipo');
+INSERT INTO auth_permission VALUES (86, 'Can change dependencias tipo', 22, 'change_dependenciastipo');
+INSERT INTO auth_permission VALUES (87, 'Can delete dependencias tipo', 22, 'delete_dependenciastipo');
+INSERT INTO auth_permission VALUES (88, 'Can view dependencias tipo', 22, 'view_dependenciastipo');
+INSERT INTO auth_permission VALUES (89, 'Can add historial dependencias', 23, 'add_historialdependencias');
+INSERT INTO auth_permission VALUES (90, 'Can change historial dependencias', 23, 'change_historialdependencias');
+INSERT INTO auth_permission VALUES (91, 'Can delete historial dependencias', 23, 'delete_historialdependencias');
+INSERT INTO auth_permission VALUES (92, 'Can view historial dependencias', 23, 'view_historialdependencias');
+INSERT INTO auth_permission VALUES (93, 'Can add sedes clinica', 24, 'add_sedesclinica');
+INSERT INTO auth_permission VALUES (94, 'Can change sedes clinica', 24, 'change_sedesclinica');
+INSERT INTO auth_permission VALUES (95, 'Can delete sedes clinica', 24, 'delete_sedesclinica');
+INSERT INTO auth_permission VALUES (96, 'Can view sedes clinica', 24, 'view_sedesclinica');
+INSERT INTO auth_permission VALUES (97, 'Can add servicios sedes', 25, 'add_serviciossedes');
+INSERT INTO auth_permission VALUES (98, 'Can change servicios sedes', 25, 'change_serviciossedes');
+INSERT INTO auth_permission VALUES (99, 'Can delete servicios sedes', 25, 'delete_serviciossedes');
+INSERT INTO auth_permission VALUES (100, 'Can view servicios sedes', 25, 'view_serviciossedes');
+INSERT INTO auth_permission VALUES (101, 'Can add sub servicios sedes', 26, 'add_subserviciossedes');
+INSERT INTO auth_permission VALUES (102, 'Can change sub servicios sedes', 26, 'change_subserviciossedes');
+INSERT INTO auth_permission VALUES (103, 'Can delete sub servicios sedes', 26, 'delete_subserviciossedes');
+INSERT INTO auth_permission VALUES (104, 'Can view sub servicios sedes', 26, 'view_subserviciossedes');
+INSERT INTO auth_permission VALUES (105, 'Can add antecedentes', 27, 'add_antecedentes');
+INSERT INTO auth_permission VALUES (106, 'Can change antecedentes', 27, 'change_antecedentes');
+INSERT INTO auth_permission VALUES (107, 'Can delete antecedentes', 27, 'delete_antecedentes');
+INSERT INTO auth_permission VALUES (108, 'Can view antecedentes', 27, 'view_antecedentes');
+INSERT INTO auth_permission VALUES (109, 'Can add causas externa', 28, 'add_causasexterna');
+INSERT INTO auth_permission VALUES (110, 'Can change causas externa', 28, 'change_causasexterna');
+INSERT INTO auth_permission VALUES (111, 'Can delete causas externa', 28, 'delete_causasexterna');
+INSERT INTO auth_permission VALUES (112, 'Can view causas externa', 28, 'view_causasexterna');
+INSERT INTO auth_permission VALUES (113, 'Can add diagnosticos', 29, 'add_diagnosticos');
+INSERT INTO auth_permission VALUES (114, 'Can change diagnosticos', 29, 'change_diagnosticos');
+INSERT INTO auth_permission VALUES (115, 'Can delete diagnosticos', 29, 'delete_diagnosticos');
+INSERT INTO auth_permission VALUES (116, 'Can view diagnosticos', 29, 'view_diagnosticos');
+INSERT INTO auth_permission VALUES (117, 'Can add enfermedades', 30, 'add_enfermedades');
+INSERT INTO auth_permission VALUES (118, 'Can change enfermedades', 30, 'change_enfermedades');
+INSERT INTO auth_permission VALUES (119, 'Can delete enfermedades', 30, 'delete_enfermedades');
+INSERT INTO auth_permission VALUES (120, 'Can view enfermedades', 30, 'view_enfermedades');
+INSERT INTO auth_permission VALUES (121, 'Can add especialidades', 31, 'add_especialidades');
+INSERT INTO auth_permission VALUES (122, 'Can change especialidades', 31, 'change_especialidades');
+INSERT INTO auth_permission VALUES (123, 'Can delete especialidades', 31, 'delete_especialidades');
+INSERT INTO auth_permission VALUES (124, 'Can view especialidades', 31, 'view_especialidades');
+INSERT INTO auth_permission VALUES (125, 'Can add especialidades medicos', 32, 'add_especialidadesmedicos');
+INSERT INTO auth_permission VALUES (126, 'Can change especialidades medicos', 32, 'change_especialidadesmedicos');
+INSERT INTO auth_permission VALUES (127, 'Can delete especialidades medicos', 32, 'delete_especialidadesmedicos');
+INSERT INTO auth_permission VALUES (128, 'Can view especialidades medicos', 32, 'view_especialidadesmedicos');
+INSERT INTO auth_permission VALUES (129, 'Can add estado examenes', 33, 'add_estadoexamenes');
+INSERT INTO auth_permission VALUES (130, 'Can change estado examenes', 33, 'change_estadoexamenes');
+INSERT INTO auth_permission VALUES (131, 'Can delete estado examenes', 33, 'delete_estadoexamenes');
+INSERT INTO auth_permission VALUES (132, 'Can view estado examenes', 33, 'view_estadoexamenes');
+INSERT INTO auth_permission VALUES (133, 'Can add estados interconsulta', 34, 'add_estadosinterconsulta');
+INSERT INTO auth_permission VALUES (134, 'Can change estados interconsulta', 34, 'change_estadosinterconsulta');
+INSERT INTO auth_permission VALUES (135, 'Can delete estados interconsulta', 34, 'delete_estadosinterconsulta');
+INSERT INTO auth_permission VALUES (136, 'Can view estados interconsulta', 34, 'view_estadosinterconsulta');
+INSERT INTO auth_permission VALUES (137, 'Can add estados salida', 35, 'add_estadossalida');
+INSERT INTO auth_permission VALUES (138, 'Can change estados salida', 35, 'change_estadossalida');
+INSERT INTO auth_permission VALUES (139, 'Can delete estados salida', 35, 'delete_estadossalida');
+INSERT INTO auth_permission VALUES (140, 'Can view estados salida', 35, 'view_estadossalida');
+INSERT INTO auth_permission VALUES (141, 'Can add examenes', 36, 'add_examenes');
+INSERT INTO auth_permission VALUES (142, 'Can change examenes', 36, 'change_examenes');
+INSERT INTO auth_permission VALUES (143, 'Can delete examenes', 36, 'delete_examenes');
+INSERT INTO auth_permission VALUES (144, 'Can view examenes', 36, 'view_examenes');
+INSERT INTO auth_permission VALUES (145, 'Can add historia', 37, 'add_historia');
+INSERT INTO auth_permission VALUES (146, 'Can change historia', 37, 'change_historia');
+INSERT INTO auth_permission VALUES (147, 'Can delete historia', 37, 'delete_historia');
+INSERT INTO auth_permission VALUES (148, 'Can view historia', 37, 'view_historia');
+INSERT INTO auth_permission VALUES (149, 'Can add historia examenes', 38, 'add_historiaexamenes');
+INSERT INTO auth_permission VALUES (150, 'Can change historia examenes', 38, 'change_historiaexamenes');
+INSERT INTO auth_permission VALUES (151, 'Can delete historia examenes', 38, 'delete_historiaexamenes');
+INSERT INTO auth_permission VALUES (152, 'Can view historia examenes', 38, 'view_historiaexamenes');
+INSERT INTO auth_permission VALUES (153, 'Can add historia examenes cabezote', 39, 'add_historiaexamenescabezote');
+INSERT INTO auth_permission VALUES (154, 'Can change historia examenes cabezote', 39, 'change_historiaexamenescabezote');
+INSERT INTO auth_permission VALUES (155, 'Can delete historia examenes cabezote', 39, 'delete_historiaexamenescabezote');
+INSERT INTO auth_permission VALUES (156, 'Can view historia examenes cabezote', 39, 'view_historiaexamenescabezote');
+INSERT INTO auth_permission VALUES (157, 'Can add historial antecedentes', 40, 'add_historialantecedentes');
+INSERT INTO auth_permission VALUES (158, 'Can change historial antecedentes', 40, 'change_historialantecedentes');
+INSERT INTO auth_permission VALUES (159, 'Can delete historial antecedentes', 40, 'delete_historialantecedentes');
+INSERT INTO auth_permission VALUES (160, 'Can view historial antecedentes', 40, 'view_historialantecedentes');
+INSERT INTO auth_permission VALUES (161, 'Can add historial diagnosticos', 41, 'add_historialdiagnosticos');
+INSERT INTO auth_permission VALUES (162, 'Can change historial diagnosticos', 41, 'change_historialdiagnosticos');
+INSERT INTO auth_permission VALUES (163, 'Can delete historial diagnosticos', 41, 'delete_historialdiagnosticos');
+INSERT INTO auth_permission VALUES (164, 'Can view historial diagnosticos', 41, 'view_historialdiagnosticos');
+INSERT INTO auth_permission VALUES (165, 'Can add historial diagnosticos cabezote', 42, 'add_historialdiagnosticoscabezote');
+INSERT INTO auth_permission VALUES (166, 'Can change historial diagnosticos cabezote', 42, 'change_historialdiagnosticoscabezote');
+INSERT INTO auth_permission VALUES (167, 'Can delete historial diagnosticos cabezote', 42, 'delete_historialdiagnosticoscabezote');
+INSERT INTO auth_permission VALUES (168, 'Can view historial diagnosticos cabezote', 42, 'view_historialdiagnosticoscabezote');
+INSERT INTO auth_permission VALUES (169, 'Can add historia resultados', 43, 'add_historiaresultados');
+INSERT INTO auth_permission VALUES (170, 'Can change historia resultados', 43, 'change_historiaresultados');
+INSERT INTO auth_permission VALUES (171, 'Can delete historia resultados', 43, 'delete_historiaresultados');
+INSERT INTO auth_permission VALUES (172, 'Can view historia resultados', 43, 'view_historiaresultados');
+INSERT INTO auth_permission VALUES (173, 'Can add incapacidades', 44, 'add_incapacidades');
+INSERT INTO auth_permission VALUES (174, 'Can change incapacidades', 44, 'change_incapacidades');
+INSERT INTO auth_permission VALUES (175, 'Can delete incapacidades', 44, 'delete_incapacidades');
+INSERT INTO auth_permission VALUES (176, 'Can view incapacidades', 44, 'view_incapacidades');
+INSERT INTO auth_permission VALUES (177, 'Can add interconsultas', 45, 'add_interconsultas');
+INSERT INTO auth_permission VALUES (178, 'Can change interconsultas', 45, 'change_interconsultas');
+INSERT INTO auth_permission VALUES (179, 'Can delete interconsultas', 45, 'delete_interconsultas');
+INSERT INTO auth_permission VALUES (180, 'Can view interconsultas', 45, 'view_interconsultas');
+INSERT INTO auth_permission VALUES (181, 'Can add medicos', 46, 'add_medicos');
+INSERT INTO auth_permission VALUES (182, 'Can change medicos', 46, 'change_medicos');
+INSERT INTO auth_permission VALUES (183, 'Can delete medicos', 46, 'delete_medicos');
+INSERT INTO auth_permission VALUES (184, 'Can view medicos', 46, 'view_medicos');
+INSERT INTO auth_permission VALUES (185, 'Can add servicios', 47, 'add_servicios');
+INSERT INTO auth_permission VALUES (186, 'Can change servicios', 47, 'change_servicios');
+INSERT INTO auth_permission VALUES (187, 'Can delete servicios', 47, 'delete_servicios');
+INSERT INTO auth_permission VALUES (188, 'Can view servicios', 47, 'view_servicios');
+INSERT INTO auth_permission VALUES (189, 'Can add tipos antecedente', 48, 'add_tiposantecedente');
+INSERT INTO auth_permission VALUES (190, 'Can change tipos antecedente', 48, 'change_tiposantecedente');
+INSERT INTO auth_permission VALUES (191, 'Can delete tipos antecedente', 48, 'delete_tiposantecedente');
+INSERT INTO auth_permission VALUES (192, 'Can view tipos antecedente', 48, 'view_tiposantecedente');
+INSERT INTO auth_permission VALUES (193, 'Can add tipos diagnostico', 49, 'add_tiposdiagnostico');
+INSERT INTO auth_permission VALUES (194, 'Can change tipos diagnostico', 49, 'change_tiposdiagnostico');
+INSERT INTO auth_permission VALUES (195, 'Can delete tipos diagnostico', 49, 'delete_tiposdiagnostico');
+INSERT INTO auth_permission VALUES (196, 'Can view tipos diagnostico', 49, 'view_tiposdiagnostico');
+INSERT INTO auth_permission VALUES (197, 'Can add tipos examen', 50, 'add_tiposexamen');
+INSERT INTO auth_permission VALUES (198, 'Can change tipos examen', 50, 'change_tiposexamen');
+INSERT INTO auth_permission VALUES (199, 'Can delete tipos examen', 50, 'delete_tiposexamen');
+INSERT INTO auth_permission VALUES (200, 'Can view tipos examen', 50, 'view_tiposexamen');
+INSERT INTO auth_permission VALUES (201, 'Can add tipos folio', 51, 'add_tiposfolio');
+INSERT INTO auth_permission VALUES (202, 'Can change tipos folio', 51, 'change_tiposfolio');
+INSERT INTO auth_permission VALUES (203, 'Can delete tipos folio', 51, 'delete_tiposfolio');
+INSERT INTO auth_permission VALUES (204, 'Can view tipos folio', 51, 'view_tiposfolio');
+INSERT INTO auth_permission VALUES (205, 'Can add tipos incapacidad', 52, 'add_tiposincapacidad');
+INSERT INTO auth_permission VALUES (206, 'Can change tipos incapacidad', 52, 'change_tiposincapacidad');
+INSERT INTO auth_permission VALUES (207, 'Can delete tipos incapacidad', 52, 'delete_tiposincapacidad');
+INSERT INTO auth_permission VALUES (208, 'Can view tipos incapacidad', 52, 'view_tiposincapacidad');
+INSERT INTO auth_permission VALUES (209, 'Can add vias', 53, 'add_vias');
+INSERT INTO auth_permission VALUES (210, 'Can change vias', 53, 'change_vias');
+INSERT INTO auth_permission VALUES (211, 'Can delete vias', 53, 'delete_vias');
+INSERT INTO auth_permission VALUES (212, 'Can view vias', 53, 'view_vias');
+INSERT INTO auth_permission VALUES (213, 'Can add perfiles planta', 54, 'add_perfilesplanta');
+INSERT INTO auth_permission VALUES (214, 'Can change perfiles planta', 54, 'change_perfilesplanta');
+INSERT INTO auth_permission VALUES (215, 'Can delete perfiles planta', 54, 'delete_perfilesplanta');
+INSERT INTO auth_permission VALUES (216, 'Can view perfiles planta', 54, 'view_perfilesplanta');
+INSERT INTO auth_permission VALUES (217, 'Can add planta', 55, 'add_planta');
+INSERT INTO auth_permission VALUES (218, 'Can change planta', 55, 'change_planta');
+INSERT INTO auth_permission VALUES (219, 'Can delete planta', 55, 'delete_planta');
+INSERT INTO auth_permission VALUES (220, 'Can view planta', 55, 'view_planta');
+INSERT INTO auth_permission VALUES (221, 'Can add tipos planta', 56, 'add_tiposplanta');
+INSERT INTO auth_permission VALUES (222, 'Can change tipos planta', 56, 'change_tiposplanta');
+INSERT INTO auth_permission VALUES (223, 'Can delete tipos planta', 56, 'delete_tiposplanta');
+INSERT INTO auth_permission VALUES (224, 'Can view tipos planta', 56, 'view_tiposplanta');
+INSERT INTO auth_permission VALUES (225, 'Can add ingresos', 57, 'add_ingresos');
+INSERT INTO auth_permission VALUES (226, 'Can change ingresos', 57, 'change_ingresos');
+INSERT INTO auth_permission VALUES (227, 'Can delete ingresos', 57, 'delete_ingresos');
+INSERT INTO auth_permission VALUES (228, 'Can view ingresos', 57, 'view_ingresos');
+INSERT INTO auth_permission VALUES (229, 'Can add procedimientos', 58, 'add_procedimientos');
+INSERT INTO auth_permission VALUES (230, 'Can change procedimientos', 58, 'change_procedimientos');
+INSERT INTO auth_permission VALUES (231, 'Can delete procedimientos', 58, 'delete_procedimientos');
+INSERT INTO auth_permission VALUES (232, 'Can view procedimientos', 58, 'view_procedimientos');
+INSERT INTO auth_permission VALUES (233, 'Can add modulos', 59, 'add_modulos');
+INSERT INTO auth_permission VALUES (234, 'Can change modulos', 59, 'change_modulos');
+INSERT INTO auth_permission VALUES (235, 'Can delete modulos', 59, 'delete_modulos');
+INSERT INTO auth_permission VALUES (236, 'Can view modulos', 59, 'view_modulos');
+INSERT INTO auth_permission VALUES (237, 'Can add modulos elementos', 60, 'add_moduloselementos');
+INSERT INTO auth_permission VALUES (238, 'Can change modulos elementos', 60, 'change_moduloselementos');
+INSERT INTO auth_permission VALUES (239, 'Can delete modulos elementos', 60, 'delete_moduloselementos');
+INSERT INTO auth_permission VALUES (240, 'Can view modulos elementos', 60, 'view_moduloselementos');
+INSERT INTO auth_permission VALUES (241, 'Can add modulos elementos def', 61, 'add_moduloselementosdef');
+INSERT INTO auth_permission VALUES (242, 'Can change modulos elementos def', 61, 'change_moduloselementosdef');
+INSERT INTO auth_permission VALUES (243, 'Can delete modulos elementos def', 61, 'delete_moduloselementosdef');
+INSERT INTO auth_permission VALUES (244, 'Can view modulos elementos def', 61, 'view_moduloselementosdef');
+INSERT INTO auth_permission VALUES (245, 'Can add perfiles', 62, 'add_perfiles');
+INSERT INTO auth_permission VALUES (246, 'Can change perfiles', 62, 'change_perfiles');
+INSERT INTO auth_permission VALUES (247, 'Can delete perfiles', 62, 'delete_perfiles');
+INSERT INTO auth_permission VALUES (248, 'Can view perfiles', 62, 'view_perfiles');
+INSERT INTO auth_permission VALUES (249, 'Can add perfiles clinica', 63, 'add_perfilesclinica');
+INSERT INTO auth_permission VALUES (250, 'Can change perfiles clinica', 63, 'change_perfilesclinica');
+INSERT INTO auth_permission VALUES (251, 'Can delete perfiles clinica', 63, 'delete_perfilesclinica');
+INSERT INTO auth_permission VALUES (252, 'Can view perfiles clinica', 63, 'view_perfilesclinica');
+INSERT INTO auth_permission VALUES (253, 'Can add perfiles clinica opciones', 64, 'add_perfilesclinicaopciones');
+INSERT INTO auth_permission VALUES (254, 'Can change perfiles clinica opciones', 64, 'change_perfilesclinicaopciones');
+INSERT INTO auth_permission VALUES (255, 'Can delete perfiles clinica opciones', 64, 'delete_perfilesclinicaopciones');
+INSERT INTO auth_permission VALUES (256, 'Can view perfiles clinica opciones', 64, 'view_perfilesclinicaopciones');
+INSERT INTO auth_permission VALUES (257, 'Can add perfiles gral usu', 65, 'add_perfilesgralusu');
+INSERT INTO auth_permission VALUES (258, 'Can change perfiles gral usu', 65, 'change_perfilesgralusu');
+INSERT INTO auth_permission VALUES (259, 'Can delete perfiles gral usu', 65, 'delete_perfilesgralusu');
+INSERT INTO auth_permission VALUES (260, 'Can view perfiles gral usu', 65, 'view_perfilesgralusu');
+INSERT INTO auth_permission VALUES (261, 'Can add perfiles opciones', 66, 'add_perfilesopciones');
+INSERT INTO auth_permission VALUES (262, 'Can change perfiles opciones', 66, 'change_perfilesopciones');
+INSERT INTO auth_permission VALUES (263, 'Can delete perfiles opciones', 66, 'delete_perfilesopciones');
+INSERT INTO auth_permission VALUES (264, 'Can view perfiles opciones', 66, 'view_perfilesopciones');
+INSERT INTO auth_permission VALUES (265, 'Can add perfiles usu', 67, 'add_perfilesusu');
+INSERT INTO auth_permission VALUES (266, 'Can change perfiles usu', 67, 'change_perfilesusu');
+INSERT INTO auth_permission VALUES (267, 'Can delete perfiles usu', 67, 'delete_perfilesusu');
+INSERT INTO auth_permission VALUES (268, 'Can view perfiles usu', 67, 'view_perfilesusu');
+
+
+--
+-- TOC entry 3875 (class 0 OID 7330194)
+-- Dependencies: 196
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4006 (class 0 OID 0)
+-- Dependencies: 195
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- TOC entry 4007 (class 0 OID 0)
+-- Dependencies: 191
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_permission_id_seq', 268, true);
+
+
+--
+-- TOC entry 3877 (class 0 OID 7330202)
+-- Dependencies: 198
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO auth_user VALUES (1, 'pbkdf2_sha256$120000$eqTydVrAdG59$o9QSrzHb2HQ5Dq+qptJMXDo4PY9vDNX1QKvCFtaLVQw=', '2024-06-27 14:40:34.446727-05', true, 'admin', '', '', 'alberto_bernalf@yahoo.com.co', true, true, '2024-06-25 09:33:25.528393-05');
+
+
+--
+-- TOC entry 3879 (class 0 OID 7330212)
+-- Dependencies: 200
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4008 (class 0 OID 0)
+-- Dependencies: 199
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 1, false);
+
+
+--
+-- TOC entry 4009 (class 0 OID 0)
+-- Dependencies: 197
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_user_id_seq', 1, true);
+
+
+--
+-- TOC entry 3881 (class 0 OID 7330220)
+-- Dependencies: 202
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4010 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- TOC entry 3927 (class 0 OID 7330478)
+-- Dependencies: 248
+-- Data for Name: clinico_tiposantecedente; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3885 (class 0 OID 7330304)
+-- Dependencies: 206
+-- Data for Name: clinico_antecedentes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4011 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: clinico_antecedentes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_antecedentes_id_seq', 1, false);
+
+
+--
+-- TOC entry 3887 (class 0 OID 7330312)
+-- Dependencies: 208
+-- Data for Name: clinico_causasexterna; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4012 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: clinico_causasexterna_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_causasexterna_id_seq', 1, false);
+
+
+--
+-- TOC entry 4013 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: clinico_diagnosticos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_diagnosticos_id_seq', 1, false);
+
+
+--
+-- TOC entry 3891 (class 0 OID 7330328)
+-- Dependencies: 212
+-- Data for Name: clinico_enfermedades; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4014 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: clinico_enfermedades_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_enfermedades_id_seq', 1, false);
+
+
+--
+-- TOC entry 4015 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: clinico_especialidades_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_especialidades_id_seq', 5, true);
+
+
+--
+-- TOC entry 3895 (class 0 OID 7330344)
+-- Dependencies: 216
+-- Data for Name: clinico_especialidadesmedicos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO clinico_especialidadesmedicos VALUES (1, 'POTOTITO MEDICO', '2024-06-27 15:45:38.450555-05', 'A', 4, 3, 1);
+
+
+--
+-- TOC entry 4016 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: clinico_especialidadesmedicos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_especialidadesmedicos_id_seq', 1, true);
+
+
+--
+-- TOC entry 3897 (class 0 OID 7330352)
+-- Dependencies: 218
+-- Data for Name: clinico_estadoexamenes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4017 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: clinico_estadoexamenes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_estadoexamenes_id_seq', 1, false);
+
+
+--
+-- TOC entry 3899 (class 0 OID 7330360)
+-- Dependencies: 220
+-- Data for Name: clinico_estadosinterconsulta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4018 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: clinico_estadosinterconsulta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_estadosinterconsulta_id_seq', 1, false);
+
+
+--
+-- TOC entry 4019 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: clinico_estadossalida_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_estadossalida_id_seq', 1, false);
+
+
+--
+-- TOC entry 3931 (class 0 OID 7330494)
+-- Dependencies: 252
+-- Data for Name: clinico_tiposexamen; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO clinico_tiposexamen VALUES (1, 'LABORATORIO', 'A');
+INSERT INTO clinico_tiposexamen VALUES (2, 'TERAPIAS', 'A');
+INSERT INTO clinico_tiposexamen VALUES (3, 'RADIOLOGIA', 'A');
+INSERT INTO clinico_tiposexamen VALUES (4, 'PROCEDIMIENTOS NO QX', 'A');
+
+
+--
+-- TOC entry 3903 (class 0 OID 7330376)
+-- Dependencies: 224
+-- Data for Name: clinico_examenes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4020 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: clinico_examenes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_examenes_id_seq', 1, false);
+
+
+--
+-- TOC entry 3933 (class 0 OID 7330502)
+-- Dependencies: 254
+-- Data for Name: clinico_tiposfolio; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3905 (class 0 OID 7330384)
+-- Dependencies: 226
+-- Data for Name: clinico_historia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4021 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: clinico_historia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_historia_id_seq', 1, false);
+
+
+--
+-- TOC entry 3909 (class 0 OID 7330403)
+-- Dependencies: 230
+-- Data for Name: clinico_historiaexamenescabezote; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3973 (class 0 OID 7330933)
+-- Dependencies: 294
+-- Data for Name: contratacion_procedimientos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3907 (class 0 OID 7330395)
+-- Dependencies: 228
+-- Data for Name: clinico_historiaexamenes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4022 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: clinico_historiaexamenes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_historiaexamenes_id_seq', 1, false);
+
+
+--
+-- TOC entry 4023 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: clinico_historiaexamenescabezote_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_historiaexamenescabezote_id_seq', 1, false);
+
+
+--
+-- TOC entry 3911 (class 0 OID 7330411)
+-- Dependencies: 232
+-- Data for Name: clinico_historialantecedentes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4024 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: clinico_historialantecedentes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_historialantecedentes_id_seq', 1, false);
+
+
+--
+-- TOC entry 3915 (class 0 OID 7330427)
+-- Dependencies: 236
+-- Data for Name: clinico_historialdiagnosticoscabezote; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3929 (class 0 OID 7330486)
+-- Dependencies: 250
+-- Data for Name: clinico_tiposdiagnostico; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3913 (class 0 OID 7330419)
+-- Dependencies: 234
+-- Data for Name: clinico_historialdiagnosticos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4025 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: clinico_historialdiagnosticos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_historialdiagnosticos_id_seq', 1, false);
+
+
+--
+-- TOC entry 4026 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: clinico_historialdiagnosticoscabezote_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_historialdiagnosticoscabezote_id_seq', 1, false);
+
+
+--
+-- TOC entry 3917 (class 0 OID 7330435)
+-- Dependencies: 238
+-- Data for Name: clinico_historiaresultados; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4027 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: clinico_historiaresultados_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_historiaresultados_id_seq', 1, false);
+
+
+--
+-- TOC entry 3935 (class 0 OID 7330510)
+-- Dependencies: 256
+-- Data for Name: clinico_tiposincapacidad; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3919 (class 0 OID 7330446)
+-- Dependencies: 240
+-- Data for Name: clinico_incapacidades; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4028 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: clinico_incapacidades_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_incapacidades_id_seq', 1, false);
+
+
+--
+-- TOC entry 3921 (class 0 OID 7330454)
+-- Dependencies: 242
+-- Data for Name: clinico_interconsultas; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4029 (class 0 OID 0)
+-- Dependencies: 241
+-- Name: clinico_interconsultas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_interconsultas_id_seq', 1, false);
+
+
+--
+-- TOC entry 3923 (class 0 OID 7330462)
+-- Dependencies: 244
+-- Data for Name: clinico_medicos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4030 (class 0 OID 0)
+-- Dependencies: 243
+-- Name: clinico_medicos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_medicos_id_seq', 1, false);
+
+
+--
+-- TOC entry 4031 (class 0 OID 0)
+-- Dependencies: 245
+-- Name: clinico_servicios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_servicios_id_seq', 4, true);
+
+
+--
+-- TOC entry 4032 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: clinico_tiposantecedente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_tiposantecedente_id_seq', 1, false);
+
+
+--
+-- TOC entry 4033 (class 0 OID 0)
+-- Dependencies: 249
+-- Name: clinico_tiposdiagnostico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_tiposdiagnostico_id_seq', 1, false);
+
+
+--
+-- TOC entry 4034 (class 0 OID 0)
+-- Dependencies: 251
+-- Name: clinico_tiposexamen_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_tiposexamen_id_seq', 4, true);
+
+
+--
+-- TOC entry 4035 (class 0 OID 0)
+-- Dependencies: 253
+-- Name: clinico_tiposfolio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_tiposfolio_id_seq', 1, false);
+
+
+--
+-- TOC entry 4036 (class 0 OID 0)
+-- Dependencies: 255
+-- Name: clinico_tiposincapacidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_tiposincapacidad_id_seq', 1, false);
+
+
+--
+-- TOC entry 3937 (class 0 OID 7330518)
+-- Dependencies: 258
+-- Data for Name: clinico_vias; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4037 (class 0 OID 0)
+-- Dependencies: 257
+-- Name: clinico_vias_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clinico_vias_id_seq', 1, false);
+
+
+--
+-- TOC entry 4038 (class 0 OID 0)
+-- Dependencies: 293
+-- Name: contratacion_procedimientos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('contratacion_procedimientos_id_seq', 1, false);
+
+
+--
+-- TOC entry 3883 (class 0 OID 7330280)
+-- Dependencies: 204
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO django_admin_log VALUES (1, '2024-06-25 09:48:10.051556-05', '1', 'MEDICO', 2, '[{"changed": {"fields": ["sedesClinica"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (2, '2024-06-25 09:48:17.882081-05', '2', 'ENFERMERA JEFE', 2, '[{"changed": {"fields": ["sedesClinica"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (3, '2024-06-25 09:50:51.555939-05', '10', 'APOYO TERAPEUTICO kenedy', 2, '[{"changed": {"fields": ["nombre"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (4, '2024-06-25 09:51:01.419945-05', '1', 'MEDICO kenedy', 2, '[{"changed": {"fields": ["nombre"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (5, '2024-06-25 09:51:56.028022-05', '1', 'HISTORIA CLINICA kenedy', 2, '[{"changed": {"fields": ["nombre"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (6, '2024-06-25 09:51:57.884802-05', '1', 'HISTORIA CLINICA kenedy', 2, '[]', 63, 1);
+INSERT INTO django_admin_log VALUES (7, '2024-06-25 10:38:28.299771-05', '3', 'HISTORIA CLINICA KENEDY', 2, '[{"changed": {"fields": ["nombre", "sedesClinica"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (8, '2024-06-25 10:38:41.265089-05', '13', 'HISTORIA CLINICA AMERICAS', 1, '[{"added": {}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (9, '2024-06-25 10:38:56.960268-05', '6', 'ADMISIONISTA KENEDY', 2, '[{"changed": {"fields": ["nombre", "sedesClinica"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (10, '2024-06-25 10:39:08.016171-05', '14', 'ADMISIONISTA AMERICAS', 1, '[{"added": {}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (11, '2024-06-25 14:33:29.65918-05', '1', 'ADMISIONISTA KENEDY', 1, '[{"added": {}}]', 65, 1);
+INSERT INTO django_admin_log VALUES (12, '2024-06-25 14:35:24.82375-05', '2', 'HISTORIA CLINICA KENEDY', 1, '[{"added": {}}]', 65, 1);
+INSERT INTO django_admin_log VALUES (13, '2024-06-25 14:35:34.199896-05', '3', 'HISTORIA CLINICA AMERICAS', 1, '[{"added": {}}]', 65, 1);
+INSERT INTO django_admin_log VALUES (14, '2024-06-25 14:42:21.973787-05', '12', 'APOYO TERAPEUTICO', 2, '[{"changed": {"fields": ["sedesClinica"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (15, '2024-06-25 14:42:28.84233-05', '11', 'INVENTARIOS', 2, '[{"changed": {"fields": ["sedesClinica"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (16, '2024-06-25 14:42:36.224242-05', '10', 'COMPRAS', 2, '[{"changed": {"fields": ["sedesClinica"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (17, '2024-06-25 14:42:41.971678-05', '9', 'CUENTAS MEDICAS', 2, '[{"changed": {"fields": ["sedesClinica"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (18, '2024-06-25 14:42:46.331368-05', '8', 'GLOSAS', 2, '[{"changed": {"fields": ["sedesClinica"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (19, '2024-06-25 14:42:51.019942-05', '7', 'FACTURADOR', 2, '[{"changed": {"fields": ["sedesClinica"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (20, '2024-06-25 14:43:31.520372-05', '5', 'AUXILIAR DE ENFERMERIA', 2, '[{"changed": {"fields": ["sedesClinica"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (21, '2024-06-25 14:43:44.863703-05', '4', 'ENFERMERA JEFE KENEDY', 2, '[{"changed": {"fields": ["nombre", "sedesClinica"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (22, '2024-06-25 14:43:59.427732-05', '12', 'APOYO TERAPEUTICO KENEDY', 2, '[{"changed": {"fields": ["nombre"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (23, '2024-06-25 14:44:09.685318-05', '11', 'INVENTARIOS KENEDY', 2, '[{"changed": {"fields": ["nombre"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (24, '2024-06-25 14:44:15.756861-05', '10', 'COMPRAS KENEDY', 2, '[{"changed": {"fields": ["nombre"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (25, '2024-06-25 14:44:24.481775-05', '9', 'CUENTAS MEDICAS KENEDY', 2, '[{"changed": {"fields": ["nombre"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (26, '2024-06-25 14:44:30.234875-05', '8', 'GLOSAS KENEDY', 2, '[{"changed": {"fields": ["nombre"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (27, '2024-06-25 14:44:36.277338-05', '7', 'FACTURADOR KENEDY', 2, '[{"changed": {"fields": ["nombre"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (28, '2024-06-25 14:44:44.372945-05', '5', 'AUXILIAR DE ENFERMERIA KENEDY', 2, '[{"changed": {"fields": ["nombre"]}}]', 63, 1);
+INSERT INTO django_admin_log VALUES (29, '2024-06-25 17:00:06.441481-05', '2', 'ALBERTO BERNAL TRABAJADOR AMERICAS', 1, '[{"added": {}}]', 55, 1);
+INSERT INTO django_admin_log VALUES (30, '2024-06-25 17:00:47.777935-05', '3', 'HISTORIA CLINICA AMERICAS', 2, '[{"changed": {"fields": ["plantaId"]}}]', 65, 1);
+INSERT INTO django_admin_log VALUES (31, '2024-06-25 17:00:51.388313-05', '3', 'HISTORIA CLINICA AMERICAS', 2, '[]', 65, 1);
+INSERT INTO django_admin_log VALUES (32, '2024-06-25 17:01:20.548661-05', '3', 'HISTORIA CLINICA AMERICAS', 2, '[]', 65, 1);
+INSERT INTO django_admin_log VALUES (33, '2024-06-26 15:39:11.92238-05', '65', 'ADMISIONISTA AMERICAS CREAR ADMISION', 1, '[{"added": {}}]', 64, 1);
+INSERT INTO django_admin_log VALUES (34, '2024-06-26 15:39:20.247181-05', '65', 'ADMISIONISTA AMERICAS CREAR ADMISION', 2, '[]', 64, 1);
+INSERT INTO django_admin_log VALUES (35, '2024-06-26 15:39:40.967407-05', '66', 'ADMISIONISTA AMERICAS RESPONSABLES', 1, '[{"added": {}}]', 64, 1);
+INSERT INTO django_admin_log VALUES (36, '2024-06-26 15:39:51.001807-05', '67', 'ADMISIONISTA AMERICAS ABONOS', 1, '[{"added": {}}]', 64, 1);
+INSERT INTO django_admin_log VALUES (37, '2024-06-26 15:39:57.831572-05', '68', 'ADMISIONISTA AMERICAS CAMBIO DE SERVICIO', 1, '[{"added": {}}]', 64, 1);
+INSERT INTO django_admin_log VALUES (38, '2024-06-26 15:40:02.959173-05', '69', 'ADMISIONISTA AMERICAS HABITACIONES', 1, '[{"added": {}}]', 64, 1);
+INSERT INTO django_admin_log VALUES (39, '2024-06-26 15:40:08.429088-05', '70', 'ADMISIONISTA AMERICAS AUTORIZACIONES', 1, '[{"added": {}}]', 64, 1);
+INSERT INTO django_admin_log VALUES (40, '2024-06-26 15:41:40.59426-05', '4', 'ADMISIONISTA AMERICAS', 1, '[{"added": {}}]', 65, 1);
+INSERT INTO django_admin_log VALUES (41, '2024-06-26 16:02:48.348333-05', '3', 'HISTORIA CLINICA KENEDY LABORATORIOS', 3, '', 67, 1);
+INSERT INTO django_admin_log VALUES (42, '2024-06-26 16:03:03.169844-05', '5', 'HISTORIA CLINICA KENEDY CAUSA EXTERNA', 3, '', 67, 1);
+INSERT INTO django_admin_log VALUES (43, '2024-06-26 16:03:03.196307-05', '4', 'HISTORIA CLINICA KENEDY DIAGNOSTICOS', 3, '', 67, 1);
+INSERT INTO django_admin_log VALUES (44, '2024-06-26 16:03:14.638826-05', '4', 'ADMISIONISTA AMERICAS CREAR ADMISION', 1, '[{"added": {}}]', 67, 1);
+INSERT INTO django_admin_log VALUES (45, '2024-06-26 16:03:25.056727-05', '5', 'ADMISIONISTA AMERICAS RESPONSABLES', 1, '[{"added": {}}]', 67, 1);
+INSERT INTO django_admin_log VALUES (46, '2024-06-26 16:03:31.715308-05', '6', 'ADMISIONISTA AMERICAS ABONOS', 1, '[{"added": {}}]', 67, 1);
+INSERT INTO django_admin_log VALUES (47, '2024-06-26 16:03:37.385598-05', '7', 'ADMISIONISTA AMERICAS CAMBIO DE SERVICIO', 1, '[{"added": {}}]', 67, 1);
+INSERT INTO django_admin_log VALUES (48, '2024-06-27 14:41:10.649498-05', '3', 'SEDE TOBERIN', 1, '[{"added": {}}]', 24, 1);
+INSERT INTO django_admin_log VALUES (49, '2024-06-27 15:06:11.846377-05', '3', 'HISTORIA CLINICA AMERICAS', 3, '', 65, 1);
+INSERT INTO django_admin_log VALUES (50, '2024-06-27 15:30:11.430735-05', '1', 'SubServiciosSedes object (1)', 1, '[{"added": {}}]', 26, 1);
+INSERT INTO django_admin_log VALUES (51, '2024-06-27 15:30:39.082248-05', '2', 'SubServiciosSedes object (2)', 1, '[{"added": {}}]', 26, 1);
+INSERT INTO django_admin_log VALUES (52, '2024-06-27 15:43:01.800161-05', '3', 'gonzalo bernal ferreira', 1, '[{"added": {}}]', 55, 1);
+INSERT INTO django_admin_log VALUES (53, '2024-06-27 15:44:55.127067-05', '1', 'ORTOPEDIA', 1, '[{"added": {}}]', 31, 1);
+INSERT INTO django_admin_log VALUES (54, '2024-06-27 15:45:01.634504-05', '2', 'NEUROCIRUGIA', 1, '[{"added": {}}]', 31, 1);
+INSERT INTO django_admin_log VALUES (55, '2024-06-27 15:45:06.812803-05', '3', 'ENDOCRINO', 1, '[{"added": {}}]', 31, 1);
+INSERT INTO django_admin_log VALUES (56, '2024-06-27 15:45:11.734082-05', '4', 'MEDICO GENERAL', 1, '[{"added": {}}]', 31, 1);
+INSERT INTO django_admin_log VALUES (57, '2024-06-27 15:45:16.807601-05', '5', 'GINECOLOGIA', 1, '[{"added": {}}]', 31, 1);
+INSERT INTO django_admin_log VALUES (58, '2024-06-27 15:45:38.516594-05', '1', 'EspecialidadesMedicos object (1)', 1, '[{"added": {}}]', 32, 1);
+INSERT INTO django_admin_log VALUES (59, '2024-06-27 15:52:37.055057-05', '1', 'PACIENTE COMUN', 1, '[{"added": {}}]', 15, 1);
+INSERT INTO django_admin_log VALUES (60, '2024-06-27 15:52:41.728355-05', '1', 'PACIENTE COMUN', 2, '[]', 15, 1);
+INSERT INTO django_admin_log VALUES (61, '2024-06-27 15:54:09.850791-05', '2', 'HABITANTE DE CALLE', 1, '[{"added": {}}]', 15, 1);
+INSERT INTO django_admin_log VALUES (62, '2024-06-27 15:54:12.152096-05', '2', 'HABITANTE DE CALLE', 2, '[]', 15, 1);
+INSERT INTO django_admin_log VALUES (63, '2024-06-27 15:54:24.864587-05', '3', 'RECLUIDO EN CENTRO', 1, '[{"added": {}}]', 15, 1);
+INSERT INTO django_admin_log VALUES (64, '2024-06-27 15:57:33.087754-05', '1', 'CENTRO LA MANUELITA BELTRAN', 1, '[{"added": {}}]', 17, 1);
+INSERT INTO django_admin_log VALUES (65, '2024-06-27 16:00:42.432957-05', '2', 'HABITANTE CONDICION NORMAL', 1, '[{"added": {}}]', 17, 1);
+INSERT INTO django_admin_log VALUES (66, '2024-06-27 16:01:18.114329-05', '1', 'ALBERTO BERNAL PACIENTE', 1, '[{"added": {}}]', 16, 1);
+INSERT INTO django_admin_log VALUES (67, '2024-06-27 16:39:59.200613-05', '1', 'HABITACION 101', 1, '[{"added": {}}]', 20, 1);
+INSERT INTO django_admin_log VALUES (68, '2024-06-27 16:40:01.642254-05', '1', 'HABITACION 101', 2, '[]', 20, 1);
+INSERT INTO django_admin_log VALUES (69, '2024-06-27 16:40:20.071947-05', '2', 'HABITACION 102', 1, '[{"added": {}}]', 20, 1);
+
+
+--
+-- TOC entry 4039 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('django_admin_log_id_seq', 69, true);
+
+
+--
+-- TOC entry 4040 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('django_content_type_id_seq', 67, true);
+
+
+--
+-- TOC entry 3853 (class 0 OID 7330020)
+-- Dependencies: 174
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO django_migrations VALUES (1, 'Administracion', '0001_initial', '2024-06-25 08:35:43.11754-05');
+INSERT INTO django_migrations VALUES (2, 'contenttypes', '0001_initial', '2024-06-25 08:35:43.196689-05');
+INSERT INTO django_migrations VALUES (3, 'auth', '0001_initial', '2024-06-25 08:35:43.537267-05');
+INSERT INTO django_migrations VALUES (4, 'admin', '0001_initial', '2024-06-25 08:35:43.643767-05');
+INSERT INTO django_migrations VALUES (5, 'admin', '0002_logentry_remove_auto_add', '2024-06-25 08:35:43.682017-05');
+INSERT INTO django_migrations VALUES (6, 'admin', '0003_logentry_add_action_flag_choices', '2024-06-25 08:35:43.715249-05');
+INSERT INTO django_migrations VALUES (7, 'clinico', '0001_initial', '2024-06-25 08:35:44.12981-05');
+INSERT INTO django_migrations VALUES (8, 'sitios', '0001_initial', '2024-06-25 08:35:44.476234-05');
+INSERT INTO django_migrations VALUES (9, 'usuarios', '0001_initial', '2024-06-25 08:35:44.679895-05');
+INSERT INTO django_migrations VALUES (10, 'planta', '0001_initial', '2024-06-25 08:35:44.789282-05');
+INSERT INTO django_migrations VALUES (11, 'admisiones', '0001_initial', '2024-06-25 08:35:44.856863-05');
+INSERT INTO django_migrations VALUES (12, 'admisiones', '0002_auto_20240625_0835', '2024-06-25 08:35:45.762057-05');
+INSERT INTO django_migrations VALUES (13, 'contenttypes', '0002_remove_content_type_name', '2024-06-25 08:35:45.859147-05');
+INSERT INTO django_migrations VALUES (14, 'auth', '0002_alter_permission_name_max_length', '2024-06-25 08:35:45.927527-05');
+INSERT INTO django_migrations VALUES (15, 'auth', '0003_alter_user_email_max_length', '2024-06-25 08:35:45.990493-05');
+INSERT INTO django_migrations VALUES (16, 'auth', '0004_alter_user_username_opts', '2024-06-25 08:35:46.032566-05');
+INSERT INTO django_migrations VALUES (17, 'auth', '0005_alter_user_last_login_null', '2024-06-25 08:35:46.121773-05');
+INSERT INTO django_migrations VALUES (18, 'auth', '0006_require_contenttypes_0002', '2024-06-25 08:35:46.155429-05');
+INSERT INTO django_migrations VALUES (19, 'auth', '0007_alter_validators_add_error_messages', '2024-06-25 08:35:46.198421-05');
+INSERT INTO django_migrations VALUES (20, 'auth', '0008_alter_user_username_max_length', '2024-06-25 08:35:46.269105-05');
+INSERT INTO django_migrations VALUES (21, 'auth', '0009_alter_user_last_name_max_length', '2024-06-25 08:35:46.335387-05');
+INSERT INTO django_migrations VALUES (22, 'contratacion', '0001_initial', '2024-06-25 08:35:46.423946-05');
+INSERT INTO django_migrations VALUES (23, 'contratacion', '0002_procedimientos_usuarioregistro', '2024-06-25 08:35:46.54444-05');
+INSERT INTO django_migrations VALUES (24, 'clinico', '0002_auto_20240625_0835', '2024-06-25 08:35:49.344858-05');
+INSERT INTO django_migrations VALUES (25, 'planta', '0002_auto_20240625_0835', '2024-06-25 08:35:49.724533-05');
+INSERT INTO django_migrations VALUES (26, 'seguridad', '0001_initial', '2024-06-25 08:35:50.096067-05');
+INSERT INTO django_migrations VALUES (27, 'seguridad', '0002_auto_20240625_0835', '2024-06-25 08:35:50.3699-05');
+INSERT INTO django_migrations VALUES (28, 'sessions', '0001_initial', '2024-06-25 08:35:50.454427-05');
+INSERT INTO django_migrations VALUES (29, 'sitios', '0002_auto_20240625_0835', '2024-06-25 08:35:51.428161-05');
+
+
+--
+-- TOC entry 4041 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('django_migrations_id_seq', 29, true);
+
+
+--
+-- TOC entry 3992 (class 0 OID 7331748)
+-- Dependencies: 313
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO django_session VALUES ('b8snhq6vjc8d3fghvfbmbul48kvntock', 'NmE0YjM1ZjZjMmQxMTdjMzhjZTQzZDMxZDhjMzI3MDYyNTgyNWEwNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1NGZiZWJhNmQyYzQ2MmE4YzBhMjc3ODQ0YmYyMTZkMDEyZGQ1M2Y5In0=', '2024-07-09 10:36:57.129866-05');
+INSERT INTO django_session VALUES ('yu75et7bs7dzsshp0yvbbj0evcqfb2vw', 'NmE0YjM1ZjZjMmQxMTdjMzhjZTQzZDMxZDhjMzI3MDYyNTgyNWEwNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1NGZiZWJhNmQyYzQ2MmE4YzBhMjc3ODQ0YmYyMTZkMDEyZGQ1M2Y5In0=', '2024-07-09 14:18:37.231794-05');
+INSERT INTO django_session VALUES ('tzzlt6dx4r3z394qp4xpcae2hoq853ef', 'NmE0YjM1ZjZjMmQxMTdjMzhjZTQzZDMxZDhjMzI3MDYyNTgyNWEwNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1NGZiZWJhNmQyYzQ2MmE4YzBhMjc3ODQ0YmYyMTZkMDEyZGQ1M2Y5In0=', '2024-07-11 14:40:34.463029-05');
+
+
+--
+-- TOC entry 3969 (class 0 OID 7330723)
+-- Dependencies: 290
+-- Data for Name: planta_tiposplanta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3965 (class 0 OID 7330705)
+-- Dependencies: 286
+-- Data for Name: planta_perfilesplanta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4042 (class 0 OID 0)
+-- Dependencies: 285
+-- Name: planta_perfilesplanta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('planta_perfilesplanta_id_seq', 1, false);
+
+
+--
+-- TOC entry 4043 (class 0 OID 0)
+-- Dependencies: 287
+-- Name: planta_planta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('planta_planta_id_seq', 3, true);
+
+
+--
+-- TOC entry 4044 (class 0 OID 0)
+-- Dependencies: 289
+-- Name: planta_tiposplanta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('planta_tiposplanta_id_seq', 1, false);
+
+
+--
+-- TOC entry 3975 (class 0 OID 7331590)
+-- Dependencies: 296
+-- Data for Name: seguridad_modulos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO seguridad_modulos VALUES (1, 'HISTORIA CLINICA', 'HCLI', '/IMG/HISTORIACLINICA.JPG', 'A');
+INSERT INTO seguridad_modulos VALUES (2, 'CITAS MEDICAS', 'CITA', '', 'A');
+INSERT INTO seguridad_modulos VALUES (3, 'FACTURACION', 'FACT', '', 'A');
+INSERT INTO seguridad_modulos VALUES (4, 'ADMISIONES', 'ADMI', '/IMG/ADMISIONESFINAL.JPG', 'A');
+INSERT INTO seguridad_modulos VALUES (5, 'ENFERMERIA', 'ENFE', '/IMG/ENFERMERIA.JPG', 'A');
+INSERT INTO seguridad_modulos VALUES (6, 'CUENTAS MEDICAS', 'CUEN', '', 'A');
+INSERT INTO seguridad_modulos VALUES (7, 'TRIAGE', 'TRIA', '/IMG/TRIAGE.JPG', 'A');
+INSERT INTO seguridad_modulos VALUES (8, 'FARMACIA', 'FARM', '', 'A');
+INSERT INTO seguridad_modulos VALUES (9, 'COMPRAS', 'COMP', '', 'A');
+INSERT INTO seguridad_modulos VALUES (10, 'INVENTARIOS', 'INVE', '', 'A');
+INSERT INTO seguridad_modulos VALUES (11, 'APOYO TERAPEUTICO', 'APOY', '', 'A');
+INSERT INTO seguridad_modulos VALUES (12, 'SEGURIDAD', 'SEGU', '', 'A');
+INSERT INTO seguridad_modulos VALUES (13, 'PARAMETRIZACION', 'PARA', '', 'A');
+INSERT INTO seguridad_modulos VALUES (14, 'REPORTES', 'REP', '/img/REPORTES.JPG', 'A');
+
+
+--
+-- TOC entry 4045 (class 0 OID 0)
+-- Dependencies: 295
+-- Name: seguridad_modulos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('seguridad_modulos_id_seq', 14, true);
+
+
+--
+-- TOC entry 3977 (class 0 OID 7331598)
+-- Dependencies: 298
+-- Data for Name: seguridad_moduloselementos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO seguridad_moduloselementos VALUES (1, 'TEMPLATE', 'A');
+INSERT INTO seguridad_moduloselementos VALUES (2, 'TAB', 'A');
+INSERT INTO seguridad_moduloselementos VALUES (3, 'BOTON', 'A');
+
+
+--
+-- TOC entry 4046 (class 0 OID 0)
+-- Dependencies: 297
+-- Name: seguridad_moduloselementos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('seguridad_moduloselementos_id_seq', 3, true);
+
+
+--
+-- TOC entry 3979 (class 0 OID 7331606)
+-- Dependencies: 300
+-- Data for Name: seguridad_moduloselementosdef; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO seguridad_moduloselementosdef VALUES (1, 'panelClinico', 'panelClinico', 'clinico/panelClinico.html', 'A', 1, 1);
+INSERT INTO seguridad_moduloselementosdef VALUES (2, 'INGRESOS CLINICOS', 'INGRESOS CLINICOS', '/', 'A', 2, 4);
+INSERT INTO seguridad_moduloselementosdef VALUES (3, 'CREAR ADMISION', 'CREAR ADMISION', '/', 'A', 3, 4);
+INSERT INTO seguridad_moduloselementosdef VALUES (4, 'RESPONSABLES', 'RESPONSABLES', '/', 'A', 3, 4);
+INSERT INTO seguridad_moduloselementosdef VALUES (5, 'ABONOS', 'ABONOS', '/', 'A', 3, 4);
+INSERT INTO seguridad_moduloselementosdef VALUES (6, 'CAMBIO DE SERVICIO', 'CAMBIO DE SERVICIO', '/', 'A', 3, 4);
+INSERT INTO seguridad_moduloselementosdef VALUES (7, 'HABITACIONES', 'HABITACIONES', '/', 'A', 3, 4);
+INSERT INTO seguridad_moduloselementosdef VALUES (8, 'AUTORIZACIONES', 'AUTORIZACIONES', '/', 'A', 3, 4);
+INSERT INTO seguridad_moduloselementosdef VALUES (9, 'LABORATORIOS', 'Ordenar Laboratorios', '/Temporal', 'A', 2, 1);
+INSERT INTO seguridad_moduloselementosdef VALUES (10, 'RADIOLOGIA', 'Ordenes de radiologia', '/Temporal', 'A', 2, 1);
+INSERT INTO seguridad_moduloselementosdef VALUES (11, 'TERAPIAS', 'Ordenes Terapias', '/Temporal', 'A', 2, 1);
+INSERT INTO seguridad_moduloselementosdef VALUES (12, 'DIAGNOSTICOS', 'Diagnosticos al paciente', '/Temporal', 'A', 2, 1);
+INSERT INTO seguridad_moduloselementosdef VALUES (13, 'PROCEDIMIENTOS NO QX', 'Ordenes procedimientos Qx', '/Temporal', 'A', 2, 1);
+INSERT INTO seguridad_moduloselementosdef VALUES (14, 'MEDICAMENTOS', 'Formulacion de medicamentos', '/Temporal', 'A', 2, 1);
+INSERT INTO seguridad_moduloselementosdef VALUES (15, 'CAUSA EXTERNA', 'Causa externa', '/Temporal', 'A', 2, 1);
+INSERT INTO seguridad_moduloselementosdef VALUES (16, 'CIRUGIAS', 'Ordenes de Cirugia', '/Temporal', 'A', 2, 1);
+
+
+--
+-- TOC entry 4047 (class 0 OID 0)
+-- Dependencies: 299
+-- Name: seguridad_moduloselementosdef_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('seguridad_moduloselementosdef_id_seq', 16, true);
+
+
+--
+-- TOC entry 3981 (class 0 OID 7331614)
+-- Dependencies: 302
+-- Data for Name: seguridad_perfiles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO seguridad_perfiles VALUES (1, 'MEDICO', 'A');
+INSERT INTO seguridad_perfiles VALUES (2, 'ENFERMERA JEFE', 'A');
+INSERT INTO seguridad_perfiles VALUES (3, 'AUXILIAR DE ENFERMERIA', 'A');
+INSERT INTO seguridad_perfiles VALUES (4, 'ADMISIONISTA', 'A');
+INSERT INTO seguridad_perfiles VALUES (5, 'FACTURADOR', 'A');
+INSERT INTO seguridad_perfiles VALUES (6, 'GLOSAS', 'A');
+INSERT INTO seguridad_perfiles VALUES (7, 'CUENTAS MEDICAS', 'A');
+INSERT INTO seguridad_perfiles VALUES (8, 'COMPRAS', 'A');
+INSERT INTO seguridad_perfiles VALUES (9, 'INVENTARIOS', 'A');
+INSERT INTO seguridad_perfiles VALUES (10, 'APOYO TERAPEUTICO', 'A');
+
+
+--
+-- TOC entry 4048 (class 0 OID 0)
+-- Dependencies: 301
+-- Name: seguridad_perfiles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('seguridad_perfiles_id_seq', 1, false);
+
+
+--
+-- TOC entry 3983 (class 0 OID 7331622)
+-- Dependencies: 304
+-- Data for Name: seguridad_perfilesclinica; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO seguridad_perfilesclinica VALUES (3, 'HISTORIA CLINICA KENEDY', 'A', 1, 1);
+INSERT INTO seguridad_perfilesclinica VALUES (13, 'HISTORIA CLINICA AMERICAS', 'A', 1, 2);
+INSERT INTO seguridad_perfilesclinica VALUES (6, 'ADMISIONISTA KENEDY', 'A', 4, 1);
+INSERT INTO seguridad_perfilesclinica VALUES (4, 'ENFERMERA JEFE KENEDY', 'A', 5, 1);
+INSERT INTO seguridad_perfilesclinica VALUES (12, 'APOYO TERAPEUTICO KENEDY', 'A', 11, 1);
+INSERT INTO seguridad_perfilesclinica VALUES (11, 'INVENTARIOS KENEDY', 'A', 10, 1);
+INSERT INTO seguridad_perfilesclinica VALUES (10, 'COMPRAS KENEDY', 'A', 9, 1);
+INSERT INTO seguridad_perfilesclinica VALUES (9, 'CUENTAS MEDICAS KENEDY', 'A', 3, 1);
+INSERT INTO seguridad_perfilesclinica VALUES (8, 'GLOSAS KENEDY', 'A', 3, 1);
+INSERT INTO seguridad_perfilesclinica VALUES (7, 'FACTURADOR KENEDY', 'A', 3, 1);
+INSERT INTO seguridad_perfilesclinica VALUES (5, 'AUXILIAR DE ENFERMERIA KENEDY', 'A', 5, 1);
+INSERT INTO seguridad_perfilesclinica VALUES (14, 'ADMISIONISTA AMERICAS', 'A', 4, 2);
+
+
+--
+-- TOC entry 4049 (class 0 OID 0)
+-- Dependencies: 303
+-- Name: seguridad_perfilesclinica_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('seguridad_perfilesclinica_id_seq', 14, true);
+
+
+--
+-- TOC entry 3985 (class 0 OID 7331630)
+-- Dependencies: 306
+-- Data for Name: seguridad_perfilesclinicaopciones; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (49, 'A', 1, 3);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (50, 'A', 2, 6);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (51, 'A', 3, 6);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (52, 'A', 4, 6);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (53, 'A', 5, 6);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (54, 'A', 6, 6);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (55, 'A', 6, 6);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (56, 'A', 6, 6);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (57, 'A', 8, 6);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (58, 'A', 14, 3);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (59, 'A', 9, 3);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (60, 'A', 12, 3);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (61, 'A', 10, 3);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (62, 'A', 16, 3);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (63, 'A', 15, 3);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (64, 'A', 11, 3);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (65, 'A', 3, 14);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (66, 'A', 4, 14);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (67, 'A', 5, 14);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (68, 'A', 6, 14);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (69, 'A', 7, 14);
+INSERT INTO seguridad_perfilesclinicaopciones VALUES (70, 'A', 8, 14);
+
+
+--
+-- TOC entry 4050 (class 0 OID 0)
+-- Dependencies: 305
+-- Name: seguridad_perfilesclinicaopciones_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('seguridad_perfilesclinicaopciones_id_seq', 70, true);
+
+
+--
+-- TOC entry 3987 (class 0 OID 7331638)
+-- Dependencies: 308
+-- Data for Name: seguridad_perfilesgralusu; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO seguridad_perfilesgralusu VALUES (1, 'A', 6, 1);
+INSERT INTO seguridad_perfilesgralusu VALUES (2, 'A', 3, 1);
+INSERT INTO seguridad_perfilesgralusu VALUES (4, 'A', 14, 2);
+
+
+--
+-- TOC entry 4051 (class 0 OID 0)
+-- Dependencies: 307
+-- Name: seguridad_perfilesgralusu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('seguridad_perfilesgralusu_id_seq', 4, true);
+
+
+--
+-- TOC entry 3989 (class 0 OID 7331646)
+-- Dependencies: 310
+-- Data for Name: seguridad_perfilesopciones; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO seguridad_perfilesopciones VALUES (3, 'A', 1, 1);
+INSERT INTO seguridad_perfilesopciones VALUES (5, 'A', 2, 4);
+INSERT INTO seguridad_perfilesopciones VALUES (6, 'A', 3, 4);
+INSERT INTO seguridad_perfilesopciones VALUES (7, 'A', 4, 4);
+INSERT INTO seguridad_perfilesopciones VALUES (8, 'A', 5, 4);
+INSERT INTO seguridad_perfilesopciones VALUES (9, 'A', 6, 4);
+INSERT INTO seguridad_perfilesopciones VALUES (10, 'A', 7, 4);
+INSERT INTO seguridad_perfilesopciones VALUES (11, 'A', 8, 4);
+
+
+--
+-- TOC entry 4052 (class 0 OID 0)
+-- Dependencies: 309
+-- Name: seguridad_perfilesopciones_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('seguridad_perfilesopciones_id_seq', 1, false);
+
+
+--
+-- TOC entry 3991 (class 0 OID 7331654)
+-- Dependencies: 312
+-- Data for Name: seguridad_perfilesusu; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO seguridad_perfilesusu VALUES (1, 'S', 'A', 49, 1);
+INSERT INTO seguridad_perfilesusu VALUES (2, 'S', 'A', 58, 1);
+INSERT INTO seguridad_perfilesusu VALUES (4, 'S', 'A', 65, 2);
+INSERT INTO seguridad_perfilesusu VALUES (5, 'S', 'A', 66, 2);
+INSERT INTO seguridad_perfilesusu VALUES (6, 'S', 'A', 67, 2);
+INSERT INTO seguridad_perfilesusu VALUES (7, 'S', 'A', 68, 2);
+
+
+--
+-- TOC entry 4053 (class 0 OID 0)
+-- Dependencies: 311
+-- Name: seguridad_perfilesusu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('seguridad_perfilesusu_id_seq', 7, true);
+
+
+--
+-- TOC entry 4054 (class 0 OID 0)
+-- Dependencies: 259
+-- Name: sitios_centros_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sitios_centros_id_seq', 2, true);
+
+
+--
+-- TOC entry 4055 (class 0 OID 0)
+-- Dependencies: 261
+-- Name: sitios_ciudades_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sitios_ciudades_id_seq', 6, true);
+
+
+--
+-- TOC entry 4056 (class 0 OID 0)
+-- Dependencies: 263
+-- Name: sitios_departamentos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sitios_departamentos_id_seq', 4, true);
+
+
+--
+-- TOC entry 4057 (class 0 OID 0)
+-- Dependencies: 265
+-- Name: sitios_dependencias_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sitios_dependencias_id_seq', 2, true);
+
+
+--
+-- TOC entry 4058 (class 0 OID 0)
+-- Dependencies: 267
+-- Name: sitios_dependenciasactual_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sitios_dependenciasactual_id_seq', 1, false);
+
+
+--
+-- TOC entry 4059 (class 0 OID 0)
+-- Dependencies: 269
+-- Name: sitios_dependenciastipo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sitios_dependenciastipo_id_seq', 2, true);
+
+
+--
+-- TOC entry 3951 (class 0 OID 7330574)
+-- Dependencies: 272
+-- Data for Name: sitios_historialdependencias; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4060 (class 0 OID 0)
+-- Dependencies: 271
+-- Name: sitios_historialdependencias_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sitios_historialdependencias_id_seq', 1, false);
+
+
+--
+-- TOC entry 4061 (class 0 OID 0)
+-- Dependencies: 273
+-- Name: sitios_sedesclinica_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sitios_sedesclinica_id_seq', 3, true);
+
+
+--
+-- TOC entry 4062 (class 0 OID 0)
+-- Dependencies: 275
+-- Name: sitios_serviciossedes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sitios_serviciossedes_id_seq', 2, true);
+
+
+--
+-- TOC entry 4063 (class 0 OID 0)
+-- Dependencies: 277
+-- Name: sitios_subserviciossedes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sitios_subserviciossedes_id_seq', 2, true);
+
+
+--
+-- TOC entry 4064 (class 0 OID 0)
+-- Dependencies: 279
+-- Name: usuarios_tiposdocumento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('usuarios_tiposdocumento_id_seq', 4, true);
+
+
+--
+-- TOC entry 4065 (class 0 OID 0)
+-- Dependencies: 281
+-- Name: usuarios_tiposusuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('usuarios_tiposusuario_id_seq', 3, true);
+
+
+--
+-- TOC entry 4066 (class 0 OID 0)
+-- Dependencies: 283
+-- Name: usuarios_usuarios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('usuarios_usuarios_id_seq', 1, true);
+
+
+-- Completed on 2024-06-28 10:54:32
+
+--
+-- PostgreSQL database dump complete
+--
+
