@@ -17,7 +17,6 @@ class Departamentos(models.Model):
     departamentoCodigoDian = models.CharField(max_length=15, default ='')
     pais = models.ForeignKey('sitios.Paises', blank=True, null=True, editable=True, on_delete=models.PROTECT)
     fechaRegistro = models.DateTimeField(default=now, editable=False)
-  #  usuarioRegistro = models.ForeignKey('usuarios.Usuarios', default=1, on_delete=models.PROTECT, null=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
@@ -28,7 +27,6 @@ class Ciudades(models.Model):
         departamentos = models.ForeignKey('sitios.Departamentos', blank=True,null= True, editable=True, on_delete=models.PROTECT,  related_name = 'ciudades')
         nombre = models.CharField(max_length=50)
         fechaRegistro = models.DateTimeField(default=now, editable=False)
-   #     usuarioRegistro = models.ForeignKey('usuarios.Usuarios', default=1, on_delete=models.PROTECT, null=True)
         estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
         def __str__(self):
@@ -45,8 +43,8 @@ class SedesClinica(models.Model):
     direccion = models.CharField(max_length=50)
     telefono = models.CharField(max_length=20)
     contacto = models.CharField(max_length=50)
+    nit      = models.CharField(max_length=50  , blank=False,null= False, editable=True, default='0')
     fechaRegistro = models.DateTimeField(default=now, editable=False)
- #   usuarioRegistro = models.ForeignKey('usuarios.Usuarios', default=1, on_delete=models.PROTECT, null=True)
     estadoReg = models.CharField(max_length=1,default='A', editable=False)
 
     def __str__(self):
@@ -69,7 +67,6 @@ class Centros(models.Model):
         telefono = models.CharField(max_length=20)
         contacto = models.CharField(max_length=50)
         fechaRegistro = models.DateTimeField(default=now, editable=False)
-     #   usuarioRegistro = models.ForeignKey('usuarios.Usuarios', default=1, on_delete=models.PROTECT, null=True)
         estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
 
@@ -158,7 +155,6 @@ class Dependencias(models.Model):
     fechaLiberacion = models.DateTimeField(default=now,blank=True,null= True, editable=True)
     disponibilidad = models.CharField(max_length=1, default='L', choices=TIPO_CHOICES, )
     fechaRegistro = models.DateTimeField(default=now, editable=False)
-   # usuarioRegistro = models.ForeignKey('usuarios.Usuarios', default=1, on_delete=models.PROTECT, null=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     #class Meta:

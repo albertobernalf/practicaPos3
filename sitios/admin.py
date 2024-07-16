@@ -8,10 +8,10 @@ from sitios.models import Departamentos, Ciudades, Centros, SedesClinica, Depend
 class sedesClinicaAdmin(admin.ModelAdmin):
 
 
-    list_display = ("id","departamentos","ciudades" , "nombre","direccion", "telefono", "contacto","fechaRegistro")
-    search_fields = ("id","departamentos","ciudades", "nombre","direccion", "telefono", "contacto","fechaRegistro")
+    list_display = ("id","nit","departamentos","ciudades" , "nombre","direccion", "telefono", "contacto","fechaRegistro")
+    search_fields = ("id","nit","departamentos","ciudades", "nombre","direccion", "telefono", "contacto","fechaRegistro")
     #Filtrar
-    list_filter =('nombre', 'ciudades')
+    list_filter =('nombre', "nit", 'ciudades')
 
 
 class CiudadesAdmin(admin.ModelAdmin):

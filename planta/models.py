@@ -12,7 +12,6 @@ class TiposPlanta(models.Model):
     id=models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=30)
     fechaRegistro = models.DateTimeField(default=now, editable=False)
-  #  usuarioRegistro = models.ForeignKey('usuarios.Usuarios', default=1, on_delete=models.PROTECT, null=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
@@ -52,7 +51,6 @@ class Planta(models.Model):
     telefono  = models.CharField(max_length=20)
     imagen = models.ImageField(upload_to="fotos", null=True)
     fechaRegistro = models.DateTimeField(default=now, editable=False)
-  #  usuarioRegistro = models.ForeignKey('usuarios.Usuarios', default=1, on_delete=models.PROTECT, null=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):

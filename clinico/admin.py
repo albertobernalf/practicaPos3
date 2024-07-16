@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 
 from clinico.models import Medicos, Especialidades , TiposExamen, Examenes, Historia, HistoriaExamenes, HistoriaResultados, EspecialidadesMedicos, Servicios, Diagnosticos, EstadosSalida,   EstadoExamenes,  Enfermedades, TiposFolio, TiposAntecedente, Antecedentes ,  CausasExterna, ViasIngreso , TiposIncapacidad, HistoriaExamenesCabezote, HistorialAntecedentes, TiposDiagnostico, HistorialDiagnosticos, Interconsultas, EstadosInterconsulta, HistorialDiagnosticosCabezote
-from clinico.models import ViasEgreso, RevisionSistemas, NivelesClinica, TiposTriage, TurnosEnfermeria, TiposSalidas, Eps, TiposCotizante,  Regimenes, Recomendaciones, Hallazgos, NivelesRegimenes
+from clinico.models import ViasEgreso, RevisionSistemas, NivelesClinica, TiposTriage, TurnosEnfermeria, TiposSalidas, Eps, TiposCotizante,  Regimenes, Recomendaciones, Hallazgos, NivelesRegimenes, Ips
 
 @admin.register(Servicios)
 class serviciosAdmin(admin.ModelAdmin):
@@ -308,3 +308,12 @@ class nivelesRegimenesAdmin(admin.ModelAdmin):
             search_fields = ("id","nombre", "regimen","porCuotaModeradora","porCopago","porTopeEve","porTopeAnual")
             # Filtrar
             list_filter = ("id", "nombre","regimen","porCuotaModeradora","porCopago","porTopeEve","porTopeAnual")
+
+
+@admin.register(Ips)
+class ipssAdmin(admin.ModelAdmin):
+
+    list_display = ("id", "nombre")
+    search_fields =("id", "nombre")
+    # Filtrar
+    list_filter =("id", "nombre")

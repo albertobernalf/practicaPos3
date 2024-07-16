@@ -6,6 +6,7 @@
 
 <link rel="stylesheet" type="text/css" href={% static 'css/panelAdmisiones.css' %}>
 <link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+  <link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
 <script src={% static 'js/panelTabsAdmisiones.js' %} defer>         </script>
 <script src="https://kit.fontawesome.com/5d0337a043.js" crossorigin="anonymous"></script>
 
@@ -14,52 +15,31 @@ th ,tr{
   border-style:solid;
   border-color: #96D4D4;
 }
-
-
-
 </style>
 
 <div class="wrap">
     <ul class="tabs">
         <li><a href="#Ingresos"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
             Ingresos Clinicos </a></li>
+        <li><a href="#CrearAdmision"><span class="fa-solid fa-user-doctor-message"></span> <span
+                class="tab-text"> </span> Crear Admision </a></li>
         <li><a href="#IngresosTriage"><span class="fa-solid fa-user-doctor-message"></span> <span
                 class="tab-text"> </span> Ingresos Triage </a></li>
         <li><a href="#Furips"><span class="fa-solid fa-user-doctor-message"></span> <span
                 class="tab-text"> </span> Furips </a></li>
+        <li><a href="#Autorizaciones"><span class="fa-solid fa-user-doctor-message"></span> <span
+                class="tab-text"> </span> Autorizaciones </a></li>
     </ul>
 </div>
 
-
 {% endblock %}
-
 
 {% block content %}
 
-<input type="hidden" id="username" name="username" value = "{{Username}}">
-<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
-<input type="hidden" id="numreporte" name="numreporte" value = "{{numreporte}}">
-<input type="hidden" id="grupo" name="grupo" value = "{{Grupo}}">
-<input type="hidden" id="subGrupo" name="subGrupo" value = "{{SubGrupo}}">
-<!--  Estos si de la Aplixcacion bse -->
-
-
-<input type="hidden" id="sede" name="sede" value = "{{Sede}}">
-<input type="hidden" id="documento" name="documento" value = "{{Documento}}">
-<input type="hidden" id="nombreSede" name="nombreSede" value = "{{NombreSede}}">
-<input type="hidden" id="profesional" name="profesional" value = "{{Profesional}}">
-<input type="hidden" id="permisosGrales" name="permisosGrales" value = "{{PermisosGrales}}">
-<input type="hidden" id="permisosDetalle" name="permisosDetalle" value = "{{PermisosDetalle}}">
-<input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
-
-
-
 <div class="secciones">
     <article id="Ingresos">
-
         <!-- Inicioo Table -->
-
-        <center><h3>Ingresos Pacientes</h3></center>
+        <center><h4>Ingresos Pacientes</h4></center>
 
              <div class="row justify-content-center">
 
@@ -76,6 +56,24 @@ th ,tr{
                                 value="MJ1CwN7LHRoBZUnyQoPpHBnb4M3PwGYmsLJeNsN92l41zY9ZaUPztrhcMWyUTHxc">
                             <div class="row justify-content-center">
                             </div>
+
+
+                        <input type="hidden" id="username" name="username" value = "{{Username}}">
+                        <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
+                        <input type="hidden" id="numreporte" name="numreporte" value = "{{numreporte}}">
+                        <input type="hidden" id="grupo" name="grupo" value = "{{Grupo}}">
+                        <input type="hidden" id="subGrupo" name="subGrupo" value = "{{SubGrupo}}">
+                        <!--  Estos si de la Aplixcacion bse -->
+
+
+                        <input type="hidden" id="sede" name="sede" value = "{{Sede}}">
+                        <input type="hidden" id="documento" name="documento" value = "{{Documento}}">
+                        <input type="hidden" id="nombreSede" name="nombreSede" value = "{{NombreSede}}">
+                        <input type="hidden" id="profesional" name="profesional" value = "{{Profesional}}">
+                        <input type="hidden" id="permisosGrales" name="permisosGrales" value = "{{PermisosGrales}}">
+                        <input type="hidden" id="permisosDetalle" name="permisosDetalle" value = "{{PermisosDetalle}}">
+                        <input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
+
 
                             <div class="row justify-content-center">
                                 <div class="form-group">
@@ -120,6 +118,8 @@ th ,tr{
 
                                     <input type="text" id="busPaciente" name="busPaciente"></input>
 
+                                    <!-- Que pasa si meto dos de abajo aquip -->
+
 
                                 </div>
 
@@ -128,11 +128,12 @@ th ,tr{
                             <div class="row justify-content-center">
 
                                 <div class="form-group">
+
                                     <label class="required" for="busDesde">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Desde:&nbsp;&nbsp;&nbsp;</label>
 
                                     <input type="datetime-local" id="busDesde" name="busDesde"></input>
 
-                                    <label class="required" for="busHasta"> &nbsp;&nbsp;&nbsp;Hasta:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                   <label class="required" for="busHasta"> &nbsp;&nbsp;&nbsp;Hasta:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 
                                     <input type="datetime-local" id="busHasta" name="busHasta"></input>
 
@@ -168,7 +169,7 @@ th ,tr{
 
 
                             <div class="submit-row">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="submit" value="BUSCAR PACIENTES">
                             </div>
                         </form>
@@ -318,6 +319,12 @@ th ,tr{
 
                                         </div>
 
+                                        <div class="form-group">
+                                            <label for="fechaNacio" class="col-form-label">Documento:</label>
+                                            <input type="datetime-local" class="form-control" id="fechaNacio" name="fechaNacio" value="">
+                                        </div>
+
+
                                          <div class="form-group">
                                             <label for="departamentos" class="col-form-label">Departamento:</label>
 
@@ -330,6 +337,35 @@ th ,tr{
                                             </select>
 
                                         </div>
+
+
+                                        <div class="form-group">
+                                            <label for="municipios" class="col-form-label">Municipio:</label>
+
+
+                                            <select class="form-control" id="municipios" name="municipios">
+                                                {% for municipios in Municipios %}
+                                                <option value="{{municipios.id}}"> {{municipios.nombre}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="localidades" class="col-form-label">Localidad:</label>
+
+
+                                            <select class="form-control" id="localidades" name="localidades">
+                                                {% for localidades in Localidades %}
+                                                <option value="{{localidades.id}}"> {{localidades.nombre}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+
+                                        </div>
+
+
 
                                          <div class="form-group">
                                             <label for="ciudades" class="col-form-label">Ciudad:</label>
@@ -362,6 +398,36 @@ th ,tr{
                                                    value="">
                                         </div>
 
+                                        <div class="form-group">
+                                            <label for="estadoCivil" class="col-form-label">Estado Civil:</label>
+
+
+                                            <select class="form-control" id="estadoCivil" name="estadoCivil">
+                                                {% for estadoCivil in EstadoCivil %}
+                                                <option value="{{estadoCivil.id}}"> {{estadoCivil.nombre}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="ocupaciones" class="col-form-label">Ocupacion:</label>
+
+
+                                            <select class="form-control" id="ocupaciones" name="ocupaciones">
+                                                {% for ocupaciones in Ocupaciones %}
+                                                <option value="{{ocupaciones.id}}"> {{ocupaciones.nombre}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="correo" class="col-form-label">Correo:</label>
+                                            <input type="text" class="form-control" id="correo" name="correo" value="">
+                                        </div>
 
                                         <div class="form-group">
                                             <label for="centrosc" class="col-form-label">Centros:</label>
@@ -426,7 +492,7 @@ th ,tr{
                                 <input type="hidden" id="Sede" name="Sede" value="{{Sede}}">
                                 <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
                                 <input type="text" id="documento" name="documento" value = "{{Documento}}">
-                                <input type="hidden" id="Username" name="Username" value="{{Username}}">
+                                <input type="hidden" id="username" name="username" value="{{Username}}">
                                 <input type="hidden" id="Username_id" name="Username_id" value="{{Username_id}}">
                                 <input type="hidden" id="Profesional" name="Profesional" value="{{Profesional}}">
                                 <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
@@ -653,6 +719,62 @@ th ,tr{
                                         </select>
                                     </div>
 
+                                    <div class="form-group col-md-2 ">
+
+                                        <label for="empresas" class="col-form-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Empresa:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <select class="form-control" id="empresas" name="empresas" required>
+                                            {% for empresas in Empresas %}
+                                            <option value="{{empresas.id}}"> {{empresas.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-2 ">
+
+                                        <label for="acompanantes" class="col-form-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tipos
+                                            Acompañante:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <select class="form-control" id="acompanantes" name="acompanantes" required>
+                                            {% for acompanantes in Acompanantes %}
+                                            <option value="{{acompanantes.id}}"> {{acompanantes.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-2 ">
+
+                                        <label for="responsables" class="col-form-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                   Responsable:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <select class="form-control" id="responsables" name="responsables" required>
+                                            {% for responsables in Responsables %}
+                                            <option value="{{responsables.id}}"> {{responsables.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                     <div class="form-group col-md-2 ">
+                                         <label for="remitido" class="col-form-label">&nbsp;&nbsp;&nbsp;remitido:                                         &nbsp;&nbsp;&nbsp;</label>
+                                         <input type="text" class="form-control" id="remitido" name="remitido" value="">
+                                     </div>
+
+                                    <div class="form-group col-md-4 ">
+
+                                        <label for="ips" class="col-form-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IPS:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <select class="form-control" id="ips" name="ips" required>
+                                            {% for ips in Ips %}
+                                            <option value="{{ips.id}}"> {{ips.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                     <div class="form-group col-md-4 ">
+                                        <label for="numManilla" class="col-form-label">&nbsp;&nbsp;&nbsp;Numero manilla:                                         &nbsp;&nbsp;&nbsp;</label>
+                                             <input type="text" class="form-control" id="numManilla" name="numManilla" value="">
+                                     </div>
+
+
                                 </div>
 
 
@@ -678,7 +800,7 @@ th ,tr{
                                 <input type="hidden" id="Sede" name="Sede" value="{{Sede}}">
                                 <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
                                 <input type="hidden" id="Perfil" name="Perfil" value="{{Perfil}}">
-                                <input type="hidden" id="Username" name="Username" value="{{Username}}">
+                                <input type="hidden" id="username" name="username" value="{{Username}}">
                                 <input type="hidden" id="Username_id" name="Username_id" value="{{Username_id}}">
                                 <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
                                 <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
@@ -756,8 +878,6 @@ th ,tr{
 
 <div class="wrap">
     <ul class="tabs">
-        <li><a href="#CrearAdmision"><span class="fa-solid fa-user-doctor-message"></span> <span
-                class="tab-text"> </span> Crear Admision </a></li>
         <li><a href="#Responsables"><span class="fa-solid fa-user-doctor-message"></span> <span
                 class="tab-text"> </span> Responsables </a></li>
         <li><a href="#Abonos"><span class="fa-solid fa-user-doctor-message"></span> <span
@@ -766,8 +886,6 @@ th ,tr{
                 class="tab-text"> </span> Cambio de sercicio </a></li>
         <li><a href="#Habitaciones"><span class="fa-solid fa-user-doctor-message"></span> <span
                 class="tab-text"> </span> Habitaciones </a></li>
-        <li><a href="#Autorizaciones"><span class="fa-solid fa-user-doctor-message"></span> <span
-                class="tab-text"> </span> Autorizaciones </a></li>
     </ul>
 </div>
 

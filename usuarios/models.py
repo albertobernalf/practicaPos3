@@ -14,7 +14,6 @@ class TiposDocumento(models.Model):
     nombre = models.CharField(max_length=50)
     tiposDocCodigoDian = models.CharField(max_length=15, default='')
     fechaRegistro = models.DateTimeField(default=now, editable=False)
-   # usuarioRegistro = models.ForeignKey('usuarios.Usuarios', default=1, on_delete=models.PROTECT, null=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
 
@@ -25,7 +24,6 @@ class TiposUsuario(models.Model):
     id=models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50)
     fechaRegistro = models.DateTimeField(default=now, editable=False)
- #   usuarioRegistro = models.ForeignKey('usuarios.Usuarios', default=1, on_delete=models.PROTECT, null=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
 
@@ -64,7 +62,6 @@ class Usuarios(models.Model):
     imagen = models.ImageField(upload_to="fotos", null=True)
 
     fechaRegistro = models.DateTimeField(default=now, editable=False)
-   # usuarioRegistro = models.ForeignKey('planta.Planta', default=1, on_delete=models.PROTECT, null=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):

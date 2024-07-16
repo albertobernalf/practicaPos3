@@ -54,6 +54,9 @@ INSTALLED_APPS = [
     'camara',
     'seguridad',
     'basicas',
+    'facturacion',
+    'autorizaciones',
+    'terapeutico',
 ]
 
 MIDDLEWARE = [

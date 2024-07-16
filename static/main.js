@@ -74,6 +74,14 @@ function AUsuario()
 	 alert("direccion = " +  direccion);
 	var telefono = document.getElementById("telefono").value;
 	var contacto = document.getElementById("contacto").value;
+	var municipio = document.getElementById("municipios").value;
+	var localidad = document.getElementById("localidades").value;
+	var estadoCivil = document.getElementById("estadoCivil").value;
+	var ocupacion = document.getElementById("ocupaciones").value;
+	var correo = document.getElementById("correo").value;
+	var fechaNacio = document.getElementById("fechaNacio").value;
+	alert("fechaNacio = " + fechaNacio);
+
 	var centrosc = document.getElementById("centrosc").value;
 	var tiposUsuario = document.getElementById("tiposUsuario").value;
 	var centrosC_id = document.getElementById("centrosc").value;
@@ -84,9 +92,9 @@ function AUsuario()
 	$.ajax({
 		type: 'POST',
     	url: '/guardarUsuariosModal/',
-		data: {'tipoDoc':tipoDoc,'documento':documento,'nombre':nombre,'genero':genero,'departamentos':departamentos, 'ciudades':ciudades,'direccion':direccion,'telefono':telefono, 'contacto':contacto, "centrosC_id":centrosC_id, 'tiposUsuario':tiposUsuario},
-		success: function (respuesta) {
+		data: {'tipoDoc':tipoDoc,'documento':documento,'nombre':nombre,'genero':genero,'fechaNacio':fechaNacio, 'departamentos':departamentos, 'ciudades':ciudades,'direccion':direccion,'telefono':telefono, 'contacto':contacto, "centrosC_id":centrosC_id, 'tiposUsuario':tiposUsuario, 'municipios':municipio,'localidades':localidad, 'estadoCivil':estadoCivil,'ocupaciones':ocupacion, 'correo':correo},
 
+		success: function (respuesta) {
 
 			$('#usuariosModal').modal().hide();
 
@@ -95,7 +103,8 @@ function AUsuario()
          //    document.getElementById("dependenciasIngreso").value = document.getElementById("bakdependenciasIngreso").value;
              document.getElementById("tipoDoc").value = document.getElementById("baktipoDoc").value;
              document.getElementById("busDocumentoSel").value = document.getElementById("bakbusDocumentoSel").value;
-             document.getElementById("fechaIngreso").value = document.getElementById("bakfechaIngreso");
+            // document.getElementById("fechaIngreso").value = document.getElementById("bakfechaIngreso");
+            //  document.getElementById("fechaIngreso").value = '2024-01-01';
              var pase  = document.getElementById("bakbusServicio2").value;
              var pase1 = document.getElementById("bakbusSubServicio2").value;
 
@@ -110,8 +119,10 @@ function AUsuario()
 
 
                 $('#mensaje1').html('<span> respuesta</span>');
-			     window.location.reload(document.getElementById("bakbusServicio2").value,document.getElementById("bakbusSubServicio2").value);
                 $('#usuariosModal').modal().hide();
+			    // window.location.reload(document.getElementById("bakbusServicio2").value,document.getElementById("bakbusSubServicio2").value);
+			     window.location.reload();
+
                     },
 	   		    error: function (request, status, error) {
 	   	    	}
@@ -181,11 +192,18 @@ function findOneUsuario1()
 
 				$('#genero').val(Usuarios.genero);
 				$('#departamentos').val(Usuarios.departamento);
+				$('#municipios').val(Usuarios.municipio);
+				$('#localidades').val(Usuarios.localidad);
 				$('#ciudades').val(Usuarios.ciudad);
 
 				$('#direccion').val(Usuarios.direccion);
 				$('#telefono').val(Usuarios.telefono);
 				$('#contacto').val(Usuarios.contacto);
+				$('#estadoCivil').val(Usuarios.estadoCivil);
+				$('#ocupaciones').val(Usuarios.ocupacion);
+				$('#correo').val(Usuarios.correo);
+
+
 				$('#centrosc').val(Usuarios.centrosc_id);
 				$('#tiposUsuario').val(Usuarios.tiposUsuario_id);
 

@@ -521,3 +521,14 @@ class NivelesRegimenes(models.Model):
 
     def __str__(self):
         return str(self.regimen)
+
+
+class Ips(models.Model):
+
+    id       = models.AutoField(primary_key=True)
+    nombre  =  models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    fechaRegistro = models.DateTimeField(default=now, blank=True,null= True, editable=True, )
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.nombre)
