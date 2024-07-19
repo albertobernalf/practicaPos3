@@ -3,9 +3,9 @@
 
 {% block head %}
 
-
-<link rel="stylesheet" type="text/css" href={% static 'css/panelAdmisiones.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/panelAutorizaciones.css' %}>
 <link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+  <link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
 <script src={% static 'js/panelTabsAutorizaciones.js' %} defer>         </script>
 <script src="https://kit.fontawesome.com/5d0337a043.js" crossorigin="anonymous"></script>
 
@@ -21,7 +21,7 @@ th ,tr{
         <li><a href="#Autorizaciones"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
             Autorizaciones </a></li>
         <li><a href="#CrearAutorizaciones"><span class="fa-solid fa-user-doctor-message"></span> <span
-                class="tab-text"> </span> Crear Auorizacion </a></li>
+                class="tab-text"> </span> Crear Autorizacion </a></li>
         <li><a href="#CrearAutorizacionesCups"><span class="fa-solid fa-user-doctor-message"></span> <span
                 class="tab-text"> </span> Crear Autorizaciones Cups </a></li>
         <li><a href="#CrearAutorizacionesCirugias"><span class="fa-solid fa-user-doctor-message"></span> <span
@@ -33,15 +33,14 @@ th ,tr{
 
 {% block content %}
 
-
 <div class="secciones">
     <article id="Autorizaciones">
+        <center><h3>Autorizaciones </h3></center>
     </article>
 
     <article id="CrearAutorizaciones">
-     <center><h3>Aurorizaciones Cups</h3></center>
+     <center><h3> Crear Autorizaciones </h3></center>
     </article>
-
 
     <article id="CrearAutorizacionesCups">
         <center><h3>Aurorizaciones Cups</h3></center>
@@ -51,7 +50,6 @@ th ,tr{
         <center><h3>Autorizaciones Cirugias</h3></center>
     </article>
 </div>
-
 
 {% endblock %}
 

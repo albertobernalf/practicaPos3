@@ -1778,7 +1778,7 @@ def buscarAdmision(request):
     context = {}
 
     ## ULTIMOS AJUSTES
-    
+
     print("Entre Buscar Admision" )
     BusTipoDoc = request.POST["busTipoDoc"]
     BusDocumento = request.POST["busDocumento"]

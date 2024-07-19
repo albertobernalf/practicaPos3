@@ -171,7 +171,6 @@ class EstadosInterconsulta(models.Model):
                     return self.nombre
 
 
-
 class Interconsultas(models.Model):
 
                 id  = models.AutoField(primary_key=True)
@@ -191,35 +190,80 @@ class Interconsultas(models.Model):
                 def __str__(self):
                     return self.descripcionConsulta
 
+
+class TiposEvolucion(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=30, null=False)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return self.nombre
+
+
+
+
 class Historia(models.Model):
-                id = models.AutoField(primary_key=True)
-                tipoDoc = models.ForeignKey('usuarios.TiposDocumento', default=1, on_delete=models.PROTECT, null=False)
-                documento = models.ForeignKey('usuarios.Usuarios', default=1, on_delete=models.PROTECT, null=False,
-                                              related_name='DocumentoHistoria')
-                consecAdmision = models.IntegerField(default=0)
-                folio =  models.IntegerField(default=0)
-                fecha = models.DateTimeField()
-                tiposFolio = models.ForeignKey('clinico.TiposFolio', default=1, on_delete=models.PROTECT, null=False)
-                causasExterna = models.ForeignKey('clinico.causasExterna', default=1, on_delete=models.PROTECT, null=False)
-                dependenciasRealizado = models.ForeignKey('sitios.Dependencias', default=1, on_delete=models.PROTECT,        null=False)
-                especialidades = models.ForeignKey('clinico.Especialidades', default=1, on_delete=models.PROTECT, null=False)
-                planta   = models.ForeignKey('planta.Planta', default=1, on_delete=models.PROTECT, null=False)
-                motivo     = models.CharField(max_length=250,blank=True)
-                subjetivo  = models.CharField(max_length=250, blank=True)
-                objetivo   = models.CharField(max_length=250,blank=True)
-                analisis   = models.CharField(max_length=250, blank=True)
-                plann       = models.CharField(max_length=250, blank=True)
-                fechaRegistro = models.DateTimeField(default=now, editable=False)
-                usuarioRegistro = models.ForeignKey('usuarios.Usuarios', default=1, on_delete=models.PROTECT, null=True)
-                estadoReg = models.CharField(max_length=1, default='A', editable=False)
+    id = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True, null=True, editable=True,                        on_delete=models.PROTECT)
+    documento = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True, on_delete=models.PROTECT,                  related_name='DocumentoHistoria5672')
+    consecAdmision = models.IntegerField(default=0)
+    folio = models.IntegerField(default=0)
+    fecha = models.DateTimeField()
+    tiposFolio = models.ForeignKey('clinico.TiposFolio', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    causasExterna = models.ForeignKey('clinico.causasExterna', blank=True, null=True, editable=True,             on_delete=models.PROTECT)
+    dependenciasRealizado = models.ForeignKey('sitios.Dependencias', blank=True, null=True, editable=True,            on_delete=models.PROTECT)
+    especialidades = models.ForeignKey('clinico.Especialidades', blank=True, null=True, editable=True,             on_delete=models.PROTECT)
+    planta = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    motivo = models.CharField(max_length=250, blank=True)
+    subjetivo = models.CharField(max_length=250, blank=True)
+    objetivo = models.CharField(max_length=250, blank=True)
+    analisis = models.CharField(max_length=250, blank=True)
+    plann = models.CharField(max_length=250, blank=True)
+    enfermedadActual = models.CharField(max_length=5000, blank=True)
+    ingestaAlcohol = models.CharField(max_length=5000, blank=True)
+    monitoreo = models.CharField(max_length=1, blank=True)
+    examenFisico = models.CharField(max_length=5000, blank=True)
+    justificacion = models.CharField(max_length=5000, blank=True)
+    tipoEvolucion = models.ForeignKey('clinico.TiposEvolucion', blank=True, null=True, editable=True,               on_delete=models.PROTECT)
+    apache2 = models.IntegerField(default=0)
+    indiceMortalidad = models.IntegerField(default=0)
+    epicrisis = models.CharField(max_length=20000, blank=True)
+    manejoQx = models.CharField(max_length=20000, blank=True)
+    noQx = models.CharField(max_length=30, blank=True)
+    antibioticos = models.CharField(max_length=1, blank=True)
+    tratamiento = models.CharField(max_length=5000, blank=True)
+    llenadoCapilar = models.CharField(max_length=1, blank=True)
+    pulsos = models.CharField(max_length=1, blank=True)
+    vomito = models.CharField(max_length=1, blank=True)
+    nauseas = models.CharField(max_length=1, blank=True)
+    irritacion = models.CharField(max_length=1, blank=True)
+    neurologia = models.CharField(max_length=1, blank=True)
+    retiroPuntos = models.CharField(max_length=1, blank=True)
+    movilidadLimitada = models.CharField(max_length=1, blank=True)
+    interconsulta = models.CharField(max_length=1, blank=True)
+    observaciones = models.CharField(max_length=5000, blank=True)
+    riesgos = models.CharField(max_length=5000, blank=True)
+    notaAclaratoria = models.CharField(max_length=1, blank=True)
+    fecNotaAclaratoria = models.DateTimeField(blank=True, null=True)
+    textoNotaAclaratoria = models.CharField(max_length=5000, blank=True)
+    usuarioNotaAclaratoria = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True,          on_delete=models.PROTECT)
+    inmovilizacion = models.CharField(max_length=1, blank=True)
+    inmovilizacionObservaciones = models.CharField(max_length=5000, blank=True)
+    riesgoHemodinamico = models.CharField(max_length=15, blank=True)
+    riesgoVentilatorio = models.CharField(max_length=15, blank=True)
+    leucopenia = models.CharField(max_length=50, blank=True)
+    trombocitopenia = models.CharField(max_length=50, blank=True)
+    hipotension = models.CharField(max_length=50, blank=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT   ,          related_name='lanta345')
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
+    def __str__(self):
+        return str(self.id)
 
-
-                def __str__(self):
-                    return str(self.id)
-
-                class Meta:
-                    ordering = ["tipoDoc","documento","folio","fecha","especialidades","motivo","subjetivo","objetivo","analisis","plann"]
+    class Meta:
+        ordering = ["tipoDoc", "documento", "folio", "fecha", "especialidades", "motivo", "subjetivo", "objetivo",
+                    "analisis", "plann"]
 
 
 class HistoriaExamenesCabezote(models.Model):
@@ -532,3 +576,389 @@ class Ips(models.Model):
 
     def __str__(self):
         return str(self.nombre)
+
+class Grupos(models.Model):
+    id = models.AutoField(primary_key=True)
+    grupo = models.CharField(max_length=80, blank=True, null=True, editable=False)
+    nombre = models.CharField(max_length=80, blank=True, null=True, editable=False)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class SubGrupos(models.Model):
+    id = models.AutoField(primary_key=True)
+    grupo = models.ForeignKey('clinico.Grupos', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    nombre = models.CharField(max_length=80, blank=True, null=True, editable=False)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class ViasAdministracion(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class UnidadesDeMedida(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    nomenclatura = models.CharField(max_length=50, blank=True, null=True, editable=True)
+    descripcion = models.CharField(max_length=100, blank=True, null=True, editable=True)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class Presentacion(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class FormasFarmaceuticas(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class UnidadesDeMedidaDosis(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    unidadaDeMedidaPrincipioA = models.CharField(max_length=50, blank=True, null=True, editable=True)
+    descripcion = models.CharField(max_length=100, blank=True, null=True, editable=True)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class FrecuenciasAplicacion(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    descripcion = models.CharField(max_length=100, blank=True, null=True, editable=True)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class IndicacionesEspeciales(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    descripcion = models.CharField(max_length=100, blank=True, null=True, editable=True)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class TiposMedicamento(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    descripcion = models.CharField(max_length=100, blank=True, null=True, editable=True)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class MedicamentosDci(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    descripcionDciConcentracion = models.CharField(max_length=100, blank=True, null=True, editable=True)
+    tipoMedicamento = models.ForeignKey('clinico.TiposMedicamento', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class ExpedienteDCI(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    formaFarmaceutica = models.ForeignKey('clinico.FormasFarmaceuticas', blank=True, null=True, editable=True,  on_delete=models.PROTECT)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class TiposDispositivoMedico(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    descripcion = models.CharField(max_length=100, blank=True, null=True, editable=True)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class TiposProductosNutricion(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    descripcion = models.CharField(max_length=100, blank=True, null=True, editable=True)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class ProductosNutricion(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0)
+    nombreComercial = models.CharField(max_length=100, blank=True, null=True, editable=True)
+    grupo =  models.CharField(max_length=100, blank=True, null=True, editable=True)
+    formaFarmaceutica = models.ForeignKey('clinico.FormasFarmaceuticas', blank=True, null=True, editable=True,  on_delete=models.PROTECT)
+    presentacion = models.ForeignKey('clinico.Presentacion', blank=True, null=True, editable=True,   on_delete=models.PROTECT)
+    unidades = models.ForeignKey('clinico.UnidadesDeMedida', blank=True, null=True, editable=True,   on_delete=models.PROTECT)
+    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class SignosVitales(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True, null=True, editable=True,  on_delete=models.PROTECT)
+    documento = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True,  on_delete=models.PROTECT, related_name='DocumentoHistoria78')
+    consecAdmision = models.IntegerField(default=0)
+    folio = models.IntegerField(default=0)
+    fecha = models.DateTimeField()
+    frecCardiaca = models.DecimalField(max_digits=3, decimal_places=2)
+    frecRespiratoria = models.DecimalField(max_digits=3, decimal_places=2)
+    tensionADiastolica = models.DecimalField(max_digits=3, decimal_places=2)
+    tensionASistolica = models.DecimalField(max_digits=3, decimal_places=2)
+    tensionAMedia = models.DecimalField(max_digits=3, decimal_places=2)
+    temperatura = models.DecimalField(max_digits=3, decimal_places=2)
+    saturacion = models.DecimalField(max_digits=3, decimal_places=2)
+    glucometria = models.DecimalField(max_digits=3, decimal_places=2)
+    glasgow = models.DecimalField(max_digits=3, decimal_places=2)
+    apache = models.DecimalField(max_digits=3, decimal_places=2)
+    pvc = models.DecimalField(max_digits=3, decimal_places=2)
+    cuna = models.DecimalField(max_digits=3, decimal_places=2)
+    ic = models.DecimalField(max_digits=3, decimal_places=2)
+    glasgowOcular = models.DecimalField(max_digits=3, decimal_places=2)
+    glagowVerbal = models.DecimalField(max_digits=3, decimal_places=2)
+    glasgowMotora = models.DecimalField(max_digits=3, decimal_places=2)
+    observacion = models.CharField(max_length=5000, blank=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True,    on_delete=models.PROTECT)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class RevisionPacientesSistemas(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True, null=True, editable=True,   on_delete=models.PROTECT)
+    documento = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='DocumentoHistoria69')
+    consecAdmision = models.IntegerField(default=0)
+    folio = models.IntegerField(default=0)
+    fecha = models.DateTimeField()
+    revisionSistemas = models.ForeignKey('clinico.RevisionSistemas', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    observacion = models.CharField(max_length=5000, blank=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class Trasfusiones(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True, null=True, editable=True,  on_delete=models.PROTECT)
+    documento = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='DocumentoHistoria62')
+    consecAdmision = models.IntegerField(default=0)
+    folio = models.IntegerField(default=0)
+    fecha = models.DateTimeField()
+    selloCalidad = models.CharField(max_length=5000, blank=True)
+    grupoBolsa = models.CharField(max_length=50, blank=True)
+    fechaCaducidad = models.DateTimeField()
+    realizoTrasfusion = models.CharField(max_length=50, blank=True)
+    trasfusionInicio = models.CharField(max_length=50, blank=True)
+    trasfusionFinal = models.CharField(max_length=50, blank=True)
+    complicaciones = models.CharField(max_length=5000, blank=True)
+    tipoComponente = models.CharField(max_length=50, blank=True)
+    epicrisis = models.CharField(max_length=5000, blank=True)
+    compReactRtha = models.CharField(max_length=15, blank=True)
+    compEnfInjerto = models.CharField(max_length=15, blank=True)
+    compSobreCargaCirc = models.CharField(max_length=15, blank=True)
+    compLesPulmonar = models.CharField(max_length=15, blank=True)
+    compReacAlergica = models.CharField(max_length=15, blank=True)
+    compSepsis = models.CharField(max_length=15, blank=True)
+    compPurpPostTrans = models.CharField(max_length=15, blank=True)
+    compReacFHemolitica = models.CharField(max_length=15, blank=True)
+    compReacFNoHemolitica = models.CharField(max_length=15, blank=True)
+    compEmboAereo = models.CharField(max_length=15, blank=True)
+    compHipocalemia = models.CharField(max_length=15, blank=True)
+    compHipotermia = models.CharField(max_length=15, blank=True)
+    compTransMasiva = models.CharField(max_length=15, blank=True)
+    compEscalofrios = models.CharField(max_length=15, blank=True)
+    compOtro = models.CharField(max_length=15, blank=True)
+    compOtroDesc = models.CharField(max_length=2000, blank=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True,     on_delete=models.PROTECT)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class Oxigeno(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True, null=True, editable=True,    on_delete=models.PROTECT)
+    documento = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True,  on_delete=models.PROTECT, related_name='DocumentoHistoria56')
+    consecAdmision = models.IntegerField(default=0)
+    folio = models.IntegerField(default=0)
+    fechaInicio = models.DateTimeField()
+    fechaFinal = models.DateTimeField()
+    tipoOxigenacion = models.CharField(max_length=15, blank=True)
+    aire = models.CharField(max_length=1, blank=True)
+    saturacionOxigeno = models.DecimalField(max_digits=3, decimal_places=2)
+    flujoLtsOxigeno = models.DecimalField(max_digits=3, decimal_places=2)
+    flujoLtsAire = models.DecimalField(max_digits=3, decimal_places=2)
+    horasOxigeno = models.DecimalField(max_digits=3, decimal_places=2)
+    horasAire = models.DecimalField(max_digits=3, decimal_places=2)
+    totalLtsoxigeno = models.DecimalField(max_digits=3, decimal_places=2)
+    totalLtsAire = models.DecimalField(max_digits=3, decimal_places=2)
+    totalMetrocubicoOxigeno = models.DecimalField(max_digits=3, decimal_places=2)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class ImHaloTerapia(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    documento = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True,  on_delete=models.PROTECT, related_name='DocumentoHistoria29')
+    consecAdmision = models.IntegerField(default=0)
+    folio = models.IntegerField(default=0)
+    fecha = models.DateTimeField()
+    salbutamol = models.CharField(max_length=50, blank=True)
+    ipratropio = models.CharField(max_length=50, blank=True)
+    beclometazona = models.CharField(max_length=50, blank=True)
+    berudual = models.CharField(max_length=50, blank=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True,   on_delete=models.PROTECT)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+
+    def __str__(self):
+        return str(self.id)
+
+class Antibiotico(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True, null=True, editable=True,  on_delete=models.PROTECT)
+    documento = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True,     on_delete=models.PROTECT ,related_name='DocumentoHistoria34')
+    consecAdmision = models.IntegerField(default=0)
+    folio = models.IntegerField(default=0)
+    fechaSolicitud = models.DateTimeField()
+    fechaInicio = models.DateTimeField()
+    suministro = models.ForeignKey('facturacion.Suministros', blank=True, null=True, editable=True, on_delete=models.PROTECT ,related_name='sumins03')
+    profilaxis = models.CharField(max_length=10, blank=True, null=True, editable=True)
+    ttoEmpirico = models.CharField(max_length=10, blank=True, null=True, editable=True)
+    ttoetiologico = models.CharField(max_length=10, blank=True, null=True, editable=True)
+    ampliacionTto = models.CharField(max_length=10, blank=True, null=True, editable=True)
+    cambioEsquema = models.CharField(max_length=10, blank=True, null=True, editable=True)
+    saludPublica = models.CharField(max_length=10, blank=True, null=True, editable=True)
+    dxInfeccion = models.CharField(max_length=1000, blank=True, null=True, editable=True)
+    germenAislado = models.CharField(max_length=1000, blank=True, null=True, editable=True)
+    fechaVigencia = models.DateTimeField()
+    fallaRenal = models.CharField(max_length=10, blank=True, null=True, editable=True)
+    fallaHepatica = models.CharField(max_length=10, blank=True, null=True, editable=True)
+    infeccionSevera = models.CharField(max_length=10, blank=True, null=True, editable=True)
+    inmunoSupresion = models.CharField(max_length=10, blank=True, null=True, editable=True)
+    aprobado = models.CharField(max_length=15, blank=True, null=True, editable=True)
+    prescripcion = models.CharField(max_length=1000, blank=True, null=True, editable=True)
+    protocolo = models.CharField(max_length=1000, blank=True, null=True, editable=True)
+    noProtocolo = models.CharField(max_length=1000, blank=True, null=True, editable=True)
+    ajustadoCultivo = models.CharField(max_length=1000, blank=True, null=True, editable=True)
+    ajustadoDosiRenal = models.CharField(max_length=1000, blank=True, null=True, editable=True)
+    autInfectologia = models.CharField(max_length=2, blank=True, null=True, editable=True)
+    observacionEpidemilogia = models.CharField(max_length=10000, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True,   on_delete=models.PROTECT)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class Medicamentos(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True, null=True, editable=True,     on_delete=models.PROTECT)
+    documento = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True,  on_delete=models.PROTECT, related_name='DocumentoHistoria89')
+    consecAdmision = models.IntegerField(default=0)
+    folio = models.IntegerField(default=0)
+    fecha = models.DateTimeField()
+    orden = models.IntegerField(default=0)
+    suministro = models.ForeignKey('facturacion.Suministros', blank=True, null=True, editable=True,   on_delete=models.PROTECT)
+    concentracion = models.CharField(max_length=150, blank=True, null=True, editable=False)
+    #concentracionUMedida = models.ForeignKey('clinico.ConcentracionUMedidas', blank=True, null=True,  editable=True, on_delete=models.PROTECT)
+    dosisCantidad = models.DecimalField(max_digits=20, decimal_places=3)
+    dosisUnidad = models.ForeignKey('clinico.UnidadesDeMedidaDosis', blank=True, null=True, editable=True,   on_delete=models.PROTECT)
+    frecuenciaCantidad = models.DecimalField(max_digits=2, decimal_places=0)
+    frecuenciaUnidad = models.ForeignKey('clinico.FrecuenciasAplicacion', blank=True, null=True, editable=True,               on_delete=models.PROTECT)
+    #via = models.ForeignKey('clinico.frecuenciaVia', blank=True, null=True, editable=True,   on_delete=models.PROTECT)
+    nota = models.CharField(max_length=5000, blank=True)
+    cantidadSolicitada = models.DecimalField(max_digits=20, decimal_places=0)
+    cantidadEntregada = models.DecimalField(max_digits=20, decimal_places=0)
+    cantidadDispensada = models.DecimalField(max_digits=20, decimal_places=0)
+    cantidadAplicada = models.DecimalField(max_digits=20, decimal_places=0)
+    cantidadDevuelta = models.DecimalField(max_digits=20, decimal_places=0)
+    cantidadSaldoIni = models.DecimalField(max_digits=20, decimal_places=0)
+    cantidadsaldoFinal = models.DecimalField(max_digits=20, decimal_places=0)
+    cantidadfacturada = models.DecimalField(max_digits=20, decimal_places=0)
+    nopos = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    estadoMedicamento = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    horarioDosis = models.CharField(max_length=200, blank=True, null=True, editable=True)
+    dosisUnica = models.DecimalField(max_digits=10, decimal_places=0)
+    dosisRescate = models.CharField(max_length=200, blank=True, null=True, editable=True)
+    dosisProfilaxis = models.CharField(max_length=200, blank=True, null=True, editable=True)
+    dosisAdelanto = models.CharField(max_length=200, blank=True, null=True, editable=True)
+    urgente = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    dosificacion = models.CharField(max_length=2000, blank=True, null=True, editable=True)
+    antibiotico = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    fechaSuspension = models.DateTimeField()
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True,    on_delete=models.PROTECT)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)

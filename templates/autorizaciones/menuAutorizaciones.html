@@ -33,15 +33,13 @@ window.onload = function(){
 </script>
 {% endblock %}
 
-<body class=" login" data-admin-utc-offset="0"  ">
+<body class=" login" data-admin-utc-offset="0">
 
 <input type="hidden" id="username" name="username" value = "{{Username}}">
 <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
 <input type="hidden" id="numreporte" name="numreporte" value = "{{numreporte}}">
 <input type="hidden" id="grupo" name="grupo" value = "{{Grupo}}">
 <input type="hidden" id="subGrupo" name="subGrupo" value = "{{SubGrupo}}">
-
-
 
 <input type="hidden" id="sede" name="sede" value = "{{Sede}}">
 <input type="hidden" id="documento" name="documento" value = "{{Documento}}">
@@ -115,15 +113,8 @@ window.onload = function(){
     <form class="form-inline my-2 my-lg-0">
         <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
       <a class="nav-link" href="/retornarMen/{{Sede}}, {{Username}}, {{Documento}}, {{NombreSede}}, {{Profesional}}">Retornar</a>
-
-        <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="button">
-
-        </button> -->
-        <!--  <button class="btn btn-outline-success my-2 my-sm-0" type="button">ADMISIONES</button> -->
     </form>
 </nav>
-
-
 
 
 {% block content  %}
@@ -132,7 +123,6 @@ window.onload = function(){
 {% endblock %}
 
 {% block footer  %}
-
 
 {% endblock %}
 

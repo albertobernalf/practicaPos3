@@ -57,6 +57,10 @@ INSTALLED_APPS = [
     'facturacion',
     'autorizaciones',
     'terapeutico',
+    'referencia',
+    'cirugia',
+    'enfermeria',
+
 ]
 
 MIDDLEWARE = [
