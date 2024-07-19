@@ -4,6 +4,22 @@ from django.utils.timezone import now
 # Create your models here.
 
 
+class Eapb (models.Model):
+
+    id = models.AutoField(primary_key=True)
+    codigoEapb=models.CharField(max_length=8, blank=True,null= True, editable=True)
+    nombre = models.CharField(max_length=30, null=False)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    documento =models.CharField(max_length=30, blank=True,null= True, editable=True)
+    direccion= models.CharField(max_length=150, blank=True,null= True, editable=True)
+    telefono =models.CharField(max_length=30, blank=True,null= True, editable=True)
+    codigoRips= models.CharField(max_length=8, blank=True,null= True, editable=True)
+    fechaRegistro = models.DateTimeField(default=now, blank=True, null=True, editable=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __integer__(self):
+        return self.nombre
+
 class Empresas (models.Model):
 
     id           = models.AutoField(primary_key=True)
