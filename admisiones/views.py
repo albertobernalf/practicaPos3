@@ -2876,10 +2876,18 @@ def crearAdmisionDef(request):
         tiposCotizante = request.POST["tiposCotizante"]
         context['TiposCotizante'] = tiposCotizante
         empresaId = request.POST["empresas"]
-        ipsRemite = request.POST["remitido"]
+        ipsRemite = request.POST["ips"]
         numManilla = request.POST["numManilla"]
         contactoAcompanante = request.POST["acompanantes"]
         contactoResponsable = request.POST["responsables"]
+        remitido = request.POST["remitido"]
+        print("empresaId= ", empresaId)
+        print("numManilla = ", numManilla)
+        print("ipsRemite = ", ipsRemite)
+        print("remitido = ", remitido)
+        print("contactoAcompanante = ",contactoAcompanante)
+        print("contactoResponsable = ", contactoResponsable)
+
 
         grabo = Ingresos(
                          sedesClinica_id=Sede,
@@ -2910,10 +2918,11 @@ def crearAdmisionDef(request):
                          regimen_id=regimenes,
                          tiposCotizante_id=tiposCotizante,
                          empresa_id=empresaId,
-                         #ipsRemite_id=ipsRemite,
-                         #numManilla=numManilla,
-                         #contactoAcompañante_id=contactoAcompanante,
-                         #contactoResponsable_id=contactoResponsable,
+                         ipsRemite_id=ipsRemite,
+                         numManilla=numManilla,
+                         contactoAcompañante_id=contactoAcompanante,
+                         contactoResponsable_id=contactoResponsable,
+                         remitido=remitido,
                          #salidaClinica=salidaClinica,
                          #salidaDefinitiva=salidaDefinitiva,
                          fechaRegistro=fechaRegistro,

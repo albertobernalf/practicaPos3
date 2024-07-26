@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from clinico.models import Medicos, Especialidades , TiposExamen, Examenes, Historia, HistoriaExamenes, HistoriaResultados, EspecialidadesMedicos, Servicios, Diagnosticos, EstadosSalida,   EstadoExamenes,  Enfermedades, TiposFolio, TiposAntecedente, Antecedentes ,  CausasExterna, ViasIngreso , TiposIncapacidad, HistoriaExamenesCabezote, HistorialAntecedentes, TiposDiagnostico, HistorialDiagnosticos, Interconsultas, EstadosInterconsulta, HistorialDiagnosticosCabezote
+from clinico.models import Medicos, Especialidades , TiposExamen, Examenes, Historia, HistoriaExamenes, HistoriaResultados, EspecialidadesMedicos, Servicios, Diagnosticos, EstadosSalida,   EstadoExamenes,  Enfermedades, TiposFolio, TiposAntecedente, Antecedentes ,  CausasExterna, ViasIngreso , TiposIncapacidad,  HistorialAntecedentes, TiposDiagnostico, HistorialDiagnosticos, Interconsultas, EstadosInterconsulta
 from clinico.models import ViasEgreso, RevisionSistemas, NivelesClinica, TiposTriage, TurnosEnfermeria, TiposSalidas, Eps, TiposCotizante,  Regimenes, Recomendaciones, Hallazgos, NivelesRegimenes, Ips
 
 @admin.register(Servicios)
@@ -112,18 +112,11 @@ class examenesAdmin(admin.ModelAdmin):
 @admin.register(HistoriaExamenes)
 class historiaExamenesAdmin(admin.ModelAdmin):
 
-    list_display = ( "id", "procedimientos", "cantidad","estadoExamenes")
-    search_fields = ( "id", "procedimientos","cantidad","estadoExamenes")
+    list_display = ( "id", "cantidad","estadoExamenes")
+    search_fields = ( "id","cantidad","estadoExamenes")
     # Filtrar
-    list_filter = ( "id", "procedimientos","cantidad","estadoExamenes")
+    list_filter = ( "id", "cantidad","estadoExamenes")
 
-
-@admin.register(HistorialDiagnosticosCabezote)
-class historialDiagnosticosCabezoteAdmin(admin.ModelAdmin):
-        list_display = ("id", "tipoDoc", "documento","folio","observaciones")
-        search_fields =  ("id", "tipoDoc", "documento","folio","observaciones")
-        # Filtrar
-        list_filter =  ("id", "tipoDoc", "documento","folio","observaciones")
 
 
 
@@ -135,15 +128,6 @@ class historialDiagnosticosAdmin(admin.ModelAdmin):
         list_filter = ("id", "diagnosticos","tiposDiagnostico")
 
 
-@admin.register(HistoriaExamenesCabezote)
-class historiaExamenesCabezoteAdmin(admin.ModelAdmin):
-
-    list_display = ( "id", "historia", "tiposExamen","observaciones")
-    search_fields =( "id", "historia","tiposExamen","observaciones")
-    # Filtrar
-    list_filter = ( "id", "historia", "tiposExamen","observaciones")
-
-
 
 @admin.register(Historia)
 class historiaAdmin(admin.ModelAdmin):
@@ -153,13 +137,6 @@ class historiaAdmin(admin.ModelAdmin):
         # Filtrar
         list_filter = ('id', 'tipoDoc', 'documento', 'folio', 'fecha', 'causasExterna','dependenciasRealizado')
 
-
-@admin.register(HistoriaResultados)
-class historiaResultadosAdmin(admin.ModelAdmin):
-    list_display = ("id", "tipoDoc", "documento", "folio", "fecha", "consecResultados","tiposExamen", "examen","resultado")
-    search_fields =  ("id", "tipoDoc", "documento", "folio", "fecha", "consecResultados","tiposExamen", "examen","resultado")
-    # Filtrar
-    list_filter = ('id', 'tipoDoc', 'documento', 'folio', 'fecha', 'tiposExamen', 'examen', 'resultado', 'interpretacion')
 
 
 @admin.register(TiposDiagnostico)
@@ -190,10 +167,10 @@ class estadosSalidaAdmin(admin.ModelAdmin):
 @admin.register(HistorialAntecedentes)
 class historialAntecedentesAdmin(admin.ModelAdmin):
 
-        list_display = ("id", "tipoDoc", "documento","folio","tiposAntecedente","antecedentes","descripcion")
-        search_fields = ("id", "tipoDoc", "documento","folio","tiposAntecedente","antecedentes","descripcion")
+        list_display = ("id", "historia","tiposAntecedente","antecedentes","descripcion")
+        search_fields = ("id", "historia","tiposAntecedente","antecedentes","descripcion")
         # Filtrar
-        list_filter = ("id", "tipoDoc", "documento","folio","tiposAntecedente","antecedentes","descripcion")
+        list_filter = ("id", "historia","tiposAntecedente","antecedentes","descripcion")
 
 
 
@@ -208,10 +185,10 @@ class estadosInterconsultaAdmin(admin.ModelAdmin):
 @admin.register(Interconsultas)
 class interconsultasAdmin(admin.ModelAdmin):
 
-        list_display = ("id", "tipoDoc", "documento","folio","descripcionConsulta","especialidadConsultada","respuestaConsulta")
-        search_fields = ("id", "tipoDoc", "documento","folio","descripcionConsulta","especialidadConsultada","respuestaConsulta")
+        list_display = ("id", "historia","descripcionConsulta","especialidadConsultada","respuestaConsulta")
+        search_fields = ("id", "historia","descripcionConsulta","especialidadConsultada","respuestaConsulta")
         # Filtrar
-        list_filter =("id", "tipoDoc", "documento","folio","descripcionConsulta","especialidadConsultada","respuestaConsulta")
+        list_filter =("id", "historia","descripcionConsulta","especialidadConsultada","respuestaConsulta")
 
 
 @admin.register(Medicos)

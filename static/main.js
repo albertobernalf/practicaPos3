@@ -220,6 +220,37 @@ function findOneUsuario1()
 };
 
 
+$('#tablaDatos tbody td').click(function(){
+      var rowIndex = $(this).parent().index('#tablaDatos tbody tr');
+      var tdIndex = $(this).index('#tablaDatos tbody tr:eq('+rowIndex+') td');
+      alert('Row Number: '+(rowIndex+1)+'\nColumn Number: '+(tdIndex+1));
+      var celda = $(this);
+      alert("valor celda = " + celda.html());
+      let obtenerDato = document.getElementsByTagName("td");
+      alert("valores son : " + obtenerDato.innerHTML + " ::::" + obtenerDato[0].innerHTML + " " + obtenerDato[1].innerHTML + " " + obtenerDato[2].innerHTML + " " + obtenerDato[3].innerHTML + " " + obtenerDato[4].innerHTML + " " + obtenerDato[5].innerHTML + " " + obtenerDato[6].innerHTML)
+      alert ("Aquip los valores");
+
+      alert ($(this).parents("tr").find("td").eq(0).html());
+      alert ($(this).parents("tr").find("td").eq(1).html());
+      alert ($(this).parents("tr").find("td").eq(2).html());
+      alert ($(this).parents("tr").find("td").eq(3).html());
+      alert ($(this).parents("tr").find("td").eq(4).html());
+      alert ($(this).parents("tr").find("td").eq(5).html());
+      alert ($(this).parents("tr").find("td").eq(6).html());
+      alert ($(this).parents("tr").find("td").eq(7).html());
+      alert ($(this).parents("tr").find("td").eq(8).html());
+      alert ($(this).parents("tr").find("td").eq(9).html());
+      alert ($(this).parents("tr").find("td").eq(10).html());
+
+      //var tipoDoc =
+      //var documento = document.getElementById("busDocumentoSel").value;
+      //var documento=
+      //var ingreso=
+      //alert("tipoDoc =" + tipoDoc + "documento=" + documento +"ingreso= " + ingreso);
+
+
+});
+
 
 
  $('.eBtn').on('click',function(event)

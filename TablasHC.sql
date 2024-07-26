@@ -20,13 +20,15 @@ select * from tblhcl_enfheridas where num_admision = '916764'
 select * from tblhcl_enfnotas where num_admision = '916764'
 select * from tblhcl_enfnotasliq where num_admision = '916764'
 select * from tblhcl_enfposicion where num_admision = '916764'
+select * from tblhcl_enfsignos where num_admision = '916764'
+select * from tblhcl_enfdispositivos where num_admision = '916764'
 
 -- Aquip vamos
  
 select * from tblhcl_hallazgos_ic where num_admision = 916764   -- Sip
 select * from tblhcl_hallazgos where num_admision = 916764   -- Sip
 select * from tblhcl_fichas where num_admision = 916764  --  Sip
-select * from tblhcl_ingrtrauma  where num_admision = 916764 
+select * from tblhcl_ingrtrauma limit 1000 where num_admision = 916764 
 select * from tblhcl_interconsultas where num_admision = 916764  -- Sip
 select * from tblhcl_resumeaten  where num_admision = '916764' -- sip pero no se como
 select * from tblhcl_serfarma  where num_admision = '916764' -- sip npo se exactamente para que es
@@ -36,19 +38,14 @@ select * from tblhcl_mezclas where num_admision = '916764' -- Sip analizar la in
 select * from tblhcl_nopos where num_admision = '916764' -- Sip
 
 
-
-
 -- Para modulo basicas
 select * from tblhcl_sivigila; -- Sip cruce con sivigila -- de parametrizacion 
 select * from tblhcl_materialqx where num_admision = '916764' -- Es como un lstado de material qx, umm sirve
 
 -- Para el modulo de Enfermeria :
+select * from tblhcl_enfsabanas where num_admision = '916764' order by fecha
 
-select * from tblhcl_enfdispositivos where num_admision = '916764'
-select * from tblhcl_enfsabanas where num_admision = '916764'
-select * from tblhcl_enfsignos where num_admision = '916764'
-select * from tblhcl_enfbalanceliq where num_admision = '916764'  -- Sip
 -- ojo ciomo manejar los turnos en las tablas
 
-select * from mae_mezclas;
+
 
