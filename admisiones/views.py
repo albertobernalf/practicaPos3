@@ -19,7 +19,7 @@ import datetime as dt
 
 
 from sitios.models import  HistorialDependencias, Dependencias
-from usuarios.models import Usuarios
+from usuarios.models import Usuarios, TiposDocumento
 from planta.models import Planta
 
 # Create your views here.
@@ -1126,6 +1126,26 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
     if (escogeModulo == 'TRIAGE'):
         print ("WENTRE PERMSISO TRIAGE")
         ## Aqui contexto para solo Triage
+        triage = []
+
+        # miConexionx = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curx = miConexionx.cursor()
+
+        comando = 'SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , t.consec consec , dep.nombre camaNombre,t."fechaSolicita" solicita,t.motivo motivo, t."clasificacionTriage_id" triage FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  ,sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND t."sedesClinica_id" =' + "'" + str(Sede) + "'" + ' AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and t."tipoDoc_id" = u."tipoDoc_id" and  u.id = t."documento_id"'
+        print(comando)
+
+        curx.execute(comando)
+
+        for tipoDoc, documento, nombre, consec, camaNombre, solicita, motivo, triage in curx.fetchall():
+            triage.append({'tipoDoc': tipoDoc, 'Documento': documento, 'Nombre': nombre, 'Consec': consec,
+                             'camaNombre': camaNombre, 'solicita': solicita,
+                             'motivo': motivo, 'triage': triage})
+
+        miConexionx.close()
+        print(triage)
+        context['Triage'] = triage
 
         ## FIN CONTEXTO
         return render(request, "triage/panelTriage.html", context)
@@ -3821,3 +3841,44 @@ def guardarUsuariosModal(request):
 
         miConexion3.close()
         return HttpResponse("Usuario Actualizado ! ")
+
+def encuentraAdmisionModal(request, tipoDoc, documento, consec, sede):
+
+        print("Entre a buscar una Admision Modal")
+        print("documento = ", documento)
+        print("tipodoc = ", tipoDoc)
+        print("consecutivoAdmision = ", consec)
+        print("Sede = ", sede)
+        tipoDoc1 = TiposDocumento.objects.get(nombre=tipoDoc)
+        print("tipodoc1 = ", tipoDoc1.id)
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = 'SELECT tp.nombre tipoDoc,  u.documento documento, u.nombre  paciente , i.consec consec , i."fechaIngreso" ingreso , i."fechaSalida" salida, ser.nombre servicioNombreIng, dep.nombre dependenciasIngreso ,med1.nombre medicoIngreso, esp1.nombre espMedico,diag1.nombre diagMedico,vias.nombre viasIngreso, cexterna.nombre causasExterna,reg.nombre regimenes ,cot.nombre cotizante,i.remitido remitido,ips.nombre ips ,i."numManilla" numManilla, diag1.nombre dxIngreso FROM admisiones_ingresos i inner join usuarios_usuarios u on (u."tipoDoc_id" = i."tipoDoc_id" and u.id = i."documento_id" ) inner join sitios_dependencias dep on (dep."sedesClinica_id" = i."sedesClinica_id" and dep."tipoDoc_id" =  i."tipoDoc_id" and dep.documento_id =i."documento_id"  and dep.consec = i.consec) inner join usuarios_tiposDocumento tp on (tp.id = u."tipoDoc_id") inner join sitios_dependenciastipo deptip on (deptip.id = dep."dependenciasTipo_id") inner join sitios_serviciosSedes sd on (sd."sedesClinica_id" = i."sedesClinica_id") inner join clinico_servicios ser  on (ser.id = sd.servicios_id  and ser.id = i."serviciosIng_id" ) left join clinico_especialidades esp1 on (esp1.id = i."especialidadesMedicosIngreso_id" ) left join clinico_diagnosticos diag1 on (diag1.id = i."dxIngreso_id") left join clinico_medicos med1 on (med1.id =i."medicoIngreso_id"  ) inner join clinico_viasIngreso vias on (vias.id = i."ViasIngreso_id") left join clinico_causasExterna cexterna on (cexterna.id = i."causasExterna_id") inner join clinico_regimenes reg on (reg.id = i.regimen_id) inner join clinico_tiposcotizante cot on (cot.id = i."tiposCotizante_id") left  join clinico_ips ips on (ips.id =i."ipsRemite_id") WHERE i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' and u."tipoDoc_id" = ' + "'" + str(tipoDoc1.id) + "'" + ' and u.documento = ' + "'" + str(documento) + "'" + ' and i.consec= ' + "'" + str(consec) + "'" + ' and i."fechaSalida" is null'
+
+        print(comando)
+        curt.execute(comando)
+
+        Usuarios = {}
+
+        for tipoDoc,  documento,paciente ,consec ,  ingreso , salida, servicioNombreIng, dependenciasIngreso , medicoIngreso, espMedico,diagMedico, viasIngreso, causasExterna,regimenes, cotizante, remitido,ips , numManilla, dxIngreso  in curt.fetchall():
+            Usuarios = {'tipoDoc': tipoDoc, 'documento': documento, 'paciente': paciente, 'ingreso': ingreso,
+                        'salida': salida, 'servicioNombreIng': servicioNombreIng, 'dependenciasIngreso': dependenciasIngreso,
+                        'medicoIngreso': medicoIngreso, 'espMedico': espMedico, 'diagMedico': diagMedico,
+                        'viasIngreso': viasIngreso, 'causasExterna': causasExterna,
+                        'regimenes': regimenes, 'cotizante': cotizante, 'remitido': remitido,
+                        'ips': ips, 'numManilla': numManilla, 'dxIngreso':dxIngreso}
+
+        miConexiont.close()
+        print(Usuarios)
+
+        if Usuarios == '[]':
+            datos = {'Mensaje': 'Usuario No existe'}
+            return JsonResponse(datos, safe=False)
+        else:
+            datos = {'Mensaje': 'Usuario SIII existe'}
+            return JsonResponse(Usuarios, safe=False)
+
+
+

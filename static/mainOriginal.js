@@ -223,24 +223,24 @@ function findOneUsuario1()
 $('#tablaDatos tbody td').click(function(){
       var rowIndex = $(this).parent().index('#tablaDatos tbody tr');
       var tdIndex = $(this).index('#tablaDatos tbody tr:eq('+rowIndex+') td');
-     alert('Row Number: '+(rowIndex+1)+'\nColumn Number: '+(tdIndex+1));
-  //    var celda = $(this);
-      //alert("valor celda = " + celda.html());
- //     let obtenerDato = document.getElementsByTagName("td");
-      //alert("valores son : " + obtenerDato.innerHTML + " ::::" + obtenerDato[0].innerHTML + " " + obtenerDato[1].innerHTML + " " + obtenerDato[2].innerHTML + " " + obtenerDato[3].innerHTML + " " + obtenerDato[4].innerHTML + " " + obtenerDato[5].innerHTML + " " + obtenerDato[6].innerHTML)
-      //alert ("Aquip los valores");
+      alert('Row Number: '+(rowIndex+1)+'\nColumn Number: '+(tdIndex+1));
+      var celda = $(this);
+      alert("valor celda = " + celda.html());
+      let obtenerDato = document.getElementsByTagName("td");
+      alert("valores son : " + obtenerDato.innerHTML + " ::::" + obtenerDato[0].innerHTML + " " + obtenerDato[1].innerHTML + " " + obtenerDato[2].innerHTML + " " + obtenerDato[3].innerHTML + " " + obtenerDato[4].innerHTML + " " + obtenerDato[5].innerHTML + " " + obtenerDato[6].innerHTML)
+      alert ("Aquip los valores");
 
-      //alert ($(this).parents("tr").find("td").eq(0).html());
-      //alert ($(this).parents("tr").find("td").eq(1).html());
-      //alert ($(this).parents("tr").find("td").eq(2).html());
-      //alert ($(this).parents("tr").find("td").eq(3).html());
-      //alert ($(this).parents("tr").find("td").eq(4).html());
-      //alert ($(this).parents("tr").find("td").eq(5).html());
-      //alert ($(this).parents("tr").find("td").eq(6).html());
-      //alert ($(this).parents("tr").find("td").eq(7).html());
-      //alert ($(this).parents("tr").find("td").eq(8).html());
-      //#alert ($(this).parents("tr").find("td").eq(9).html());
-      //alert ($(this).parents("tr").find("td").eq(10).html());
+      alert ($(this).parents("tr").find("td").eq(0).html());
+      alert ($(this).parents("tr").find("td").eq(1).html());
+      alert ($(this).parents("tr").find("td").eq(2).html());
+      alert ($(this).parents("tr").find("td").eq(3).html());
+      alert ($(this).parents("tr").find("td").eq(4).html());
+      alert ($(this).parents("tr").find("td").eq(5).html());
+      alert ($(this).parents("tr").find("td").eq(6).html());
+      alert ($(this).parents("tr").find("td").eq(7).html());
+      alert ($(this).parents("tr").find("td").eq(8).html());
+      alert ($(this).parents("tr").find("td").eq(9).html());
+      alert ($(this).parents("tr").find("td").eq(10).html());
 
       //var tipoDoc =
       //var documento = document.getElementById("busDocumentoSel").value;
@@ -689,98 +689,7 @@ $(document).on('change', '#busSubServicio2', function(event) {
 
 
 
-// FUnciones para Modales
 
 
 
 
-
-
-function encuentraAdmisionModal()
-{
-}
-
-function abrir_modal(url)
-        {
-            alert ("Entre NModal_0000000000000000000000000001");
-            $('#modalActualizaAdmision').load(url, function()
-            {
-            alert ("Entre NModal_001");
-            $(this).modal({
-
-                backdrop: 'static',
-                keyboard: false
-            })
-            alert ("Entre NModal_003");
-
-            $('#tipoDoc').val("1");
-	    	$('#documento').val("33333333333333333333");
-
-
-
-            $(this).modal('show');
-            });
-            return false;
-        }
-
-function cerrar_modal()
-        {
-        $('#modalActualizaAdmision').modal('hide');
-return false;
-        }
-
-
-function findOneAdmision(tipoDoc,Documento,consec, sede)
-{
-     alert("Entre function finfOneAdmision");
-
-	var envios = new FormData();
-
-
-	//var select = document.getElementById("tipoDoc");
-    //var tipoDoc = select.options[select.selectedIndex].value;
-	//var documento = document.getElementById("busDocumentoSel").value;
-
-    alert("Envio a la MOdal Tipo Doc = " + tipoDoc);
-    alert("Envio a la MOdal documento = " + documento);
-    alert("Envio a la MOdal consec = " + consec);
-    alert("Envio a la MOdal sede = " + sede);
-
-	$.ajax({
-		type: 'POST',
-    	url: '/encuentraAdmisionModal/',
-		data: {'tipoDoc':tipoDoc,'documento':documento,'consec':consec, 'sede':sede},
-		success: function (Usuarios) {
-
-			 alert("entre DATOS MODAL de admision y el nombre es = " + Usuarios.tipoDoc + " " +  Usuarios.documento);
-
-	            $('#tipoDoc').val(Usuarios.tipoDoc_id);
-				$('#documento').val(Usuarios.documento);
-
-				$('#viasIngreso').val(Usuarios.viasIngreso);
-
-				$('#causasExterna').val(Usuarios.causasExterna);
-				$('#regimenes').val(Usuarios.regimenes);
-				$('#cotizante').val(Usuarios.cotizante);
-				$('#remitido').val(Usuarios.remitido);
-				$('#ips').val(Usuarios.ips);
-
-				$('#numManilla').val(Usuarios.numManilla);
-				$('#dxIngreso').val(Usuarios.dxIngreso);
-				$('#paciente').val(Usuarios.paciente);
-				$('#ingreso').val(Usuarios.ingreso);
-				$('#salida').val(Usuarios.salida);
-				$('#medicoIngreso').val(Usuarios.medicoIngreso);
-
-
-				$('#espMedico').val(Usuarios.espMedico);
-				$('#diagMedico').val(Usuarios.diagMedico);
-
-				 $('#modalActualizaAdmision').modal({show:true});
-
-
-                    },
-	   		    error: function (request, status, error) {
-	   	    	}
-	});
-};

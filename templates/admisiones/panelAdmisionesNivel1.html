@@ -239,9 +239,9 @@ th ,tr{
 
 
                                     <div class="form-row">
-
-                                            <div class="col">
-	                                        <label for="busServicio2" class="col-sm-6 col-form-label col-form-label-sm">Servicio:</label>
+                                        <div class="form-group col-sm-4">
+                                            <label for="busServicio2" class="col-sm-6 col-form-label col-form-label-sm">Servicio:</label>
+                                            <div class="col-sm-8">
                                                 <select class="form-select  h-100 w-200 form-control form-control-sm"
                                                         aria-label="" id="busServicio2" name="busServicio2" disabled="disabled">
                                                     {% for servicios in Servicios %}
@@ -249,9 +249,11 @@ th ,tr{
                                                     {% endfor %}
                                                 </select>
                                             </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
 
-                                        <div class="col1">
                                             <label for="busSubServicio2" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SubServ:</label>
+                                            <div class="col-sm-8">
                                                 <select class="form-select  h-100 w-200" aria-label=""
                                                         id="busSubServicio2" name="busSubServicio2" disabled="disabled">
                                                     {% for subServicios in SubServicios %}
@@ -259,11 +261,15 @@ th ,tr{
                                                     </option>
                                                     {% endfor %}
                                                 </select>
+                                            </div>
                                         </div>
+                                        <div class="form-group col-sm-4">
 
-                                        <div class="col">
-                                            <label for="dependenciasIngreso" class="col-sm-6 control-label">Dependenc:</label>
-                                               <select class="form-select  h-100 w-200 orm-control form-control-sm"
+                                            <label for="dependenciasIngreso"
+                                                   class="col-sm-6 control-label">Dependenc:</label>
+
+                                            <div class="col-sm-8">
+                                                <select class="form-select  h-100 w-200 orm-control form-control-sm"
                                                         aria-label="" id="dependenciasIngreso"
                                                         name="dependenciasIngreso"
                                                         disabled="disabled">
@@ -272,12 +278,14 @@ th ,tr{
                                                     </option>
                                                     {% endfor %}
                                                 </select>
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div class="form-row">
-                                        <div class="col">
+                                        <div class="form-group col-sm-4">
                                             <label for="tipoDoc" class="col-sm-6 control-label">TipoDoc:</label>
+                                            <div class="col-sm-8">
                                                 <select class="form-select  h-40 w-200" aria-label="" id="tipoDoc"
                                                         name="tipoDoc" disabled="disabled">
                                                     {% for tiposDocumento in TiposDocumento %}
@@ -286,14 +294,25 @@ th ,tr{
                                                     </option>
                                                     {% endfor %}
                                                 </select>
+
+                                            </div>
                                         </div>
-                                        <div class="col">
-                                            <label class="col-sm-6 control-label" for="busDocumentoSel">Documento:</label>
+                                        <div class="form-group col-sm-4">
+
+                                            <label class="col-sm-6 control-label"
+                                                   for="busDocumentoSel">Documento:</label>
                                             <input type="text" class="form-control" id="busDocumentoSel"
                                                    name="busDocumentoSel" disabled="disabled">
                                         </div>
-                                        <div class="col">
-                                            <label for="dxIngreso" class="col-sm-6 control-label">Diagnosticos:</label>
+                                    </div>
+
+
+                                    <div class="form-row">
+                                        <div class="form-group col-sm-4">
+
+                                            <label for="dxIngreso"
+                                                   class="col-sm-6 control-label">Diagnosticos:</label>
+                                            <div class="col-sm-8">
                                                 <select class="form-select  h-40 w-100" aria-label="" id="dxIngreso"
                                                         name="dxIngreso" required>
                                                     {% for diagnosticos in Diagnosticos %}
@@ -301,14 +320,16 @@ th ,tr{
                                                     </option>
                                                     {% endfor %}
                                                 </select>
+                                            </div>
+
                                         </div>
-                                    </div>
 
+                                        <div class="form-group col-sm-4">
 
-                                    <div class="form-row">
+                                            <label for="busEspecialidad" class="col-sm-6 control-label">Especialidad:
+                                            </label>
 
-                                        <div class="col">
-                                            <label for="busEspecialidad" class="col-sm-6 control-label">Especialidad:   </label>
+                                            <div class="col-sm-1">
                                                 <select class="form-select  h-40 w-10" aria-label=""
                                                         id="busEspecialidad" name="busEspecialidad"
                                                         required>
@@ -318,20 +339,30 @@ th ,tr{
                                                     </option>
                                                     {% endfor %}
                                                 </select>
+                                            </div>
                                         </div>
 
-                                        <div class="col">
+                                        <div class="form-group col-sm-4">
 
-                                            <label for="medicoIngreso" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medico: &nbsp;&nbsp;&nbsp;</label>
+                                            <label for="medicoIngreso" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medico:
+                                                &nbsp;&nbsp;&nbsp;</label>
+                                            <div class="col-sm-4">
                                                 <select class="form-select  h-40 w-100" aria-label=""
                                                         id="medicoIngreso" name="medicoIngreso" required>
                                                     {% for medicos in Medicos %}
                                                     <option value="{{medicos.id}}"> {{medicos.nombre}}</option>
                                                     {% endfor %}
                                                 </select>
+                                            </div>
                                         </div>
-                                        <div class="col">
-                                            <label for="viasIngreso" class="col-sm-6 control-label">ViasDeIngreso:</label>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-sm-4">
+
+                                            <label for="viasIngreso"
+                                                   class="col-sm-6 control-label">ViasDeIngreso:</label>
+                                            <div class="col-sm-4">
                                                 <select class="form-select  h-40 w-150" aria-label=""
                                                         id="viasIngreso" name="viasIngreso" required>
                                                     {% for viasIngreso in ViasIngreso %}
@@ -339,12 +370,16 @@ th ,tr{
                                                     </option>
                                                     {% endfor %}
                                                 </select>
-                                        </div>
-                                    </div>
+                                            </div>
 
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <label for="causasExterna" class="col-sm-6 control-label">CausaExterna:</label>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+
+                                            <label for="causasExterna" class="col-sm-6 control-label">CausaExterna:
+                                            </label>
+
+                                            <div class="col-sm-4">
                                                 <select class="form-select  h-40 w-150" aria-label=""
                                                         id="causasExterna" name="causasExterna"
                                                         required>
@@ -353,18 +388,33 @@ th ,tr{
                                                     </option>
                                                     {% endfor %}
                                                 </select>
-                                           </div>
-                                    <div class="col">
-                                        <label for="regimenes" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Regimen: &nbsp;&nbsp;&nbsp;</label>
+                                            </div>
+                                        </div>
+                                </div>
+
+                                <div class="form-group row">
+
+
+                                    <div class="form-group col-sm-4 ">
+
+                                        <label for="regimenes" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Regimen:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-4">
                                             <select class="form-select  h-40 w-100" aria-label="" id="regimenes"
                                                     name="regimenes" required>
                                                 {% for regimenes in Regimenes %}
                                                 <option value="{{regimenes.id}}"> {{regimenes.nombre}}</option>
                                                 {% endfor %}
                                             </select>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <label for="tiposCotizante" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tipos Cotizante:  &nbsp;&nbsp;&nbsp;</label>
+
+                                    <div class="form-group col-sm-4 ">
+
+                                        <label for="tiposCotizante" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tipos
+                                            Cotizante:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-4">
                                             <select class="form-select  h-40 w-100" aria-label=""
                                                     id="tiposCotizante" name="tiposCotizante" required>
                                                 {% for tiposCotizante in TiposCotizante %}
@@ -373,21 +423,31 @@ th ,tr{
                                                 </option>
                                                 {% endfor %}
                                             </select>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group row">
-                                    <div class="col">
-                                        <label for="empresas" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Empresa:   &nbsp;&nbsp;&nbsp;</label>
+                                    <div class="form-group col-sm-4 ">
+
+                                        <label for="empresas" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Empresa:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-4">
                                             <select class="form-select  h-40 w-100" aria-label="" id="empresas"
                                                     name="empresas" required>
                                                 {% for empresas in Empresas %}
                                                 <option value="{{empresas.id}}"> {{empresas.nombre}}</option>
                                                 {% endfor %}
                                             </select>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <label for="acompanantes" class="col-sm-6 control-label">&nbsp;TiposAcompañante:  &nbsp;&nbsp;&nbsp;</label>
+                                </div>
+
+                                <div class="form-group row">
+
+                                    <div class="form-group col-sm-4 ">
+
+                                        <label for="acompanantes" class="col-sm-6 control-label">&nbsp;TiposAcompañante:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-4">
                                             <select class="form-select  h-40 w-100" aria-label=""
                                                     id="acompanantes" name="acompanantes" required>
                                                 {% for acompanantes in Acompanantes %}
@@ -395,9 +455,15 @@ th ,tr{
                                                 </option>
                                                 {% endfor %}
                                             </select>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <label for="responsables" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Responsable: &nbsp;&nbsp;&nbsp;</label>
+
+                                    <div class="form-group col-sm-4 ">
+
+                                        <label for="responsables" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            Responsable:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-4">
                                             <select class="form-select  h-40 w-100" aria-label=""
                                                     id="responsables" name="responsables" required>
                                                 {% for responsables in Responsables %}
@@ -405,29 +471,37 @@ th ,tr{
                                                 </option>
                                                 {% endfor %}
                                             </select>
+                                        </div>
                                     </div>
+
+                                    <div class="form-group col-sm-4 ">
+                                        <label for="remitido" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;remitido:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <input type="text" class="form-control" id="remitido" name="remitido"
+                                               value="">
+                                    </div>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <label for="ips" class="col-sm-4 col-form-label col-form-label-sm">IPS:
+                                    &nbsp;&nbsp;&nbsp;</label>
+                                <div class="col-sm-4">
+                                    <select class="form-select  h-40 w-100" aria-label="" id="ips" name="ips" required>
+                                        {% for ips in Ips %}
+                                        <option value="{{ips.id}}"> {{ips.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
 
-                                <div class="form-group row">
+                                <label for="numManilla" class="col-sm-4 col-form-label col-form-label-sm">NumeroManilla:&nbsp;&nbsp;</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control form-control-sm" id="numManilla"
+                                           name="numManilla" value="">
+                                </div>
 
-                                    <div class="col">
-                                        <label for="remitido" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;remitido:  &nbsp;&nbsp;&nbsp;</label>
-                                        <input type="text" class="form-control" id="remitido" name="remitido"  value="">
-                                    </div>
-	                            <div class="col">
-        	                        <label for="ips" class="col-sm-4 col-form-label col-form-label-sm">IPS: &nbsp;&nbsp;&nbsp;</label>
-                	                    <select class="form-select  h-40 w-100" aria-label="" id="ips" name="ips" required>
-                        	                {% for ips in Ips %}
-                                	        <option value="{{ips.id}}"> {{ips.nombre}}</option>
-	                                        {% endfor %}
-	                                    </select>
-				    </div>	
-	                            <div class="col">
-					 <label for="numManilla" class="col-sm-4 col-form-label col-form-label-sm">NumeroManilla:&nbsp;&nbsp;</label>
-	                                    <input type="text" class="form-control form-control-sm" id="numManilla" name="numManilla" value="">
-                                    </div>
- 
-                                </div>                           
+                            </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                     onclick="CierraModal()">Close
@@ -457,8 +531,7 @@ th ,tr{
 
                 <div class="card-block">
                     <div style="height: 300px; overflow: auto">
-                        <table class="table table-hover" id="tablaDatos"
-                               style="height: 300px , background-color:LightGray; border: 2px solid black; border-radius: 10px; width:99%;">
+                        <table class="table table-hover" id="tablaDatos"   style="height: 300px , background-color:LightGray; border: 2px solid black; border-radius: 10px; width:99%;">
                             <thead>
                             <th>Tipo Doc</th>
                             <th>Documento</th>
@@ -479,18 +552,26 @@ th ,tr{
                                 <td>{{ingresos.Documento}}</td>
                                 <td>{{ingresos.Nombre}}</td>
                                 <td>{{ingresos.Consec}}</td>
-                                <td>{{ingresos.FechaIngreso}}</td>
-                                <td>{{ingresos.FechaSalida}}</td>
-                                <td>{{ingresos.servicioNombreIng}}</td>
-                                <td>{{ingresos.camaNombreIng}}</td>
-                                <td>{{ingresos.DxActual}}</td>
+                                <td>{{ ingresos.FechaIngreso }}</td>
+                                <td>{{ ingresos.FechaSalida }}</td>
+                                <td>{{ ingresos.servicioNombreIng }}</td>
+                                <td>{{ ingresos.camaNombreIng }}</td>
+                                <td>{{ ingresos.DxActual }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary eBtn1" role="button" data-toggle="modal" id="banda1"
-                                       onclick="findOneAdmision( {{ingresos.tipoDoc}} , {{ingresos.Documento}} ,{{ingresos.Nombre}} ,{{Sede}})"></a>
+<!--
+                                    <a onclick="return abrir_modal ('{% url 'encuentraAdmisionModal' ingresos.tipoDoc ingresos.Documento ingresos.Consec  Sede   %}')" class="btn btn-primary btn-circle" href="#"> <span class="fa fa-edit"></span> </a>
+                                    -->
+
+                                        <a href="*" role="button" data-toggle="modal" id="banda1" name="banda1" onclick='findOneAdmision(ingresos.tipoDoc, ingresos.Documento, ingresos.Consec, Sede)' class="btn btn-primary btn-circle"> </a>
+
                                 </td>
+
+
                             </tr>
                             {% endfor %}
+
                             <tbody>
+
 
                             </tbody>
 
@@ -1098,67 +1179,6 @@ th ,tr{
 
     <article id="IngresosTriage">
         <center><h3>Ingresos Triage</h3></center>
-
-        <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
-            <tr>
-                <td>
-
-                </td>
-                <td>
-                </td>
-                <td>
-
-                    <table class="table"    style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
-
-
-                        <form class="form-inline" action="/creartriage/" method="POST" id="grabacionForma">
-
-                            <input type="hidden" id="Sede" name="Sede" value="{{Sede}}">
-                            <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
-                            <input type="hidden" id="documento" name="documento" value="{{Documento}}">
-                            <input type="hidden" id="username" name="username" value="{{Username}}">
-                            <input type="hidden" id="Username_id" name="Username_id" value="{{Username_id}}">
-                            <input type="hidden" id="Profesional" name="Profesional" value="{{Profesional}}">
-                            <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
-                            <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
-
-                            <!-- VARIABLESD DE COPIA PARA RESTAURAR DATOS -->
-
-                            <input type="hidden" id="bakbusServicio2" name="bakbusServicio2" value="">
-                            <input type="hidden" id="bakbusSubServicio2" name="bakbusSubServicio2" value="">
-                            <input type="hidden" id="bakdependenciasIngreso" name="bakdependenciasIngreso" value="">
-                            <input type="hidden" id="baktipoDoc" name="baktipoDoc" value="">
-                            <input type="hidden" id="bakbusDocumentoSel" name="bakbusDocumentoSel" value="">
-                            <input type="hidden" id="bakfechaIngreso" name="bakfechaIngreso" value="">
-                            <input type="hidden" id="bakdxIngreso" name="bakdxIngreso" value="">
-                            <input type="hidden" id="bakespecialidadesMedicosIngreso"
-                                   name="bakespecialidadesMedicosIngreso"
-                                   value="">
-                            <input type="hidden" id="bakmedicoIngreso" name="bakmedicoIngreso" value="">
-                            <input type="hidden" id="bakescogeModulo" name="bakescogeModulo" value="{{EscogeModulo}}">
-
-
-                            {% if crearAdmisionForm.errors %}
-                            <p style="color:Red;"> Revizar estos camos</p>
-
-                            {% endif %}
-
-
-                        </form>
-
-                    </table>
-                </td>
-                <td>
-                </td>
-                <td>
-
-                </td>
-            <tr>
-        </table>
-
-        <!-- FIN CREAR TRIAGE -->
-
-
     </article>
 
     <article id="Responsables">

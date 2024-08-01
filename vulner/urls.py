@@ -127,8 +127,9 @@ urlpatterns = [
 
     path('findOneUsuario/', viewsAdmisiones.UsuariosModal),
     path('guardarUsuariosModal/', viewsAdmisiones.guardarUsuariosModal),
-
     path('crearResponsables/', viewsAdmisiones.crearResponsables),
+    path('encuentraAdmisionModal/<str:tipoDoc> , <str:documento> , <str:consec> , <str:sede>/', viewsAdmisiones.encuentraAdmisionModal, name='encuentraAdmisionModal'),
+
 
     # Facturacion
 
