@@ -1126,26 +1126,96 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
     if (escogeModulo == 'TRIAGE'):
         print ("WENTRE PERMSISO TRIAGE")
         ## Aqui contexto para solo Triage
-        triage = []
+
+        # Combo de Servicios
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+        comando = 'SELECT sed.id id ,sed.nombre nombre FROM sitios_serviciosSedes sed, clinico_servicios ser Where sed."sedesClinica_id" =' + "'" + str(
+            sede) + "'" + ' AND sed."servicios_id" = ser.id AND ser.nombre = ' + "'" + str('TRIAGE') + "'"
+        curt.execute(comando)
+        print(comando)
+
+        servicios = []
+        servicios.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            servicios.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(servicios)
+
+        context['Servicios'] = servicios
+
+        # Fin combo servicios
+
+        # Combo de SubServicios
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+        #comando = 'SELECT sub.id id ,sub.nombre nombre  FROM sitios_serviciosSedes sed, clinico_servicios ser  , sitios_subserviciossedes sub Where sed."sedesClinica_id" =' + "'" + str(sede) + "'" + ' AND sed."servicios_id" = ser.id and  sed."sedesClinica_id" = sub."sedesClinica_id" and sed."servicios_id" = sub."serviciosSedes_id"'
+        comando = 'SELECT sub.id id ,sub.nombre nombre FROM sitios_serviciosSedes sed, clinico_servicios ser  , sitios_subserviciossedes sub Where sed."sedesClinica_id" =' + "'" + str(Sede) + "'" + ' AND sed."servicios_id" = ser.id and  sed."sedesClinica_id" = sub."sedesClinica_id" and sub."serviciosSedes_id" = sed.id AND ser.nombre = ' + "'" + str('TRIAGE') + "'"
+        curt.execute(comando)
+        print(comando)
+
+        subServicios = []
+        subServicios.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            subServicios.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(subServicios)
+
+        context['SubServicios'] = subServicios
+
+        # Fin combo SubServicios
+
+        # Combo de TiposTriage
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+        #comando = 'SELECT sub.id id ,sub.nombre nombre  FROM sitios_serviciosSedes sed, clinico_servicios ser  , sitios_subserviciossedes sub Where sed."sedesClinica_id" =' + "'" + str(sede) + "'" + ' AND sed."servicios_id" = ser.id and  sed."sedesClinica_id" = sub."sedesClinica_id" and sed."servicios_id" = sub."serviciosSedes_id"'
+        comando = 'SELECT id, nombre FROM clinico_tipostriage order by id'
+        curt.execute(comando)
+        print(comando)
+
+        tiposTriage = []
+        tiposTriage.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            tiposTriage.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(tiposTriage)
+
+        context['TiposTriage'] = tiposTriage
+
+        # Fin combo TiposTriage
+
+
+        triage1 = []
 
         # miConexionx = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
         miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
                                        password="pass123")
         curx = miConexionx.cursor()
 
-        comando = 'SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , t.consec consec , dep.nombre camaNombre,t."fechaSolicita" solicita,t.motivo motivo, t."clasificacionTriage_id" triage FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  ,sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND t."sedesClinica_id" =' + "'" + str(Sede) + "'" + ' AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and t."tipoDoc_id" = u."tipoDoc_id" and  u.id = t."documento_id"'
+        comando = 'SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , t.consec consec , dep.nombre camaNombre,t."fechaSolicita" solicita,t.motivo motivo, t."clasificacionTriage_id" triage FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  ,sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND t."sedesClinica_id" =' + "'" + str(Sede) + "'" + ' AND dep."sedesClinica_id" =  sd."sedesClinica_id" AND dep.id = t.dependencias_id AND t."serviciosSedes_id" = sd.id AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and t."tipoDoc_id" = u."tipoDoc_id" and  u.id = t."documento_id"'
         print(comando)
 
         curx.execute(comando)
 
         for tipoDoc, documento, nombre, consec, camaNombre, solicita, motivo, triage in curx.fetchall():
-            triage.append({'tipoDoc': tipoDoc, 'Documento': documento, 'Nombre': nombre, 'Consec': consec,
-                             'camaNombre': camaNombre, 'solicita': solicita,
+            triage1.append({'tipoDoc': tipoDoc, 'Documento': documento, 'Nombre': nombre, 'Consec': consec,'camaNombre': camaNombre, 'solicita': solicita,
                              'motivo': motivo, 'triage': triage})
 
         miConexionx.close()
-        print(triage)
-        context['Triage'] = triage
+        print(triage1)
+        context['Triage'] = triage1
 
         ## FIN CONTEXTO
         return render(request, "triage/panelTriage.html", context)

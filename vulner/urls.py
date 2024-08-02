@@ -24,6 +24,7 @@ from camara import  views as viewsCamara
 from Reportes import views as viewsReportes
 
 from admisiones import views as viewsAdmisiones
+from triage import views as viewsTriage
 
 from usuarios import views as viewsUsuarios
 
@@ -121,6 +122,7 @@ urlpatterns = [
     path('buscarEspecialidadesMedicos/', viewsAdmisiones.buscarEspecialidadesMedicos),
     path('buscarCiudades/', viewsAdmisiones.buscarCiudades),
     path('buscarHabitaciones/', viewsAdmisiones.buscarHabitaciones),
+
     path('buscarSubServicios/', viewsAdmisiones.buscarSubServicios),
     # path('crearAdmision/<str:Sede>,<str:Perfil>, <str:Username>, <str:Username_id>', viewsAdmisiones.crearAdmision.as_view()),
     path('crearAdmisionDef/', viewsAdmisiones.crearAdmisionDef),
@@ -131,7 +133,17 @@ urlpatterns = [
     path('encuentraAdmisionModal/<str:tipoDoc> , <str:documento> , <str:consec> , <str:sede>/', viewsAdmisiones.encuentraAdmisionModal, name='encuentraAdmisionModal'),
 
 
-    # Facturacion
+    # Triage
+
+    path('crearTriage/', viewsTriage.crearTriage),
+    path('buscarTriage/', viewsTriage.buscarTriage),
+    path('buscarSubServiciosTriage/', viewsTriage.buscarSubServiciosTriage),
+    path('buscarHabitacionesTriage/', viewsTriage.buscarHabitacionesTriage),
+    path('/encuentraTriageModal/<str:tipoDoc> , <str:documento>, <str:sede>/', viewsTriage.encuentraTriageModal, name='encuentraTriageModal'),
+
+
+
+# Facturacion
 
     # Citas Medicas
 
