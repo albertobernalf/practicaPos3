@@ -132,15 +132,17 @@ urlpatterns = [
     path('crearResponsables/', viewsAdmisiones.crearResponsables),
     path('encuentraAdmisionModal/<str:tipoDoc> , <str:documento> , <str:consec> , <str:sede>/', viewsAdmisiones.encuentraAdmisionModal, name='encuentraAdmisionModal'),
 
-
     # Triage
 
     path('crearTriage/', viewsTriage.crearTriage),
     path('buscarTriage/', viewsTriage.buscarTriage),
     path('buscarSubServiciosTriage/', viewsTriage.buscarSubServiciosTriage),
     path('buscarHabitacionesTriage/', viewsTriage.buscarHabitacionesTriage),
-    path('/encuentraTriageModal/<str:tipoDoc> , <str:documento>, <str:sede>/', viewsTriage.encuentraTriageModal, name='encuentraTriageModal'),
-
+    path('encuentraTriageModal/<str:tipoDoc> , <str:documento>, <str:sede>/', viewsTriage.encuentraTriageModal),
+    path('encuentraTriageModal/', viewsTriage.encuentraTriageModal),
+    path('findOneUsuarioTriage/', viewsTriage.UsuariosModalTriage),
+    path('grabaUsuariosTriage/', viewsTriage.grabaUsuariosTriage),
+    path('grabaTriageModal/', viewsTriage.grabaTriageModal),
 
 
 # Facturacion

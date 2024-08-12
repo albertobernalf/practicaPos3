@@ -128,3 +128,10 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 subir tblas, buscar ultimas tablas mipres 2024
 -- segiir con mejoras presente chivo
 -- Probar portar a una nueva instalacion
+
+-- Ojo deja  grabar una cedula, documento en dos dependencias a la vez, controlar esop.
+-- Los filtros del triage no funcionan VERIFICAR
+-- falta tener en cuenta clasificacion_triage
+-- crear admision desde triage
+-- Ojo un usuario no puede tener dis (2) Triages
+-- Ojo cuando actualizo un usuario existente desde crea Triage, problemas con fechanacio, estadocivil= 0, etc

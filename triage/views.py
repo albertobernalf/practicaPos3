@@ -59,14 +59,14 @@ def crearTriage(request):
         print(" busSubServicioT = ", busSubServicioT)
         context['BusSubServicioT'] = busSubServicioT
 
-        dependencias= request.POST["dependencias"]
+        dependencias= request.POST["dependenciasT"]
         print(" dependencias= ", dependencias)
         context['Dependencias'] = dependencias
 
 
-        tipoDoc = request.POST['tipoDoc']
+        tipoDoc = request.POST['tipoDocTriage']
        # documento = request.POST['documento']
-        documento = request.POST['busDocumentoSel']
+        documento = request.POST['busDocumentoSelTriage']
         print("tipoDoc = ", tipoDoc)
         print("documento = ", documento)
 
@@ -505,7 +505,7 @@ def buscarTriage(request):
                                    password="pass123")
     curt = miConexiont.cursor()
     comando = 'SELECT ser.id id ,ser.nombre nombre FROM sitios_serviciosSedes sed, clinico_servicios ser Where sed."sedesClinica_id" =' + "'" + str(
-        sede) + "'" + ' AND sed."servicios_id" = ser.id'
+        sede) + "'" + ' AND sed."servicios_id" = ser.id and ser.nombre=' + "'" + str('TRIAGE') + "'"
     curt.execute(comando)
     print(comando)
 
@@ -528,7 +528,7 @@ def buscarTriage(request):
                                    password="pass123")
     curt = miConexiont.cursor()
     comando = 'SELECT sub.id id ,sub.nombre nombre  FROM sitios_serviciosSedes sed, clinico_servicios ser  , sitios_subserviciossedes sub Where sed."sedesClinica_id" =' + "'" + str(
-        sede) + "'" + ' AND sed."servicios_id" = ser.id and  sed."sedesClinica_id" = sub."sedesClinica_id" and sed."servicios_id" = sub."serviciosSedes_id"'
+        sede) + "'" + ' AND sed."servicios_id" = ser.id and  sed."sedesClinica_id" = sub."sedesClinica_id" and sed.id = sub."serviciosSedes_id" and sed.servicios_id = ser.id and sub."serviciosSedes_id" = sed.id  and ser.nombre = ' +  "'" + str('TRIAGE') + "'"
     curt.execute(comando)
     print(comando)
 
@@ -849,7 +849,7 @@ def buscarTriage(request):
     print(detalle)
 
     if BusServicio != "":
-      detalle = detalle + " AND  sd.servicios_id = '" + str(BusServicio) + "'"
+      detalle = detalle + " AND  sd.id = '" + str(BusServicio) + "'"
     print(detalle)
 
     if BusSubServicio != "":
@@ -899,7 +899,7 @@ def buscarTriage(request):
 
 def buscarSubServiciosTriage(request):
     context = {}
-    Serv = request.GET["busServicioT"]
+    Serv = request.GET["Serv"]
     Sede = request.GET["Sede"]
     print ("Entre buscar  Subservicios del servicio  =",Serv)
     print ("Sede = ", Sede)
@@ -909,7 +909,7 @@ def buscarSubServiciosTriage(request):
     miConexiont =psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
     curt = miConexiont.cursor()
     #comando = 'SELECT sub.id id ,sub.nombre nombre FROM sitios_serviciosSedes sed ,sitios_subserviciossedes sub Where sed."sedesClinica_id" = ' + "'" + str(Sede) + "'" + '  and sed."sedesClinica_id" = sub."sedesClinica_id" and sed.id = sub."serviciosSedes_id" and sub."serviciosSedes_id" = ' + "'" + str(Serv) + "'"
-    comando = 'SELECT sub.id id ,sub.nombre nombre FROM sitios_serviciosSedes sed ,sitios_subserviciossedes sub , clinico_servicios serv Where sed."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' and sed."sedesClinica_id" = sub."sedesClinica_id" and sed.id = sub."serviciosSedes_id"  and sed.servicios_id = ' + "'" + str(Serv) + "'" + ' and sub."serviciosSedes_id" = sed.id and serv.id = ' + "'" + str(Serv) + "'"
+    comando = 'SELECT sub.id id ,sub.nombre nombre FROM sitios_serviciosSedes sed ,sitios_subserviciossedes sub , clinico_servicios serv Where sed."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' and sed."sedesClinica_id" = sub."sedesClinica_id" and sed.id = sub."serviciosSedes_id"  and sub."serviciosSedes_id" = sed.id and sed.id= ' + "'" + str(Serv) + "'" + ' and sed.servicios_id=serv.id'
     curt.execute(comando)
     print(comando)
 
@@ -965,30 +965,33 @@ def buscarHabitacionesTriage(request):
     curt.execute(comando)
     print(comando)
 
-    Habitaciones =[]
-
-
+    habitaciones =[]
 
 
     for id, nombre in curt.fetchall():
-        Habitaciones.append({'id': id, 'nombre': nombre})
+        habitaciones.append({'id': id, 'nombre': nombre})
 
     miConexiont.close()
-    print(Habitaciones)
-    context['Habitaciones'] = Habitaciones
+    print(habitaciones)
+    context['Habitaciones'] = habitaciones
 
     context['Sede'] = Sede
 
 
 
-    return JsonResponse(json.dumps(Habitaciones), safe=False)
+    return JsonResponse(json.dumps(habitaciones), safe=False)
 
-def encuentraTriageModal(request, tipoDoc, documento, sede):
+#def encuentraTriageModal(request, tipoDoc, documento, sede):
+def encuentraTriageModal(request):
 
         print("Entre a buscar una Triage Modal")
+        Sede = request.POST["sede"]
+        tipoDoc = request.POST["tipoDoc"]
+        documento = request.POST["documento"]
+
         print("documento = ", documento)
         print("tipodoc = ", tipoDoc)
-        print("Sede = ", sede)
+        print("Sede = ", Sede)
         consec = 0;
         tipoDoc1 = TiposDocumento.objects.get(nombre=tipoDoc)
         print("tipodoc1 = ", tipoDoc1.id)
@@ -996,27 +999,234 @@ def encuentraTriageModal(request, tipoDoc, documento, sede):
                                        password="pass123")
         curt = miConexiont.cursor()
 
-        comando = 'SELECT tp.nombre tipoDoc,  u.documento documento, u.nombre  paciente , ser.nombre servicioNombreIng, dep.nombre dependenciasIngreso , t.motivo,t.examenFisico,t.frecCardiaca,t.frecRespiratoria,t.taSist,t.taDiast,t.taMedia,t.glasgow,t.peso,t.temperatura,t.estatura,t.glucometria,t.escalaDolor,t.tipoIngreso,t.observaciones FROM triage_triage t inner join usuarios_usuarios u on (u."tipoDoc_id" = t."tipoDoc_id" and u.id = t."documento_id" ) inner join sitios_dependencias dep on (dep."sedesClinica_id" = t."sedesClinica_id" and dep."tipoDoc_id" =  t."tipoDoc_id" and dep.documento_id =t."documento_id"  and dep.consec = t.consec) inner join usuarios_tiposDocumento tp on (tp.id = u."tipoDoc_id") inner join sitios_dependenciastipo deptip on (deptip.id = dep."dependenciasTipo_id") inner join sitios_serviciosSedes sd on (sd."sedesClinica_id" = t."sedesClinica_id") inner join clinico_servicios ser  on (ser.id = sd.servicios_id  and ser.id = t."serviciosIng_id" ) WHERE i."sedesClinica_id" = ' + "'" + str(
-            sede) + "'" + ' and u."tipoDoc_id" = ' + "'" + str(tipoDoc1.id) + "'" + ' and u.documento = ' + "'" + str(documento) + "'" + ' and t.consec= ' + "'" + str(consec) + "'"
+        #comando = 'SELECT tp.nombre tipoDoc,  u.documento documento, u.nombre  paciente , ser.nombre servicioNombreIng, dep.nombre dependenciasIngreso , t.motivo,t."examenFisico",t."frecCardiaca",t."frecRespiratoria",t."taSist",t."taDiast",t."taMedia",t.glasgow,t.peso,t.temperatura,t.estatura,t.glucometria,t."escalaDolor",t."tipoIngreso",t.observaciones FROM triage_triage t inner join usuarios_usuarios u on (u."tipoDoc_id" = t."tipoDoc_id" and u.id = t."documento_id" ) inner join sitios_dependencias dep on (dep."sedesClinica_id" = t."sedesClinica_id" and dep."tipoDoc_id" =  t."tipoDoc_id" and dep.documento_id =t."documento_id"  and dep.consec = t.consec) inner join usuarios_tiposDocumento tp on (tp.id = u."tipoDoc_id") inner join sitios_dependenciastipo deptip on (deptip.id = dep."dependenciasTipo_id") inner join sitios_serviciosSedes sd on (sd."sedesClinica_id" = t."sedesClinica_id") inner join clinico_servicios ser  on (ser.id = sd.servicios_id  and ser.id = t."serviciosSedes_id" ) WHERE t."sedesClinica_id" = ' + "'" + str(
+        #    Sede) + "'" + ' and u."tipoDoc_id" = ' + "'" + str(tipoDoc1.id) + "'" + ' and u.documento = ' + "'" + str(documento) + "'" + ' and t.consec= ' + "'" + str(consec) + "'"
+        comando = 'SELECT sd.id servicioSedes, sub.id subServiciosSedes, dep.id dependencias, tp.nombre tipoDoc,  u.documento documento, u.nombre  paciente , dep.nombre dependenciasIngreso , t.motivo,t."examenFisico",t."frecCardiaca",t."frecRespiratoria",t."taSist",t."taDiast",t."taMedia",t.glasgow,t.peso,t.temperatura,t.estatura,t.glucometria,t."escalaDolor",t."tipoIngreso",t.observaciones, t.saturacion, t."clasificacionTriage_id"   clasificacionTriage FROM triage_triage t inner join usuarios_usuarios u on (u."tipoDoc_id" = t."tipoDoc_id" and u.id = t."documento_id" ) inner join sitios_dependencias dep on (dep."sedesClinica_id" = t."sedesClinica_id" and dep."tipoDoc_id" =  t."tipoDoc_id" and dep.documento_id =t."documento_id" ) inner join usuarios_tiposDocumento tp on (tp.id = u."tipoDoc_id") inner join sitios_dependenciastipo deptip on (deptip.id = dep."dependenciasTipo_id") inner join sitios_serviciosSedes sd on (sd."sedesClinica_id" = t."sedesClinica_id" and sd.id = dep."serviciosSedes_id" and sd.id = t."serviciosSedes_id" ) inner join sitios_subServiciosSedes sub on (sub."serviciosSedes_id" = sd.id and   sub."serviciosSedes_id"= dep."serviciosSedes_id"  and sub.id = t."subServiciosSedes_id" and sub."serviciosSedes_id" = dep."serviciosSedes_id"  and sub.id = dep."subServiciosSedes_id" ) inner join clinico_servicios ser  on (ser.id = sd.servicios_id   ) WHERE t."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' and u."tipoDoc_id" = ' + "'" + str(tipoDoc1.id) + "'" + ' and u.documento = ' + "'" + str(documento) + "'" + ' and t.consec = 0'
 
+
+        print(comando)
+        curt.execute(comando)
+
+        Triage = {}
+
+        for servicioSedes, subServiciosSedes,  dependencias, tipoDoc, documento, paciente,  dependenciasIngreso,  motivo,examenFisico,frecCardiaca,frecRespiratoria, taSist,taDiast,taMedia,glasgow,peso,temperatura,estatura,glucometria,escalaDolor,tipoIngreso,observaciones, saturacion, clasificacionTriage in curt.fetchall():
+            Triage = {'servicioSedes':servicioSedes,'subServiciosSedes':subServiciosSedes,'dependencias':dependencias,'tipoDoc': tipoDoc1.id, 'documento': documento,'paciente':paciente, 'dependenciasIngreso' : dependenciasIngreso, 'motivo':motivo , 'examenFisico':examenFisico,'frecCardiaca':frecCardiaca,'frecRespiratoria':frecRespiratoria,
+                       'taSist':taSist, 'taDiast':taDiast, 'taMedia':taMedia,'glasgow':glasgow,'peso':peso,'temperatura':temperatura ,'estatura':estatura,'glucometria':glucometria,'escalaDolor':escalaDolor,'tipoIngreso':tipoIngreso,'observaciones':observaciones,'saturacion':saturacion, 'clasificacionTriage':clasificacionTriage}
+
+
+        miConexiont.close()
+        print(Triage)
+
+
+        # Combo de TiposTriage
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+        #comando = 'SELECT sub.id id ,sub.nombre nombre  FROM sitios_serviciosSedes sed, clinico_servicios ser  , sitios_subserviciossedes sub Where sed."sedesClinica_id" =' + "'" + str(sede) + "'" + ' AND sed."servicios_id" = ser.id and  sed."sedesClinica_id" = sub."sedesClinica_id" and sed."servicios_id" = sub."serviciosSedes_id"'
+        comando = 'SELECT id, nombre FROM clinico_tipostriage order by id'
+        curt.execute(comando)
+        print(comando)
+
+        tiposTriage = []
+        tiposTriage.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            tiposTriage.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(tiposTriage)
+
+
+        # Fin combo TiposTriage
+
+
+
+        response_data = {}
+        response_data['Triage'] = Triage
+        response_data['TiposTriage'] = tiposTriage
+
+
+        if Triage == '[]':
+            datos = {'Mensaje': 'Triage No existe'}
+            return JsonResponse(datos, safe=False)
+
+        else:
+            datos = {'Mensaje': 'Triage SIII existe'}
+            #return JsonResponse(Triage, safe=False)
+            return JsonResponse(response_data, safe=False)
+
+
+def UsuariosModalTriage(request):
+        print("Entre a buscar Usuario para la Modal")
+
+        tipoDoc = request.POST['tipoDoc']
+        documento = request.POST['documento']
+        print ("documento = " , documento)
+        print("tipodoc = " ,tipoDoc)
+
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        curt = miConexiont.cursor()
+        comando = 'SELECT usu.nombre, usu.documento documento, usu.genero, usu."fechaNacio" fechaNacio,  usu.departamentos_id departamentos, usu.ciudades_id ciudades, usu.direccion direccion, usu.telefono telefono, usu.contacto contacto, usu."centrosC_id" centrosC, usu."tipoDoc_id" tipoDoc , usu."tiposUsuario_id" tiposUsuario, usu.municipio_id municipio, usu.localidad_id localidad, usu."estadoCivil_id" estadoCivil , usu.ocupacion_id ocupacion, correo correo  FROM usuarios_usuarios usu WHERE usu."tipoDoc_id" = ' + "'"  + str(tipoDoc) + "'" + ' AND usu.documento = ' + "'" + str(documento) + "'"
         print(comando)
         curt.execute(comando)
 
         Usuarios = {}
 
-        for tipoDoc, documento, paciente, consec, t.motivo,t.examenFisico,t.frecCardiaca,t.frecRespiratoria,t.taSist,t.taDiast,t.taMedia,t.glasgow,t.peso,t.temperatura,t.estatura,t.glucometria,t.escalaDolor,t.tipoIngreso,t.observaciones in curt.fetchall():
-            Usuarios = {'tipoDoc': tipoDoc, 'documento': documento,'consec':consec, 'motivo':motivo,'examenFisico':examenFisico,'frecCardiaca':frecCardiaca,'frecRespiratoria':frecRespiratoria,
-                       'taSist':taSist, 'taDiast':taDiast, 'taMedia':taMedia,'glasgow':glasgow,'peso':peso,'temperatura':temperatura ,'estatura':estatura,'glucometria':glucometria,'escalaDolor':escalaDolor,'tipoIngreso':tipoIngreso,'observaciones':observaciones}
+        for nombre, documento, genero, fechaNacio, departamentos, ciudades, direccion, telefono, contacto, centrosC, tipoDoc, tiposUsuario, municipio, localidad, estadoCivil, ocupacion, correo  in curt.fetchall():
+            Usuarios = {'nombre': nombre, 'documento': documento, 'genero': genero, 'fechaNacio': fechaNacio , 'departamentos' : departamentos, 'ciudades': ciudades,  'direccion':  direccion, 'telefono' :telefono, 'contacto': contacto, 'centrosC':centrosC, 'tipoDoc':tipoDoc,'tiposUsuario':tiposUsuario,
+                        'municipio':municipio, 'localidad':localidad, 'estadoCivil':estadoCivil, 'ocupacion':ocupacion,'correo':correo}
 
         miConexiont.close()
         print(Usuarios)
 
         if Usuarios == '[]':
-            datos = {'Mensaje': 'Usuario No existe'}
+            datos = {'Mensaje' : 'Usuario No existe'}
             return JsonResponse(datos, safe=False)
         else:
-            datos = {'Mensaje': 'Usuario SIII existe'}
             return JsonResponse(Usuarios, safe=False)
 
+def grabaUsuariosTriage(request):
+    print("Entre a grabar Usuarios Modal")
+    tipoDoc = request.POST["tipoDoc"]
+    documento = request.POST["documento"]
+    nombre = request.POST["nombre"]
+    print("DOCUMENTO = " ,documento)
+    print(nombre)
+    genero = request.POST["genero"]
+    departamentos = request.POST["departamentos"]
+    ciudades = request.POST["ciudades"]
+    fechaNacio = request.POST["fechaNacio"]
+    print("fechaNacio = ", fechaNacio)
+    print ("departamentos = ", departamentos)
+    print("ciudad = ", ciudades)
+    direccion = request.POST["direccion"]
+    telefono = request.POST["telefono"]
+    contacto = request.POST["contacto"]
+    centrosC = request.POST["centrosC"]
+    #quemado por el momento mientras encuentor que pasa
+    #centrosc_id = 1
+    tiposUsuario = request.POST["tiposUsuario"]
+    print("DIRECCION = ", direccion)
+    print("telefono = ", telefono)
+    print("contacto = ", contacto)
+    #municipios  = request.POST['municipios']
+    #localidad  = request.POST['localidades']
+    #estadoCivil  = request.POST['estadoCivil']
+    #ocupaciones = request.POST['ocupaciones']
+    #correo = request.POST["correo"]
+    print("centrosC = ", centrosC)
+    municipios  = 0
+    localidades  = 0
+    estadoCivil  = 0
+    ocupaciones = 0
+    correo = '0'
 
+
+    print(documento)
+    print(tipoDoc)
+
+    #miConexion11 =  MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexion11 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+    cur11 = miConexion11.cursor()
+    comando = 'SELECT usu.id, usu."tipoDoc_id" tipoDoc, usu.documento FROM usuarios_usuarios usu WHERE usu."tipoDoc_id" = ' + "'" + str(tipoDoc) + "'" + ' AND usu.documento = ' + "'" + str(documento) + "'"
+
+    print(comando)
+    cur11.execute(comando)
+
+    Usuarios = []
+
+    for id, tipoDoc, documento in cur11.fetchall():
+        Usuarios.append({'id': id, 'tipoDoc': tipoDoc, 'documento': documento})
+
+    miConexion11.close()
+
+    fechaRegistro = dt.datetime.now()
+
+
+    if Usuarios == []:
+
+         print("Entre a crear")
+         #miConexion3 = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+         miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+         cur3 = miConexion3.cursor()
+         #comando = 'insert into usuarios_usuarios (nombre, documento, genero, "fechaNacio",  departamentos_id, ciudades_id, direccion, telefono, contacto, "centrosC_id", "tipoDoc_id", "tiposUsuario_id", municipio_id, localidad_id, "estadoCivil_id", ocupacion_id, correo ,"fechaRegistro", "estadoReg") values (' + "'" + str(nombre) + "'" + ' , ' + "'" + str(documento) + "'" + ', ' + "'" + str(genero) + "'" + '  , ' + "'" + str(fechaNacio) + "'" +  ', '  + "'" + str(departamentos) + "'" +  '  , ' + "'" +  str(ciudades) + "'" + '  , ' + "'" +  str(direccion) + "'" + ', ' + "'" + str(telefono) + "'" + ', ' + "'" + str(contacto) + "'" + ', ' + "'" + str(centrosC) + "'" +  ', ' + "'" + str(tipoDoc) + "'" + ', ' + "'" + str(tiposUsuario) + "' , " + "'" + str(municipios) + "'" +   ', ' + "'" + str(localidades) + "'" + ", " + "'" + str(estadoCivil) + "'" + ", " + "'" + str(ocupaciones) + "'" + ", " + "'" + str(correo) + "', " +  "'"  + str(fechaRegistro) + "'"  +  ", 'A'"  +      ')'
+         comando = 'insert into usuarios_usuarios (nombre, documento, genero, "fechaNacio",  departamentos_id, ciudades_id, direccion, telefono, contacto, "centrosC_id", "tipoDoc_id", "tiposUsuario_id", "fechaRegistro", "estadoReg") values (' + "'" + str(nombre) + "'" + ' , ' + "'" + str(documento) + "'" + ', ' + "'" + str(genero) + "'" + '  , ' + "'" + str(fechaNacio) + "'" + ', ' + "'" + str(departamentos) + "'" + '  , ' + "'" + str(ciudades) + "'" + '  , ' + "'" + str(direccion) + "'" + ', ' + "'" + str(telefono) + "'" + ', ' + "'" + str(contacto) + "'" + ', ' + "'" + str(centrosC) + "'" + ', ' + "'" + str(tipoDoc) + "'" + ', ' + "'" + str(tiposUsuario) + "' , '" + str(fechaRegistro) + "'" + ", 'A'" + ')'
+
+         print(comando)
+         cur3.execute(comando)
+         miConexion3.commit()
+         miConexion3.close()
+         return HttpResponse("Usuario Creado ! ")
+    else:
+        print("Entre a actualizar")
+        #miConexion3 =  MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        cur3 = miConexion3.cursor()
+        comando = 'update usuarios_usuarios set nombre = ' "'" + str(nombre) +  "'" +  ', direccion  = ' + "'" +  str(direccion) + "'" + ', genero = ' + "'" + str(genero) + "'"  + ', "fechaNacio" = ' + "'" + str(fechaNacio) + "'"   + ', telefono= ' + "'" + str(telefono) + "'" +  ', contacto= ' + "'" +  str(contacto) + "'" +  ', "centrosC_id"= ' + "'" + str(centrosC) + "'" + ', "tiposUsuario_id" = ' + "'" + str(tiposUsuario) + "' , "   + ' municipio_id = ' + "'" + str(municipios) + "'" +  ', localidad_id = ' + "'" + str(localidades) + "'" + ', "estadoCivil_id"= ' + "'" + str(estadoCivil) + "'" + ', ocupacion_id = ' + "'" + str(ocupaciones) + "'"  + ', correo = ' + "'" + str(correo) + "'"  + ' WHERE "tipoDoc_id" = ' + str(tipoDoc) + ' AND documento = ' + "'" + str(documento) + "'"
+
+        print(comando)
+        cur3.execute(comando)
+        miConexion3.commit()
+
+
+        miConexion3.close()
+        return HttpResponse("Usuario Actualizado ! ")
+
+def grabaTriageModal(request):
+
+        print("Entre a guardaTriageModal")
+
+
+
+        #y = json.loads(envios2)
+
+        estatura = request.POST["estatura"]
+        peso = request.POST["peso"]
+        documento = request.POST["documento"]
+        print("estatura = ", estatura)
+        print ("peso = " , peso)
+        print("documento= ", documento)
+        busServicioT = request.POST["busServicioT"]
+        busSubServicioT = request.POST["busSubServicioT"]
+        dependenciasP = request.POST["dependenciasP"]
+        tipoDoc = request.POST["tipoDoc"]
+        documento = request.POST["documento"]
+        motivo = request.POST["motivo"]
+        examenFisico = request.POST["examenFisico"]
+        frecCardiaca = request.POST["frecCardiaca"]
+        frecRespiratoria = request.POST["frecRespiratoria"]
+        taSist = request.POST["taSist"]
+        taDiast = request.POST["taDiast"]
+        taMedia = request.POST["taMedia"]
+        glasgow = request.POST["glasgow"]
+        peso = request.POST["peso"]
+        temperatura = request.POST["temperatura"]
+        glucometria = request.POST["glucometria"]
+        escalaDolor = request.POST["escalaDolor"]
+        tipoIngreso = request.POST["tipoIngreso"]
+        observaciones = request.POST["observaciones"]
+        #clasificacionTriage = request.POST["clasificacionTriage"]
+        # OJOO QUEMADO POR EL MOMENTo
+
+
+        documento_llave = Usuarios.objects.get(documento=documento)
+        print("el id del documento = ", documento_llave.id)
+
+        print("Entre a actualizar")
+        # miConexion3 =  MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        cur3 = miConexion3.cursor()
+        comando = 'update triage_triage set  "serviciosSedes_id" = ' + "'" + str(busServicioT) + "'," + ' "subServiciosSedes_id" = ' + "'" + str(busSubServicioT) + "',"  + ' dependencias_id= ' + "'" +  str(dependenciasP) + "'," +  ' "tipoDoc_id" = ' "'" + str(tipoDoc) + "'" + ', documento_id  = ' + "'" + str(documento_llave.id) + "'" + ', motivo = ' + "'" + str(motivo) + "'" + ', "examenFisico" = ' + "'" + str(examenFisico) + "'" + ', "frecCardiaca"= ' + "'" + str(frecCardiaca) + "'" + ', "frecRespiratoria"= ' + "'" + str(frecRespiratoria) + "'" + ', "taSist"= ' + "'" + str(taSist) + "'" + ', "taDiast" = ' + "'" + str(taDiast) + "' , " + ' "taMedia" = ' + "'" + str(taMedia) + "'" + ', glasgow = ' + "'" + str(glasgow) + "'" + ', "peso"= ' + "'" + str(peso) + "'" + ', temperatura = ' + "'" + str(temperatura) + "'" + ', glucometria = ' + "'" + str(glucometria) + "'" ', "tipoIngreso"= ' + "'" + str(tipoIngreso) + "'" + ', observaciones = ' + "'" + str(observaciones) + "'"  + ' WHERE "tipoDoc_id" = ' + str(tipoDoc) + ' AND documento_id = ' + "'" + str(documento_llave.id) + "';"
+
+        print(comando)
+        cur3.execute(comando)
+        miConexion3.commit()
+
+        miConexion3.close()
+        print("De regreso")
+        return JsonResponse("Triage Actualizado ! ", safe=False)
+
+        #return HttpResponse("Triage Actualizado ! ")
 

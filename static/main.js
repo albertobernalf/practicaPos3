@@ -129,6 +129,236 @@ function AUsuario()
 	});
 };
 
+///// Aqui la para buscar Usuario  Admisiones ////
+
+$(document).on('change', '#busDocumentoSel', function(event) {
+
+        alert("Entre cambio Modal usuarios");
+
+	var envios = new FormData();
+
+
+   document.getElementById("baktipoDoc").value  = document.getElementById("tipoDoc").value;
+   document.getElementById("bakbusDocumentoSel").value  = document.getElementById("busDocumentoSel").value;
+   eldocu = document.getElementById("busDocumentoSel").value;
+   alert( "Este es el nro del documento : " + eldocu);
+
+
+   	var busDocumentoSel = document.getElementById("busDocumentoSel").value;
+    alert("Documento = " +  eldocu);
+    alert("OtorDocumento = " +  busDocumentoSel);
+
+
+
+   document.getElementById("bakfechaIngreso").value  = document.getElementById("fechaIngreso");
+   document.getElementById("bakbusServicio2").value  = document.getElementById("busServicio2").value;
+   document.getElementById("bakbusSubServicio2").value  = document.getElementById("busSubServicio2").value;
+
+
+ //   var bakdxIngreso = document.getElementById("dxIngreso").value;
+  //  var bakespecialidadesMedicosIngreso = document.getElementById("especialidadesMedicosIngreso").value;
+  //  var  bakdependenciasIngreso = document.getElementById("dependenciasIngreso").value;
+
+
+
+ //   var  bakmedicoIngreso = document.getElementById("medicoIngreso").value;
+
+
+	 var select = document.getElementById("tipoDoc"); /*Obtener el SELECT */
+
+
+
+       var tipoDoc = select.options[select.selectedIndex].value; /* Obtener el valor */
+
+
+	var documento = document.getElementById("busDocumentoSel").value;
+
+    alert("Envio a la MOdal Tipo Doc = " + tipoDoc);
+    alert("Envio a la MOdal documento = " + documento);
+
+
+	$.ajax({
+		type: 'POST',
+    	url: '/findOneUsuario/',
+		data: {'tipoDoc':tipoDoc,'documento':documento},
+		success: function (Usuarios) {
+
+			 alert("entre DATOS MODAL y el nombre es = " + Usuarios.tipoDoc_id + " " +  Usuarios.documento);
+
+                $('#tipoDoc1').val(Usuarios.tipoDoc_id);
+		$('#tipoDoc').val(Usuarios.tipoDoc_id);
+				$('#documento').val(Usuarios.documento);
+
+				$('#nombre1').val(Usuarios.nombre);
+
+				$('#genero').val(Usuarios.genero);
+				$('#departamentos').val(Usuarios.departamento);
+				$('#municipios').val(Usuarios.municipio);
+				$('#localidades').val(Usuarios.localidad);
+				$('#ciudades').val(Usuarios.ciudad);
+
+				$('#direccion').val(Usuarios.direccion);
+				$('#telefono').val(Usuarios.telefono);
+				$('#contacto').val(Usuarios.contacto);
+				$('#estadoCivil').val(Usuarios.estadoCivil);
+				$('#ocupaciones').val(Usuarios.ocupacion);
+				$('#correo').val(Usuarios.correo);
+
+
+				$('#centrosc').val(Usuarios.centrosc_id);
+				$('#tiposUsuario').val(Usuarios.tiposUsuario_id);
+
+				 $('#usuariosModal').modal({show:true});
+			//	 $('#usuariosModal').modal().hide();
+
+
+
+
+                    },
+	   		    error: function (request, status, error) {
+	   	    	}
+	});
+
+});
+
+
+//  FIN
+
+///// Aqui la para buscar Usuario Triage ////
+
+$(document).on('change', '#busDocumentoSelTriage', function(event) {
+
+        alert("Entre cambio Modal usuarios Triage");
+
+	var envios = new FormData();
+
+	 var select = document.getElementById("tipoDocTriage"); /*Obtener el SELECT */
+    var tipoDoc = select.options[select.selectedIndex].value; /* Obtener el valor */
+
+   documento = document.getElementById("busDocumentoSelTriage").value;
+   alert( "Este es el documento : " + tipoDoc +  " " + documento);
+
+    alert("Envio a la MOdal Tipo Doc = " + tipoDoc);
+    alert("Envio a la MOdal documento = " + documento);
+
+
+	$.ajax({
+		type: 'POST',
+    	url: '/findOneUsuarioTriage/',
+		data: {'tipoDoc':tipoDoc,'documento':documento},
+		success: function (Usuarios) {
+
+			 alert("entre DATOS MODAL y el nombre es = " + Usuarios.tipoDoc_id + " " +  Usuarios.documento);
+
+                $('#tipoDoc').val(Usuarios.tipoDoc_id);
+		$('#tipoDoc').val(Usuarios.tipoDoc_id);
+				$('#documento').val(Usuarios.documento);
+
+				$('#nombre1').val(Usuarios.nombre);
+
+				$('#genero').val(Usuarios.genero);
+				$('#departamentos').val(Usuarios.departamento);
+				$('#municipios').val(Usuarios.municipio);
+				$('#localidades').val(Usuarios.localidad);
+				$('#ciudades').val(Usuarios.ciudad);
+
+				$('#direccion').val(Usuarios.direccion);
+				$('#telefono').val(Usuarios.telefono);
+				$('#contacto').val(Usuarios.contacto);
+				$('#estadoCivil').val(Usuarios.estadoCivil);
+				$('#ocupaciones').val(Usuarios.ocupacion);
+				$('#correo').val(Usuarios.correo);
+
+
+				$('#centrosc').val(Usuarios.centrosc_id);
+				$('#tiposUsuario').val(Usuarios.tiposUsuario_id);
+
+				 $('#usuariosModalTriage').modal({show:true});
+			//	 $('#usuariosModal').modal().hide();
+
+
+
+
+                    },
+	   		    error: function (request, status, error) {
+	   	    	}
+	});
+
+});
+
+
+// Aqui usuario para triage
+
+function findOneUsuarioTriage()
+{
+
+	var envios = new FormData();
+
+   eldocu = document.getElementById("busDocumentoSelTriage").value;
+   alert( "Este es el nro del documento : " + eldocu);
+
+
+   	var busDocumentoSelTriage = document.getElementById("busDocumentoSeltriage").value;
+    alert("Documento = " +  eldocu);
+    alert("OtorDocumento = " +  busDocumentoSelTriage);
+
+
+   document.getElementById("bakfechaIngreso").value  = document.getElementById("fechaIngreso");
+   document.getElementById("bakbusServicio2").value  = document.getElementById("busServicio2").value;
+   document.getElementById("bakbusSubServicio2").value  = document.getElementById("busSubServicio2").value;
+
+	 var select = document.getElementById("tipoDoc"); /*Obtener el SELECT */
+       var tipoDoc = select.options[select.selectedIndex].value; /* Obtener el valor */
+
+
+	var documento = document.getElementById("busDocumentoSelTriage").value;
+
+    alert("Envio a la MOdal Tipo Doc = " + tipoDoc);
+    alert("Envio a la MOdal documento = " + documento);
+
+
+	$.ajax({
+		type: 'POST',
+    	url: '/findOneUsuario/',
+		data: {'tipoDoc':tipoDoc,'documento':documento},
+		success: function (Usuarios) {
+
+			 alert("entre DATOS MODAL y el nombre es = " + Usuarios.tipoDoc_id + " " +  Usuarios.documento);
+
+                $('#tipoDoc1').val(Usuarios.tipoDoc_id);
+				$('#documento').val(Usuarios.documento);
+
+				$('#nombre1').val(Usuarios.nombre);
+
+				$('#genero').val(Usuarios.genero);
+				$('#departamentos').val(Usuarios.departamento);
+				$('#municipios').val(Usuarios.municipio);
+				$('#localidades').val(Usuarios.localidad);
+				$('#ciudades').val(Usuarios.ciudad);
+
+				$('#direccion').val(Usuarios.direccion);
+				$('#telefono').val(Usuarios.telefono);
+				$('#contacto').val(Usuarios.contacto);
+				$('#estadoCivil').val(Usuarios.estadoCivil);
+				$('#ocupaciones').val(Usuarios.ocupacion);
+				$('#correo').val(Usuarios.correo);
+
+
+				$('#centrosc').val(Usuarios.centrosc_id);
+				$('#tiposUsuario').val(Usuarios.tiposUsuario_id);
+
+				 $('#usuariosModalTriage').modal({show:true});
+			//	 $('#usuariosModal').modal().hide();
+
+
+
+
+                    },
+	   		    error: function (request, status, error) {
+	   	    	}
+	});
+};
+
 
 
 
@@ -220,6 +450,8 @@ function findOneUsuario1()
 };
 
 
+
+
 $('#tablaDatos tbody td').click(function(){
       var rowIndex = $(this).parent().index('#tablaDatos tbody tr');
       var tdIndex = $(this).index('#tablaDatos tbody tr:eq('+rowIndex+') td');
@@ -269,7 +501,10 @@ $('#tablaDatosTriage tbody td').click(function(){
 
       tipoDoc=$(this).parents("tr").find("td").eq(0).html();
       documento=$(this).parents("tr").find("td").eq(1).html();
-      sede='1';
+      var sede = document.getElementById("Sede").value;
+
+      alert("sede = " + sede);
+
 
       if ((tdIndex+1) == '9')
       {
@@ -565,6 +800,8 @@ $(document).on('change', '#busServicioT', function(event) {
 
        var Serv =   $(this).val()
 
+       alert("Entre para llamar a buscarServiciosTriage : " + Serv)
+
         var Sede =  document.getElementById("Sede").value;
        // var Sede1 = document.getElementById("FormBuscar").elements["Sede"];
 
@@ -616,10 +853,11 @@ $(document).on('change', '#busSubServicio', function(event) {
 
 
        var select = document.getElementById("busSubServicio"); /*Obtener el SELECT */
-       var Serv = select.options[select .selectedIndex].value; /* Obtener el valor */
+       var Serv = select.options[select.selectedIndex].value; /* Obtener el valor */
        var SubServ =   $(this).val()
 
         var Sede =  document.getElementById("Sede").value;
+        alert("voy a enviar este servicio parea la busqueda de habitaciones  = " + Serv);
 
 
         $.ajax({
@@ -666,13 +904,25 @@ $(document).on('change', '#busSubServicio', function(event) {
 
 $(document).on('change', '#busSubServicioT', function(event) {
 
+        alert("Entre a busSubServicioT");
 
-       var select = document.getElementById("busSubServicioT"); /*Obtener el SELECT */
-       var Serv = select.options[select .selectedIndex].value; /* Obtener el valor */
-       var SubServ =   $(this).val()
+        var select = document.getElementById("busServicioT"); /*Obtener el SELECT */
+        // var Serv = select.options[select.selectedIndex].value; /* Obtener el valor */
+       // var Serv = document.getElementById("busServicioT").value;
+
+	var Serv = $("#busSubServicioT").val();
+
+
+
+        alert("Entre para llamar a buscar Nuevo ServiciosTriage : " + Serv);
+
+        var SubServ =   $(this).val()
 
         var Sede =  document.getElementById("Sede").value;
 
+
+        alert("Entre para llamar a buscar SubServiciosTriage : " + SubServ);
+        alert("Entre para llamar a buscar Sede : " + Sede);
 
         $.ajax({
 	           url: '/buscarHabitacionesTriage',
@@ -682,17 +932,18 @@ $(document).on('change', '#busSubServicioT', function(event) {
 
 	  		success: function (respuesta) {
 
+	  		alert("Me devuelvo pos satisfactorio habitaciones");
+
+
 	  		   var options = '<option value="=================="></option>';
 
 	  		  var dato = JSON.parse(respuesta);
 
+                     const $id2 = document.querySelector("#dependenciasT");
 
-                     const $id2 = document.querySelector("#dependencias");
+ 	      		     $("#dependenciasT").empty();
 
-
- 	      		     $("#dependencias").empty();
-
-
+                    alert("ya borre ahora a escribir depedencias" + dato);
 
 	                 $.each(dato, function(key,value) {
                                     options +='<option value="' + value.id + '">' + value.nombre + '</option>';
@@ -701,10 +952,6 @@ $(document).on('change', '#busSubServicioT', function(event) {
                                     option.text = value.nombre;
                                     $id2.appendChild(option);
  	      		      });
-
-
-
-
 
                     },
 	   		    error: function (request, status, error) {
@@ -953,12 +1200,12 @@ function findOneAdmision(tipoDoc,Documento,consec, sede)
 
 function findOneTriage(tipoDoc , Documento, Nombre, sede)
 {
-     alert("Entre function finfOneAdmision");
-     alert("datos= " + tipoDoc);
-     alert("datos1= " + Documento);
-     alert("datos2= " + Nombre);
-     alert("datos3= " + sede);
- 	var envios = new FormData();
+     alert("Entre function finfOneTriage");
+     alert("datos0 = " + tipoDoc);
+     alert("datos1 = " + Documento);
+     alert("datos2 = " + Nombre);
+     alert("datos3 = " + sede);
+     var envios = new FormData();
 
 
 
