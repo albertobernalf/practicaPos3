@@ -143,6 +143,8 @@ urlpatterns = [
     path('findOneUsuarioTriage/', viewsTriage.UsuariosModalTriage),
     path('grabaUsuariosTriage/', viewsTriage.grabaUsuariosTriage),
     path('grabaTriageModal/', viewsTriage.grabaTriageModal),
+    path('admisionTriageModal/', viewsTriage.admisionTriageModal),
+    path('guardarAdmisionTriage/', viewsTriage.guardarAdmisionTriage),
 
 
 # Facturacion

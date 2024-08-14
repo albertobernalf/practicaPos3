@@ -157,10 +157,10 @@ class Dependencias(models.Model):
     fechaRegistro = models.DateTimeField(default=now, editable=False)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
-    #class Meta:
+    class Meta:
 
     #  unique_together = ('sedesClinica', 'serviciosSedes', 'subServicios','numero','dependenciasTipo')
-
+       unique_together = (('tipoDoc', 'documento'),)	
        #constraints = [
         #   models.UniqueConstraint(fields=[ 'sedesClinica', 'serviciosSedes','servicios','subServicios','numero','dependenciasTipo'], name='Constraint_dependencias')
        # ]

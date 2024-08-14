@@ -57,6 +57,9 @@ class Triage(models.Model):
     estadoReg = models.CharField(max_length=1, default='A', editable=False ,choices = TIPO_CHOICES)
 
 
+    class Meta:
+        unique_together = (('tipoDoc', 'documento'),)
+
     def __str__(self):
             return self.nombre
 

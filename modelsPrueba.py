@@ -121,17 +121,29 @@ Podria ser FuripsClinico, FuripsLegal
 Mas la tabla normal de las evoluciones Clinicas
 Ideas: ir backup de tablas sep
 
-El lines 22.
+El lunes 22.
 
 Terminar Clinico, buscar alog de farmacia, inventarios, compras
 
-subir tblas, buscar ultimas tablas mipres 2024
+subir tablas, buscar ultimas tablas mipres 2024
 -- segiir con mejoras presente chivo
 -- Probar portar a una nueva instalacion
 
 -- Ojo deja  grabar una cedula, documento en dos dependencias a la vez, controlar esop.
 -- Los filtros del triage no funcionan VERIFICAR
--- falta tener en cuenta clasificacion_triage
--- crear admision desde triage
+
 -- Ojo un usuario no puede tener dis (2) Triages
--- Ojo cuando actualizo un usuario existente desde crea Triage, problemas con fechanacio, estadocivil= 0, etc
+-- OJOOO el ingreso de una Admision debe ser agil, veloz se debe arreglar el ingreso de acompanantes y de responsables de la cuenta . deben de quedar en las misma captura de la admision
+   no en mas opciones.- (PRoPUESTAS) y si se crean nuevas ventanas modales para acompanantes, responsbles y empresas ???. Sera muy verraco crear tablas para solucionar esto en las modales asi :
+   tabla de conveniosPacienteIngresos, tabla contactos (crea un contacto), tabla responsables. Yo creo que es mejor crear unas tablas dentro d ela modal que ingreses los datos y se van 
+   a guardar en las tablas de usuarios_contactos (responsabe y contacto) y para el convenio es mas verraco, nop simplemente en otro lugar se crea la empresa para el paciente(usuario) y
+   aqui en la tabla simplemente lo asocia parta pa la grabacion del convenioo de la empresa.-
+
+
+-- ojo con los filtros d ebusqueda triage no estan funcionando
+-- Ojo cuando edito una modal triage y cambio clasificacion no la graba
+-- Ojo al editar la ventana modal triage se piederde profesional , nombreSede ??? ojo no se pueden perder estos valores basicos para el manejo d ela aplicacion
+-- falta tener en cuenta clasificacion_triage, porque el combo al ser seleccionado no cambia ni graba el valor escogido por el usuario ???'
+-- Ojo que paso al crear una admision no pone bien los subserviicios /habitaciones que paso si estaba funcionando.
+-- Al crear un triage No refresca el listado de triages
+-- Al crear un triage y colocar el numero del paciente en la ventana no cumple cabalmente el foco la ventana de modal usuario ver que pasa
