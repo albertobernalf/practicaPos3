@@ -131,6 +131,9 @@ urlpatterns = [
     path('guardarUsuariosModal/', viewsAdmisiones.guardarUsuariosModal),
     path('crearResponsables/', viewsAdmisiones.crearResponsables),
     path('encuentraAdmisionModal/<str:tipoDoc> , <str:documento> , <str:consec> , <str:sede>/', viewsAdmisiones.encuentraAdmisionModal, name='encuentraAdmisionModal'),
+    path('cambioServicio/', viewsAdmisiones.cambioServicio),
+    path('guardaCambioServicio/', viewsAdmisiones.guardaCambioServicio),
+
 
     # Triage
 

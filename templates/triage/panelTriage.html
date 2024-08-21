@@ -61,6 +61,7 @@ th ,tr{
                         <form class="form-inline" action="/buscarTriage/" method="POST" id="formBuscarTriage">
 
                             <input type="hidden" id="username" name="username" value="{{Username}}">
+			    <input type="hidden" id="username_id" name="username_id"   value="{{Username_id}}">
                             <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada"
                                    value="{{SedeSeleccionada}}">
                             <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
@@ -165,7 +166,7 @@ th ,tr{
                <div class="container"> -->
         <div class="card">
             <div class="myForm">
-                <form id="guardaTriageModal" method="POST" onsubmit="grabaTriageModal()">
+                <form id="guardaTriageModal" method="POST" onsubmit="guardaTriageModal()">
                     <div class="modal fade" id="modalActualizaTriage" tabindex="-1" role="dialog"
                          style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
@@ -199,11 +200,11 @@ th ,tr{
                                             </div>
 
                                             <div class="col">
-                                                <label for="busSubServicioT"
+                                                <label for="busSubServicioP"
                                                        class="col-sm-10 col-form-label col-form-label-sm">SubServicio:</label>
                                                 <select class="form-select  h-10 w-100 form-control form-control-sm"
                                                         aria-label=""
-                                                        id="busSubServicioT" name="busSubServicioT" disabled>
+                                                        id="busSubServicioP" name="busSubServicioP" disabled>
                                                     {% for subServicios in SubServicios %}
                                                     <option value="{{subServicios.id}}"> {{subServicios.nombre}}
                                                     </option>
@@ -412,9 +413,9 @@ th ,tr{
                                         <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
                                         <input type="hidden" id="documento" name="documento" value="{{Documento}}">
                                         <input type="hidden" id="username" name="username" value="{{Username}}">
-                                        <input type="hidden" id="Username_id" name="Username_id"
+                                        <input type="hidden" id="username_id" name="username_id"
                                                value="{{Username_id}}">
-                                        <input type="hidden" id="Profesional" name="Profesional"
+                                        <input type="hidden" id="profesional" name="profesional"
                                                value="{{Profesional}}">
                                         <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
                                         <input type="hidden" id="escogeModulo" name="escogeModulo"
@@ -637,6 +638,7 @@ th ,tr{
 
 
         <div class="row">
+
             <div class="col-lg-12" style="background-color:LightGray;">
                 <div class="card-block">
                     <div style="height: 300px; overflow: auto">
@@ -666,10 +668,12 @@ th ,tr{
                                 <td>{{triage.triage}}</td>
                                 <td>
                                     <button class="btn btn-primary" type="submit">Editar</button>
-                                    <!--
+
+                                    <!-- Ops recuerde lo estoy haciendo por la click en la tabla  Todo esto deberia de arreglarlo mejo
+
                    <a href="#" class="btn btn-primary eBtn1" role="button" data-toggle="modal" id="banda1"
                                           onclick="findOneTriage( {{triage.tipoDoc}}  {{triage.Documento}}  {{Sede}})">Editar</a>
-   -->
+    -->
                                 </td>
                                 <td>
                                     <a href="#" class="btn btn-primary" role="button" data-toggle="modal"
@@ -684,6 +688,8 @@ th ,tr{
                     </div>
                 </div>
             </div>
+            <span id="mensajes" name="mensajes">{{Mensajes}}</span>
+
         </div>
 
 
@@ -867,7 +873,7 @@ th ,tr{
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                                onclick="CierraModal()">Close
+                                                onclick="CierraModalUsuarioTriage()">Close
                                         </button>
                                         <input type="button" class="btn btn-primary" value="save"
                                                onclick="AUsuarioTriage()">
@@ -1089,7 +1095,7 @@ th ,tr{
                                         </div>
                                         <div class="col">
                                             <center>
-                                                <span id="mensaje1" name="mensaje1"></span>
+
                                                 <input type="submit" id="guardarTrige" name="guardarTriage"
                                                        value="GUARDAR"></input>
                                             </center>

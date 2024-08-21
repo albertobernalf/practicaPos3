@@ -33,6 +33,53 @@ const form2 = document.getElementById('formClinicos')
 console.log(form)
 console.log(form2)
 
+const get = document.getElementById('dispara');  
+get.addEventListener('click', e => {});  
+get.dispatchEvent(new Event('click'));  
+
+function clickEvent() {  
+
+
+console.log("The required event is triggered ") 
+	var valor = $('input[name="ingresoId"]:checked').val();
+	  var sede = document.getElementById("sede").value;
+
+
+	$.ajax({
+		type: 'POST',
+    		url: '/cambioServicio/',
+		data: {'valor' : valor, 'sede': sede},
+		dataType : 'json',
+		success: function (cambioServicio) {
+
+                  alert("llegue MODAL cambio Servicio = " + cambioServicio['Usuarios'].tipoDocId);
+                  alert("llegue MODAL cambio Servicio = " + cambioServicio['Usuarios'].documento);
+                     alert("servicio = " + cambioServicio['DependenciasActual'].servicio);
+                      alert("Subservicioio = " + cambioServicio['DependenciasActual'].subServicio);
+
+//		$("#tipoDocx option[value="+ cambioServicio['Usuarios'].tipoDocId +"]").attr("selected",true);
+		 $('#tipoDocx').val(cambioServicio['Usuarios'].tipoDoc);
+		 $('#documentox').val(cambioServicio['Usuarios'].documento);
+		 $('#pacientex').val(cambioServicio['Usuarios'].paciente);
+		 $('#consecx').val(cambioServicio['Usuarios'].consec);
+		$('#servicioActual').val(cambioServicio['DependenciasActual'].servicio);
+		$('#subServicioActual').val(cambioServicio['DependenciasActual'].subServicio);
+		$('#dependenciaActual').val(cambioServicio['DependenciasActual'].depNombre);
+		$('#fechaOcupacion').val(cambioServicio['DependenciasActual'].fechaOcupacion);
+
+
+		 $('#servicioCambio').val(cambioServicio['Servicios']);
+		 $('#subServicioCambio').val(cambioServicio['SubServicios']);
+		 $('#dependenciaCambio').val(cambioServicio['DependenciasActual'].habitaciones);
+
+
+                    },
+	   		    error: function (request, status, error) {
+	   	    	}
+	}); 
+} 
+
+
 
 function valida(forma)
 {
@@ -97,30 +144,13 @@ function AUsuario()
 		success: function (respuesta) {
 
 			$('#usuariosModal').modal().hide();
-
-			document.getElementById("busServicio2").value = document.getElementById("bakbusServicio2").value;
-             document.getElementById("busSubServicio2").value = document.getElementById("bakbusSubServicio2").value;
-         //    document.getElementById("dependenciasIngreso").value = document.getElementById("bakdependenciasIngreso").value;
-             document.getElementById("tipoDoc").value = document.getElementById("baktipoDoc").value;
-             document.getElementById("busDocumentoSel").value = document.getElementById("bakbusDocumentoSel").value;
-            // document.getElementById("fechaIngreso").value = document.getElementById("bakfechaIngreso");
             //  document.getElementById("fechaIngreso").value = '2024-01-01';
-             var pase  = document.getElementById("bakbusServicio2").value;
-             var pase1 = document.getElementById("bakbusSubServicio2").value;
-
-
-      //      var  dependenciasIngreso = document.getElementById("bakdependenciasIngreso");
-        //    var dxIngreso = document.getElementById("bakdxIngreso");
-      //      var especialidadesMedicosIngreso = document.getElementById("bakespecialidadesMedicosIngreso");
-     //       var  medicoIngreso = document.getElementById("bakmedicoIngreso");
-
-
-
+     
 
 
                 $('#mensaje1').html('<span> respuesta</span>');
                 $('#usuariosModal').modal().hide();
-			    // window.location.reload(document.getElementById("bakbusServicio2").value,document.getElementById("bakbusSubServicio2").value);
+			   
 			     window.location.reload();
 
                     },
@@ -128,6 +158,89 @@ function AUsuario()
 	   	    	}
 	});
 };
+
+
+// Aqui combos para Cambio de servicio
+
+$(document).on('change', '#servicioCambio', function(event) {
+
+    alert (" Entre cambio Servicio");
+    var serv =   $(this).val()
+    var sede =  document.getElementById("sede").value;
+    alert ("envio = " + serv + "   " + sede);
+
+
+        $.ajax({
+	           url: '/buscarSubServicios',
+	            data : {serv:serv, sede:sede},
+	           type: 'GET',
+	           dataType : 'json',
+	  		success: function (respuesta) {
+                        alert("Regrese");
+
+	  		   var options = '<option value="=================="></option>';
+	  		  var dato = JSON.parse(respuesta);
+                     const $id2 = document.querySelector("#subServicioCambio");
+ 	      		     $("#subServicioCambio").empty();
+				alert("voy a llenar subservicio");
+	                 $.each(dato, function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id2.appendChild(option);
+ 	      		      });
+                    },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+});
+
+
+
+$(document).on('change', '#subServicioCambio', function(event) {
+    alert (" Entre cambio Habitacion Servicio");
+       var select = document.getElementById("servicioCambio"); /*Obtener el SELECT */
+       var serv = select.options[select.selectedIndex].value; /* Obtener el valor */
+       var subServ =   $(this).val()
+       alert("voy a enviar este servicio   = " + serv);
+       alert("voy a enviar este Subservicio   = " + subServ);
+       var sede =  document.getElementById("sede").value;
+
+        $.ajax({
+	           url: '/buscarHabitaciones',
+		    data : {serv:serv, sede:sede, subServ:subServ, Exc:'S'},
+	           type: 'GET',
+	           dataType : 'json',
+	  		success: function (respuesta) {
+	  		   var options = '<option value="=================="></option>';
+	  		  var dato = JSON.parse(respuesta);
+                     const $id2 = document.querySelector("#dependenciaCambio");
+ 	      		     $("#dependenciaCambio").empty();
+			
+	                 $.each(dato, function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id2.appendChild(option);
+ 	      		      });
+                    },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+});
+
+// Fin combios cambios de Servicio
+
+
+// Aqui la Grabacion del Cambio de Servicio
+
+
+
+// Fin grabacion Cambio de Servicio
 
 ///// Aqui la para buscar Usuario  Admisiones ////
 
@@ -138,8 +251,6 @@ $(document).on('change', '#busDocumentoSel', function(event) {
 	var envios = new FormData();
 
 
-   document.getElementById("baktipoDoc").value  = document.getElementById("tipoDoc").value;
-   document.getElementById("bakbusDocumentoSel").value  = document.getElementById("busDocumentoSel").value;
    eldocu = document.getElementById("busDocumentoSel").value;
    alert( "Este es el nro del documento : " + eldocu);
 
@@ -149,19 +260,6 @@ $(document).on('change', '#busDocumentoSel', function(event) {
     alert("OtorDocumento = " +  busDocumentoSel);
 
 
-
-   document.getElementById("bakfechaIngreso").value  = document.getElementById("fechaIngreso");
-   document.getElementById("bakbusServicio2").value  = document.getElementById("busServicio2").value;
-   document.getElementById("bakbusSubServicio2").value  = document.getElementById("busSubServicio2").value;
-
-
- //   var bakdxIngreso = document.getElementById("dxIngreso").value;
-  //  var bakespecialidadesMedicosIngreso = document.getElementById("especialidadesMedicosIngreso").value;
-  //  var  bakdependenciasIngreso = document.getElementById("dependenciasIngreso").value;
-
-
-
- //   var  bakmedicoIngreso = document.getElementById("medicoIngreso").value;
 
 
 	 var select = document.getElementById("tipoDoc"); /*Obtener el SELECT */
@@ -303,10 +401,6 @@ function findOneUsuarioTriage()
     alert("OtorDocumento = " +  busDocumentoSelTriage);
 
 
-   document.getElementById("bakfechaIngreso").value  = document.getElementById("fechaIngreso");
-   document.getElementById("bakbusServicio2").value  = document.getElementById("busServicio2").value;
-   document.getElementById("bakbusSubServicio2").value  = document.getElementById("busSubServicio2").value;
-
 	 var select = document.getElementById("tipoDoc"); /*Obtener el SELECT */
        var tipoDoc = select.options[select.selectedIndex].value; /* Obtener el valor */
 
@@ -360,6 +454,61 @@ function findOneUsuarioTriage()
 };
 
 
+$(document).on('change', '#busDocumentoSel22', function(event) {
+
+	var envios = new FormData();
+
+     var select = document.getElementById("tipoDoc22"); /*Obtener el SELECT */
+       var tipoDoc = select.options[select.selectedIndex].value; /* Obtener el valor */
+
+
+	var documento = document.getElementById("busDocumentoSel22").value;
+
+    alert("Envio a la MOdal Tipo Doc = " + tipoDoc);
+    alert("Envio a la MOdal documento = " + documento);
+
+
+	$.ajax({
+		type: 'POST',
+    	url: '/findOneUsuario/',
+		data: {'tipoDoc':tipoDoc,'documento':documento},
+		success: function (Usuarios) {
+
+			 alert("entre DATOS MODAL y el nombre es = " + Usuarios.tipoDoc_id + " " +  Usuarios.documento);
+
+                             $('#tipoDoc1').val(Usuarios.tipoDoc_id);
+				$('#documento1').val(Usuarios.documento);
+				$('#nombre1').val(Usuarios.nombre);
+				$('#genero').val(Usuarios.genero);
+				$('#departamentos').val(Usuarios.departamento);
+				$('#municipios').val(Usuarios.municipio);
+				$('#localidades').val(Usuarios.localidad);
+				$('#ciudades').val(Usuarios.ciudad);
+
+				$('#direccion').val(Usuarios.direccion);
+				$('#telefono').val(Usuarios.telefono);
+				$('#contacto').val(Usuarios.contacto);
+				$('#estadoCivil').val(Usuarios.estadoCivil);
+				$('#ocupaciones').val(Usuarios.ocupacion);
+				$('#correo').val(Usuarios.correo);
+
+
+				$('#centrosc').val(Usuarios.centrosc_id);
+				$('#tiposUsuario').val(Usuarios.tiposUsuario_id);
+
+				 $('#usuariosModal').modal({show:true});
+
+
+
+
+
+                    },
+	   		    error: function (request, status, error) {
+	   	    	}
+	});
+});
+
+
 
 
 function findOneUsuario1()
@@ -367,9 +516,6 @@ function findOneUsuario1()
 
 	var envios = new FormData();
 
-
-   document.getElementById("baktipoDoc").value  = document.getElementById("tipoDoc").value;
-   document.getElementById("bakbusDocumentoSel").value  = document.getElementById("busDocumentoSel").value;
    eldocu = document.getElementById("busDocumentoSel").value;
    alert( "Este es el nro del documento : " + eldocu);
 
@@ -380,21 +526,8 @@ function findOneUsuario1()
 
 
 
-   document.getElementById("bakfechaIngreso").value  = document.getElementById("fechaIngreso");
-   document.getElementById("bakbusServicio2").value  = document.getElementById("busServicio2").value;
-   document.getElementById("bakbusSubServicio2").value  = document.getElementById("busSubServicio2").value;
 
-
- //   var bakdxIngreso = document.getElementById("dxIngreso").value;
-  //  var bakespecialidadesMedicosIngreso = document.getElementById("especialidadesMedicosIngreso").value;
-  //  var  bakdependenciasIngreso = document.getElementById("dependenciasIngreso").value;
-
-
-
- //   var  bakmedicoIngreso = document.getElementById("medicoIngreso").value;
-
-
-	 var select = document.getElementById("tipoDoc"); /*Obtener el SELECT */
+   var select = document.getElementById("tipoDoc"); /*Obtener el SELECT */
 
 
 
@@ -452,100 +585,60 @@ function findOneUsuario1()
 
 
 
+
+
 $('#tablaDatos tbody td').click(function(){
       var rowIndex = $(this).parent().index('#tablaDatos tbody tr');
       var tdIndex = $(this).index('#tablaDatos tbody tr:eq('+rowIndex+') td');
-     alert('Row Number: '+(rowIndex+1)+'\nColumn Number: '+(tdIndex+1));
-  //    var celda = $(this);
-      //alert("valor celda = " + celda.html());
- //     let obtenerDato = document.getElementsByTagName("td");
-      //alert("valores son : " + obtenerDato.innerHTML + " ::::" + obtenerDato[0].innerHTML + " " + obtenerDato[1].innerHTML + " " + obtenerDato[2].innerHTML + " " + obtenerDato[3].innerHTML + " " + obtenerDato[4].innerHTML + " " + obtenerDato[5].innerHTML + " " + obtenerDato[6].innerHTML)
-      //alert ("Aquip los valores");
-
-      //alert ($(this).parents("tr").find("td").eq(0).html());
-      //alert ($(this).parents("tr").find("td").eq(1).html());
-      //alert ($(this).parents("tr").find("td").eq(2).html());
-      //alert ($(this).parents("tr").find("td").eq(3).html());
-      //alert ($(this).parents("tr").find("td").eq(4).html());
-      //alert ($(this).parents("tr").find("td").eq(5).html());
-      //alert ($(this).parents("tr").find("td").eq(6).html());
-      //alert ($(this).parents("tr").find("td").eq(7).html());
-      //alert ($(this).parents("tr").find("td").eq(8).html());
-      //#alert ($(this).parents("tr").find("td").eq(9).html());
-      //alert ($(this).parents("tr").find("td").eq(10).html());
-
-      //var tipoDoc =
-      //var documento = document.getElementById("busDocumentoSel").value;
-      //var documento=
-      //var ingreso=
-      //alert("tipoDoc =" + tipoDoc + "documento=" + documento +"ingreso= " + ingreso);
-
-
-});
-
-$('#tablaDatosTriage tbody td').click(function(){
-      var rowIndex = $(this).parent().index('#tablaDatosTriage tbody tr');
-      var tdIndex = $(this).index('#tablaDatosTriage tbody tr:eq('+rowIndex+') td');
-      alert('Row Number: '+(rowIndex+1)+'\nColumn Number: '+(tdIndex+1));
-  //    var celda = $(this);
-      //alert("valor celda = " + celda.html());
- //     let obtenerDato = document.getElementsByTagName("td");
-      //alert("valores son : " + obtenerDato.innerHTML + " ::::" + obtenerDato[0].innerHTML + " " + obtenerDato[1].innerHTML + " " + obtenerDato[2].innerHTML + " " + obtenerDato[3].innerHTML + " " + obtenerDato[4].innerHTML + " " + obtenerDato[5].innerHTML + " " + obtenerDato[6].innerHTML)
-      //alert ("Aquip los valores");
-
-      alert ($(this).parents("tr").find("td").eq(0).html());
-      alert ($(this).parents("tr").find("td").eq(1).html());
-      alert ($(this).parents("tr").find("td").eq(2).html());
-      alert ($(this).parents("tr").find("td").eq(3).html());
-      alert ($(this).parents("tr").find("td").eq(4).html());
+   //   alert('Row Number: '+(rowIndex+1)+'\nColumn Number: '+(tdIndex+1));
 
       tipoDoc=$(this).parents("tr").find("td").eq(0).html();
       documento=$(this).parents("tr").find("td").eq(1).html();
+      consec=$(this).parents("tr").find("td").eq(3).html();
       var sede = document.getElementById("Sede").value;
 
-      alert("sede = " + sede);
+ //     alert("sede = " + sede);
+  //    alert("tipoDoc =" + tipoDoc + "documento=" + documento + "ingreso= " + consec);
+  //    alert("tdIndex = " + tdIndex);
 
+//    $(this).addClass('selected').siblings().removeClass('selected');    
+  //    alert("El valor del botón seleccionado es: " + $(this).find('input:first').val());
+  
 
-      if ((tdIndex+1) == '9')
+      if ((tdIndex+1)=='9')
       {
       alert("Entre a Editar AJAX");
 
       $.ajax({
 		type: 'POST',
-    	url: '/encuentraTriageModal/',
-		data: {'tipoDoc':tipoDoc,'documento':documento,'sede':sede},
+      	        url: '/encuentraAdmisionModal/',
+		data: {'tipoDoc':tipoDoc,'documento':documento,'consec':consec, 'sede':sede},
 		success: function (Usuarios) {
 
 			 alert("entre DATOS MODAL de Triage y el  nombre es = " + Usuarios.tipoDoc + " " +  Usuarios.documento);
-
-	            $('#tipoDoc').val(Usuarios.tipoDoc_id);
-				$('#documento').val(Usuarios.documento);
-				$('#motivo').val(Usuarios.motivo);
-				$('#examenFisico').val(Usuarios.examenFisico);
-				$('#frecCardiaca').val(Usuarios.frecCardiaca);
-				$('#frecRespiratoria').val(Usuarios.frecRespiratoria);
-				$('#taSist').val(Usuarios.taSist);
-				$('#taDiast').val(Usuarios.taDiast);
-				$('#taMedia').val(Usuarios.taMedia);
-				$('#glasgow').val(Usuarios.glasgow);
-				$('#peso').val(Usuarios.peso);
-				$('#temperatura').val(Usuarios.temperatura);
-				$('#estatura').val(Usuarios.estatura);
-				$('#glucometria').val(Usuarios.glucometria);
-				$('#escalaDolor').val(Usuarios.escalaDolor);
-				$('#tipoIngreso').val(Usuarios.tipoIngreso);
-				$('#observaciones').val(Usuarios.observaciones);
-				 $('#modalActualizaTriage').modal({show:true});
+		            $('#tipoDoc').val(Usuarios.tipoDoc_id);
+    			    $('#busDocumentoSel').val(Usuarios.documento);
+    			    $('#dependenciasIngreso').val(Usuarios.dependenciasIngreso);
+    			    $('#busEspecialidad').val(Usuarios.espMedico);
+    			    $('#dxIngreso').val(Usuarios.dxIngreso);
+    			    $('#medicoIngreso').val(Usuarios.medicoIngreso);
+    			    $('#viasIngreso').val(Usuarios.viasIngreso);
+    			    $('#causasExterna').val(Usuarios.causasExterna);
+    			    $('#regimenes').val(Usuarios.regimenes);
+    			    $('#tiposCotizante').val(Usuarios.cotizante);
+    			    $('#remitido').val(Usuarios.remitido);
+    			    $('#numManilla').val(Usuarios.numManilla);
+                            $('#modalActualizaAdmision').modal({show:true});
 
                     },
 	   		    error: function (request, status, error) {
 	   	    	}
 	});
       }
+
 });
 
-
- $('.eBtn').on('click',function(event)
+$('.eBtn').on('click',function(event)
 	        {
 			event.preventDefault();
 			var href = $(this).attr('href');
@@ -570,8 +663,7 @@ $('#tablaDatosTriage tbody td').click(function(){
 				$('#centrosc').val(Usuarios.centrosc_id);
 				$('#tiposUsuario').val(Usuarios.tiposUsuario_id);
 
-				}
-			);
+				});
 
 			 $('#usuariosModal').modal({show:true});
 
@@ -853,16 +945,16 @@ $(document).on('change', '#busSubServicio', function(event) {
 
 
        var select = document.getElementById("busSubServicio"); /*Obtener el SELECT */
-       var Serv = select.options[select.selectedIndex].value; /* Obtener el valor */
-       var SubServ =   $(this).val()
+       var serv = select.options[select.selectedIndex].value; /* Obtener el valor */
+       var subServ =   $(this).val()
 
-        var Sede =  document.getElementById("Sede").value;
-        alert("voy a enviar este servicio parea la busqueda de habitaciones  = " + Serv);
+        var sede =  document.getElementById("sede").value;
+        alert("voy a enviar este servicio parea la busqueda de habitaciones  = " + serv);
 
 
         $.ajax({
 	           url: '/buscarHabitaciones',
-	            data : {Serv:Serv, Sede:Sede, SubServ:SubServ, Exc:'N'},
+	            data : {serv:serv, sede:sede, subServ:subServ, Exc:'N'},
 	           type: 'GET',
 	           dataType : 'json',
 
@@ -968,42 +1060,40 @@ $(document).on('change', '#busSubServicioT', function(event) {
 
 
 
-$(document).on('change', '#busServicio2', function(event) {
+$(document).on('change', '#busServicio22', function(event) {
 
 
 
-       var Serv =   $(this).val()
+       var serv =   $(this).val()
 
-        var Sede =  document.getElementById("Sede").value;
+        var sede =  document.getElementById("Sede").value;
        // var Sede1 = document.getElementById("FormBuscar").elements["Sede"];
 
 
 
         $.ajax({
 	           url: '/buscarSubServicios',
-	            data : {Serv:Serv, Sede:Sede},
+	            data : {serv:serv, sede:sede},
 	           type: 'GET',
 	           dataType : 'json',
 
 	  		success: function (respuesta) {
+				alert("DE REGRESO");
+
 
 	  		   var options = '<option value="=================="></option>';
-
 	  		  var dato = JSON.parse(respuesta);
+			alert("esto devuelve = " + dato);
 
-
-                     const $id2 = document.querySelector("#busSubServicio2");
-
-
- 	      		     $("#busSubServicio2").empty();
-
+                     const $id21 = document.querySelector("#busSubServicio22");
+ 	      		     $("#busSubServicio22").empty();
 
 	                 $.each(dato, function(key,value) {
                                     options +='<option value="' + value.id + '">' + value.nombre + '</option>';
                                     option = document.createElement("option");
                                     option.value = value.id;
                                     option.text = value.nombre;
-                                    $id2.appendChild(option);
+                                    $id21.appendChild(option);
  	      		      });
 
 
@@ -1020,20 +1110,20 @@ $(document).on('change', '#busServicio2', function(event) {
 });
 
 
-$(document).on('change', '#busSubServicio2', function(event) {
+$(document).on('change', '#busSubServicio22', function(event) {
 
+       alert("Entre a cambiar el subservicio");	
 
+       var select = document.getElementById("busServicio22"); /*Obtener el SELECT */
+       var serv = select.options[select .selectedIndex].value; /* Obtener el valor */
+       var subServ =   $(this).val()
 
-       var select = document.getElementById("busServicio2"); /*Obtener el SELECT */
-       var Serv = select.options[select .selectedIndex].value; /* Obtener el valor */
-       var SubServ =   $(this).val()
-
-        var Sede =  document.getElementById("Sede").value;
+        var sede =  document.getElementById("sede").value;
 
 
         $.ajax({
 	           url: '/buscarHabitaciones',
-	            data : {Serv:Serv, Sede:Sede, SubServ:SubServ, Exc:'S'},
+	            data : {serv:serv, sede:sede, subServ:subServ, Exc:'S'},
 	           type: 'GET',
 	           dataType : 'json',
 
@@ -1044,10 +1134,10 @@ $(document).on('change', '#busSubServicio2', function(event) {
 	  		  var dato = JSON.parse(respuesta);
 
 
-                     const $id2 = document.querySelector("#dependenciasIngreso");
+                     const $id2 = document.querySelector("#dependenciasIngreso22");
 
 
- 	      		     $("#dependenciasIngreso").empty();
+ 	      		     $("#dependenciasIngreso22").empty();
 
 
 	                 $.each(dato, function(key,value) {
@@ -1191,23 +1281,12 @@ function findOneAdmision(tipoDoc,Documento,consec, sede)
 
 				 $('#modalActualizaAdmision').modal({show:true});
 
-
                     },
 	   		    error: function (request, status, error) {
 	   	    	}
 	});
 };
 
-function findOneTriage(tipoDoc , Documento, Nombre, sede)
-{
-     alert("Entre function finfOneTriage");
-     alert("datos0 = " + tipoDoc);
-     alert("datos1 = " + Documento);
-     alert("datos2 = " + Nombre);
-     alert("datos3 = " + sede);
-     var envios = new FormData();
 
 
 
-
-};

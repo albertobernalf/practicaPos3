@@ -17,8 +17,8 @@ import tzlocal
 import datetime as dt
 
 
-
-from sitios.models import  HistorialDependencias, Dependencias
+from admisiones.models import Ingresos
+from sitios.models import  HistorialDependencias, Dependencias, ServiciosSedes, SubServiciosSedes
 from usuarios.models import Usuarios, TiposDocumento
 from planta.models import Planta
 
@@ -330,7 +330,7 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
                                    password="pass123")
     curt = miConexiont.cursor()
     comando = 'SELECT ser.id id ,ser.nombre nombre FROM sitios_serviciosSedes sed, clinico_servicios ser Where sed."sedesClinica_id" =' + "'" + str(
-        sede) + "'" + ' AND sed."servicios_id" = ser.id'
+        sede) + "'" + ' AND sed."servicios_id" = ser.id AND ser.nombre != ' + "'" + str('TRIAGE') + "'"
     curt.execute(comando)
     print(comando)
 
@@ -465,7 +465,7 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
                                    password="pass123")
     curt = miConexiont.cursor()
 
-    comando = 'SELECT p.id id, p.nombre nombre FROM planta_planta p,clinico_medicos med, planta_tiposPlanta tp WHERE p."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' and p."tiposPlanta_id" = tp.id and tp.nombre = ' + "'" + str('MEDICO') + "'" + ' and med.planta_id = p.id'
+    comando = 'SELECT med.id id, med.nombre nombre FROM planta_planta p,clinico_medicos med, planta_tiposPlanta tp WHERE p."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' and p."tiposPlanta_id" = tp.id and tp.nombre = ' + "'" + str('MEDICO') + "'" + ' and med.planta_id = p.id'
 
     curt.execute(comando)
     print(comando)
@@ -1074,14 +1074,14 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
                                        password="pass123")
         curx = miConexionx.cursor()
 
-        detalle = 'SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(
-            Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosIng_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and ser.nombre != ' + "'" + str('TRIAGE') + "'" + ' AND dep."serviciosSedes_id" = sd.id'
+        detalle = 'SELECT i.id id, tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(
+            Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and ser.nombre != ' + "'" + str('TRIAGE') + "'" + ' AND dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id"'
         print(detalle)
 
         curx.execute(detalle)
 
-        for tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual in curx.fetchall():
-            ingresos.append({'tipoDoc': tipoDoc, 'Documento': documento, 'Nombre': nombre, 'Consec': consec,
+        for id, tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual in curx.fetchall():
+            ingresos.append({'id':id, 'tipoDoc': tipoDoc, 'Documento': documento, 'Nombre': nombre, 'Consec': consec,
                              'FechaIngreso': fechaIngreso, 'FechaSalida': fechaSalida,
                              'servicioNombreIng': servicioNombreIng, 'camaNombreIng': camaNombreIng,
                              'DxActual': dxActual})
@@ -1103,14 +1103,14 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
                                        password="pass123")
         curx = miConexionx.cursor()
 
-        detalle = 'SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(
-            Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosIng_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null'
+        detalle = 'SELECT i.id id, tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(
+            Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null'
         print(detalle)
 
         curx.execute(detalle)
 
-        for tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual in curx.fetchall():
-            ingresos.append({'tipoDoc': tipoDoc, 'Documento': documento, 'Nombre': nombre, 'Consec': consec,
+        for id,tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual in curx.fetchall():
+            ingresos.append({'id':id, 'tipoDoc': tipoDoc, 'Documento': documento, 'Nombre': nombre, 'Consec': consec,
                              'FechaIngreso': fechaIngreso, 'FechaSalida': fechaSalida,
                              'servicioNombreIng': servicioNombreIng, 'camaNombreIng': camaNombreIng,
                              'DxActual': dxActual})
@@ -1301,7 +1301,7 @@ def retornarAdmision(request, Sede, Perfil, Username, Username_id, NombreSede):
     curx = miConexionx.cursor()
 
     detalle = 'SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(
-        Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosIng_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null'
+        Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null'
     print(detalle)
 
     curx.execute(detalle)
@@ -1935,7 +1935,7 @@ def buscarAdmision(request):
     curx = miConexionx.cursor()
 
 
-    detalle = 'SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosIng_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null'
+    detalle = 'SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null'
     print(detalle)
 
     curx.execute(detalle)
@@ -2671,8 +2671,8 @@ def buscarServicios(request):
 
 def buscarSubServicios(request):
     context = {}
-    Serv = request.GET["Serv"]
-    Sede = request.GET["Sede"]
+    Serv = request.GET["serv"]
+    Sede = request.GET["sede"]
     print ("Entre buscar  Subservicios del servicio  =",Serv)
     print ("Sede = ", Sede)
 
@@ -2789,9 +2789,9 @@ def buscarHabitaciones(request):
     context = {}
     Exc = request.GET["Exc"]
     print ("Excluir = ", Exc)
-    Serv = request.GET["Serv"]
-    SubServ = request.GET["SubServ"]
-    Sede = request.GET["Sede"]
+    Serv = request.GET["serv"]
+    SubServ = request.GET["subServ"]
+    Sede = request.GET["sede"]
     print ("Entre buscar  servicio =",Serv)
     print("Entre buscar Subservicio =", SubServ)
     print ("Sede = ", Sede)
@@ -2810,9 +2810,7 @@ def buscarHabitaciones(request):
 
     else:
 
-
-       comando = 'SELECT dep.id id ,dep.numero nombre   FROM sitios_serviciosSedes sed,  sitios_subserviciossedes sub , sitios_dependencias dep Where sed."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' AND sed."sedesClinica_id" = sub."sedesClinica_id" and sub."serviciosSedes_id" = sed.id and dep."sedesClinica_id"=sed."sedesClinica_id" and dep."serviciosSedes_id"= sed.id and dep."subServiciosSedes_id" = sub.id and dep."subServiciosSedes_id" = ' + "'" + str(SubServ) + "'" + ' and dep.disponibilidad = ' + "'" + 'L' + "'"
-
+       comando = 'SELECT dep.id id ,dep.numero nombre   FROM sitios_serviciosSedes sed,  sitios_subserviciossedes sub , sitios_dependencias dep ,  sitios_dependenciasTipo tip   Where sed."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' AND sed."sedesClinica_id" = sub."sedesClinica_id" and sub."serviciosSedes_id" = sed.id and dep."sedesClinica_id"=sed."sedesClinica_id" and dep."serviciosSedes_id"= sed.id and dep."subServiciosSedes_id" = sub.id and dep."subServiciosSedes_id" = ' + "'" + str(SubServ) + "'" + ' and dep.disponibilidad = ' + "'" + 'L' +  "'" + ' and tip.id=dep."dependenciasTipo_id" and tip.nombre = ' + "'" + str('HABITACIONES') + "'"
     curt.execute(comando)
     print(comando)
 
@@ -2867,26 +2865,23 @@ def crearAdmisionDef(request):
         print(" Username = " , username)
         context['Username'] = username
 
-        Profesional = request.POST["Profesional"]
+        Profesional = request.POST["profesional"]
         print(" Profesional = " , Profesional)
         context['Profesional'] = Profesional
 
 
-        Username_id = request.POST["Username_id"]
+        Username_id = request.POST["username_id"]
         print("Username_id = ", Username_id)
         context['Username_id'] = Username_id
 
-        busServicio2 = request.POST["busServicio2"]
+        busServicio2 = request.POST["busServicio22"]
         print(" busServicio2 = ", busServicio2)
         context['BusServicio2'] = busServicio2
 
-        tipoDoc = request.POST['tipoDoc']
-       # documento = request.POST['documento']
-        documento = request.POST['busDocumentoSel']
+        tipoDoc = request.POST['tipoDoc22']
+        documento = request.POST['busDocumentoSel22']
         print("tipoDoc = ", tipoDoc)
         print("documento = ", documento)
-        #extraServicio = request.POST['extraServicio']
-       #print("extraServicio = ", extraServicio)
 
         # Consigo el Id del Paciente Documento
 
@@ -2913,7 +2908,7 @@ def crearAdmisionDef(request):
 
         factura = 0
         numcita = 0
-        dependenciasIngreso = request.POST['dependenciasIngreso']
+        dependenciasIngreso = request.POST['dependenciasIngreso22']
         print("dependenciasIngreso =", dependenciasIngreso)
         #dependenciasActual = dependenciasIngreso
         dependenciasSalida = ""
@@ -2966,18 +2961,13 @@ def crearAdmisionDef(request):
         context['Regimenes'] = regimenes
         tiposCotizante = request.POST["tiposCotizante"]
         context['TiposCotizante'] = tiposCotizante
-        empresaId = request.POST["empresas"]
         ipsRemite = request.POST["ips"]
         numManilla = request.POST["numManilla"]
-        contactoAcompanante = request.POST["acompanantes"]
-        contactoResponsable = request.POST["responsables"]
         remitido = request.POST["remitido"]
-        print("empresaId= ", empresaId)
+        #print("empresaId= ", empresaId)
         print("numManilla = ", numManilla)
         print("ipsRemite = ", ipsRemite)
         print("remitido = ", remitido)
-        print("contactoAcompanante = ",contactoAcompanante)
-        print("contactoResponsable = ", contactoResponsable)
 
 
         grabo = Ingresos(
@@ -3008,11 +2998,11 @@ def crearAdmisionDef(request):
                          causasExterna_id=causasExterna,
                          regimen_id=regimenes,
                          tiposCotizante_id=tiposCotizante,
-                         empresa_id=empresaId,
+                         #empresa_id=empresaId,
                          ipsRemite_id=ipsRemite,
                          numManilla=numManilla,
-                         contactoAcompañante_id=contactoAcompanante,
-                         contactoResponsable_id=contactoResponsable,
+                         #contactoAcompañante_id=contactoAcompanante,
+                         #contactoResponsable_id=contactoResponsable,
                          remitido=remitido,
                          #salidaClinica=salidaClinica,
                          #salidaDefinitiva=salidaDefinitiva,
@@ -3067,7 +3057,7 @@ def crearAdmisionDef(request):
         curx = miConexionx.cursor()
 
         detalle = 'SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(
-            Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and  i."serviciosIng_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null'
+            Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and  i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null'
 
         print(detalle)
 
@@ -3158,7 +3148,7 @@ def crearAdmisionDef(request):
                                        password="pass123")
         curx = miConexionx.cursor()
         detalle = 'SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(
-            Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosIng_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null'
+            Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null'
         print(detalle)
 
         curx.execute(detalle)
@@ -3920,6 +3910,7 @@ def encuentraAdmisionModal(request, tipoDoc, documento, consec, sede):
         print("tipodoc = ", tipoDoc)
         print("consecutivoAdmision = ", consec)
         print("Sede = ", sede)
+        print("consec = ", consec)
         tipoDoc1 = TiposDocumento.objects.get(nombre=tipoDoc)
         print("tipodoc1 = ", tipoDoc1.id)
         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
@@ -3952,4 +3943,218 @@ def encuentraAdmisionModal(request, tipoDoc, documento, consec, sede):
             return JsonResponse(Usuarios, safe=False)
 
 
+def cambioServicio(request):
 
+    print("Entre a buscar una Cambio Servicio  Modal")
+    sede = request.POST['sede']
+    print("sede = ", sede)
+    ingreso = request.POST['valor']
+    print("ingreso = ", ingreso)
+
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = 'SELECT i."tipoDoc_id" tipoDocId, tp.nombre tipoDoc,  i.documento_id documentoId, u.documento documento, u.nombre  paciente , i.consec consec , i."fechaIngreso" ingreso , i."fechaSalida" salida, ser.nombre servicioNombreIng, dep.nombre dependenciasIngreso ,med1.nombre medicoIngreso, esp1.nombre espMedico,diag1.nombre diagMedico,vias.nombre viasIngreso, cexterna.nombre causasExterna,reg.nombre regimenes ,cot.nombre cotizante,i.remitido remitido,ips.nombre ips ,i."numManilla" numManilla, diag1.nombre dxIngreso FROM admisiones_ingresos i inner join usuarios_usuarios u on (u."tipoDoc_id" = i."tipoDoc_id" and u.id = i."documento_id" ) inner join sitios_dependencias dep on (dep."sedesClinica_id" = i."sedesClinica_id" and dep."tipoDoc_id" =  i."tipoDoc_id" and dep.documento_id =i."documento_id"  and dep.consec = i.consec) inner join usuarios_tiposDocumento tp on (tp.id = u."tipoDoc_id") inner join sitios_dependenciastipo deptip on (deptip.id = dep."dependenciasTipo_id") inner join sitios_serviciosSedes sd on (sd."sedesClinica_id" = i."sedesClinica_id") inner join clinico_servicios ser  on (ser.id = sd.servicios_id  and ser.id = i."serviciosIng_id" ) left join clinico_especialidades esp1 on (esp1.id = i."especialidadesMedicosIngreso_id" ) left join clinico_diagnosticos diag1 on (diag1.id = i."dxIngreso_id") left join clinico_medicos med1 on (med1.id =i."medicoIngreso_id"  ) inner join clinico_viasIngreso vias on (vias.id = i."ViasIngreso_id") left join clinico_causasExterna cexterna on (cexterna.id = i."causasExterna_id") inner join clinico_regimenes reg on (reg.id = i.regimen_id) inner join clinico_tiposcotizante cot on (cot.id = i."tiposCotizante_id") left  join clinico_ips ips on (ips.id =i."ipsRemite_id") WHERE i.id = ' + "'" + str(ingreso) + "'"
+
+    print(comando)
+    curt.execute(comando)
+
+    usuarios = {}
+
+    for tipoDocId, tipoDoc, documentoId, documento, paciente, consec, ingreso, salida, servicioNombreIng, dependenciasIngreso, medicoIngreso, espMedico, diagMedico, viasIngreso, causasExterna, regimenes, cotizante, remitido, ips, numManilla, dxIngreso in curt.fetchall():
+        usuarios = {'tipoDocId':tipoDocId, 'tipoDoc': tipoDoc, 'documentoId':documentoId, 'documento': documento, 'paciente': paciente, 'consec':consec, 'ingreso': ingreso,
+                    'salida': salida, 'servicioNombreIng': servicioNombreIng,
+                    'dependenciasIngreso': dependenciasIngreso,
+                    'medicoIngreso': medicoIngreso, 'espMedico': espMedico, 'diagMedico': diagMedico,
+                    'viasIngreso': viasIngreso, 'causasExterna': causasExterna,
+                    'regimenes': regimenes, 'cotizante': cotizante, 'remitido': remitido,
+                    'ips': ips, 'numManilla': numManilla, 'dxIngreso': dxIngreso}
+
+    miConexiont.close()
+    print(usuarios)
+
+    cambioServicio = {}
+    cambioServicio['Usuarios'] = usuarios
+
+    dependenciasActual = {}
+
+    # Ahora llevamos la dependencia Actual
+
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                   password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = 'select dep.id id , dep.numero numero , dep.nombre depNombre, sd.nombre servicio, sub.nombre subServicio,   dep."tipoDoc_id" tipoDocId, dep.documento_id documentoId, dep."fechaRegistro" fechaRegistro, dep.disponibilidad dispo,dep.consec consec ,dep."fechaOcupacion" ocupacion from sitios_dependencias dep, sitios_serviciosSedes sd, sitios_subServiciosSedes sub where dep."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' and dep."tipoDoc_id"=' + "'" + str(tipoDocId) + "'" + ' and dep.documento_id=' + "'" + str(documentoId) + "'" + ' and dep.consec = ' + str(consec) + '  and dep.disponibilidad = ' + "'" + str('O') + "'" + ' and sub."serviciosSedes_id" = sd.id and sd.id=dep."serviciosSedes_id" and sub.id= dep."subServiciosSedes_id"'
+
+    print(comando)
+    curt.execute(comando)
+
+    for id, numero, depNombre, servicio, subServicio, tipoDocId, documentoId, fechaRegistro, dispo, consec, ocupacion in curt.fetchall():
+        dependenciasActual = {'id': id, 'numero': numero, 'depNombre': depNombre, 'servicio': servicio,
+                    'subServicio': subServicio,
+                    'tipoDocId': tipoDocId, 'documentoId': documentoId,
+                    'fechaRegistro': fechaRegistro,'dispo':dispo, 'consec':consec,'ocupacion':ocupacion   }
+
+    miConexiont.close()
+
+    cambioServicio['DependenciasActual'] = dependenciasActual
+
+
+    # Combo de Servicios
+    # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curt = miConexiont.cursor()
+    comando = 'SELECT ser.id id ,ser.nombre nombre FROM sitios_serviciosSedes sed, clinico_servicios ser Where sed."sedesClinica_id" =' + "'" + str(
+        sede) + "'" + ' AND sed."servicios_id" = ser.id AND ser.nombre in ( ' + "'" + str('HOSPITALIZACION') + "','" + str('URGENCIAS') + "')"
+    curt.execute(comando)
+    print(comando)
+
+    servicios = []
+    servicios.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+        servicios.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(servicios)
+
+    cambioServicio['Servicios'] = servicios
+
+    # Fin combo servicios
+
+    # Combo de SubServicios
+    # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curt = miConexiont.cursor()
+    comando = 'SELECT sub.id id ,sub.nombre nombre  FROM sitios_serviciosSedes sed, clinico_servicios ser  , sitios_subserviciossedes sub Where sed."sedesClinica_id" =' + "'" + str(sede) + "'" + ' AND sed."servicios_id" = ser.id and  sed."sedesClinica_id" = sub."sedesClinica_id" and sed."servicios_id" = sub."serviciosSedes_id" AND ser.nombre in ( ' + "'" + str('HOSPITALIZACION') + "','" + str('URGENCIAS') + "')"
+    curt.execute(comando)
+    print(comando)
+
+    subServicios = []
+    subServicios.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+        subServicios.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(subServicios)
+
+
+    cambioServicio['SubServicios'] = subServicios
+
+    # Fin combo SubServicios
+
+
+    # Combo Habitaciones
+
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = 'SELECT dep.id ,dep.nombre FROM sitios_dependencias dep, sitios_dependenciasTipo tip , sitios_serviciosSedes sd, clinico_servicios ser where dep."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND tip.nombre=' + "'" + str('HABITACIONES') + "'" + ' and dep."dependenciasTipo_id" = tip.id AND dep.disponibilidad = ' + "'" + str('L') + "'" + ' AND sd.id=dep."serviciosSedes_id" AND ser.id = sd."servicios_id" and ser.nombre in (' + "'" + str('HOSPITALIZACION') + "'," + "'" + str('URGENCIAS') + "')"
+    curt.execute(comando)
+    print(comando)
+
+    habitaciones = []
+    habitaciones.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+        habitaciones.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(habitaciones)
+
+    cambioServicio['Habitaciones'] = habitaciones
+
+    # Fin combo Habitaciones
+
+    if cambioServicio == '[]':
+        datos = {'Mensaje': 'Usuario No existe'}
+        return JsonResponse(cambioServicio, safe=False)
+    else:
+        datos = {'Mensaje': 'Usuario SIII existe'}
+        return JsonResponse(cambioServicio, safe=False)
+
+
+
+def guardaCambioServicio(request):
+    print ("entre guardaCambioServicio")
+    tipoDoc = request.POST['tipoDocx']
+    documento = request.POST["documentox"]
+    consec = request.POST["consecx"]
+    print("tipoDoc  = ", tipoDoc)
+    print ("documento = ", documento )
+    print("consec = ", consec )
+    servicioFin = request.POST["servicioCambio"]
+    subServicioFin = request.POST["subServicioCambio"]
+    dependenciaFin = request.POST["dependenciaCambio"]
+    fechaOcupacion = dt.datetime.now()
+    fechaRegistro= fechaOcupacion
+
+    username_id = request.POST["username_id"]
+    print("servicioFin = ", servicioFin )
+    print("subServicioFin = ", subServicioFin )
+    print("fechaOcupacion = ", fechaOcupacion)
+    print("username_id = ", username_id)
+
+    # Aqui consigo el servicio Actual
+
+    servicioActualId = ServiciosSedes.objects.get(id=servicioFin)
+    print("servicioActualId = ", servicioActualId.id)	
+
+    documentoId = Usuarios.objects.get(documento=documento)
+    print("el id del documento es : ", documentoId.id)
+    tipoDocId = TiposDocumento.objects.get(nombre=tipoDoc)
+    print("el id del tipo del  documento es : ", tipoDocId.id)
+
+    dependenciaActualId = Dependencias.objects.get(documento_id=documentoId.id , tipoDoc_id=tipoDocId.id , consec=consec)
+    print("el id del dependenciaActualId es : ", dependenciaActualId.id)
+    dependenciaFinalId = Dependencias.objects.get(serviciosSedes_id=servicioFin , subServiciosSedes_id=subServicioFin , id=dependenciaFin)
+    print("el id del dependenciaFinalId es : ", dependenciaFinalId.id)
+    ingresoActualId = Ingresos.objects.get(documento_id=documentoId.id , tipoDoc_id=tipoDocId.id , consec=consec)
+    print("el id del ingresoFinalId es : ", ingresoActualId.id)
+
+
+
+    # Actualiza la dependecia Actual
+
+    grabo01 =  Dependencias.objects.filter(id = dependenciaActualId.id).update(tipoDoc_id='', documento_id='', consec=0, disponibilidad='L',fechaRegistro=fechaRegistro, fechaLiberacion= fechaOcupacion)
+    print ("pase grabo01", grabo01)
+
+    # Actualiza la dependencia Nueva
+
+    grabo02 =  Dependencias.objects.filter(id = dependenciaFinalId.id).update(tipoDoc_id=tipoDocId.id, documento_id=documentoId.id, consec=consec, disponibilidad='O',fechaRegistro=fechaRegistro, fechaOcupacion= fechaOcupacion)
+    print("pase grabo02", grabo02)
+    # Inserta en dependeciasHistoricos
+
+    # Actualiza la admision en Ingresos
+
+    grabo03 =  Ingresos.objects.filter(id = ingresoActualId.id).update(dependenciasActual_id=dependenciaFinalId.id, serviciosActual_id = servicioActualId.servicios_id)
+    print("pase grabo03", grabo03)
+
+    # Registro el historico de dependencias
+
+
+    grabo04 = HistorialDependencias(
+            tipoDoc_id=tipoDocId.id,
+            documento_id=documentoId.id,
+            consec=consec,
+            dependencias_id=dependenciaActualId.id,
+            disponibilidad='L',
+            fechaRegistro=fechaRegistro,
+            usuarioRegistro_id=username_id,
+            fechaLiberacion=fechaRegistro,
+            fechaOcupacion=dependenciaActualId.fechaOcupacion,
+            estadoReg='A'
+
+        )
+    grabo04.save()
+    print("yA grabe dependencias historico", grabo04.id)
+
+    CambioServicio = {}
+
+    CambioServicio['Mensaje'] = 'Cambio de servicio realizado'
+
+    return HttpResponse(CambioServicio, safe=False)
+    

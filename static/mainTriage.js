@@ -41,18 +41,26 @@ function valida(forma)
 
 	};
 
+function CierraModalUsuarioTriage()
+{
+
+       	 $('#usuariosModalTriage').modal('hide');
+
+}
+
+
 
 function CierraModalTriage()
 {
 
-       	 $('#modalActualizaTriage').modal().hide();
+       	 $('#modalActualizaTriage').modal('hide');
 
 }
 
 function CierraModalAdmisionTriage()
 {
 
-       	 $('#crearAdmTriage').modal().hide();
+       	 $('#crearAdmTriage').modal('hide');
 
 }
 
@@ -115,7 +123,7 @@ function AUsuarioTriage()
 
 
                 $('#mensaje1').html('<span> respuesta</span>');
-                $('#usuariosModalTriage').modal().hide();
+                $('#usuariosModalTriage').modal('hide');
 		        window.location.reload();
 
                     },
@@ -204,9 +212,18 @@ $('#tablaDatosTriage tbody td').click(function(){
 		data: {'tiposDoc':tiposDoc,'documento':documento,'sede':sede},
 		success: function (response_data) {
 
+              //  var options = '<option value="=================="></option>';
+              //  const $id9 = document.querySelector("#busServicioT");
+
+		var dato =   JSON.parse(response_data['Triage'].servicioSedes);
+		alert("dato = " + dato);
+
 
                 $('#busServicioT').val(response_data['Triage'].servicioSedes);
-          	    $('#busSubServicioT').val(response_data['Triage'].subServiciosSedes);
+	    
+
+
+          	    $('#busSubServicioP').val(response_data['Triage'].subServiciosSedes);
 				$('#dependenciasP').val(response_data['Triage'].dependencias);
           		$('#tiposDoc').val(response_data['Triage'].tiposDoc);
 				$('#busDocumentoSel').val(response_data['Triage'].documento);
@@ -227,6 +244,9 @@ $('#tablaDatosTriage tbody td').click(function(){
 				$('#tipoIngreso').val(response_data['Triage'].tipoIngreso);
 				$('#observaciones').val(response_data['Triage'].observaciones);
 				$('#clasificacionTriage').val(response_data['Triage'].clasificacionTriage);
+
+		
+
 				 $('#modalActualizaTriage').modal({show:true});
                     },
    		    error: function (request, status, error) {
@@ -244,9 +264,6 @@ $('#tablaDatosTriage tbody td').click(function(){
 	//$('#sede').val(sede);
 	//$('#tiposDoc').val(tiposDoc);
 	//$('#busDocumentoSel').val(documento);
-	alert (tiposDoc);
-	alert (documento);
-    alert (sede);
   	var username = document.getElementById("username").value;
   	alert ("username = " + username);
 
@@ -276,6 +293,7 @@ $('#tablaDatosTriage tbody td').click(function(){
  	      		      });
 
 
+			alert("voy para SubServicios  = " + response_data['SubServicios']);
 
 
 
@@ -301,6 +319,7 @@ $('#tablaDatosTriage tbody td').click(function(){
 				$('#busEspecialidad').val(response_data['Especialidades']);
 				//$('#medicoIngreso').val(response_data['Medicos']);
 
+
 	          	    const $id4 = document.querySelector("#medicoIngreso");
 
 	 	      	    $("#medicoIngreso").empty();
@@ -313,6 +332,7 @@ $('#tablaDatosTriage tbody td').click(function(){
                                     $id4.appendChild(option);
  	      		      });
 
+				$('#medicoIngreso').val(response_data['Medicos']);
 
 
 				$('#viasIngreso').val(response_data['ViasIngreso']);
@@ -322,7 +342,7 @@ $('#tablaDatosTriage tbody td').click(function(){
 				$('#remitido').val('N');
 				$('#ips').val(response_data['Ips']);
 				$('#numManilla').val('0');
-	            $('#crearAdmTriage').modal({show:false});
+	            $('#crearAdmTriage').modal({show:true});
                     },
    		    error: function (request, status, error) {
 	   	    	}
@@ -455,7 +475,7 @@ $(document).on('change', '#busServicio', function(event) {
                                     $id2.appendChild(option);
  	      		      });
 
-
+		//	$('#busSubServicio').val(respuesta);
 
 
 
@@ -481,7 +501,7 @@ $(document).on('change', '#busServicio2', function(event) {
 
 
         $.ajax({
-	           url: '/buscarSubServiciosTriage',
+	           url: '/buscarSubServicios',
 	            data : {Serv:Serv, Sede:Sede},
 	           type: 'GET',
 	           dataType : 'json',
@@ -576,6 +596,65 @@ $(document).on('change', '#busServicioX', function(event) {
 	     });
 });
 
+$(document).on('change', '#busSubServicio', function(event) {
+
+        alert("Entre a busSubServicio");
+
+        var select = document.getElementById('busServicio'); /*Obtener el SELECT */
+
+        var Serv = select.options[select.selectedIndex].value; /* Obtener el valor */
+
+        alert("servicio = " + Serv);
+
+        var SubServ =   $(this).val();
+
+        alert("SubServ = " + SubServ);
+
+        var Sede =  document.getElementById("Sede").value;
+
+         alert("Sede = " + Sede);
+//        alert("Entre para llamar a buscar SubServiciosTriage : " + SubServ);
+  //      alert("Entre para llamar a buscar Sede : " + Sede);
+
+        $.ajax({
+	           url: '/buscarHabitacionesTriage',
+	            data : {Serv:Serv, Sede:Sede, SubServ:SubServ, Exc:'S'},
+	           type: 'GET',
+	           dataType : 'json',
+
+	  		success: function (respuesta) {
+
+//	  		alert("Me devuelvo pos satisfactorio habitaciones");
+
+
+	  		   var options = '<option value="=================="></option>';
+
+	  		  var dato = JSON.parse(respuesta);
+
+                     const $id2 = document.querySelector("#busHabitacion");
+
+ 	      		     $("#busHabitacion").empty();
+
+//                    alert("ya borre ahora a escribir depedencias" + dato);
+
+	                 $.each(dato, function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id2.appendChild(option);
+ 	      		      });
+
+                    },
+	   		    error: function (request, status, error) {
+
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+
+	     });
+});
+
+
 
 $(document).on('change', '#busSubServicioT', function(event) {
 
@@ -657,7 +736,7 @@ $(document).on('change', '#busSubServicio2', function(event) {
   //      alert("Entre para llamar a buscar Sede : " + Sede);
 
         $.ajax({
-	           url: '/buscarHabitacionesTriage',
+	           url: '/buscarHabitaciones',
 	            data : {Serv:Serv, Sede:Sede, SubServ:SubServ, Exc:'S'},
 	           type: 'GET',
 	           dataType : 'json',
@@ -755,35 +834,14 @@ return false;
         }
 
 
-function findOneTriage(tipoDoc , Documento, Nombre, sede)
-{
-     alert("Entre function finfOneTriage");
-     alert("datos0 = " + tipoDoc);
-     alert("datos1 = " + Documento);
-     alert("datos2 = " + Nombre);
-     alert("datos3 = " + sede);
-     var envios = new FormData();
-
-
-
-
-};
-
 function guardaTriageModal()
 {
 	const forma = document.getElementById("guardaTriageModal");
-
-
-
 	var tiposDoc = document.getElementById("tiposDoc").value;
-
-
 	var documento = document.getElementById("busDocumentoSel").value;
-
   	var busServicioT = document.getElementById("busServicioT").value;
-  	var busSubServicioT = document.getElementById("busSubServicioT").value;
+  	var busSubServicioP = document.getElementById("busSubServicioP").value;
   	var dependenciasP = document.getElementById("dependenciasP").value;
-
   	var motivo = document.getElementById("motivo").value;
   	var examenFisico = document.getElementById("examenFisico").value;
   	var frecCardiaca = document.getElementById("frecCardiaca").value;
@@ -800,13 +858,14 @@ function guardaTriageModal()
   	var tipoIngreso = document.getElementById("tipoIngreso").value;
   	var observaciones = document.getElementById("observaciones").value;
   	var clasificacionTriage = document.getElementById("clasificacionTriage").value;
+
   	var sede = document.getElementById("Sede").value;
-  	alert("sede =" + sede);
+
     var username = document.getElementById("username").value;
     var Profesional = document.getElementById("Profesional").value;
-   alert("Profesional =" + Profesional);
+
     var nombreSede = document.getElementById("nombreSede").value;
-    alert("nombreSede =" + nombreSede);
+
     var Username_id = document.getElementById("Username_id").value;
     var escogeModulo = document.getElementById("escogeModulo").value;
 
@@ -817,7 +876,7 @@ function guardaTriageModal()
 	    data: {'tiposDoc': tiposDoc,
 	            'documento': documento,
 	            'busServicioT' : busServicioT,
-	            'busSubServicioT':busSubServicioT,
+	            'busSubServicioP':busSubServicioP,
 	            'dependenciasP':dependenciasP,
 	            'motivo':motivo ,
 	             'examenFisico':examenFisico,
@@ -834,7 +893,7 @@ function guardaTriageModal()
 	             'escalaDolor':escalaDolor,
 	             'tipoIngreso':tipoIngreso,
 	             'observaciones':observaciones,
-	             'clasificaciontriage':clasificacionTriage,
+	             'clasificacionTriage':clasificacionTriage,
 	             'sede':sede,
 	             'username':username,
 	             'Profesional':Profesional,
@@ -846,8 +905,8 @@ function guardaTriageModal()
 		        {
 
                 $('#mensaje1').html('<span> respuesta</span>');
-                $('#modalActualizaTriage').modal().hide();
-
+                // $('#modalActualizaTriage').modal('hide');
+                $('#modalActualizaTriage').modal({show:false});
 		        window.location.reload();
 		        $('#mensajeria').val("Triage Actualizado ...");
 
@@ -885,11 +944,11 @@ function guardarAdmisionTriage()
   	var sede = document.getElementById("Sede").value;
   	alert("sede =" + sede);
     var username = document.getElementById("username").value;
-    var Profesional = document.getElementById("Profesional").value;
+    var Profesional = document.getElementById("profesional").value;
    alert("Profesional =" + Profesional);
     var nombreSede = document.getElementById("nombreSede").value;
     alert("nombreSede =" + nombreSede);
-    var Username_id = document.getElementById("Username_id").value;
+    var Username_id = document.getElementById("username_id").value;
     var escogeModulo = document.getElementById("escogeModulo").value;
 
 	$.ajax({
@@ -923,8 +982,10 @@ function guardarAdmisionTriage()
          		alert ("REGRESE DE GUARDAR Admision triage ");
 
                         $('#mensaje1').html('<span> respuesta</span>');
-                        $('#crearAdmTriage').modal().hide();
-		        window.location.reload();
+              //          $('#crearAdmTriage').modal('hide');
+     		    $('#crearAdmTriage').modal({show:false});
+		         window.location.reload();
+
 		        $('#mensajeria').val("Admision creada ...");
 
                 },

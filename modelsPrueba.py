@@ -121,17 +121,17 @@ Podria ser FuripsClinico, FuripsLegal
 Mas la tabla normal de las evoluciones Clinicas
 Ideas: ir backup de tablas sep
 
+-- Acabo de detectar algo recontra DURO, los quetys SQL, mundo aparte su complejidad es aparte de la armadura general del programa,.. No debe retrazar el desarrollo
+   se deja hasta bun buen termino y se sigue con la armadura(desarrollo-software)
+
+
 El lunes 22.
 
 Terminar Clinico, buscar alog de farmacia, inventarios, compras
 
 subir tablas, buscar ultimas tablas mipres 2024
--- segiir con mejoras presente chivo
 -- Probar portar a una nueva instalacion
-
 -- Ojo deja  grabar una cedula, documento en dos dependencias a la vez, controlar esop.
--- Los filtros del triage no funcionan VERIFICAR
-
 -- Ojo un usuario no puede tener dis (2) Triages
 -- OJOOO el ingreso de una Admision debe ser agil, veloz se debe arreglar el ingreso de acompanantes y de responsables de la cuenta . deben de quedar en las misma captura de la admision
    no en mas opciones.- (PRoPUESTAS) y si se crean nuevas ventanas modales para acompanantes, responsbles y empresas ???. Sera muy verraco crear tablas para solucionar esto en las modales asi :
@@ -140,10 +140,44 @@ subir tablas, buscar ultimas tablas mipres 2024
    aqui en la tabla simplemente lo asocia parta pa la grabacion del convenioo de la empresa.-
 
 
--- ojo con los filtros d ebusqueda triage no estan funcionando
--- Ojo cuando edito una modal triage y cambio clasificacion no la graba
--- Ojo al editar la ventana modal triage se piederde profesional , nombreSede ??? ojo no se pueden perder estos valores basicos para el manejo d ela aplicacion
--- falta tener en cuenta clasificacion_triage, porque el combo al ser seleccionado no cambia ni graba el valor escogido por el usuario ???'
--- Ojo que paso al crear una admision no pone bien los subserviicios /habitaciones que paso si estaba funcionando.
--- Al crear un triage No refresca el listado de triages
--- Al crear un triage y colocar el numero del paciente en la ventana no cumple cabalmente el foco la ventana de modal usuario ver que pasa
+-- ojo con los filtros de busqueda triage no estan funcionando para la segunda busqueda se pirede el combo subservicio. Sipi PAILAS INVESTIGAR porque es cuando yo coloco o reescribo 
+  el combo subservicio con javascript .-
+
+-- En triage filtros cuando le da por segunda vez buscar se depelota (UMm no encontre nada de nada) 
+   OJOO EL MARTES 20 agosto  ESO TIENE QUE VER CREO CON LO ENCONTRADO LOD id REPETIDOS en una misma pagia. por ejemplo busServicio2
+
+
+-- cuandor creo una admision desde triage no me desaparece la ventana modal ??? /mymodal.hide() , ver si estop funcionap NO FUNCIONA DE PRONTO QUITAR WINDOW.RELOAD()/ 
+  nota: definitivamente no la cierra ops por cua sera? investigar
+
+
+-- ops en creacion triage, creacion usuario me actualizo la localidad y me borro la ocupacion_id ops (Puede ser problema d los campos NULL de localiaes y ocupaciones VERIFICAR)
+
+-- ops otra vuelta se pierden los combos de de servicio y subservicio y habita en la edicion de la modal triage pero cuando he dado vueltas por la creacion
+   de usuarios antes. Pero si entramos en una a triage y luego edicion no hay problema, es por paso de variables entre aplicaciones 
+   Ops Verificar ....
+
+-- No me modifico el usuario creado desde la modal de triage-usuario. 
+   ES PROBLEMA DE LOS VALORE NULOS, VER AGOSTO 20
+   Ops le puse temporlmente un puntico
+   Verificar ........
+
+
+-- Ojo se creo una modal de cambioServicioModal,  pero es mejor no hacerlo por modal sino en el article html pagina
+
+
+--  IMPORTANTE VER COMO NO HAYA QUE CREAR UN CLICK QUE SEA AUTOMATICO por que si no ñucas cambioservico por ejemplo
+ 
+-- La otra semana crear :
+   -- Cambio de Servicio : Dependencia desde --> dependencia hasta
+   -- Habitaciones (Mantenimiento)
+   -- OJO MARTES 20 AGOSTO IMPOLEMENTAR EL CLICK AUTOMATICO PERO DE ESTA FORMA : https://www.javatpoint.com/javascript-trigger-click
+      addeventistener, para ver si asip si funciona .-
+
+  -- Hay que revisar Ingresos={}, poruqe hay dos diferentes querys y no puede actualziar
+     en muchos de ellos la dependenciaActual_id. OJOOO
+
+  -- despues de almuerzo
+   1) git
+   2) acomodar mdalen enadmisiones y triage
+   39 ver si se puede arreglar algo de basura pero con mucho cuidado papaberol

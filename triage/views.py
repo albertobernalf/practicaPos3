@@ -40,9 +40,19 @@ def crearTriage(request):
         Sede = request.POST['Sede']
         sede = request.POST['Sede']
         context['Sede'] = Sede
-
         NombreSede = request.POST['nombreSede']
         nombreSede = request.POST['nombreSede']
+        print("Sedes Clinica = ", sedesClinica)
+        print ("Sede = ",Sede)
+        username = request.POST["username"].strip()
+        print(" Username = " , username)
+        context['Username'] = username
+        Profesional = request.POST["Profesional"]
+        print(" Profesional = " , Profesional)
+        context['Profesional'] = Profesional
+        Username_id = request.POST["Username_id"]
+        print("Username_id = ", Username_id)
+        context['Username_id'] = Username_id
 
         print("Sedes Clinica = ", sedesClinica)
         print ("Sede = ",Sede)
@@ -247,7 +257,7 @@ def crearTriage(request):
         # Fin Combo PermisosGrales
         print("permisosGrales= ", permisosGrales)
 
-        context = {}
+
         context['PermisosGrales'] = permisosGrales
         context['Documento'] = documento
         context['Username'] = username
@@ -265,8 +275,7 @@ def crearTriage(request):
         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
                                        password="pass123")
         curt = miConexiont.cursor()
-        comando = 'SELECT ser.id id ,ser.nombre nombre FROM sitios_serviciosSedes sed, clinico_servicios ser Where sed."sedesClinica_id" =' + "'" + str(
-            sede) + "'" + ' AND sed."servicios_id" = ser.id'
+        comando = 'SELECT ser.id id ,ser.nombre nombre FROM sitios_serviciosSedes sed, clinico_servicios ser Where sed."sedesClinica_id" =' + "'" + str(sede) + "'" + ' AND sed."servicios_id" = ser.id AND ser.nombre =' + "'" + str('TRIAGE') + "'"
         curt.execute(comando)
         print(comando)
 
@@ -289,7 +298,7 @@ def crearTriage(request):
                                        password="pass123")
         curt = miConexiont.cursor()
         comando = 'SELECT sub.id id ,sub.nombre nombre  FROM sitios_serviciosSedes sed, clinico_servicios ser  , sitios_subserviciossedes sub Where sed."sedesClinica_id" =' + "'" + str(
-            sede) + "'" + ' AND sed."servicios_id" = ser.id and  sed."sedesClinica_id" = sub."sedesClinica_id" and sed."servicios_id" = sub."serviciosSedes_id"'
+            sede) + "'" + ' AND sed."servicios_id" = ser.id and  sed."sedesClinica_id" = sub."sedesClinica_id" and sed."servicios_id" = sub."serviciosSedes_id"' + ' AND ser.nombre = ' + "'" + str('TRIAGE') + "'"
         curt.execute(comando)
         print(comando)
 
@@ -457,6 +466,7 @@ def crearTriage(request):
         # FIN RUTINA ARMADO CONTEXT
 
     print(triage1)
+    context['Mensajes'] = 'Triage Creado ... '	
 
     return render(request, "triage/panelTriage.html", context)
 
@@ -476,9 +486,26 @@ def buscarTriage(request):
     BusServicio = request.POST["busServicio"]
     BusSubServicio = request.POST["busSubServicio"]
     BusPaciente = request.POST["busPaciente"]
-    Sede = request.POST["sede"]
-    sede = request.POST["sede"]
+    Sede = request.POST['sede']
+    sede = request.POST['sede']
     context['Sede'] = Sede
+    NombreSede = request.POST['nombreSede']
+    nombreSede = request.POST['nombreSede']
+    context['NombreSede'] = nombreSede 
+    #print("Sedes Clinica = ", sedesClinica)
+    print ("Sede = ",Sede)
+    username = request.POST["username"].strip()
+    print(" Username = " , username)
+    context['Username'] = username
+    Profesional = request.POST["profesional"]
+    print(" Profesional = " , Profesional)
+    context['Profesional'] = Profesional
+    Username_id = request.POST["username_id"]
+    print("Username_id = ", Username_id)
+    context['Username_id'] = Username_id
+    EscogeModulo = request.POST["escogeModulo"]
+    print("EscogeModulo  = ", EscogeModulo )
+    context['EscogeModulo'] = EscogeModulo 
 
     # Consigo la sede Nombre
 
@@ -489,19 +516,7 @@ def buscarTriage(request):
     cur.execute(comando)
     print(comando)
 
-    nombreSedes = []
-
-    for nombre in cur.fetchall():
-        nombreSedes.append({'nombre': nombre})
-
-    miConexion.close()
-    print(nombreSedes)
-    nombresede1 = nombreSedes[0]
-
-    context['NombreSede'] = nombresede1
-
-    username = request.POST["username"]
-    context['Username'] = username
+    
     print("Sede  = ", Sede)
     print("BusHabitacion= ", BusHabitacion)
     print("BusTipoDoc=", BusTipoDoc)
@@ -873,7 +888,7 @@ def buscarTriage(request):
     print(detalle)
 
     if BusSubServicio != "":
-      detalle = detalle + " AND  sub.id = '" + str(BusSubServicio) + "'"
+      detalle = detalle + ' AND  dep."serviciosSedes_id" = sd.id and dep."subServiciosSedes_id"= ' +  "'" + str(BusSubServicio) + "'"
     print(detalle)
 
 
@@ -924,12 +939,14 @@ def buscarSubServiciosTriage(request):
     print ("Entre buscar  Subservicios del servicio  =",Serv)
     print ("Sede = ", Sede)
 
+    print ("Serv = ", Serv)
+
     # Combo de SubServicios
     #miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
     miConexiont =psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
     curt = miConexiont.cursor()
     #comando = 'SELECT sub.id id ,sub.nombre nombre FROM sitios_serviciosSedes sed ,sitios_subserviciossedes sub Where sed."sedesClinica_id" = ' + "'" + str(Sede) + "'" + '  and sed."sedesClinica_id" = sub."sedesClinica_id" and sed.id = sub."serviciosSedes_id" and sub."serviciosSedes_id" = ' + "'" + str(Serv) + "'"
-    comando = 'SELECT sub.id id ,sub.nombre nombre FROM sitios_serviciosSedes sed ,sitios_subserviciossedes sub , clinico_servicios serv Where sed."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' and sed."sedesClinica_id" = sub."sedesClinica_id" and sed.id = sub."serviciosSedes_id"  and sub."serviciosSedes_id" = sed.id and sed.id= ' + "'" + str(Serv) + "'" + ' and sed.servicios_id=serv.id'
+    comando = 'SELECT sub.id id ,sub.nombre nombre FROM sitios_serviciosSedes sed ,sitios_subserviciossedes sub , clinico_servicios serv Where sed."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' and sed."sedesClinica_id" = sub."sedesClinica_id" and sed.id = sub."serviciosSedes_id"  and sub."serviciosSedes_id" = sed.id and sed.id= ' + "'" + str(Serv) + "'" + ' and sed.servicios_id=serv.id' + ' AND serv.nombre = ' + "'" + str('TRIAGE') + "'"
     curt.execute(comando)
     print(comando)
 
@@ -949,6 +966,58 @@ def buscarSubServiciosTriage(request):
 
 
     return JsonResponse(json.dumps(subServicios), safe=False)
+
+def buscarHabitaciones(request):
+
+
+    context = {}
+    Exc = request.GET["Exc"]
+    print ("Excluir = ", Exc)
+    Serv = request.GET["Serv"]
+    SubServ = request.GET["SubServ"]
+    Sede = request.GET["Sede"]
+    print ("Entre buscar  servicio =",Serv)
+    print("Entre buscar Subservicio =", SubServ)
+    print ("Sede = ", Sede)
+
+
+    # Busco la habitaciones de un Servicio
+
+    #miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+    curt = miConexiont.cursor()
+
+    if Exc == 'N':
+
+      comando = "SELECT dep.id id ,dep.numero nombre  FROM sitios_serviciosSedes sed, clinico_servicios ser  , sitios_subserviciossedes sub , sitios_dependencias dep  Where sed.sedesClinica_id ='" + str(
+        Sede) + "' AND sed.servicios_id = ser.id and  sed.sedesClinica_id = sub.sedesClinica_id and sed.servicios_id =sub.servicios_id and  dep.sedesClinica_id=sed.sedesClinica_id and dep.servicios_id = sub.servicios_id and dep.subServicios_id =sub.id  and dep.subServicios_id = '" +str(SubServ) + "'" + ' and dep.disponibilidad = ' + "'" + 'L' + "'"
+
+    else:
+
+
+       comando = 'SELECT dep.id id ,dep.numero nombre   FROM sitios_serviciosSedes sed,  sitios_subserviciossedes sub , sitios_dependencias dep Where sed."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' AND sed."sedesClinica_id" = sub."sedesClinica_id" and sub."serviciosSedes_id" = sed.id and dep."sedesClinica_id"=sed."sedesClinica_id" and dep."serviciosSedes_id"= sed.id and dep."subServiciosSedes_id" = sub.id and dep."subServiciosSedes_id" = ' + "'" + str(SubServ) + "'" + ' and dep.disponibilidad = ' + "'" + 'L' + "'"
+
+    curt.execute(comando)
+    print(comando)
+
+    Habitaciones =[]
+
+
+
+
+    for id, nombre in curt.fetchall():
+        Habitaciones.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(Habitaciones)
+    context['Habitaciones'] = Habitaciones
+
+    context['Sede'] = Sede
+
+
+
+    return JsonResponse(json.dumps(Habitaciones), safe=False)
+
 
 
 
@@ -975,12 +1044,12 @@ def buscarHabitacionesTriage(request):
     if Exc == 'N':
 
       comando = "SELECT dep.id id ,dep.numero nombre  FROM sitios_serviciosSedes sed, clinico_servicios ser  , sitios_subserviciossedes sub , sitios_dependencias dep  Where sed.sedesClinica_id ='" + str(
-        Sede) + "' AND sed.servicios_id = ser.id and  sed.sedesClinica_id = sub.sedesClinica_id and sed.servicios_id =sub.servicios_id and  dep.sedesClinica_id=sed.sedesClinica_id and dep.servicios_id = sub.servicios_id and dep.subServicios_id =sub.id  and dep.subServicios_id = '" +str(SubServ) + "'"
+        Sede) + "' AND sed.servicios_id = ser.id and  sed.sedesClinica_id = sub.sedesClinica_id and sed.servicios_id =sub.servicios_id and  dep.sedesClinica_id=sed.sedesClinica_id and dep.servicios_id = sub.servicios_id and dep.subServicios_id =sub.id  and ser.nombre = " + "'" + str('TRIAGE') + "'" + " AND dep.subServicios_id = '" +str(SubServ) + "'"
 
     else:
 
 
-       comando = 'SELECT dep.id id ,dep.numero nombre   FROM sitios_serviciosSedes sed,  sitios_subserviciossedes sub , sitios_dependencias dep Where sed."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' AND sed."sedesClinica_id" = sub."sedesClinica_id" and sub."serviciosSedes_id" = sed.id and dep."sedesClinica_id"=sed."sedesClinica_id" and dep."serviciosSedes_id"= sed.id and dep."subServiciosSedes_id" = sub.id and dep."subServiciosSedes_id" = ' + "'" + str(SubServ) + "'"
+       comando = 'SELECT dep.id id ,dep.numero nombre  FROM sitios_serviciosSedes sed,  sitios_subserviciossedes sub , sitios_dependencias dep, clinico_servicios ser  Where sed."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' AND sed."sedesClinica_id" = sub."sedesClinica_id" and sub."serviciosSedes_id" = sed.id and dep."sedesClinica_id"=sed."sedesClinica_id" and dep."serviciosSedes_id"= sed.id and dep."subServiciosSedes_id" = sub.id  and ser.id = sed.servicios_id   and ser.nombre = ' + "'" + str('TRIAGE') + "'" + ' AND  dep."subServiciosSedes_id" = ' + "'" + str(SubServ) + "'"
 
     curt.execute(comando)
     print(comando)
@@ -1135,23 +1204,28 @@ def grabaUsuariosTriage(request):
     print("contacto = ", contacto)
     municipios  = request.POST['municipios']
     if municipios == '':
-        municipios="null"
+        municipios="."
 
 
     localidades  = request.POST['localidades']
     if localidades == '':
-        localidades="null"
+        localidades="."
 
     estadoCivil  = request.POST['estadoCivil']
     if estadoCivil == '':
-        estadoCivil="null"
+        estadoCivil="."
 
     ocupaciones = request.POST['ocupaciones']
     if ocupaciones == '':
-        ocupaciones="null"
+        ocupaciones="."
 
     correo = request.POST["correo"]
     print("centrosC = ", centrosC)
+
+
+    if centrosC== '':
+        centrosC="."
+
 
 
     print(documento)
@@ -1217,7 +1291,7 @@ def grabaTriageModal(request):
         print ("peso = " , peso)
         print("documento= ", documento)
         busServicioT = request.POST["busServicioT"]
-        busSubServicioT = request.POST["busSubServicioT"]
+        busSubServicioP = request.POST["busSubServicioP"]
         dependenciasP = request.POST["dependenciasP"]
         tiposDoc = request.POST["tiposDoc"]
         documento = request.POST["documento"]
@@ -1235,8 +1309,9 @@ def grabaTriageModal(request):
         escalaDolor = request.POST["escalaDolor"]
         tipoIngreso = request.POST["tipoIngreso"]
         observaciones = request.POST["observaciones"]
-        #clasificacionTriage = request.POST["clasificacionTriage"]
-        # OJOO QUEMADO POR EL MOMENTo
+
+        clasificacionTriage = request.POST['clasificacionTriage']
+
 
 
         documento_llave = Usuarios.objects.get(documento=documento)
@@ -1247,7 +1322,7 @@ def grabaTriageModal(request):
         miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
                                        password="pass123")
         cur3 = miConexion3.cursor()
-        comando = 'update triage_triage set  "serviciosSedes_id" = ' + "'" + str(busServicioT) + "'," + ' "subServiciosSedes_id" = ' + "'" + str(busSubServicioT) + "',"  + ' dependencias_id= ' + "'" +  str(dependenciasP) + "'," +  ' "tipoDoc_id" = ' "'" + str(tiposDoc) + "'" + ', documento_id  = ' + "'" + str(documento_llave.id) + "'" + ', motivo = ' + "'" + str(motivo) + "'" + ', "examenFisico" = ' + "'" + str(examenFisico) + "'" + ', "frecCardiaca"= ' + "'" + str(frecCardiaca) + "'" + ', "frecRespiratoria"= ' + "'" + str(frecRespiratoria) + "'" + ', "taSist"= ' + "'" + str(taSist) + "'" + ', "taDiast" = ' + "'" + str(taDiast) + "' , " + ' "taMedia" = ' + "'" + str(taMedia) + "'" + ', glasgow = ' + "'" + str(glasgow) + "'" + ', "peso"= ' + "'" + str(peso) + "'"  +  ', estatura= ' + "'" + str(estatura) + "'"  + ', temperatura = ' + "'" + str(temperatura) + "'" + ', glucometria = ' + "'" + str(glucometria) + "'" ', "tipoIngreso"= ' + "'" + str(tipoIngreso) + "'" + ', observaciones = ' + "'" + str(observaciones) + "'"  + ' WHERE "tipoDoc_id" = ' + str(tiposDoc) + ' AND documento_id = ' + "'" + str(documento_llave.id) + "';"
+        comando = 'update triage_triage set  "serviciosSedes_id" = ' + "'" + str(busServicioT) + "'," + ' "subServiciosSedes_id" = ' + "'" + str(busSubServicioP) + "',"  + ' dependencias_id= ' + "'" +  str(dependenciasP) + "'," +  ' "tipoDoc_id" = ' "'" + str(tiposDoc) + "'" + ', documento_id  = ' + "'" + str(documento_llave.id) + "'" + ', motivo = ' + "'" + str(motivo) + "'" + ', "examenFisico" = ' + "'" + str(examenFisico) + "'" + ', "frecCardiaca"= ' + "'" + str(frecCardiaca) + "'" + ', "frecRespiratoria"= ' + "'" + str(frecRespiratoria) + "'" + ', "taSist"= ' + "'" + str(taSist) + "'" + ', "taDiast" = ' + "'" + str(taDiast) + "' , " + ' "taMedia" = ' + "'" + str(taMedia) + "'" + ', glasgow = ' + "'" + str(glasgow) + "'" + ', "peso"= ' + "'" + str(peso) + "'"  +  ', estatura= ' + "'" + str(estatura) + "'"  + ', temperatura = ' + "'" + str(temperatura) + "'" + ', glucometria = ' + "'" + str(glucometria) + "'" ', "tipoIngreso"= ' + "'" + str(tipoIngreso) + "'" + ', observaciones = ' + "'" + str(observaciones) + "'"  +  ', "clasificacionTriage_id" = ' + "'" + str(clasificacionTriage) + "'"  +   ' WHERE "tipoDoc_id" = ' + str(tiposDoc) + ' AND documento_id = ' + "'" + str(documento_llave.id) + "';"
 
         print(comando)
         cur3.execute(comando)
@@ -1255,9 +1330,10 @@ def grabaTriageModal(request):
 
         miConexion3.close()
         print("De regreso")
-        return JsonResponse("Triage Actualizado ! ", safe=False)
+        response_data = {}
+        response_data['Mensajes']='Triage Actualizado ! '
+        return JsonResponse(response_data, safe=False)
 
-        #return HttpResponse("Triage Actualizado ! ")
 
 
 def admisionTriageModal(request):
