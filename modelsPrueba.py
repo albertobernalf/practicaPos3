@@ -131,7 +131,6 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 
 subir tablas, buscar ultimas tablas mipres 2024
 -- Probar portar a una nueva instalacion
--- Ojo deja  grabar una cedula, documento en dos dependencias a la vez, controlar esop.
 -- Ojo un usuario no puede tener dis (2) Triages
 -- OJOOO el ingreso de una Admision debe ser agil, veloz se debe arreglar el ingreso de acompanantes y de responsables de la cuenta . deben de quedar en las misma captura de la admision
    no en mas opciones.- (PRoPUESTAS) y si se crean nuevas ventanas modales para acompanantes, responsbles y empresas ???. Sera muy verraco crear tablas para solucionar esto en las modales asi :
@@ -146,38 +145,35 @@ subir tablas, buscar ultimas tablas mipres 2024
 -- En triage filtros cuando le da por segunda vez buscar se depelota (UMm no encontre nada de nada) 
    OJOO EL MARTES 20 agosto  ESO TIENE QUE VER CREO CON LO ENCONTRADO LOD id REPETIDOS en una misma pagia. por ejemplo busServicio2
 
-
 -- cuandor creo una admision desde triage no me desaparece la ventana modal ??? /mymodal.hide() , ver si estop funcionap NO FUNCIONA DE PRONTO QUITAR WINDOW.RELOAD()/ 
   nota: definitivamente no la cierra ops por cua sera? investigar
-
-
--- ops en creacion triage, creacion usuario me actualizo la localidad y me borro la ocupacion_id ops (Puede ser problema d los campos NULL de localiaes y ocupaciones VERIFICAR)
 
 -- ops otra vuelta se pierden los combos de de servicio y subservicio y habita en la edicion de la modal triage pero cuando he dado vueltas por la creacion
    de usuarios antes. Pero si entramos en una a triage y luego edicion no hay problema, es por paso de variables entre aplicaciones 
    Ops Verificar ....
 
 -- No me modifico el usuario creado desde la modal de triage-usuario. 
-   ES PROBLEMA DE LOS VALORE NULOS, VER AGOSTO 20
-   Ops le puse temporlmente un puntico
-   Verificar ........
-
-
 -- Ojo se creo una modal de cambioServicioModal,  pero es mejor no hacerlo por modal sino en el article html pagina
 
 
 --  IMPORTANTE VER COMO NO HAYA QUE CREAR UN CLICK QUE SEA AUTOMATICO por que si no ñucas cambioservico por ejemplo
  
 -- La otra semana crear :
-   -- Cambio de Servicio : Dependencia desde --> dependencia hasta
    -- Habitaciones (Mantenimiento)
    -- OJO MARTES 20 AGOSTO IMPOLEMENTAR EL CLICK AUTOMATICO PERO DE ESTA FORMA : https://www.javatpoint.com/javascript-trigger-click
       addeventistener, para ver si asip si funciona .-
 
   -- Hay que revisar Ingresos={}, poruqe hay dos diferentes querys y no puede actualziar
-     en muchos de ellos la dependenciaActual_id. OJOOO
+     en muchos de ellos la dependenciaActual_id. OJOOO 
+   -- ver si se puede arreglar algo de basura pero con mucho cuidado papaberol
+   -- error al crear triage subservicio, pero cuando se navega por los foltros de busquedap
+   -- Ojo en triage valores NULOS y de numericos o texto arreglar "update", tal como esta en glucometria
+   -- Colocar un control en guardar el cambio de servicio so no hay seleccionados datos en la ventana. para mantener robusta la Aplicacion..
 
-  -- despues de almuerzo
-   1) git
-   2) acomodar mdalen enadmisiones y triage
-   39 ver si se puede arreglar algo de basura pero con mucho cuidado papaberol
+-- Comenzar con el manejo de DataTables para el moduclo clinico
+-- Para le lunes, no se porque carachos, el boton que llama al  $get que trae info no funciona , dice qur url no existe pailas
+   no he podico, socorro , auxiliop
+   parece sedr que : $.get("/creacionHc/postConsultaHcli" +'/' + post_id  +'/edit/'  ,function (data) {
+   es cuestion d eeste llamado
+  
+-- continuar adaecuando crearHistoria en el vies clinico, de acuerdo a nueva situacion.

@@ -35,10 +35,6 @@ import pyodbc
 import psycopg2
 
 
-import json 
-import datetime 
-
-
 # Create your views here.
 
 
@@ -649,8 +645,10 @@ def crearHistoriaClinica(request):
             #return HttpResponse(json.dumps(data))
             return HttpResponse('Folio Creado')
 
-    else:
 
+
+
+    else:
         print ("Entre por GET Crear Historia Clinica")
         context = {}
         context['title'] = 'Mi gran Template'
@@ -660,11 +658,11 @@ def crearHistoriaClinica(request):
         context['HistorialDiagnosticosCabezoteForm'] = HistorialDiagnosticosCabezoteForm
 
 
-        Sede = request.GET["sede"]
-        #Servicio = request.GET["Servicio"]
-        #Perfil = request.GET["Perfil"]
-        Username = request.GET["username"]
-        Username_id = request.GET["username_id"]
+        Sede = request.GET["Sede"]
+        Servicio = request.GET["Servicio"]
+        Perfil = request.GET["Perfil"]
+        Username = request.GET["Username"]
+        Username_id = request.GET["Username_id"]
         Profesional = request.GET["profesional"]
 
         nombreSede = request.GET["nombreSede"]
@@ -673,7 +671,7 @@ def crearHistoriaClinica(request):
         IngresoPaciente = request.GET["IngresoPaciente"]
         espMedico = request.GET["espMedico"]
 
-        print("especialidad Medico = ", espMedico)
+        print("espcialidad Medico = ", espMedico)
         print("TipoDocPaciente = ", TipoDocPaciente)
 
         print("DocumentoPaciente = ", DocumentoPaciente)
@@ -766,6 +764,8 @@ def crearHistoriaClinica(request):
 
         # Fin combo Especialidades
 
+
+
         # Combo TiposFolio
 
         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
@@ -789,6 +789,8 @@ def crearHistoriaClinica(request):
 
 
         # Fin combo TiposFolio
+
+
 
         # Combo Laboratorios
 
@@ -840,11 +842,21 @@ def crearHistoriaClinica(request):
 
         # Fin combo Radiologia
 
+
+
+
+
         # Datos Basicos del Paciente
         filaTipoDoc = TiposDocumento.objects.get(nombre = TipoDocPaciente)
+
+
+
         print(filaTipoDoc.id)
 
+
+
         fila = Usuarios.objects.get(tipoDoc_id=filaTipoDoc.id,nombre=DocumentoPaciente)
+
         print ("OJO LOS DATOS DESNORMALIOZADOS")
 
         print (fila.documento)
@@ -853,6 +865,8 @@ def crearHistoriaClinica(request):
         curt = miConexiont.cursor()
 
         comando = "select  tipoDoc_id , tip.nombre tipnombre, documento documentoPaciente, u.nombre nombre, case when genero = 'M' then 'Masculino' when genero= 'F' then 'Femenino' end as genero, cen.nombre as centro, tu.nombre as tipoUsuario, fechaNacio, u.direccion direccion, u.telefono telefono  from usuarios_usuarios u, usuarios_tiposUsuario  tu, sitios_centros cen , usuarios_tiposDocumento tip  where tip.id =u.tipoDoc_id  AND u.tipoDoc_id = '" + str(filaTipoDoc.id) + "' and u.documento = '" + str(fila.documento) + "' and u.tiposUsuario_id = tu.id and u.centrosc_id = cen.id"
+
+
         curt.execute(comando)
         print(comando)
 
@@ -882,6 +896,7 @@ def crearHistoriaClinica(request):
         curt.execute(comando)
         print(comando)
 
+
         dependenciasRealizado = []
         #dependenciasRealizado.append({'id': '', 'nombre': ''})
 
@@ -901,6 +916,8 @@ def crearHistoriaClinica(request):
         curt = miConexiont.cursor()
 
         comando = "SELECT d.id id, d.nombre nombre FROM clinico_causasExterna d "
+
+
         curt.execute(comando)
         print(comando)
 
@@ -985,7 +1002,12 @@ def crearHistoriaClinica(request):
         context['Terapias'] = terapias
         context['TipoExamenTer'] = '2'
 
+
+
         # Fin combo Terapias
+
+
+
 
         # Combo No Qx
 
@@ -1001,6 +1023,7 @@ def crearHistoriaClinica(request):
         noQx = []
         noQx.append({'TipoId': '', 'id': '', 'nombre': '', 'cups': ''})
 
+
         for TipoId, id, nombre, cups in curt.fetchall():
             noQx.append({'TipoId': TipoId, 'id': id, 'nombre': nombre, 'cups': cups})
 
@@ -1014,6 +1037,7 @@ def crearHistoriaClinica(request):
 
 
         return render(request, 'clinico/navegacionClinica.html', context);
+
 
 
 
@@ -1349,8 +1373,8 @@ def cargaPanelMedico(request):
 
     # esta consulta por que se pierde de otras pantallas
 
-#    miConexion = pyodbc.connect('DRIVER={SQL Server};SERVER=CMKSISTEPC07\MEDICAL;DATABASE=vulnerable ;UID=sa;pwd=75AAbb??')
-    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+    miConexion = pyodbc.connect(
+        'DRIVER={SQL Server};SERVER=CMKSISTEPC07\MEDICAL;DATABASE=vulnerable ;UID=sa;pwd=75AAbb??')
     cur = miConexion.cursor()
     comando = "SELECT id ,nombre FROM dbo.sitios_sedesClinica"
     cur.execute(comando)
@@ -1605,105 +1629,4 @@ def buscarAntecedentes(request):
 
 
     return JsonResponse(json.dumps(antecedentes), safe=False)
-
-
-def serialize_datetime(obj): 
-    if isinstance(obj, datetime.datetime): 
-        return obj.isoformat() 
-    raise TypeError("Type not serializable") 
-
-
-
-# Create your views here.
-def load_dataAdmisiones(request, data):
-    print ("Entre load_data Admisiones")
-
-    context = {}
-    d = json.loads(data)
-
-    username = d['username']
-    sede = d['sede']
-    username_id = d['username_id']
-
-    nombreSede = d['nombreSede']
-    print ("sede:", sede)
-    print ("username:", username)
-    print ("username_id:", username_id)
-    
-
-    #print("data = ", request.GET('data'))
-
-    ingresos = []
-
-    # miConexionx = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
-    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",     password="pass123")
-    curx = miConexionx.cursor()
-   
-    #detalle = 'SELECT i.id id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id"'
-    detalle = 'SELECT i.id id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id" UNION SELECT t.id id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,t.consec consec , t."fechaSolicita" , cast(' + "'" + str('0001-01-01 00:00:00') + "'" + ' as timestamp) fechaSalida,ser.nombre servicioNombreIng, dep.nombre camaNombreIng , ' + "''" + ' dxActual FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  ,sitios_serviciosSedes sd, clinico_servicios ser WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND t."sedesClinica_id" = ' "'" + str(sede) + "'" + ' AND dep."sedesClinica_id" =  sd."sedesClinica_id" AND dep.id = t.dependencias_id AND t."serviciosSedes_id" = sd.id  AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and t."tipoDoc_id" = u."tipoDoc_id" and u.id = t."documento_id"  and ser.id = sd.servicios_id and dep."serviciosSedes_id" = sd.id and t."serviciosSedes_id" = sd.id and dep."tipoDoc_id" = t."tipoDoc_id" and dep."documento_id" = t."documento_id" and ser.nombre = ' + "'" + str('TRIAGE') + "'"
-    print(detalle)
-
-    curx.execute(detalle)
-
-    for id, tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual in curx.fetchall():
-        ingresos.append(
-		{"model":"ingresos.ingresos","pk":id,"fields":
-			{'id':id, 'tipoDoc': tipoDoc, 'documento': documento, 'nombre': nombre, 'consec': consec,
-                         'fechaIngreso': fechaIngreso, 'fechaSalida': fechaSalida,
-                         'servicioNombreIng': servicioNombreIng, 'camaNombreIng': camaNombreIng,
-                         'dxActual': dxActual}})
-
-    miConexionx.close()
-    print(ingresos)
-    context['Ingresos'] = ingresos
-
-
-    ## Voy a enviar tickets
-
-    #ingresos['EspecialidadesMedicos'] =
-
-    serialized1 = json.dumps(ingresos, default=serialize_datetime)
-
-    print ("Envio = ", json)
-
-    return HttpResponse(serialized1, content_type='application/json')
-
-
-def PostConsultaHcli(request, data):
-    print ("Entre POST edit Hc")
-
-
-    print("id = ", data)
-
-    if request.method == 'GET':
-
-        # Abro Conexion
-
-        miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",password="pass123")
-        cur = miConexion.cursor()
-        comando = 'SELECT i.id id, i."tipoDoc_id" tipoDocId,td.nombre nombreTipoDoc, i.documento_id documentoId, u.documento documento , i.consec consec FROM admisiones_ingresos i, usuarios_usuarios u, usuarios_tiposDocumento td where i.id=' + "'" +  str(id) + "'" + ' and i."tipoDoc_id" =td.id and i.documento_id=u.id'
-        print(comando)
-
-        cur.execute(comando)
-
-        hc = []
-
-        for id, tipoDocId, nombreTipoDoc, documentoId, documento, consec in cur.fetchall():
-            hc.append( {"id": id,
-                     "tipoDocId": tipoDocId,
-                     "nombreTipoDoc": nombreTipoDoc,
-                     "documentoId": documentoId, "documento": documento,
-                     "consec": consec  })
-
-        miConexion.close()
-        print(hc)
-
-        # Cierro Conexion
-
-        return JsonResponse({'pk':hc[0]['id'],'tipoDocId':hc[0]['tipoDocId'],'nombreTipoDoc':hc[0]['nombreTipoDoc'],
-                             'documentoId':hc[0]['documentoId'],  'documento': hc[0]['documento'],
-                             'consec': hc[0]['consec']})
-
-    else:
-        return JsonResponse({'errors':'Something went wrong!'})
 

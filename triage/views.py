@@ -1306,6 +1306,9 @@ def grabaTriageModal(request):
         peso = request.POST["peso"]
         temperatura = request.POST["temperatura"]
         glucometria = request.POST["glucometria"]
+        if glucometria == '':
+           glucometria="null"
+
         escalaDolor = request.POST["escalaDolor"]
         tipoIngreso = request.POST["tipoIngreso"]
         observaciones = request.POST["observaciones"]
@@ -1322,7 +1325,7 @@ def grabaTriageModal(request):
         miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
                                        password="pass123")
         cur3 = miConexion3.cursor()
-        comando = 'update triage_triage set  "serviciosSedes_id" = ' + "'" + str(busServicioT) + "'," + ' "subServiciosSedes_id" = ' + "'" + str(busSubServicioP) + "',"  + ' dependencias_id= ' + "'" +  str(dependenciasP) + "'," +  ' "tipoDoc_id" = ' "'" + str(tiposDoc) + "'" + ', documento_id  = ' + "'" + str(documento_llave.id) + "'" + ', motivo = ' + "'" + str(motivo) + "'" + ', "examenFisico" = ' + "'" + str(examenFisico) + "'" + ', "frecCardiaca"= ' + "'" + str(frecCardiaca) + "'" + ', "frecRespiratoria"= ' + "'" + str(frecRespiratoria) + "'" + ', "taSist"= ' + "'" + str(taSist) + "'" + ', "taDiast" = ' + "'" + str(taDiast) + "' , " + ' "taMedia" = ' + "'" + str(taMedia) + "'" + ', glasgow = ' + "'" + str(glasgow) + "'" + ', "peso"= ' + "'" + str(peso) + "'"  +  ', estatura= ' + "'" + str(estatura) + "'"  + ', temperatura = ' + "'" + str(temperatura) + "'" + ', glucometria = ' + "'" + str(glucometria) + "'" ', "tipoIngreso"= ' + "'" + str(tipoIngreso) + "'" + ', observaciones = ' + "'" + str(observaciones) + "'"  +  ', "clasificacionTriage_id" = ' + "'" + str(clasificacionTriage) + "'"  +   ' WHERE "tipoDoc_id" = ' + str(tiposDoc) + ' AND documento_id = ' + "'" + str(documento_llave.id) + "';"
+        comando = 'update triage_triage set  "serviciosSedes_id" = ' + "'" + str(busServicioT) + "'," + ' "subServiciosSedes_id" = ' + "'" + str(busSubServicioP) + "',"  + ' dependencias_id= ' + "'" +  str(dependenciasP) + "'," +  ' "tipoDoc_id" = ' "'" + str(tiposDoc) + "'" + ', documento_id  = ' + "'" + str(documento_llave.id) + "'" + ', motivo = ' + "'" + str(motivo) + "'" + ', "examenFisico" = ' + "'" + str(examenFisico) + "'" + ', "frecCardiaca"= ' + "'" + str(frecCardiaca) + "'" + ', "frecRespiratoria"= ' + "'" + str(frecRespiratoria) + "'" + ', "taSist"= ' + "'" + str(taSist) + "'" + ', "taDiast" = ' + "'" + str(taDiast) + "' , " + ' "taMedia" = ' + "'" + str(taMedia) + "'" + ', glasgow = ' + "'" + str(glasgow) + "'" + ', "peso"= ' + "'" + str(peso) + "'"  +  ', estatura= ' + "'" + str(estatura) + "'"  + ', temperatura = ' + "'" + str(temperatura) + "'" + ', glucometria = ' + str(glucometria)  + ', "tipoIngreso"= ' + "'" + str(tipoIngreso) + "'" + ', observaciones = ' + "'" + str(observaciones) + "'"  +  ', "clasificacionTriage_id" = ' + "'" + str(clasificacionTriage) + "'"  +   ' WHERE "tipoDoc_id" = ' + str(tiposDoc) + ' AND documento_id = ' + "'" + str(documento_llave.id) + "';"
 
         print(comando)
         cur3.execute(comando)

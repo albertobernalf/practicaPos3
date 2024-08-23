@@ -946,6 +946,7 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
     print(comando)
 
     ips = []
+    ips.append({'id': '', 'nombre': ''})
 
     for id, nombre in curt.fetchall():
         ips.append({'id': id, 'nombre': nombre})
@@ -1089,12 +1090,23 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         miConexionx.close()
         print(ingresos)
         context['Ingresos'] = ingresos
+
+
+        context['EspecialidadesMedicos'] = especialidadesMedicos
+
+    # Fin combo EspecialidadesMedicos
+
+
+
         ## FIN CONTEXTO solo Admisiones
         return render(request, "admisiones/panelAdmisiones.html", context)
 
     if (escogeModulo == 'HISTORIA CLINICA'):
         print ("WENTRE PERMSISO HISTORIA CLINICA")
         ## Aqui contexto para solo Historia Clinica
+
+        print("username = ", username)
+        username = username.lstrip()
 
         ingresos = []
 
@@ -1118,6 +1130,37 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         miConexionx.close()
         print(ingresos)
         context['Ingresos'] = ingresos
+
+        #username = username.lstrip()
+
+        print ("username = ", username)
+
+        documento_llave = Planta.objects.get(documento=username)
+
+        print("el id del dopcumento = ", documento_llave.id)
+
+        # Combo EspecialidadesMedicos
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",   password="pass123")
+        curt = miConexiont.cursor()
+        comando = 'SELECT em.id ,e.nombre FROM clinico_Especialidades e, clinico_EspecialidadesMedicos em,planta_planta pl  where em."especialidades_id" = e.id and em."planta_id" = pl.id AND pl.documento = ' + "'" + str(username) + "'"
+        curt.execute(comando)
+        print(comando)
+
+        especialidadesMedicos = []
+        especialidadesMedicos.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+             especialidadesMedicos.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+
+        print(especialidadesMedicos)
+
+        context['EspecialidadesMedicos'] = especialidadesMedicos
+
+        print ("especialidadesMedicos =", especialidadesMedicos)
 
 
         ## FIN CONTEXTO
@@ -3997,6 +4040,7 @@ def cambioServicio(request):
     miConexiont.close()
 
     cambioServicio['DependenciasActual'] = dependenciasActual
+    
 
 
     # Combo de Servicios
@@ -4080,9 +4124,12 @@ def cambioServicio(request):
 
 def guardaCambioServicio(request):
     print ("entre guardaCambioServicio")
+    CambioServicio = {}
+   
     tipoDoc = request.POST['tipoDocx']
     documento = request.POST["documentox"]
     consec = request.POST["consecx"]
+    pacientex = request.POST["pacientex"]
     print("tipoDoc  = ", tipoDoc)
     print ("documento = ", documento )
     print("consec = ", consec )
@@ -4092,11 +4139,24 @@ def guardaCambioServicio(request):
     fechaOcupacion = dt.datetime.now()
     fechaRegistro= fechaOcupacion
 
+
+
+    CambioServicio['TipoDocx'] = tipoDoc
+    CambioServicio['Documentox'] = documento
+    CambioServicio['Consecx'] = consec
+    CambioServicio['Pacientex'] = pacientex
+    #CambioServicio['ServicioCambio'] = servicioFin
+    #CambioServicio['SubServicioCambio'] = subServicioFin
+    #CambioServicio['DependenciaCambio'] = dependenciaFin
+
+
     username_id = request.POST["username_id"]
     print("servicioFin = ", servicioFin )
     print("subServicioFin = ", subServicioFin )
     print("fechaOcupacion = ", fechaOcupacion)
     print("username_id = ", username_id)
+    CambioServicio['Username_id'] = username_id
+
 
     # Aqui consigo el servicio Actual
 
@@ -4114,6 +4174,30 @@ def guardaCambioServicio(request):
     print("el id del dependenciaFinalId es : ", dependenciaFinalId.id)
     ingresoActualId = Ingresos.objects.get(documento_id=documentoId.id , tipoDoc_id=tipoDocId.id , consec=consec)
     print("el id del ingresoFinalId es : ", ingresoActualId.id)
+
+
+    sede = request.POST['sede'] 
+    sedeSeleccionada = request.POST['sedeSeleccionada'] 
+    numReporte = request.POST['numReporte'] 
+    grupo = request.POST['sede']
+    subGrupo = request.POST['subGrupo'] 
+    nombreSede = request.POST['nombreSede'] 
+    profesional = request.POST['profesional'] 
+    permisosGrales = request.POST['permisosGrales'] 
+    escogeModulo = request.POST['escogeModulo'] 
+    permisosDetalle = request.POST['permisosDetalle'] 
+
+    CambioServicio['Sede'] = sede
+    CambioServicio['SedeSeleccionada'] = sedeSeleccionada
+    CambioServicio['NumReporte'] = numReporte
+    CambioServicio['Grupo'] = grupo
+    CambioServicio['SubGrupo'] = subGrupo
+    CambioServicio['NombreSede'] = nombreSede
+    CambioServicio['Profesional'] = profesional
+    CambioServicio['PermisosGrales'] = permisosGrales
+    CambioServicio['EscogeModulo'] = escogeModulo
+    CambioServicio['PermisosDetalle'] = permisosDetalle
+
 
 
 
@@ -4152,9 +4236,89 @@ def guardaCambioServicio(request):
     grabo04.save()
     print("yA grabe dependencias historico", grabo04.id)
 
-    CambioServicio = {}
+    # Combo de Servicios
+    # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curt = miConexiont.cursor()
+    comando = 'SELECT ser.id id ,ser.nombre nombre FROM sitios_serviciosSedes sed, clinico_servicios ser Where sed."sedesClinica_id" =' + "'" + str(
+        sede) + "'" + ' AND sed."servicios_id" = ser.id AND ser.nombre in ( ' + "'" + str('HOSPITALIZACION') + "','" + str('URGENCIAS') + "')"
+    curt.execute(comando)
+    print(comando)
+
+    servicios = []
+    servicios.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+        servicios.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(servicios)
+
+    CambioServicio['Servicios'] = servicios
+
+    # Fin combo servicios
+
+
+    # Combo de SubServicios
+    # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curt = miConexiont.cursor()
+    comando = 'SELECT sub.id id ,sub.nombre nombre  FROM sitios_serviciosSedes sed, clinico_servicios ser  , sitios_subserviciossedes sub Where sed."sedesClinica_id" =' + "'" + str(sede) + "'" + ' AND sed."servicios_id" = ser.id and  sed."sedesClinica_id" = sub."sedesClinica_id" and sed."servicios_id" = sub."serviciosSedes_id" AND ser.nombre in ( ' + "'" + str('HOSPITALIZACION') + "','" + str('URGENCIAS') + "')"
+    curt.execute(comando)
+    print(comando)
+
+    subServicios = []
+    subServicios.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+        subServicios.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(subServicios)
+
+
+    CambioServicio['SubServicios'] = subServicios
+
+    # Fin combo SubServicios
+
+
+    # Combo Habitaciones
+
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = 'SELECT dep.id ,dep.nombre FROM sitios_dependencias dep, sitios_dependenciasTipo tip , sitios_serviciosSedes sd, clinico_servicios ser where dep."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND tip.nombre=' + "'" + str('HABITACIONES') + "'" + ' and dep."dependenciasTipo_id" = tip.id AND dep.disponibilidad = ' + "'" + str('L') + "'" + ' AND sd.id=dep."serviciosSedes_id" AND ser.id = sd."servicios_id" and ser.nombre in (' + "'" + str('HOSPITALIZACION') + "'," + "'" + str('URGENCIAS') + "')"
+    curt.execute(comando)
+    print(comando)
+
+    habitaciones = []
+    habitaciones.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+        habitaciones.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(habitaciones)
+
+    CambioServicio['Habitaciones'] = habitaciones
+
+    # Fin combo Habitaciones
 
     CambioServicio['Mensaje'] = 'Cambio de servicio realizado'
 
-    return HttpResponse(CambioServicio, safe=False)
-    
+    servicioActualId = ServiciosSedes.objects.get(id=servicioFin)
+    subServicioActualId = SubServiciosSedes.objects.get(id=subServicioFin)
+    dependenciaActualId = Dependencias.objects.get(id=dependenciaFin)
+
+    ## OJO NO CONFUNDIR ESTE PEDAZO DE CODIGO DE ABAJO CON LO DE ARRIBA SE SOBREESCRIBE
+	
+    CambioServicio['ServicioActual'] = servicioActualId.nombre
+    CambioServicio['SubServicioActual'] = subServicioActualId.nombre
+    CambioServicio['DependenciaActual'] = dependenciaActualId.nombre
+    CambioServicio['FechaOcupacion'] = fechaOcupacion
+
+    return JsonResponse(CambioServicio, safe=False)
+	

@@ -1,0 +1,226 @@
+{% extends "clinico/menuMedico.html" %}
+{% load static %}
+
+{% block content %}
+<script src={% static 'js/panelClinico.js' %} defer >         </script>
+
+
+
+<style>
+tablaTickets td {
+
+  text-align: center;
+  padding: 1px;
+  /* Alto de las celdas */
+  height: 1px;
+  font-size:40%
+  font-weight: bold;
+}
+
+tablaTickets tr {
+  padding: 1px;
+  /* Alto de las celdas */
+  height: 1px;
+
+}
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        /*------------------------------------------
+        --------------------------------------------
+        Post Listing Page
+        --------------------------------------------
+        --------------------------------------------*/
+
+        var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
+        var username = document.getElementById("username").value;
+        var nombreSede = document.getElementById("nombreSede").value;
+	var sede = document.getElementById("sede").value;
+
+
+         var data =  {}   ;
+
+         data['username'] = username;
+         data['sedeSeleccionada'] = sedeSeleccionada;
+         data['nombreSede'] = nombreSede;
+         data['sede'] = sede;
+         data = JSON.stringify(data);
+
+
+        var table = $('.tablaAdmisiones').DataTable({
+         "language": {
+                  "lengthMenu": "Display _MENU_ registros",
+                   "search": "Filtrar registros:",
+        
+                    },
+
+            processing: true,
+            serverSide: false,
+	 
+	     scrollY: '200px',
+	    scrollX: true,
+	    scrollCollapse: true,
+            paging:false,
+            columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        var btn = '';
+                        // btn = btn + " <button class='btn btn-primary editPost' data-pk='" + row.pk + "'>" + '<i class="fa fa-pencil"></i>' + "</button>";
+                        btn = btn + " <button class='btn btn-primary editPost' data-pk='" + row.pk + "'>" + "</button>";
+                     <!--   btn = btn + " <button class='btn btn-danger deletePost' data-action='post/" + row.pk + "/delete' data-pk='" + row.pk + "'>" + '<i class="fa fa-trash"></i>' + "</button>"; -->
+
+                        return btn;
+                    },
+                    "targets": 10
+               }
+            ],
+            ajax: {
+
+                 url:"/load_dataAdmisiones/" +  data,
+                 type: "POST",
+
+                dataSrc: ""
+            },
+
+            lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
+            columns: [
+                  { data: "fields.id"},
+                { data: "fields.tipoDoc"},
+                { data: "fields.documento"},
+                { data: "fields.nombre"},
+                { data: "fields.consec"},
+                { data: "fields.fechaIngreso"},
+                { data: "fields.fechasalida"},
+		{ data: "fields.servicioNombreIng"},
+                { data: "fields.camaNombreIng"},
+                { data: "fields.dxActual"},
+               
+
+
+            ]
+        });
+
+       /*--------------------------------------------
+        Click to Edit Button
+        --------------------------------------------
+        --------------------------------------------*/
+        $('body').on('click', '.editPost', function () {
+	  alert("Entre postEdit");
+
+          var username = document.getElementById("username").value;
+          var empleadoId = document.getElementById("empleadoId").value;
+
+            var post_id = $(this).data('pk');
+
+            $.get("/creacionTickets/postConsultaTicket" +'/' + post_id + ',' + username + ',' + empleadoId + '/edit/' ,function (data) {
+
+                $('#modelHeading').html("Edit Post");
+                $('#saveBtn').val("edit-post");
+                $('#ajaxModel').modal('show');
+                $('#pk').val(data.pk);
+                $('#nombreTiposTicket').val(data.nombreTiposTicket);
+                $('#empleado').val(data.nombreEmpleado);
+                $('#sedeInicial_id').val(data.nomSedeinicial);
+                $('#nombreTiposTurnoInicial').val(data.nombreTiposTurnoInicial);
+                $('#desdeInicial').val(data.desdeInicial);
+                $('#hastaInicial').val(data.hastaInicial);
+                   $('#sedeReemplazo').val(data.nomSedeReemplazo);
+                      $('#reemplazo').val(data.nombreEmpleadoReemplazo);
+
+                if (data.visibleTicketEmpleado=='S')
+                    {
+
+                    $('#sedeReemplazo').val(data.sedeReemplazo);
+                    $('#reemplazo').val(data.reemplazo);
+                    $('#respuestaEmpleadoCoordinador').val(data.nombreCoordinador);
+                    $('#textoRespuestaCoordinador').val(data.textoRespuestaCoordinador);
+                    $('#estadoRespuestaCoordinador').val(data.estadoRespuestaCoordinador);
+                    $('#respuestaEmpleadoThumano').val(data.nombreTHumano);
+                    $('#textoRespuestaThumano').val(data.textoRespuestaThumano);
+                    $('#estadoRespuestaThumano').val(data.estadoRespuestaThumano);
+                    }
+            })
+        });
+
+        /*------------------------------------------
+        --------------------------------------------
+        Print Error Msg
+        --------------------------------------------
+        --------------------------------------------*/
+        function printErrorMsg(msg) {
+            $('.error-msg').find('ul').html('');
+            $('.error-msg').css('display','block');
+            $.each( msg, function( key, value ) {
+                $(".error-msg").find("ul").append('<li>'+value+'</li>');
+            });
+        }
+
+
+   });
+</script>
+
+<input type="hidden" id="username" name="username" value = "{{Username}}">
+<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
+<input type="hidden" id="numreporte" name="numreporte" value = "{{numreporte}}">
+<input type="hidden" id="grupo" name="grupo" value = "{{Grupo}}">
+<input type="hidden" id="subGrupo" name="subGrupo" value = "{{SubGrupo}}">
+<!--  Estos si de la Aplixcacion base -->
+<input type="hidden" id="sede" name="sede" value = "{{Sede}}">
+<input type="hidden" id="documento" name="documento" value = "{{Documento}}">
+<input type="hidden" id="nombreSede" name="nombreSede" value = "{{NombreSede}}">
+<input type="hidden" id="profesional" name="profesional" value = "{{Profesional}}">
+<input type="hidden" id="permisosGrales" name="permisosGrales" value = "{{PermisosGrales}}">
+<input type="hidden" id="permisosDetalle" name="permisosDetalle" value = "{{PermisosDetalle}}">
+<input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
+<br>
+    <!-- INICIO ENCABEZADO PROPUESTO -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card"  >
+                <div class="card-header">
+                    <div class="row">
+                        <div class="row">
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row" >
+                        <div class="col-md-12" >
+                            <div class="alert alert-success success-msg" style="display:none"></div>
+          		<!--  <table class=" display nowrap table  table-bordered tablaAdmisiones table-hover table-sm dtr-inline"   >
+                          -->
+			 <table class="table table-bordered tablaTickets table-hover table-sm">
+                                <thead>
+                                <tr>
+                                    <th style="width:5%;">id </th>
+                                    <th style="width:5%;">TipoDoc</th>
+                                    <th style="width:12%;">Documento</th>
+                                    <th style="width:20%;">Paciente</th>
+                                    <th style="width:15%;">Consec</th>
+                                    <th style="width:3%;">FechaIngreso</th>
+                                    <th style="width:12%;">Fechasalida</th>
+                                    <th style="width:12%;">Cama</th>
+                                    <th style="width:12%;">Diagnostico</th>
+                                    <th style="width:5%;" >Action</th>
+                                  <!--  <th data-visible="true"></th>  -->
+                                </tr>
+                                </thead>
+                                <tbody style="vertical-align:bottom">
+                                <tr style="height:10%">
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+

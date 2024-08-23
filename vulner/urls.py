@@ -51,7 +51,7 @@ urlpatterns = [
     #path('/combo/<str:username>, <str:sedeSeleccionada>, <str:grupo>, <str:subGrupo>', views.combo),
 
     # path('contrasena/<str:documento>', views.contrasena),
-
+ 
     ## Invoca Reporte
 
     path('Reporte1/<str:numreporte>,<str:username>,<str:sedeSeleccionada>,<str:grupo>,<str:subGrupo>',
@@ -86,6 +86,11 @@ urlpatterns = [
     path('buscarAdmisionClinico/', viewsClinico.buscarAdmisionClinico),
     path('cargaPanelMedico/', viewsClinico.cargaPanelMedico),
     path('buscarAntecedentes/', viewsClinico.buscarAntecedentes),
+    path('load_dataAdmisiones/<str:data>', viewsClinico.load_dataAdmisiones, name='loaddataAdmisiones'),
+    #path('creacionHC/postConsultaHc/<str:id>/edit/', viewsClinico.PostConsultaHc, name='Post_editHc'),
+    path('creacionHC/<str:id>', viewsClinico.PostConsultaHcli),
+    path('creacionHC/postConsultaHc/<str:data>/edit/', viewsClinico.PostConsultaHcli , name='Post_editHc'),
+ 
 
     # Actividaes Mecanicas
 

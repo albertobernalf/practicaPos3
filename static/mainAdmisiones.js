@@ -40,10 +40,10 @@ get.dispatchEvent(new Event('click'));
 function clickEvent() {  
 
 
-console.log("The required event is triggered ") 
-	var valor = $('input[name="ingresoId"]:checked').val();
-	  var sede = document.getElementById("sede").value;
+    console.log("The required event is triggered ") ;
 
+	var valor = $('input[name="ingresoId"]:checked').val();
+	var sede = document.getElementById("sede").value;
 
 	$.ajax({
 		type: 'POST',
@@ -65,19 +65,37 @@ console.log("The required event is triggered ")
 		$('#servicioActual').val(cambioServicio['DependenciasActual'].servicio);
 		$('#subServicioActual').val(cambioServicio['DependenciasActual'].subServicio);
 		$('#dependenciaActual').val(cambioServicio['DependenciasActual'].depNombre);
-		$('#fechaOcupacion').val(cambioServicio['DependenciasActual'].fechaOcupacion);
-
-
+		$('#fechaOcupacion').val(cambioServicio['DependenciasActual'].ocupacion);
 		 $('#servicioCambio').val(cambioServicio['Servicios']);
 		 $('#subServicioCambio').val(cambioServicio['SubServicios']);
 		 $('#dependenciaCambio').val(cambioServicio['DependenciasActual'].habitaciones);
-
-
                     },
 	   		    error: function (request, status, error) {
 	   	    	}
 	}); 
 } 
+
+
+
+$(document).on('change', '#ingresoId', function(event) {
+
+           document.getElementById("mensajes").innerText="";
+           document.getElementById("tipoDocx").value="";
+           document.getElementById("documentox").value="";
+           document.getElementById("pacientex").value="";
+           document.getElementById("consecx").value="";
+           document.getElementById("servicioActual").value="";
+           document.getElementById("subServicioActual").value="";
+           document.getElementById("dependenciaActual").value="";
+           document.getElementById("fechaOcupacion").value="";
+           document.getElementById("servicioCambio").value="";
+           document.getElementById("subServicioCambio").value="";
+           document.getElementById("dependenciaCambio").value="";
+
+
+
+
+});
 
 
 
@@ -87,6 +105,7 @@ function valida(forma)
 
 
 	};
+
 
 
 function CierraModal()
@@ -253,27 +272,15 @@ $(document).on('change', '#busDocumentoSel', function(event) {
 
    eldocu = document.getElementById("busDocumentoSel").value;
    alert( "Este es el nro del documento : " + eldocu);
-
-
    	var busDocumentoSel = document.getElementById("busDocumentoSel").value;
     alert("Documento = " +  eldocu);
     alert("OtorDocumento = " +  busDocumentoSel);
-
-
-
-
 	 var select = document.getElementById("tipoDoc"); /*Obtener el SELECT */
-
-
-
        var tipoDoc = select.options[select.selectedIndex].value; /* Obtener el valor */
-
-
 	var documento = document.getElementById("busDocumentoSel").value;
 
     alert("Envio a la MOdal Tipo Doc = " + tipoDoc);
     alert("Envio a la MOdal documento = " + documento);
-
 
 	$.ajax({
 		type: 'POST',
@@ -308,9 +315,6 @@ $(document).on('change', '#busDocumentoSel', function(event) {
 
 				 $('#usuariosModal').modal({show:true});
 			//	 $('#usuariosModal').modal().hide();
-
-
-
 
                     },
 	   		    error: function (request, status, error) {
@@ -373,10 +377,6 @@ $(document).on('change', '#busDocumentoSelTriage', function(event) {
 
 				 $('#usuariosModalTriage').modal({show:true});
 			//	 $('#usuariosModal').modal().hide();
-
-
-
-
                     },
 	   		    error: function (request, status, error) {
 	   	    	}
@@ -394,8 +394,6 @@ function findOneUsuarioTriage()
 
    eldocu = document.getElementById("busDocumentoSelTriage").value;
    alert( "Este es el nro del documento : " + eldocu);
-
-
    	var busDocumentoSelTriage = document.getElementById("busDocumentoSeltriage").value;
     alert("Documento = " +  eldocu);
     alert("OtorDocumento = " +  busDocumentoSelTriage);
@@ -403,8 +401,6 @@ function findOneUsuarioTriage()
 
 	 var select = document.getElementById("tipoDoc"); /*Obtener el SELECT */
        var tipoDoc = select.options[select.selectedIndex].value; /* Obtener el valor */
-
-
 	var documento = document.getElementById("busDocumentoSelTriage").value;
 
     alert("Envio a la MOdal Tipo Doc = " + tipoDoc);
@@ -436,16 +432,11 @@ function findOneUsuarioTriage()
 				$('#estadoCivil').val(Usuarios.estadoCivil);
 				$('#ocupaciones').val(Usuarios.ocupacion);
 				$('#correo').val(Usuarios.correo);
-
-
 				$('#centrosc').val(Usuarios.centrosc_id);
 				$('#tiposUsuario').val(Usuarios.tiposUsuario_id);
 
 				 $('#usuariosModalTriage').modal({show:true});
 			//	 $('#usuariosModal').modal().hide();
-
-
-
 
                     },
 	   		    error: function (request, status, error) {
@@ -491,8 +482,6 @@ $(document).on('change', '#busDocumentoSel22', function(event) {
 				$('#estadoCivil').val(Usuarios.estadoCivil);
 				$('#ocupaciones').val(Usuarios.ocupacion);
 				$('#correo').val(Usuarios.correo);
-
-
 				$('#centrosc').val(Usuarios.centrosc_id);
 				$('#tiposUsuario').val(Usuarios.tiposUsuario_id);
 
@@ -524,12 +513,7 @@ function findOneUsuario1()
     alert("Documento = " +  eldocu);
     alert("OtorDocumento = " +  busDocumentoSel);
 
-
-
-
    var select = document.getElementById("tipoDoc"); /*Obtener el SELECT */
-
-
 
        var tipoDoc = select.options[select.selectedIndex].value; /* Obtener el valor */
 
@@ -550,9 +534,7 @@ function findOneUsuario1()
 
                 $('#tipoDoc1').val(Usuarios.tipoDoc_id);
 				$('#documento').val(Usuarios.documento);
-
 				$('#nombre1').val(Usuarios.nombre);
-
 				$('#genero').val(Usuarios.genero);
 				$('#departamentos').val(Usuarios.departamento);
 				$('#municipios').val(Usuarios.municipio);
@@ -572,9 +554,6 @@ function findOneUsuario1()
 
 				 $('#usuariosModal').modal({show:true});
 			//	 $('#usuariosModal').modal().hide();
-
-
-
 
                     },
 	   		    error: function (request, status, error) {
@@ -679,8 +658,6 @@ $(document).on('change', '#departamentos', function(event) {
 
        alert("Departamento = " + Departamento);
 
-
-
         $.ajax({
 	           url: '/buscarCiudades/',
 	            data : {Departamento:Departamento},
@@ -699,7 +676,6 @@ $(document).on('change', '#departamentos', function(event) {
 
  	      		     $("#ciudades").empty();
 
-
 	                 $.each(dato, function(key,value) {
                                     options +='<option value="' + value.id + '">' + value.nombre + '</option>';
                                     option = document.createElement("option");
@@ -707,9 +683,6 @@ $(document).on('change', '#departamentos', function(event) {
                                     option.text = value.nombre;
                                     $id2.appendChild(option);
  	      		      });
-
-
-
 
 
                     },
@@ -765,10 +738,6 @@ $(document).on('change', '#busEspecialidad', function(event) {
                                     $id2.appendChild(option);
  	      		      });
 
-
-
-
-
                     },
 	   		    error: function (request, status, error) {
 
@@ -791,7 +760,6 @@ $(document).on('change', '#tiposAntecedente', function(event) {
         alert("Entre Tipos Antecedente");
 
         $.ajax({
-
 	           url: '/buscarAntecedentes',
 	            data : {TiposAntecedente:TiposAntecedente},
 	           type: 'GET',
@@ -807,8 +775,7 @@ $(document).on('change', '#tiposAntecedente', function(event) {
                      const $id2 = document.querySelector("#antecedentes");
 
 
- 	      		     $("#antecedentes").empty();
-
+      		     $("#antecedentes").empty();
 
 	                 $.each(dato, function(key,value) {
                                     options +='<option value="' + value.id + '">' + value.nombre + '</option>';
@@ -817,10 +784,6 @@ $(document).on('change', '#tiposAntecedente', function(event) {
                                     option.text = value.nombre;
                                     $id2.appendChild(option);
  	      		      });
-
-
-
-
 
                     },
 	   		    error: function (request, status, error) {
@@ -926,10 +889,6 @@ $(document).on('change', '#busServicioT', function(event) {
                                     $id2.appendChild(option);
  	      		      });
 
-
-
-
-
                     },
 	   		    error: function (request, status, error) {
 
@@ -964,12 +923,8 @@ $(document).on('change', '#busSubServicio', function(event) {
 
 	  		  var dato = JSON.parse(respuesta);
 
-
                      const $id2 = document.querySelector("#busHabitacion");
-
-
  	      		     $("#busHabitacion").empty();
-
 
 	                 $.each(dato, function(key,value) {
                                     options +='<option value="' + value.id + '">' + value.nombre + '</option>';
@@ -978,10 +933,6 @@ $(document).on('change', '#busSubServicio', function(event) {
                                     option.text = value.nombre;
                                     $id2.appendChild(option);
  	      		      });
-
-
-
-
 
                     },
 	   		    error: function (request, status, error) {
@@ -1235,7 +1186,6 @@ return false;
 
 function findOneAdmision(tipoDoc,Documento,consec, sede)
 {
-     alert("Entre function finfOneAdmision");
 
 	var envios = new FormData();
 
@@ -1244,10 +1194,8 @@ function findOneAdmision(tipoDoc,Documento,consec, sede)
     //var tipoDoc = select.options[select.selectedIndex].value;
 	//var documento = document.getElementById("busDocumentoSel").value;
 
-    alert("Envio a la MOdal Tipo Doc = " + tipoDoc);
+
     alert("Envio a la MOdal documento = " + documento);
-    alert("Envio a la MOdal consec = " + consec);
-    alert("Envio a la MOdal sede = " + sede);
 
 	$.ajax({
 		type: 'POST',
@@ -1274,12 +1222,141 @@ function findOneAdmision(tipoDoc,Documento,consec, sede)
 				$('#ingreso').val(Usuarios.ingreso);
 				$('#salida').val(Usuarios.salida);
 				$('#medicoIngreso').val(Usuarios.medicoIngreso);
-
-
 				$('#espMedico').val(Usuarios.espMedico);
 				$('#diagMedico').val(Usuarios.diagMedico);
 
 				 $('#modalActualizaAdmision').modal({show:true});
+
+                    },
+	   		    error: function (request, status, error) {
+	   	    	}
+	});
+};
+
+
+
+
+function guardaCambioServicio()
+{
+
+
+	var tipoDocx = document.getElementById("tipoDocx").value;
+	var documentox = document.getElementById("documentox").value;
+	var pacientex = document.getElementById("pacientex").value;
+	var consecx = document.getElementById("consecx").value;
+	var sede= document.getElementById("sede").value;
+
+	var fechaOcupacion = document.getElementById("fechaOcupacion").value;
+    var servicioActual = document.getElementById("servicioActual").value;
+    var subServicioActual = document.getElementById("subServicioActual").value;
+    var dependenciaActual = document.getElementById("dependenciaActual").value;
+
+	var select = document.getElementById("servicioCambio");
+    var servicioCambio = select.options[select.selectedIndex].value;
+	var select = document.getElementById("subServicioCambio");
+    var subServicioCambio = select.options[select.selectedIndex].value;
+	var select = document.getElementById("dependenciaCambio");
+    var dependenciaCambio = select.options[select.selectedIndex].value;
+
+
+	var username = document.getElementById("username").value;
+	var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
+	var numReporte = document.getElementById("numreporte").value;
+	var grupo = document.getElementById("grupo").value;
+	var subGrupo = document.getElementById("subGrupo").value;
+	var sede = document.getElementById("sede").value;
+	var documento = document.getElementById("documento").value;
+	var nombreSede = document.getElementById("nombreSede").value;
+	var profesional = document.getElementById("profesional").value;
+	var permisosGrales = document.getElementById("permisosGrales").value;
+	var escogeModulo = document.getElementById("escogeModulo").value;
+	var username_id = document.getElementById("username_id").value;
+	var permisosDetalle = document.getElementById("permisosDetalle").value;
+
+	
+    alert("Envio:  " + documentox);
+
+	$.ajax({
+		type: 'POST',
+    		url: '/guardaCambioServicio/',
+		data: {'tipoDocx':tipoDocx,
+			'documentox':documentox,
+			'consecx':consecx,
+             'pacientex':pacientex,
+			 'sede':sede,
+			 'fechaOcupacion':fechaOcupacion,
+			 'servicioActual':servicioActual,
+			 'subServicioActual':subServicioActual,
+			 'dependenciaActual':dependenciaActual,
+			 'servicioCambio':servicioCambio,
+			 'subServicioCambio':subServicioCambio,
+			 'dependenciaCambio':dependenciaCambio,
+			 'username':username,
+			 'sedeSeleccionada':sedeSeleccionada,
+			 'numReporte':numReporte,
+			 'grupo':grupo,
+ 			 'subGrupo':subGrupo,
+             'nombreSede':nombreSede,
+			 'profesional':profesional,
+			 'permisosGrales':permisosGrales,
+			 'escogeModulo':escogeModulo,
+			 'username_id':username_id,
+			 'permisosDetalle':permisosDetalle},
+
+		success: function (CambioServicio) {
+
+			 alert("DE REGRESO CON CambioServicio = " + CambioServicio);
+			 alert("DE REGRESO CON CambioServicio Doc = " + CambioServicio.Documentox);
+			 alert("FECHA OCUPACION = " + CambioServicio.FechaOcupacion);
+
+	                       $('#tipoDocx').val(CambioServicio.TipoDocx);
+				$('#documentoc').val(CambioServicio.Documentox);
+				$('#pacientex').val(CambioServicio.Pacientex);
+				$('#servicioActual').val(CambioServicio.ServicioActual);
+				$('#subServicioActual').val(CambioServicio.SubServicioActual);
+				$('#dependenciaActual').val(CambioServicio.DependenciaActual);
+				$('#fechaOcupacion').val(CambioServicio.FechaOcupacion);
+		
+	  		  var options = '<option value="=================="></option>';
+                          const $id2 = document.querySelector("#servicioCambio");
+	     		  $("#servicioCambio").empty();
+
+	                 $.each(CambioServicio['Servicios'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id2.appendChild(option);
+ 	      		      });
+
+			  var options = '<option value="=================="></option>';	  	
+                          const $id3 = document.querySelector("#subServicioCambio");
+	     		  $("#subServicioCambio").empty();
+
+	                 $.each(CambioServicio['SubServicios'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id3.appendChild(option);
+ 	      		      });
+
+			  var options = '<option value="=================="></option>';	  	
+                          const $id4 = document.querySelector("#dependenciaCambio");
+	     		  $("#dependenciaCambio").empty();
+
+	                 $.each(CambioServicio['Habitaciones'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id4.appendChild(option);
+ 	      		      });
+			
+					
+                     document.getElementById("mensajes").innerText=CambioServicio.Mensaje;
+
+
 
                     },
 	   		    error: function (request, status, error) {
