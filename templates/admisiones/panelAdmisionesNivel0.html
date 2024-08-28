@@ -1081,16 +1081,186 @@ tablaConveniosAdmisiones tr {
 function cargarTablaConmveniosPaciente()
        {
 
+    alert("Entre");
 
-  	var data =  {}   ;
+    var data =  {}   ;
+
         var sede = document.getElementById("sede1").value;
         data['sede'] = sede;
+
         var ingresoId= document.getElementById("ingresoId1").value;
+        alert("ingresoId = " + ingresoId);
+
         data['ingresoId'] = ingresoId;
         data = JSON.stringify(data);
-	table = $("#tablaConveniosAdmisiones").dataTable().fnDestroy();
-        initTableConvenios(data);
 
+        alert("data = " + data);
+
+        var table = $('.tablaConveniosAdmisiones').DataTable({
+         "language": {
+                  "lengthMenu": "Display _MENU_ registros",
+                   "search": "Filtrar registros:",
+                    },
+            processing: true,
+            serverSide: false,
+            scrollY: '150px',
+	    scrollX: true,
+	    scrollCollapse: true,
+            paging:false,
+            columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        var btn = '';
+                          btn = btn + " <button   class='btn btn-primary editPostConvenios' data-pk='" + row.pk + "'>" + "</button>";
+			  btn = btn + " <button class='btn btn-danger deletePost' data-action='post/" + row.pk + "/delete' data-pk='" + row.pk + "'>" + '<i class="fa fa-trash"></i>' + "</button>";
+
+                        return btn;
+                    },
+                    "targets": 5
+               }
+            ],
+            ajax: {
+                 url:"/load_dataConvenioAdmisiones/" + data,
+                 type: "POST",
+                dataSrc: ""
+            },
+
+            lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
+            columns: [
+                { data: "fields.id"},
+                { data: "fields.tipoDocId"},
+                { data: "fields.documento"},
+                { data: "fields.consec"},
+                { data: "fields.convenio"},
+
+            ]
+        });
+	/*------------------------------------------
+        --------------------------------------------
+        Click to Button
+        --------------------------------------------
+        --------------------------------------------*/
+        $('#createNewPost').click(function () {
+	     
+            $('#saveBtnCrearConvenio').val("Create Post");
+            $('#post_id').val('');
+            $('#postFormCrearConvenio').trigger("reset");
+            $('#modelHeading').html("Creacion convenios en admision");
+            $('#crearConvenioModel').modal('show');
+        });
+	/*--------------------------------------------
+        Click to Edit Button
+        --------------------------------------------
+        --------------------------------------------*/
+        $('body').on('click', '.editPostConvenios', function () {
+
+          var post_id = $(this).data('pk');
+          alert("pk1 = " + $(this).data('pk'));
+
+      	$.ajax({
+	           url: '/creacionHc/postConsultaHcli/',
+	            data : {post_id:post_id},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese");
+                        alert("respuesta="  + data);
+
+			 $('#pk').val(data.pk);
+        	        $('#tipoDocId').val(data.tipoDocId);
+                	$('#nombreTipoDoc').val(data.nombreTipoDoc);
+	                $('#documentoId').val(data.documentoId);
+	                $('#documento').val(data.documento);
+	                $('#consec').val(data.consec);
+
+
+                    },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+
+        });
+
+        /*------------------------------------------
+        --------------------------------------------
+        Print Error Msg
+        --------------------------------------------
+        --------------------------------------------*/
+        function printErrorMsg(msg) {
+            $('.error-msg').find('ul').html('');
+            $('.error-msg').css('display','block');
+            $.each( msg, function( key, value ) {
+                $(".error-msg").find("ul").append('<li>'+value+'</li>');
+            });
+        }
+
+        /*------------------------------------------
+        --------------------------------------------
+        Create Post Code
+        --------------------------------------------
+        --------------------------------------------*/
+        $('#saveBtnCrearConvenio').click(function (e) {
+            e.preventDefault();
+            $(this).html('Sending..');
+
+            $.ajax({
+                data: $('#postFormCrearConvenio').serialize(),
+                url: "{% url 'guardaConvenioAdmision' %}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+                    if ($.isEmptyObject(data.error)) {
+
+                        //  $("input[name='description']").val('');
+                        $('#crearConvenioModel').modal('hide');
+                        $('.success-msg').css('display','block');
+                        $('.success-msg').text(data.message);
+                    }else{
+                        printErrorMsg(data.error)
+                    }
+                    $('#postFormCrearConvenio').trigger("reset");
+                    table.ajax.reload();
+
+                },
+                error: function (data) {
+                    $('#saveBtnCrearConvenio').html('Save Changes');
+                }
+            });
+        });
+/*------------------------------------------
+        --------------------------------------------
+        Delete Post Code
+        --------------------------------------------
+        --------------------------------------------*/
+        $("body").on("click",".deletePost",function(){
+            var current_object = $(this);
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this imaginary file!",
+                type: "error",
+                showCancelButton: true,
+                dangerMode: false,
+		color: '#000',
+	          background: 'rgba(0, 0, 0, 0.7)',
+                cancelButtonClass: '#DD6B55',
+                confirmButtonColor: '#dc3545',
+                confirmButtonText: 'Delete!',
+		showClass: {
+		            popup: 'my-icon'                     // disable popup animation css
+	          },
+            },function (result) {
+                if (result) {
+                    var action = current_object.attr('data-action');
+                    var token = $("input[name=csrfmiddlewaretoken]").val();
+                    var id = current_object.attr('data-pk');
+
+                    alert("Voy a borrar" +  action);
+                    alert("Voy a borrar2" +  id);
+
+                }
+            });
+        });
 
 }
  </script>
@@ -1108,8 +1278,8 @@ function cargarTablaConmveniosPaciente()
                            style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
                         <form class="form-inline" action="/crearConvenioPacienteDef/" method="POST"
                               id="FormaConvenioPaciente">
-			   	            <input type="hidden" id="sede1" name="sede1" value = "{{Sede}}">
-                            <input type="hidden" id="ingresoId1" name="ingresoId1" value = "">
+			   	            <input type="text" id="sede1" name="sede1" value = "{{Sede}}">
+                            <input type="text" id="ingresoId1" name="ingresoId1" value = "{{ingresoId}}">
 			   
                     
                             <!-- INICIO TABLE DE  EL DATATABLE  -->
@@ -1119,12 +1289,10 @@ function cargarTablaConmveniosPaciente()
                                         <div class="card-header">
                                             <div class="row">
                      				   <div class="col-sm-9">
-	        					<input type="button" id="btn-rango" name="btn-rango" value = "Generar consulta ¡" onClick="cargarTablaConmveniosPaciente()" >
-                                                <div class="alert alert-success success-msg" style="display:none"></div>
-
+                       				     <h3> <span class="text-secondary">Crear Convenio</span></h3>
                       				  </div>
                  			       <div class="col-sm-3 text-end">
-                       				      <span class="text-secondary">Crear Convenio</span>
+					<input type="button" id="btn-rango" name="btn-rango" value1 = "Oprima" onClick="cargarTablaConmveniosPaciente()" >
                        			     <a class="btn btn-success" href="javascript:void(0)" id="createNewPost"> <i class="fa fa-plus"></i></a>
                       				  </div>
                     </div>
@@ -1132,18 +1300,19 @@ function cargarTablaConmveniosPaciente()
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-sm-12">
-
-                                                        <table id=tablaConveniosAdmisiones class="display nowrap table table table-bordered  tablaConveniosAdmisiones table-hover table-sm dtr-inline">
+                                                        <div class="alert alert-success success-msg"
+                                                             style="display:none"></div>
+                                                        <table class="display nowrap table table table-bordered  tablaConveniosAdmisiones table-hover table-sm dtr-inline">
 
                                                             <thead>
                                                             <tr>
                                                                 <th style="width:5%;">id</th>
                                                                 <th style="width:5%;">TipoDoc</th>
-                                                                <th style="width:12%;">Paciente</th>
+                                                                <th style="width:12%;">Documento</th>
                                                                 <th style="width:12%;">#Ingreso</th>
 
                                                                 <th style="width:20%;">Convenio</th>
-                                                                <th style="width:5%;">Borrar</th>
+                                                                <th style="width:5%;">Action</th>
                                                                 <!--  <th data-visible="true"></th>  -->
                                                             </tr>
                                                             </thead>
@@ -1187,11 +1356,12 @@ function cargarTablaConmveniosPaciente()
                 <div class="alert alert-danger error-msg" style="display:none">
                     <ul class="mb-0"></ul>
                 </div>
-                <form id="postFormCrearConvenio" name="postFormCrearConvenio" class="form-horizontal"  novalidate>
+                <form id="postFormCrearConvenio" name="postFormCrearConvenio" class="form-horizontal  "  novalidate>
                     {% csrf_token %}
                     <input type="hidden" name="post_id" id="post_id">
-                    <input type="hidden" id="sede2" name="sede2" value = "{{Sede}}">
-                     <input type="hidden" id="ingresoId2" name="ingresoId2" value ="">
+                    <input type="text" id="sede2" name="sede2" value = "{{Sede}}">
+                     <input type="text" id="ingresoId2" name="ingresoId2" value ="{{ingresoId}}">
+
 
 			<div class="form-group">
                         <label for="convenio" class="col-sm-2 control-label">Convenio:</label>

@@ -21,6 +21,7 @@ from admisiones.models import Ingresos
 from sitios.models import  HistorialDependencias, Dependencias, ServiciosSedes, SubServiciosSedes
 from usuarios.models import Usuarios, TiposDocumento
 from planta.models import Planta
+from facturacion.models import ConveniosPacienteIngresos
 
 # Create your views here.
 
@@ -1066,6 +1067,31 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         print ("WENTRE ADMISIONES 4")
         print("escogeModulo = ", escogeModulo)
 
+        # Combo Convenios
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM contratacion_convenios p"
+
+        curt.execute(comando)
+        print(comando)
+
+        convenios = []
+
+        for id, nombre in curt.fetchall():
+            convenios.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("convenios", convenios)
+
+        context['Convenios'] = convenios
+
+        # Fin combo Convenios
+
+
         ## Aqui contexto para solo admisiones
 
         ingresos = []
@@ -1104,6 +1130,7 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
     if (escogeModulo == 'HISTORIA CLINICA'):
         print ("WENTRE PERMSISO HISTORIA CLINICA")
         ## Aqui contexto para solo Historia Clinica
+
 
         print("username = ", username)
         username = username.lstrip()
@@ -1260,6 +1287,9 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         miConexionx.close()
         print(triage1)
         context['Triage'] = triage1
+
+
+
 
         ## FIN CONTEXTO
         return render(request, "triage/panelTriage.html", context)
@@ -4322,3 +4352,93 @@ def guardaCambioServicio(request):
 
     return JsonResponse(CambioServicio, safe=False)
 	
+
+def serialize_datetime(obj): 
+    if isinstance(obj, datetime.datetime): 
+        return obj.isoformat() 
+    raise TypeError("Type not serializable") 
+
+# Create your views here.
+def load_dataConvenioAdmisiones(request, data):
+    print ("Entre  load_dataConvenioAdmisiones")
+
+    context = {}
+    d = json.loads(data)
+
+    ingresoId = d['ingresoId']
+    sede = d['sede']
+
+    print ("sede:", sede)
+    print ("ingresoId:", ingresoId)
+
+   
+
+    #print("data = ", request.GET('data'))
+
+    conveniosPacienteIngresos = []
+
+    # miConexionx = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",     password="pass123")
+    curx = miConexionx.cursor()
+   
+    detalle = 'SELECT i.id id,i."tipoDoc_id" tipoDocId , i.documento_id documentoId ,u.documento documento,u.nombre nombre,i.consec consec , contra.nombre convenio, tipdoc.nombre nombreDocumento FROM admisiones_ingresos i, usuarios_usuarios u, facturacion_conveniosPacienteIngresos conv , contratacion_convenios contra , usuarios_tiposdocumento tipdoc WHERE i.id = ' + "'" + str(ingresoId) + "'" + ' and i.documento_id = u.id and i."tipoDoc_id" = conv."tipoDoc_id" and i.documento_id  = conv.documento_id and i.consec = conv."consecAdmision" and contra.id = conv.convenio_id AND tipdoc.id = i."tipoDoc_id"'
+
+    print(detalle)
+
+    curx.execute(detalle)
+
+    for id, tipoDocId, documentoId, documento, nombre, consec, convenio, nombreDocumento in curx.fetchall():
+        conveniosPacienteIngresos.append(
+		{"model":"conveniosPacienteIngresos.conveniosPacienteIngresos","pk":id,"fields":
+			{'id':id, 'tipoDocId': tipoDocId, 'documentoId': documentoId, 'documento':documento , 'nombre': nombre, 'consec': consec, 'convenio':convenio, 'nombreDocumento':nombreDocumento}})
+
+    miConexionx.close()
+    print(conveniosPacienteIngresos )
+    context['ConveniosPacienteIngresos '] = conveniosPacienteIngresos 
+
+
+    serialized1 = json.dumps(conveniosPacienteIngresos , default=serialize_datetime)
+
+    print ("Envio = ", serialized1 )
+
+    return HttpResponse(serialized1, content_type='application/json')
+
+
+
+def GuardaConvenioAdmision(request):
+
+    print ("Entre GuardaConvenioAdmision" )
+
+    ingresoId = request.POST["ingresoId2"]
+    sede = request.POST["sede2"]
+    convenio = request.POST["convenio"]
+    print ("ingresoId = ", ingresoId)
+    print("sede = ", sede)
+
+    fechaRegistro = dt.datetime.now()
+
+    registroId = Ingresos.objects.get(id=ingresoId)
+    print  ("registroId documento =" , registroId.documento_id)
+
+    ## falta usuarioRegistro_id
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
+    comando = 'insert into facturacion_ConveniosPacienteIngresos ("consecAdmision", "fechaRegistro",  convenio_id, documento_id, "tipoDoc_id" , "usuarioRegistro_id" ,"estadoReg") values (' + "'" + str(registroId.consec) + "'" + ' , ' + "'" + str(fechaRegistro) + "'" + ', ' + "'" + str(convenio) + "'" + '  , ' + "'" + str(registroId.documento_id) + "'" + ', ' + "'" + str(registroId.tipoDoc_id) + "',"  + "'" + str("1") + "'," + "'" +  str("A") + "');"
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
+    miConexion3.close()
+
+    #return HttpResponse("Convenio Adicionado", content_type='application/json')
+
+    return JsonResponse({'success': True, 'message': 'Convenio Actualizado satisfactoriamente!'})
+
+
+def PostDeleteConveniosAdmision(request,id):
+
+    print ("Entre PostDeleteConveniosAdmision" )
+    print ("PostDeleteConveniosAdmision" )
+    post = ConveniosPacienteIngresos.objects.get(id=id)
+    post.delete()
+    return HttpResponseRedirect(reverse('index'))
+

@@ -88,9 +88,9 @@ urlpatterns = [
     path('buscarAntecedentes/', viewsClinico.buscarAntecedentes),
     path('load_dataAdmisiones/<str:data>', viewsClinico.load_dataAdmisiones, name='loaddataAdmisiones'),
     #path('creacionHC/postConsultaHc/<str:id>/edit/', viewsClinico.PostConsultaHc, name='Post_editHc'),
-    path('creacionHC/<str:id>', viewsClinico.PostConsultaHcli),
-    path('creacionHC/postConsultaHc/<str:data>/edit/', viewsClinico.PostConsultaHcli , name='Post_editHc'),
- 
+    #path('creacionHC/<str:id>', viewsClinico.PostConsultaHcli),
+    path('creacionHc/postConsultaHcli/', viewsClinico.PostConsultaHcli , name='Post_editHc'),
+
 
     # Actividaes Mecanicas
 
@@ -138,6 +138,10 @@ urlpatterns = [
     path('encuentraAdmisionModal/<str:tipoDoc> , <str:documento> , <str:consec> , <str:sede>/', viewsAdmisiones.encuentraAdmisionModal, name='encuentraAdmisionModal'),
     path('cambioServicio/', viewsAdmisiones.cambioServicio),
     path('guardaCambioServicio/', viewsAdmisiones.guardaCambioServicio),
+    path('load_dataConvenioAdmisiones/<str:data>', viewsAdmisiones.load_dataConvenioAdmisiones, name='loaddataAdmisiones'),
+    path('guardaConvenioAdmision/', viewsAdmisiones.GuardaConvenioAdmision, name='guardaConvenioAdmision'),
+    path('postDeleteConveniosAdmision/<str:id>', viewsAdmisiones.PostDeleteConveniosAdmision, name='postDeleteConveniosAdmision'),
+
 
 
     # Triage

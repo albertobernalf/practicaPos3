@@ -1,3 +1,4 @@
+var $ = jQuery;
 console.log('Hola Alberto Hi!')
 
 var datavta;
@@ -33,9 +34,12 @@ const form2 = document.getElementById('formClinicos')
 console.log(form)
 console.log(form2)
 
-const get = document.getElementById('dispara');  
-get.addEventListener('click', e => {});  
+const get = document.getElementById('dispara');
+
+
+get.addEventListener('click', e => {});
 get.dispatchEvent(new Event('click'));  
+
 
 function clickEvent() {  
 
@@ -91,9 +95,6 @@ $(document).on('change', '#ingresoId', function(event) {
            document.getElementById("servicioCambio").value="";
            document.getElementById("subServicioCambio").value="";
            document.getElementById("dependenciaCambio").value="";
-
-
-
 
 });
 
@@ -613,6 +614,21 @@ $('#tablaDatos tbody td').click(function(){
 	   		    error: function (request, status, error) {
 	   	    	}
 	});
+      }
+
+      if ((tdIndex+1)=='10')
+      {
+
+      var ingresoId = $('input[name="ingresoId"]:checked').val();
+      document.getElementById("sede1").value = sede;
+      document.getElementById("ingresoId1").value =ingresoId;
+      document.getElementById("sede2").value = sede;
+      document.getElementById("ingresoId2").value =ingresoId;
+      var table = $('#tablaConveniosAdmisiones').DataTable(); // accede de nuevo a la DataTable. 
+      table.destroy;	
+      table = $("#tablaConveniosAdmisiones").dataTable().fnDestroy();
+      alert("Acabo de destruir tabla que pasa");
+
       }
 
 });
@@ -1365,5 +1381,212 @@ function guardaCambioServicio()
 };
 
 
+const article = document.querySelector('article');
+// Print the selected target
+article.addEventListener('click', event => {
+    alert("click en article" + event.target);
+});
+
+$(document).ready(function () {
+
+	  var data =  {}   ;
+          var sede = document.getElementById("sede1").value;
+          data['sede'] = sede;
+          var ingresoId= document.getElementById("ingresoId1").value;
+          data['ingresoId'] = 0  // ingresoId;
+          data = JSON.stringify(data);
+    
+
+    initTableConvenios(data);
+
+//    tableActions();
+
+    	/*------------------------------------------
+        --------------------------------------------
+        Click to Button
+        --------------------------------------------
+        --------------------------------------------*/
+        $('#createNewPost').click(function () {
+
+	    var ingresoId= document.getElementById("ingresoId1").value;
+	    document.getElementById("ingresoId2").value = ingresoId;
+
+            $('#saveBtnCrearConvenio').val("Create Post");
+            $('#post_id').val('');
+            $('#postFormCrearConvenio').trigger("reset");
+            $('#modelHeading').html("Creacion convenios en admision");
+            $('#crearConvenioModel').modal('show');
+        });
+	/*--------------------------------------------
+        Click to Edit Button
+        --------------------------------------------
+        --------------------------------------------*/
+        $('body').on('click', '.editPostConvenios', function () {
+
+          var post_id = $(this).data('pk');
+          alert("pk1 = " + $(this).data('pk'));
+
+      	$.ajax({
+	           url: '/creacionHc/postConsultaHcli/',
+	            data : {post_id:post_id},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese");
+                        alert("respuesta="  + data);
+
+			 $('#pk').val(data.pk);
+        	        $('#tipoDocId').val(data.tipoDocId);
+                	$('#nombreTipoDoc').val(data.nombreTipoDoc);
+	                $('#documentoId').val(data.documentoId);
+	                $('#documento').val(data.documento);
+	                $('#consec').val(data.consec);
 
 
+                    },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+
+        });
+
+        /*------------------------------------------
+        --------------------------------------------
+        Print Error Msg
+        --------------------------------------------
+        --------------------------------------------*/
+        function printErrorMsg(msg) {
+            $('.error-msg').find('ul').html('');
+            $('.error-msg').css('display','block');
+            $.each( msg, function( key, value ) {
+                $(".error-msg").find("ul").append('<li>'+value+'</li>');
+            });
+        }
+
+        /*------------------------------------------
+        --------------------------------------------
+        Create Post Code
+        --------------------------------------------
+        --------------------------------------------*/
+        $('#saveBtnCrearConvenio').click(function (e) {
+            e.preventDefault();
+            $(this).html('Sending..');
+
+            $.ajax({
+                data: $('#postFormCrearConvenio').serialize(),
+               // url: "{% url '/guardaConvenioAdmision' %}",
+		  url: "/guardaConvenioAdmision/",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+			printErrorMsg(data.error)
+                    if ($.isEmptyObject(data.error)) {
+
+                        //  $("input[name='description']").val('');
+                        $('#crearConvenioModel').modal('hide');
+                        $('.success-msg').css('display','block');
+                        $('.success-msg').text(data.message);
+                    }else{
+                        printErrorMsg(data.error)
+                    }
+                    $('#postFormCrearConvenio').trigger("reset");
+	 	  var table = $('#tablaConveniosAdmisiones').DataTable(); // accede de nuevo a la DataTable.
+	          table.ajax.reload();
+
+                },
+                error: function (data) {
+			printErrorMsg(data.error)
+                    $('#saveBtnCrearConvenio').html('NOT Save Changes');
+                }
+            });
+        });
+/*------------------------------------------
+        --------------------------------------------
+        Delete Post Code
+        --------------------------------------------
+        --------------------------------------------*/
+        $("body").on("click",".deletePost",function(){
+            var current_object = $(this);
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this imaginary file!",
+                type: "error",
+                showCancelButton: true,
+                dangerMode: false,
+		color: '#000',
+	          background: 'rgba(0, 0, 0, 0.7)',
+                cancelButtonClass: '#DD6B55',
+                confirmButtonColor: '#dc3545',
+                confirmButtonText: 'Delete!',
+		showClass: {
+		            popup: 'my-icon'                     // disable popup animation css
+	          },
+            },function (result) {
+                if (result) {
+                    var action = current_object.attr('data-action');
+                    var token = $("input[name=csrfmiddlewaretoken]").val();
+                    var id = current_object.attr('data-pk');
+
+                    alert("Voy a borrar" +  action);
+                    alert("Voy a borrar2" +  id);
+
+                }
+            });
+        });
+
+});
+
+function initTableConvenios(data) {
+ 
+    return new DataTable('.tablaConveniosAdmisiones', {
+          "language": {
+                  "lengthMenu": "Display _MENU_ registros",
+                   "search": "Filtrar registros:",
+                    },
+            processing: true,
+            serverSide: false,
+            scrollY: '100px',
+	    scrollX: true,
+	    scrollCollapse: true,
+            paging:false,
+            columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        var btn = '';
+                       //   btn = btn + " <button   class='btn btn-primary editPostConvenios' data-pk='" + row.pk + "'>" + "</button>";
+			  btn = btn + " <button class='btn btn-danger deletePost' data-action='post/" + row.pk + "/delete' data-pk='" + row.pk + "'>" + '<i class="fa fa-trash"></i>' + "</button>";
+
+                        return btn;
+                    },
+                    "targets": 5
+               }
+            ],
+            ajax: {
+                 url:"/load_dataConvenioAdmisiones/" + data,
+                 type: "POST",
+                dataSrc: ""
+            },
+
+            lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
+            columns: [
+                { data: "fields.id"},
+                { data: "fields.nombreDocumento"},
+                { data: "fields.nombre"},
+                { data: "fields.consec"},
+                { data: "fields.convenio"},
+            ]
+    });
+
+}
+
+// function tableActions() {
+//    var table = initTable();
+
+    // perform API operations with `table`
+    // ...
+//}
+
+$(document).on('change', '#Convenios', function(event) {
+   alert("pique en article Convenios");
+});

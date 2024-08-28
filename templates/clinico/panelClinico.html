@@ -24,7 +24,7 @@
 <script src={% static 'js/panelClinico.js' %} defer >         </script>
 
 <style>
-tablaTickets td {
+tablaAdmisiones td {
 
   text-align: center;
   padding: 1px;
@@ -34,7 +34,7 @@ tablaTickets td {
   font-weight: bold;
 }
 
-tablaTickets tr {
+tablaAdmisiones tr {
   padding: 1px;
   /* Alto de las celdas */
   height: 1px;
@@ -111,20 +111,48 @@ tablaTickets tr {
         --------------------------------------------
         --------------------------------------------*/
         $('body').on('click', '.editPost', function () {
-	  alert("Entre postEdit" );
-
+	
           var post_id = $(this).data('pk');
           alert("pk1 = " + $(this).data('pk'));
-       
-            $.get("/creacionHc/postConsultaHcli" +'/' + post_id  +'/edit/'  ,function (data) {
 
-                $('#pk').val(data.pk);
-                $('#tipoDocId').val(data.tipoDocId);
-                $('#nombreTipoDoc').val(data.nombreTipoDoc);
-                $('#documentoId').val(data.documentoId);
-                $('#documento').val(data.documento);
-                $('#consec').val(data.consec);
-            })
+      // TOCARIA IMPLEMENTAR UN AJAX QUE ES LO MISMO A VER QUE PASA
+      // TAREA PARA EL DIA LUNES
+
+ //           $.get("/creacionHc/postConsultaHcli" +'/' + post_id  + '/edit/'  ,function (data) {
+
+//                $('#pk').val(data.pk);
+//                $('#tipoDocId').val(data.tipoDocId);
+//                $('#nombreTipoDoc').val(data.nombreTipoDoc);
+//                $('#documentoId').val(data.documentoId);
+//                $('#documento').val(data.documento);
+//                $('#consec').val(data.consec);
+//            })
+//	alert("VOY AJAX");
+
+
+	$.ajax({
+	           url: '/creacionHc/postConsultaHcli/',
+	            data : {post_id:post_id},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese");
+                       alert("data="  + data);
+	  		  // var dato = JSON.parse(respuesta);
+			 $('#pk').val(data.pk);
+       	        $('#tipoDocId').val(data.tipoDocId);
+               	$('#nombreTipoDoc').val(data.nombreTipoDoc);
+	                $('#documentoId').val(data.documentoId);
+	                $('#documento2').val(data.documento);
+	                $('#consec').val(data.consec);
+
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+
         });
 
         /*------------------------------------------
@@ -165,7 +193,7 @@ tablaTickets tr {
 		<input type="text" id="tipoDocId" name="tipoDocId" value="">
 		<input type="text" id="nombreTipoDoc" name="nombreTipoDoc" value="">
 		<input type="text" id="documentoId" name="documentoId" value="">
-		<input type="text" id="documento" name="documento" value="">
+		<input type="text" id="documento2" name="documento2" value="">
 		<input type="text" id="consec" name="consec" value="">
 
 
@@ -197,7 +225,7 @@ tablaTickets tr {
                     </table>
 	   </form>
 
-    <!-- INICIO ENCABEZADO PROPUESTO -->
+    <!-- INICIO TABLE DE  EL DATATABLE  -->
     <div class="row">
         <div class="col-md-12">
             <div class="card"  >
@@ -240,7 +268,7 @@ tablaTickets tr {
             </div>
         </div>
     </div>
-  </div>
+  </article>
 </div>
 
 {% endblock %}

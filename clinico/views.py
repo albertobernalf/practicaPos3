@@ -1669,19 +1669,22 @@ def load_dataAdmisiones(request, data):
     return HttpResponse(serialized1, content_type='application/json')
 
 
-def PostConsultaHcli(request, data):
-    print ("Entre POST edit Hc")
+def PostConsultaHcli(request):
+    print ("Entre PostConsultaHcli ")
 
 
-    print("id = ", data)
+    Post_id = request.POST["post_id"]
 
-    if request.method == 'GET':
+    print("id = ", Post_id)
+
+    if request.method == 'POST':
+
 
         # Abro Conexion
 
         miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",password="pass123")
-        cur = miConexion.cursor()
-        comando = 'SELECT i.id id, i."tipoDoc_id" tipoDocId,td.nombre nombreTipoDoc, i.documento_id documentoId, u.documento documento , i.consec consec FROM admisiones_ingresos i, usuarios_usuarios u, usuarios_tiposDocumento td where i.id=' + "'" +  str(id) + "'" + ' and i."tipoDoc_id" =td.id and i.documento_id=u.id'
+        cur = miConexionx.cursor()
+        comando = 'SELECT i.id id, i."tipoDoc_id" tipoDocId,td.nombre nombreTipoDoc, i.documento_id documentoId, u.documento documento , i.consec consec FROM admisiones_ingresos i, usuarios_usuarios u, usuarios_tiposDocumento td where i.id=' + "'" +  str(Post_id) + "'" + ' and i."tipoDoc_id" =td.id and i.documento_id=u.id'
         print(comando)
 
         cur.execute(comando)
@@ -1695,7 +1698,7 @@ def PostConsultaHcli(request, data):
                      "documentoId": documentoId, "documento": documento,
                      "consec": consec  })
 
-        miConexion.close()
+        miConexionx.close()
         print(hc)
 
         # Cierro Conexion

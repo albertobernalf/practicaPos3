@@ -176,4 +176,4 @@ subir tablas, buscar ultimas tablas mipres 2024
    parece sedr que : $.get("/creacionHc/postConsultaHcli" +'/' + post_id  +'/edit/'  ,function (data) {
    es cuestion d eeste llamado
   
--- continuar adaecuando crearHistoria en el vies clinico, de acuerdo a nueva situacion.
+-- continuar adaecuando crearHistoria en el views clinico, de acuerdo a nueva situacion.

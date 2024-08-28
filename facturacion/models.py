@@ -200,6 +200,8 @@ class ConveniosPacienteIngresos(models.Model):
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
+    class Meta:
+        unique_together = (('tipoDoc', 'documento','consecAdmision','convenio'),)
 
     def __str__(self):
         return str(self.id)

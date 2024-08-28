@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from facturacion.models import Empresas, Cups, TiposCups, Conceptos
+from facturacion.models import Empresas, Cups, TiposCups, Conceptos, ConveniosPaciente, ConveniosPacienteIngresos
 
 
 @admin.register(Empresas)
@@ -39,3 +39,18 @@ class conceptosAdmin(admin.ModelAdmin):
    search_fields = ("id", "nombre", "tipoCups")
    # Filtrar
    list_filter = ("id", "nombre", "tipoCups")
+
+@admin.register(ConveniosPaciente)
+class conveniosPacienteAdmin(admin.ModelAdmin):
+   list_display = ("id", "tipoDoc", "documento", "convenio")
+   search_fields = ("id", "tipoDoc", "documento", "convenio")
+   # Filtrar
+   list_filter = ("id", "tipoDoc", "documento", "convenio")
+
+@admin.register(ConveniosPacienteIngresos)
+class conveniosPacienteIngresosAdmin(admin.ModelAdmin):
+   list_display = ("id", "tipoDoc", "documento", "consecAdmision", "convenio")
+   search_fields = ("id", "tipoDoc", "documento", "consecAdmision", "convenio")
+   # Filtrar
+   list_filter = ("id", "tipoDoc", "documento", "consecAdmision", "convenio")
+
