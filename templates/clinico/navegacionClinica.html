@@ -32,6 +32,11 @@
         </a></li>
         <li><a href="#Formulacion"><span class="fa-solid fa-hand-holding-medical"></span> <span
                 class="tab-text"> </span>Formulacion </a></li>
+        <li><a href="#Consulta"><span class="fa-solid fa-hand-holding-medical"></span> <span
+                class="tab-text"> </span>Consulta Historia Clinica</a></li>
+        <li><a href="#Clinica"><span class="fa-solid fa-hand-holding-medical"></span> <span
+                class="tab-text"> </span>Clinica del paciente </a></li>
+
 
     </ul>
 </div>
@@ -49,6 +54,27 @@
     <input type="hidden" id="perfil" name="perfil" value="{{perfil}}"> </input>
     <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}"> </input>
     <input type="hidden" id="fechaRegistro" name="fechaRegistro" value=""> </input>
+    <input type="hidden" id="tipoDocPaciente" name="tipoDocPaciente" value="">
+    <input type="hidden" id="documentoPaciente" name="documentoPaciente" value="">
+    <input type="hidden" id="ingresoPaciente" name="ingresoPaciente" value="">
+    <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+    <input type="hidden" id="username" name="username" value = "{{Username}}">
+	<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
+	<input type="hidden" id="numreporte" name="numreporte" value = "{{numreporte}}">
+	<input type="hidden" id="grupo" name="grupo" value = "{{Grupo}}">
+	<input type="hidden" id="subGrupo" name="subGrupo" value = "{{SubGrupo}}">
+		
+    <!--  Estos si de la Aplixcacion bse -->
+
+	<input type="hidden" id="sede" name="sede" value = "{{Sede}}">
+	<input type="hidden" id="documento" name="documento" value = "{{Documento}}">
+	<input type="hidden" id="nombreSede" name="nombreSede" value = "{{NombreSede}}">
+	<input type="hidden" id="profesional" name="profesional" value = "{{Profesional}}">
+	<input type="hidden" id="permisosGrales" name="permisosGrales" value = "{{PermisosGrales}}">
+	<input type="hidden" id="permisosDetalle" name="permisosDetalle" value = "{{PermisosDetalle}}">
+	<input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
+
+
 
     <div class="form-row">
         <div class="form-group col-md-3 ">
@@ -102,12 +128,10 @@
         <div class="form-group col-md-2 ">
             TELEFONO:
             {{ datosPaciente.telefono}}
-
         </div>
 
         <div class="form-group col-md-2 ">
             DEPENDENCIA :
-
 
             <select class="form-control" id="dependenciasRealizado" name="dependenciasRealizado">
                 {% for dependenciasRealizado in DependenciasRealizado %}
@@ -197,81 +221,136 @@
 
 
     <article id="Laboratorios">
-        <center><h3>Ordenes de Laboratorios</h3></center>
-        <center>
-            <div class="form-row">
+        <center><h3>Ordenes de Laboratorio</h3></center>
 
 
-                <div class="form-group col-md-12 ">
-                    <form action="" method="post" id="formCabezoteLab" name="formCabezoteLab">
-                        Observaciones: {{ HistoriaExamenesCabezoteForm.observaciones }}
+        <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+             <!-- DESDE AQUIP DATATABLE  -->
 
-                        <input type="hidden" id="historia" name="historia" value=""> </input>
-                        <input type="hidden" id="tiposExamen" name="tiposExamen" value="1"> </input>
-
-
-                        <input type="hidden" id="estadoReg" name="estadoReg" value="A"> </input>
-
-
-                    </form>
-                </div>
-            </div>
-
-
-            <div class="form-row">
-                <div class="form-group col-md-3 ">
-
-                    <label for="tipoExamenLab" class="col-form-label"></label>
-                    <input type="hidden" class="form-control" id="tipoExamenLab" name="tipoExamenLab"
-                           value="{{TipoExamenLab}}">
-
-                </div>
+                    <table class="table"
+                           style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+                        <form class="form-inline" action="/crearLaboratoriosDef/" method="POST"
+                              id="FormaLaboratorios">
+	   	            <input type="hidden" id="sede1" name="sede1" value = "{{Sede}}">
+                            <input type="hidden" id="ingresoId1" name="ingresoId1" value = "">
 
 
-                <div class="form-group col-md-3 ">
-                    <label for="laboratorios1" class="col-form-label">Laboratorios:</label>
-                    <select class="form-control" id="laboratorios1" name="laboratorios1">
-                        {% for laboratorios in Laboratorios %}
-                        <option value="{{laboratorios.id}}"> {{laboratorios.nombre}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group col-md-3 ">
-                    <label for="cantidad" class="col-form-label">Cantidad:</label>
-                    <input type="text" class="form-control" id="cantidad" name="cantidad">
-                </div>
-                <div class="form-group col-md-3 ">
-                    <label for="btnAdicExamenLab" class="col-form-label">Agregar:</label>
-                    <input type="button" id="btnAdicExamenLab" value="Adicionar"/>
-                </div>
-            </div>
+                            <!-- INICIO TABLE DE  EL DATATABLE  -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row">
+                     				   <div class="col-sm-9">
+	        				
+                                                <div class="alert alert-success success-msg" style="display:none"></div>
+
+                      				  </div>
+                 			       <div class="col-sm-3 text-end">
+                       				      <span class="text-secondary">Crear Laboratorio</span>
+                       			     <a class="btn btn-success" href="javascript:void(0)" id="createNewPostLaboratorios"> <i class="fa fa-plus"></i></a>
+                      				  </div>
+		                    </div>
+					 </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <table id=tablaLaboratorios class="display nowrap table table table-bordered  tablaLaboratorios table-hover table-sm dtr-inline">
+                                                            <thead>
+                                                            <tr>
 
 
-        </center>
-        <div class="container">
-            <div id="tablas" class="scrollable">
-                <center>
-                    <table cellspacing="0" width="100%" class="table  table-fixed " id="tablaExamenes">
+								                                <th style="width:5%;">id</th>
+                                                                <th style="width:5%;">Nombres</th>
+								                                <th style="width:5%;">cantidad</th>
+								                                <th style="width:3%;">Borrar</th>
 
-                        <thead>
-                        <tr>
-                            <th data-visible="false"></th>
-                            <!-- <th style="width:40%">Tipo Examen</th> -->
-                            <th style="width:40%">Examen</th>
-                            <th style="width:10%">Cantidad</th>
-                            <th class="col-xs-1"> BORRAR</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody style="vertical-align:bottom">
+                                                            <tr style="height:10%">
 
-                            <!--       <th data-visible="false"></th>
-                                 <th data-visible="false"></th>  -->
 
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        </tfoot>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                 <td></td>
+
+
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIN TABLE DE  EL DATATABLE  -->
+                        </form>
                     </table>
-                </center>
+
+             <!-- HASTA AQUI DATATABLE -->
+
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+<!-- Espacio Modales  -->
+
+<div class="modal fade" id="crearLaboratoriosModel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelHeadingLaboratorios"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger error-msg" style="display:none">
+                    <ul class="mb-0"></ul>
+                </div>
+                <form id="postFormCrearConvenio" name="postFormCrearLaboratorios" class="form-horizontal"  novalidate>
+                    {% csrf_token %}
+
+
+		      <input type="hidden" id="tiposExamen_Id" name="tiposExamen_Id" value="1">
+
+
+
+ 			<div class="form-group">
+                        <label for="laboratorios" class="col-sm-2 control-label">Laboratorio:</label>
+                            <select class="form-select  h-100 w-200" aria-label="" id="laboratorios"
+                                    name="laboratorios">
+                                {% for laboratorios in Laboratorios %}
+                                <option value="{{laboratorios.id}}"> {{laboratorios.nombre}}</option>
+                                {% endfor %}
+                            </select>
+			</div>
+                    <div class="form-group">
+                        <label for="cantidad" class="col-sm-2 control-label">Cantidad:</label>
+                        <input type="text" id="cantidad" name="cantidad" value="1">
+                  </div>
+
+                    <div class="col-sm-offset-2 col-sm-10 mt-2">
+                        <button type="submit" class="btn btn-primary" id="saveBtnCrearLaboratorio" value="create">Guardar
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
+</div>
+
+
+<!-- Fin Modales -->
 
 
     </article>
@@ -279,162 +358,25 @@
     <article id="Radiologia">
 
         <center><h3>Ordenes de Radiologia</h3></center>
-        <!--    <form action="" method="post" id="formRadiologias" name="formRadiologias">  -->
-        <center>
-
-            <div class="form-row">
-
-
-                <div class="form-group col-md-12 ">
-                    <form action="" method="post" id="formCabezoteRad" name="formCabezoteRad">
-                        Observaciones: {{ HistoriaExamenesCabezoteForm.observaciones }}
-
-                        <input type="hidden" id="historia" name="historia" value=""> </input>
-                        <input type="hidden" id="tiposExamen" name="tiposExamen" value="3"> </input>
-                        <input type="hidden" id="estadoReg" name="estadoReg" value="A"> </input>
-
-
-                    </form>
-                </div>
-            </div>
-
-
-            <div class="form-row">
-                <div class="form-group col-md-3 ">
-
-                    <label for="tipoExamenRad" class="col-form-label">Tipo De Examen:</label>
-                    <input type="hidden" class="form-control" id="tipoExamenRad" name="tipoExamenRad"
-                           value="{{TipoExamenRad}}">
-
-                </div>
-
-                <div class="form-group col-md-3 ">
-                    <label for="radiologias1" class="col-form-label">Radiologia:</label>
-                    <select class="form-control" id="radiologias1" name="radiologias1"
-                    >
-                        {% for radiologias in Radiologias %}
-                        <option value="{{radiologias.id}}"> {{radiologias.nombre}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group col-md-3 ">
-                    <label for="cantidad" class="col-form-label">Cantidad:</label>
-                    <input type="text" class="form-control" id="cantidad" name="cantidad">
-                </div>
-                <div class="form-group col-md-3 ">
-                    <label for="btnAdicExamenRad" class="col-form-label">Agregar:</label>
-                    <input type="button" id="btnAdicExamenRad" value="Adicionar"/>
-                </div>
-            </div>
-
-        </center>
-        <div class="container">
-            <div id="noTomar" class="scrollable">
-                <center>
-                    <table cellspacing="0" width="100%"  class="table  table-fixed " id="tablaExamenesRad">
-
-                        <thead>
-                        <tr>
-
-                            <th data-visible="false"></th>
-                            <th style="width:40%">Examen</th>
-                            <th style="width:10%">Cantidad</th>
-                            <th class="col-xs-1"> BORRAR</th>
-
-
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        </tfoot>
-                    </table>
-                </center>
-            </div>
-        </div>
-
-
     </article>
 
 
     <article id="Terapias">
         <center><h3>Terapias</h3></center>
-
-          <center>
-
-            <div class="form-row">
-
-
-                <div class="form-group col-md-12 ">
-                    <form action="" method="post" id="formCabezoteTer" name="formCabezoteTer">
-                        Observaciones: {{ HistoriaExamenesCabezoteForm.observaciones }}
-
-                        <input type="hidden" id="historia" name="historia" value=""> </input>
-                        <input type="hidden" id="tiposExamen" name="tiposExamen" value="2"> </input>
-                        <input type="hidden" id="estadoReg" name="estadoReg" value="A"> </input>
-
-
-                    </form>
-                </div>
-            </div>
-
-
-            <div class="form-row">
-                <div class="form-group col-md-3 ">
-
-                    <label for="tipoExamenTer" class="col-form-label">Tipo De Examen:</label>
-                    <input type="hidden" class="form-control" id="tipoExamenTer" name="tipoExamenTer"
-                           value="{{TipoExamenTer}}">
-
-                </div>
-
-                <div class="form-group col-md-3 ">
-                    <label for="terapias1" class="col-form-label">Terapia:</label>
-                    <select class="form-control" id="terapias1" name="terapias1"
-                    >
-                        {% for terapias in Terapias %}
-                        <option value="{{terapias.id}}"> {{terapias.nombre}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group col-md-3 ">
-                    <label for="cantidad" class="col-form-label">Cantidad:</label>
-                    <input type="text" class="form-control" id="cantidad" name="cantidad">
-                </div>
-                <div class="form-group col-md-3 ">
-                    <label for="btnAdicExamenTer" class="col-form-label">Agregar:</label>
-                    <input type="button" id="btnAdicExamenTer" value="Adicionar"/>
-                </div>
-            </div>
-
-        </center>
-        <div class="container">
-            <div id="noTomar" class="scrollable">
-                <center>
-                    <table cellspacing="0" width="100%"  class="table  table-fixed " id="tablaExamenesTer">
-
-                        <thead>
-                        <tr>
-
-                            <th data-visible="false"></th>
-                            <th style="width:40%">Examen</th>
-                            <th style="width:10%">Cantidad</th>
-                            <th class="col-xs-1"> BORRAR</th>
-
-
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        </tfoot>
-                    </table>
-                </center>
-            </div>
-        </div>
-
-
     </article>
 
     <article id="Formulacion">
         <center><h3>Formulacion</h3></center>
     </article>
+
+    <article id="Consulta">
+        <center><h3>Consulta Historia Clinica</h3></center>
+    </article>
+
+    <article id="Clinica">
+        <center><h3>Clinica del paciente</h3></center>
+    </article>
+
 
     <article id="Cirugias">
         <center><h3>Cirugias</h3></center>
@@ -443,163 +385,10 @@
 
     <article id="ProcedimientosNoQx">
         <center><h3>ProcedimientosNoQx</h3></center>
-
-          <center>
-
-            <div class="form-row">
-
-
-                <div class="form-group col-md-12 ">
-                    <form action="" method="post" id="formCabezoteProcNoQx" name="formCabezoteProcNoQx">
-                        Observaciones: {{ HistoriaExamenesCabezoteForm.observaciones }}
-
-                        <input type="hidden" id="historia" name="historia" value=""> </input>
-                        <input type="hidden" id="tiposExamen" name="tiposExamen" value="2"> </input>
-                        <input type="hidden" id="estadoReg" name="estadoReg" value="A"> </input>
-
-
-                    </form>
-                </div>
-            </div>
-
-
-            <div class="form-row">
-                <div class="form-group col-md-3 ">
-
-                    <label for="tipoExamenProcNoQx" class="col-form-label">Tipo De Examen:</label>
-                    <input type="hidden" class="form-control" id="tipoExamenProcNoQx" name="tipoExamenProcNoQx"
-                           value="{{TipoExamenProcNoQx}}">
-
-                </div>
-
-                <div class="form-group col-md-3 ">
-                    <label for="NoQx" class="col-form-label">Procedimiento No Qx:</label>
-                    <select class="form-control" id="NoQx" name="NoQx"
-                    >
-                        {% for procNoQx in ProcNoQx %}
-                        <option value="{{procNoQx.id}}"> {{procNoQx.nombre}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group col-md-3 ">
-                    <label for="cantidad" class="col-form-label">Cantidad:</label>
-                    <input type="text" class="form-control" id="cantidad" name="cantidad">
-                </div>
-                <div class="form-group col-md-3 ">
-                    <label for="btnAdicExamenProcNoQx" class="col-form-label">Agregar:</label>
-                    <input type="button" id="btnAdicExamenProcNoQx" value="Adicionar"/>
-                </div>
-            </div>
-
-        </center>
-        <div class="container">
-            <div id="noTomar" class="scrollable">
-                <center>
-                    <table cellspacing="0" width="100%"  class="table  table-fixed " id="tablaExamenesProcNoQx">
-
-                        <thead>
-                        <tr>
-
-                            <th data-visible="false"></th>
-                            <th style="width:40%">Examen</th>
-                            <th style="width:10%">Cantidad</th>
-                            <th class="col-xs-1"> BORRAR</th>
-
-
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        </tfoot>
-                    </table>
-                </center>
-            </div>
-        </div>
-
-
-
-
     </article>
-
-
-
 
     <article id="Diagnosticos">
         <h3>Diagnosticos</h3>
-
-        <div class="form-row">
-
-            <div class="form-group col-md-12 ">
-                <form action="" method="post" id="formCabezoteDiadnosticos" name="formCabezoteDiadnosticos">
-                    <center>
-                        Observaciones: {{ HistorialDiagnosticosCabezoteForm.observaciones }}
-
-                        <input type="hidden" id="documento" name="documento" value="">
-                        <input type="hidden" id="tipoDoc" name="tipoDoc" value="">
-                        <input type="hidden" id="consecAdmision" name="consecAdmision" value="">
-                        <input type="hidden" id="folio" name="folio" value="">
-
-                        <input type="hidden" id="estadoReg" name="estadoReg" value="A">
-                    </center>
-
-                </form>
-            </div>
-        </div>
-
-
-        <div class="form-row">
-
-
-            <div class="form-group col-md-4 ">
-                <label for="diagnosticos" class="col-form-label">Diagnosticos:</label>
-
-
-                <select class="form-control" id="diagnosticos" name="diagnosticos">
-                    {% for diagnosticos in Diagnosticos %}
-                    <option value="{{diagnosticos.id}}"> {{diagnosticos.nombre}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="form-group col-md-4 ">
-
-                <label for="tiposDiagnostico" class="col-form-label">Tipos Diagnostico: </label>
-                <<select class="form-control" id="tiposDiagnostico" name="tiposDiagnostico">
-                {% for tiposDiagnostico in TiposDiagnostico %}
-                <option value="{{tiposDiagnostico.id}}"> {{tiposDiagnostico.nombre}}</option>
-                {% endfor %}
-            </select>
-            </div>
-
-
-            <div class="form-group col-md-4 ">
-                <label for="btnAdicDiagnosticos" class="col-form-label">Agregar:</label>
-                <input type="button" id="btnAdicDiagnosticos" value="Adicionar">
-            </div>
-        </div>
-
-
-        <div class="container">
-            <div id="noTomar" class="scrollable">
-                <center>
-                    <table cellspacing="0" width="100%" class="table  table-fixed "
-                           id="tablaDiagnosticos">
-
-                        <thead>
-                        <tr>
-                            <th style="width:40%">Tipo Diagnsotico</th>
-                            <th style="width:40%">Diagnostico</th>
-                            <!--  <th style="width:10%">Cantidad</th> -->
-                            <th class="col-xs-1"> BORRAR</th>
-
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        </tfoot>
-                    </table>
-                </center>
-            </div>
-        </div>
-
     </article>
 
     <article id="Antecedentes">
@@ -621,14 +410,41 @@
     <article id="GuardarFolio">
         <center><h3>GuardarFolio</h3></center>
 
+
         <form class="form-inline" action="" method="POST" id="formHistoriaClinica">
+
+            <input type="hidden" id="espMedico" name="espMedico" value="{{espMedico}}"> </input>
+    <input type="hidden" id="tiposFolio" name="tiposFolio" value="1"> </input>
+    <input type="hidden" id="usuarioRegistro" name="usuarioRegistro" value="{{Username_id}}"> </input>
+    <input type="hidden" id="perfil" name="perfil" value="{{perfil}}"> </input>
+    <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}"> </input>
+    <input type="hidden" id="fechaRegistro" name="fechaRegistro" value=""> </input>
+    <input type="text" id="tipoDocPaciente" name="tipoDocPaciente" value="{{TipoDocPaciente}}">
+    <input type="text" id="documentoPaciente" name="documentoPaciente" value="{{DocumentoPaciente}}">
+    <input type="text" id="ingresoPaciente" name="ingresoPaciente" value="{{IngresoPaciente}}">
+    <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+    <input type="hidden" id="username" name="username" value = "{{Username}}">
+	<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
+	<input type="hidden" id="numreporte" name="numreporte" value = "{{numreporte}}">
+	<input type="hidden" id="grupo" name="grupo" value = "{{Grupo}}">
+	<input type="hidden" id="subGrupo" name="subGrupo" value = "{{SubGrupo}}">
+
+    <!--  Estos si de la Aplixcacion bse -->
+
+	<input type="hidden" id="sede" name="sede" value = "{{Sede}}">
+	<input type="hidden" id="documento" name="documento" value = "{{Documento}}">
+	<input type="hidden" id="nombreSede" name="nombreSede" value = "{{NombreSede}}">
+	<input type="hidden" id="profesional" name="profesional" value = "{{Profesional}}">
+	<input type="hidden" id="permisosGrales" name="permisosGrales" value = "{{PermisosGrales}}">
+	<input type="hidden" id="permisosDetalle" name="permisosDetalle" value = "{{PermisosDetalle}}">
+	<input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
 
             <input type="submit" id="btnCrearFolio" name="btnCrearFolio" value="Crear Folio"> </input>
 
             <span id="mensajes" name="mensajes">Aqui mensajes </span>
 
-
         </form>
+
 
     </article>
 
@@ -644,12 +460,25 @@
             <input type="hidden" id="Username" name="Username" value="{{Username}}">
             <input type="hidden" id="Username_id" name="Username_id" value="{{Username_id}}">
             <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
-
+	    <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
+	    <input type="hidden" id="numreporte" name="numreporte" value = "{{numreporte}}">
+	    <input type="hidden" id="grupo" name="grupo" value = "{{Grupo}}">
+	    <input type="hidden" id="subGrupo" name="subGrupo" value = "{{SubGrupo}}">
 
             <input type="hidden" id="TipoDocPaciente" name="TipoDocPaciente" value="">
             <input type="hidden" id="DocumentoPaciente" name="DocumentoPaciente" value="">
             <input type="hidden" id="IngresoPaciente" name="IngresoPaciente" value="">
+		
+	<!--  Estos si de la Aplixcacion bse -->
 
+
+		<input type="hidden" id="sede" name="sede" value = "{{Sede}}">
+		<input type="hidden" id="documento" name="documento" value = "{{Documento}}">
+		<input type="hidden" id="nombreSede" name="nombreSede" value = "{{NombreSede}}">
+		<input type="hidden" id="profesional" name="profesional" value = "{{Profesional}}">
+		<input type="hidden" id="permisosGrales" name="permisosGrales" value = "{{PermisosGrales}}">
+		<input type="hidden" id="permisosDetalle" name="permisosDetalle" value = "{{PermisosDetalle}}">
+		<input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
 
         </form>
     </article>

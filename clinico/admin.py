@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 
 from clinico.models import Medicos, Especialidades , TiposExamen, Examenes, Historia, HistoriaExamenes, HistoriaResultados, EspecialidadesMedicos, Servicios, Diagnosticos, EstadosSalida,   EstadoExamenes,  Enfermedades, TiposFolio, TiposAntecedente, Antecedentes ,  CausasExterna, ViasIngreso , TiposIncapacidad,  HistorialAntecedentes, TiposDiagnostico, HistorialDiagnosticos, Interconsultas, EstadosInterconsulta
-from clinico.models import ViasEgreso, RevisionSistemas, NivelesClinica, TiposTriage, TurnosEnfermeria, TiposSalidas, Eps, TiposCotizante,  Regimenes, Recomendaciones, Hallazgos, NivelesRegimenes, Ips
+from clinico.models import TiposRadiologia,ViasEgreso, RevisionSistemas, NivelesClinica, TiposTriage, TurnosEnfermeria, TiposSalidas, Eps, TiposCotizante,  Regimenes, Recomendaciones, Hallazgos, NivelesRegimenes, Ips
 
 @admin.register(Servicios)
 class serviciosAdmin(admin.ModelAdmin):
@@ -102,10 +102,10 @@ class tiposIncapacidadAdmin(admin.ModelAdmin):
 @admin.register(Examenes)
 class examenesAdmin(admin.ModelAdmin):
 
-    list_display = ("id","nombre","TiposExamen","codigo")
-    search_fields = ("id","nombre","TiposExamen" ,"codigo")
+    list_display = ("id","nombre","TiposExamen","codigoCups")
+    search_fields = ("id","nombre","TiposExamen" ,"codigoCups")
     # Filtrar
-    list_filter = ('nombre','TiposExamen','codigo')
+    list_filter = ('nombre','TiposExamen','codigoCups')
 
 
 
@@ -294,3 +294,10 @@ class ipssAdmin(admin.ModelAdmin):
     search_fields =("id", "nombre")
     # Filtrar
     list_filter =("id", "nombre")
+
+@admin.register(TiposRadiologia)
+class tiposRadiologiaAdmin(admin.ModelAdmin):
+    list_display = ("id", "nombre")
+    search_fields = ("id", "nombre")
+    # Filtrar
+    list_filter = ("id", "nombre")

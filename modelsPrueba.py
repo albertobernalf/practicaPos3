@@ -177,3 +177,8 @@ subir tablas, buscar ultimas tablas mipres 2024
    es cuestion d eeste llamado
   
 -- continuar adaecuando crearHistoria en el views clinico, de acuerdo a nueva situacion.
+-- ojo no edita la Admision Ver mañana JUEVES
+-- Ojo cuaNDO SELECCION UNA HISTORI SALE ERROR DE: POST /creacionHc/postConsultaHcli, 
+   VE RMAÑANA JUEVES
+-- Ojo los dos botones el de generar Convenios y el de dispara cambio servicio,
+   DESAPARECEN ...

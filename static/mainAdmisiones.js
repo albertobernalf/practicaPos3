@@ -43,7 +43,6 @@ get.dispatchEvent(new Event('click'));
 
 function clickEvent() {  
 
-
     console.log("The required event is triggered ") ;
 
 	var valor = $('input[name="ingresoId"]:checked').val();
@@ -94,7 +93,54 @@ $(document).on('change', '#ingresoId', function(event) {
            document.getElementById("fechaOcupacion").value="";
            document.getElementById("servicioCambio").value="";
            document.getElementById("subServicioCambio").value="";
-           document.getElementById("dependenciaCambio").value="";
+           document.getElementById("dependenciaCambio").value="";//
+
+	       var data =  {}   ;
+           var sede = document.getElementById("sede1").value;
+           data['sede'] = sede;
+           var ingresoId= document.getElementById("ingresoId1").value;
+           data['ingresoId'] = ingresoId;
+           data = JSON.stringify(data);
+	   table = $("#tablaConveniosAdmisiones").dataTable().fnDestroy();
+           initTableConvenios(data);
+
+           // Esta es la parte del cambio de Servicio
+
+           	var valor = $('input[name="ingresoId"]:checked').val();
+	var sede = document.getElementById("sede").value;
+
+	$.ajax({
+		type: 'POST',
+    		url: '/cambioServicio/',
+		data: {'valor' : valor, 'sede': sede},
+		dataType : 'json',
+		success: function (cambioServicio) {
+
+                  alert("llegue MODAL cambio Servicio = " + cambioServicio['Usuarios'].tipoDocId);
+                  alert("llegue MODAL cambio Servicio = " + cambioServicio['Usuarios'].documento);
+                     alert("servicio = " + cambioServicio['DependenciasActual'].servicio);
+                      alert("Subservicioio = " + cambioServicio['DependenciasActual'].subServicio);
+
+//		$("#tipoDocx option[value="+ cambioServicio['Usuarios'].tipoDocId +"]").attr("selected",true);
+		 $('#tipoDocx').val(cambioServicio['Usuarios'].tipoDoc);
+		 $('#documentox').val(cambioServicio['Usuarios'].documento);
+		 $('#pacientex').val(cambioServicio['Usuarios'].paciente);
+		 $('#consecx').val(cambioServicio['Usuarios'].consec);
+		$('#servicioActual').val(cambioServicio['DependenciasActual'].servicio);
+		$('#subServicioActual').val(cambioServicio['DependenciasActual'].subServicio);
+		$('#dependenciaActual').val(cambioServicio['DependenciasActual'].depNombre);
+		$('#fechaOcupacion').val(cambioServicio['DependenciasActual'].ocupacion);
+		 $('#servicioCambio').val(cambioServicio['Servicios']);
+		 $('#subServicioCambio').val(cambioServicio['SubServicios']);
+		 $('#dependenciaCambio').val(cambioServicio['DependenciasActual'].habitaciones);
+                    },
+	   		    error: function (request, status, error) {
+	   	    	}
+	});
+
+
+           // Fin cambio de servicio
+
 
 });
 
@@ -585,14 +631,14 @@ $('#tablaDatos tbody td').click(function(){
   //    alert("El valor del botón seleccionado es: " + $(this).find('input:first').val());
   
 
-      if ((tdIndex+1)=='9')
+      if ((tdIndex+1)=='10')
       {
       alert("Entre a Editar AJAX");
 
       $.ajax({
 		type: 'POST',
       	        url: '/encuentraAdmisionModal/',
-		data: {'tipoDoc':tipoDoc,'documento':documento,'consec':consec, 'sede':sede},
+		data: {'tipoDoc':tipoDoc,'documento':documento,'consec':consec,'sede':sede},
 		success: function (Usuarios) {
 
 			 alert("entre DATOS MODAL de Triage y el  nombre es = " + Usuarios.tipoDoc + " " +  Usuarios.documento);
@@ -616,7 +662,7 @@ $('#tablaDatos tbody td').click(function(){
 	});
       }
 
-      if ((tdIndex+1)=='10')
+      if ((tdIndex+1)=='11')
       {
 
       var ingresoId = $('input[name="ingresoId"]:checked').val();
@@ -624,10 +670,6 @@ $('#tablaDatos tbody td').click(function(){
       document.getElementById("ingresoId1").value =ingresoId;
       document.getElementById("sede2").value = sede;
       document.getElementById("ingresoId2").value =ingresoId;
-      var table = $('#tablaConveniosAdmisiones').DataTable(); // accede de nuevo a la DataTable. 
-      table.destroy;	
-      table = $("#tablaConveniosAdmisiones").dataTable().fnDestroy();
-      alert("Acabo de destruir tabla que pasa");
 
       }
 
@@ -1384,7 +1426,7 @@ function guardaCambioServicio()
 const article = document.querySelector('article');
 // Print the selected target
 article.addEventListener('click', event => {
-    alert("click en article" + event.target);
+    // alert("click en article" + event.target);
 });
 
 $(document).ready(function () {
@@ -1399,7 +1441,7 @@ $(document).ready(function () {
 
     initTableConvenios(data);
 
-//    tableActions();
+    tableActions();
 
     	/*------------------------------------------
         --------------------------------------------
@@ -1496,8 +1538,13 @@ $(document).ready(function () {
 
                 },
                 error: function (data) {
-			printErrorMsg(data.error)
-                    $('#saveBtnCrearConvenio').html('NOT Save Changes');
+			alert("VENGO CON ERRORES :" , printErrorMsg(data.error));
+                   // $('#saveBtnCrearConvenio').html('NOT Save Changes');
+                        $('.success-msg').css('display','block');
+                        $('.success-msg').text(data.error);
+
+		  var table = $('#tablaConveniosAdmisiones').DataTable(); // accede de nuevo a la DataTable.
+	          table.ajax.reload();
                 }
             });
         });
@@ -1508,33 +1555,28 @@ $(document).ready(function () {
         --------------------------------------------*/
         $("body").on("click",".deletePost",function(){
             var current_object = $(this);
-            swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this imaginary file!",
-                type: "error",
-                showCancelButton: true,
-                dangerMode: false,
-		color: '#000',
-	          background: 'rgba(0, 0, 0, 0.7)',
-                cancelButtonClass: '#DD6B55',
-                confirmButtonColor: '#dc3545',
-                confirmButtonText: 'Delete!',
-		showClass: {
-		            popup: 'my-icon'                     // disable popup animation css
-	          },
-            },function (result) {
-                if (result) {
-                    var action = current_object.attr('data-action');
-                    var token = $("input[name=csrfmiddlewaretoken]").val();
-                    var id = current_object.attr('data-pk');
+            var action = current_object.attr('data-action');
+            var token = $("input[name=csrfmiddlewaretoken]").val();
+            var id = current_object.attr('data-pk');
 
-                    alert("Voy a borrar" +  action);
-                    alert("Voy a borrar2" +  id);
 
-                }
-            });
-        });
+		   $.ajax({
+	           url: '/postDeleteConveniosAdmision/' ,
+	            data : {'id':id},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
 
+		        	  $('.success-msg').css('display','block');
+                        $('.success-msg').text(data.message);
+			            var table = $('#tablaConveniosAdmisiones').DataTable(); // accede de nuevo a la DataTable.
+		                table.ajax.reload();
+                    },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	           });
+	});
 });
 
 function initTableConvenios(data) {
@@ -1546,7 +1588,7 @@ function initTableConvenios(data) {
                     },
             processing: true,
             serverSide: false,
-            scrollY: '100px',
+            scrollY: '130px',
 	    scrollX: true,
 	    scrollCollapse: true,
             paging:false,
@@ -1580,13 +1622,13 @@ function initTableConvenios(data) {
 
 }
 
-// function tableActions() {
-//    var table = initTable();
+ function tableActions() {
+   var table = initTableConvenios();
 
     // perform API operations with `table`
     // ...
-//}
+}
 
-$(document).on('change', '#Convenios', function(event) {
-   alert("pique en article Convenios");
+$(document).on('click', '#Convenios', function(event) {
+  // alert("pique en article Convenios");
 });

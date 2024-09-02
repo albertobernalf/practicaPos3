@@ -1,56 +1,43 @@
-var $ = jQuery;
-console.log('Hola Alberto Hi!')
 
-var datavta;
-var seriali = new Array();
-var serialiLab = new Array();
-var serialiRad = new Array();
-var serialiTer = new Array();
-var serialiDiag = new Array();
-var serialiAnt = new Array();
-var serialiInt = new Array();
+            $.ajax({
+                data: $('#postFormCrearLaboratorio').serialize(),
+                url: "",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+                    alert("Bien la data");
+			        printErrorMsg(data.error)
+                    if ($.isEmptyObject(data.error)) {
 
+                        //  $("input[name='description']").val('');
+                        $('#crearLaboratoriosModel').modal('hide');
+                        $('.success-msg').css('display','block');
+                        $('.success-msg').text(data.message);
+                    }else{
+                        alert("Mal la data");
+                        printErrorMsg(data.error)
+                    }
+                    $('#postFormCrearLaboratorios').trigger("reset");
+	 	            var table = $('#tablaLaboratorios').DataTable(); // accede de nuevo a la DataTable.
+	                table.ajax.reload();
 
-var seriali2 = new Array();
-var envio = new FormData()
-var envio1 = new FormData()
-var envio2 = new FormData()
-var envioLab = new FormData()
-var envioRad = new FormData()
-var envioTer = new FormData()
+                },
+                error: function (data) {
+			        alert("VENGO CON ERRORES :" , printErrorMsg(data.error));
+                   // $('#saveBtnCrearConvenio').html('NOT Save Changes');
+                        $('.success-msg').css('display','block');
+                        $('.success-msg').text(data.error);
 
-var envioDiag = new FormData()
-var formData = new FormData()
-var envio_final = new FormData()
-var envio_finalRad = new FormData()
-var envio_final1 = new FormData()
+		  var table = $('#tablaLaboratorios').DataTable(); // accede de nuevo a la DataTable.
+	          table.ajax.reload();
+                }
+            });
 
-var x=0
-var  folio_final =0
-
-const form = document.getElementById('formHistoria')
-
-const form2 = document.getElementById('formClinicos')
-console.log(form)
-console.log(form2)
-
-
-function valida(forma)
-{
-
-
-
-	};
-
-
-$('.editPostar').on('click',function(event)
-{
- 	 alert("Entre a editPostt"); 
-	 var post_id = $(this).data('pk');
-          alert("pk1 = " + $(this).data('pk'));
-
-
-	});
+		        $('#crearLaboratoriosModel').modal('hide');
+                        $('.success-msg').css('display','block');
+                        $('.success-msg').text('Dato actualizado');
+			  var table = $('#tablaLaboratorios').DataTable(); // accede de nuevo a la DataTable.
+	                 table.ajax.reload();
 
 
 
@@ -178,5 +165,4 @@ function initTableClinico(data) {
     // perform API operations with `table`
     // ...
 }
-
 

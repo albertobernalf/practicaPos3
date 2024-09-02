@@ -4381,13 +4381,13 @@ def load_dataConvenioAdmisiones(request, data):
     miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",     password="pass123")
     curx = miConexionx.cursor()
    
-    detalle = 'SELECT i.id id,i."tipoDoc_id" tipoDocId , i.documento_id documentoId ,u.documento documento,u.nombre nombre,i.consec consec , contra.nombre convenio, tipdoc.nombre nombreDocumento FROM admisiones_ingresos i, usuarios_usuarios u, facturacion_conveniosPacienteIngresos conv , contratacion_convenios contra , usuarios_tiposdocumento tipdoc WHERE i.id = ' + "'" + str(ingresoId) + "'" + ' and i.documento_id = u.id and i."tipoDoc_id" = conv."tipoDoc_id" and i.documento_id  = conv.documento_id and i.consec = conv."consecAdmision" and contra.id = conv.convenio_id AND tipdoc.id = i."tipoDoc_id"'
+    detalle = 'SELECT conv.id id,i."tipoDoc_id" tipoDocId , i.documento_id documentoId ,u.documento documento,u.nombre nombre,i.consec consec , contra.nombre convenio, tipdoc.nombre nombreDocumento FROM admisiones_ingresos i, usuarios_usuarios u, facturacion_conveniosPacienteIngresos conv , contratacion_convenios contra , usuarios_tiposdocumento tipdoc WHERE i.id = ' + "'" + str(ingresoId) + "'" + ' and i.documento_id = u.id and i."tipoDoc_id" = conv."tipoDoc_id" and i.documento_id  = conv.documento_id and i.consec = conv."consecAdmision" and contra.id = conv.convenio_id AND tipdoc.id = i."tipoDoc_id"'
 
     print(detalle)
 
     curx.execute(detalle)
 
-    for id, tipoDocId, documentoId, documento, nombre, consec, convenio, nombreDocumento in curx.fetchall():
+    for  id, tipoDocId, documentoId, documento, nombre, consec, convenio, nombreDocumento in curx.fetchall():
         conveniosPacienteIngresos.append(
 		{"model":"conveniosPacienteIngresos.conveniosPacienteIngresos","pk":id,"fields":
 			{'id':id, 'tipoDocId': tipoDocId, 'documentoId': documentoId, 'documento':documento , 'nombre': nombre, 'consec': consec, 'convenio':convenio, 'nombreDocumento':nombreDocumento}})
@@ -4434,11 +4434,18 @@ def GuardaConvenioAdmision(request):
     return JsonResponse({'success': True, 'message': 'Convenio Actualizado satisfactoriamente!'})
 
 
-def PostDeleteConveniosAdmision(request,id):
+def PostDeleteConveniosAdmision(request):
 
     print ("Entre PostDeleteConveniosAdmision" )
     print ("PostDeleteConveniosAdmision" )
+
+    id = request.POST["id"]
+    print ("el id es = ", id)
+
+
     post = ConveniosPacienteIngresos.objects.get(id=id)
     post.delete()
-    return HttpResponseRedirect(reverse('index'))
+    #return HttpResponseRedirect(reverse('index'))
+    return JsonResponse({'success': True, 'message': 'Convenio borrado!'})
+
 

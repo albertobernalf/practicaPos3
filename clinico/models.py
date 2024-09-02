@@ -16,21 +16,6 @@ class HistorialDiagnosticosCabezote(models.Model):
         return self.observaciones
 
 
-class HistoriaExamenesCabezote(models.Model):
-    id = models.AutoField(primary_key=True)
-    historia = models.ForeignKey('clinico.Historia', default=1, on_delete=models.PROTECT, null=False)
-    tiposExamen = models.ForeignKey('clinico.TiposExamen', default=1, on_delete=models.PROTECT, null=False)
-    observaciones = models.CharField(max_length=200, editable=True)
-    fechaRegistro = models.DateTimeField(default=now, editable=False)
-    usuarioRegistro = models.ForeignKey('usuarios.Usuarios', default=1, on_delete=models.PROTECT, null=False)
-    estadoReg = models.CharField(max_length=1, default='A', editable=False)
-
-
-def __str__(self):
-    return self.observaciones
-
-
-
 class TiposRadiologia(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50, null=False)
@@ -39,72 +24,7 @@ class TiposRadiologia(models.Model):
     def __str__(self):
         return self.nombre
 
-class ExamenesLaboratorio(models.Model):
-    id = models.AutoField(primary_key=True)
-    TiposExamen = models.ForeignKey('clinico.TiposExamen',  blank=True, null=True, editable=True,on_delete=models.PROTECT)
-    codigoCups = models.CharField(max_length=20, null=False, default=0)
-    nombre = models.CharField(max_length=300)
-    edadIni = models.IntegerField()
-    edadFin = models.IntegerField()
-    citaControl = models.CharField(max_length=1, null=False, default=0)
-    # unidadMedida=models.ForeignKey('facturacionConceptos',  blank=True, null=True, editable=True, on_delete=models.PROTECT, null=False)
-    concepto = models.ForeignKey('facturacion.Conceptos', blank=True, null=True, editable=True, on_delete=models.PROTECT)
-    codigoRips = models.CharField(max_length=6, null=False, default=0)
-    autorizar = models.CharField(max_length=1, null=False, default=0)
-    estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
-    def __str__(self):
-        return self.nombre
-
-class ExamenesRadiologia(models.Model):
-    id = models.AutoField(primary_key=True)
-    tipoRadiologia = models.ForeignKey('clinico.TiposRadiologia',  blank=True, null=True, editable=True, on_delete=models.PROTECT)
-    TiposExamen = models.ForeignKey('clinico.TiposExamen', default=1, on_delete=models.PROTECT)
-    codigoCups = models.CharField(max_length=20, null=False, default=0)
-    nombre = models.CharField(max_length=300)
-    edadIni = models.IntegerField()
-    edadFin = models.IntegerField()
-    citaControl = models.CharField(max_length=1, null=False, default=0)
-    concepto = models.ForeignKey('facturacion.Conceptos', blank=True, null=True, editable=True,   on_delete=models.PROTECT)
-    codigoRips = models.CharField(max_length=6, null=False, default=0)
-    autorizar = models.CharField(max_length=1, null=False, default=0)
-    estadoReg = models.CharField(max_length=1, default='A', editable=False)
-
-    def __str__(self):
-        return self.nombre
-
-class ExamenesNoQx(models.Model):
-    id = models.AutoField(primary_key=True)
-    TiposExamen = models.ForeignKey('clinico.TiposExamen',  blank=True, null=True, editable=True, on_delete=models.PROTECT)
-    codigoCups = models.CharField(max_length=20, null=False, default=0)
-    nombre = models.CharField(max_length=300)
-    edadIni = models.IntegerField()
-    edadFin = models.IntegerField()
-    citaControl = models.CharField(max_length=1, null=False, default=0)
-    concepto = models.ForeignKey('facturacion.Conceptos', blank=True, null=True, editable=True, on_delete=models.PROTECT)
-    codigoRips = models.CharField(max_length=6, null=False, default=0)
-    autorizar = models.CharField(max_length=1, null=False, default=0)
-    estadoReg = models.CharField(max_length=1, default='A', editable=False)
-
-
-    def __str__(self):
-        return self.nombre
-
-class ExamenesTerapias(models.Model):
-    id = models.AutoField(primary_key=True)
-    TiposExamen = models.ForeignKey('clinico.TiposExamen',  blank=True, null=True, editable=True, on_delete=models.PROTECT)
-    codigoCups = models.CharField(max_length=20, null=False, default=0)
-    nombre = models.CharField(max_length=3000)
-    edadIni = models.IntegerField()
-    edadFin = models.IntegerField()
-    citaControl = models.CharField(max_length=1, null=False, default=0)
-    concepto = models.ForeignKey('facturacion.Conceptos', blank=True, null=True, editable=True,  on_delete=models.PROTECT)
-    codigoRips = models.CharField(max_length=6, null=False, default=0)
-    autorizar = models.CharField(max_length=1, null=False, default=0)
-    estadoReg = models.CharField(max_length=1, default='A', editable=False)
-
-    def __str__(self):
-        return self.nombre
 
 class Servicios(models.Model):
     id = models.AutoField(primary_key=True)
@@ -256,13 +176,29 @@ class TiposIncapacidad(models.Model):
 
 
 class Examenes(models.Model):
-                id = models.AutoField(primary_key=True)
-                TiposExamen = models.ForeignKey('clinico.TiposExamen',  blank=True, null=True, editable=True, on_delete=models.PROTECT)
-                codigo = models.CharField(max_length=20, null=False, default=0)
-                nombre = models.CharField(max_length=80)
+    Si = 'S'
+    No = 'N'
+    TIPO_CHOICES = (
+        (Si, 'Si'),
+        (No, 'No'),
+    )
+    id = models.AutoField(primary_key=True)
+    TiposExamen = models.ForeignKey('clinico.TiposExamen',  blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    codigoCups = models.CharField(max_length=20, null=False,  blank=True)
+    nombre = models.CharField(max_length=300)
+    edadIni = models.IntegerField(null=False,  blank=True, default=0)
+    edadFin = models.IntegerField(null=False,  blank=True, default=120)
+    solicitaEnfermeria = models.CharField(max_length=1, choices=TIPO_CHOICES,  null=False,  blank=True, )
+    citaControl = models.CharField(max_length=1, null=False, default=0)
+                # unidadMedida=models.ForeignKey('facturacionConceptos',  blank=True, null=True, editable=True, on_delete=models.PROTECT, null=False)
+    concepto = models.ForeignKey('facturacion.Conceptos', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    codigoRips = models.CharField(max_length=6, null=False, default=0)
+    autorizar = models.CharField(max_length=1, null=False, default=0)
+    tipoRadiologia = models.ForeignKey('clinico.TiposRadiologia',  blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
-                def __str__(self):
-                    return self.nombre
+    def __str__(self):
+        return self.nombre
 
 class EstadosInterconsulta(models.Model):
                 id = models.AutoField(primary_key=True)
@@ -369,10 +305,8 @@ class Historia(models.Model):
 class HistoriaExamenes(models.Model):
     id = models.AutoField(primary_key=True)
     historia = models.ForeignKey('clinico.Historia', blank=True, null=True, editable=True, on_delete=models.PROTECT)
-    examenesLaboratorio = models.ForeignKey('clinico.ExamenesLaboratorio', blank=True, null=True,   editable=True, on_delete=models.PROTECT)
-    examenesRadiologia = models.ForeignKey('clinico.ExamenesRadiologia', blank=True, null=True, editable=True, on_delete=models.PROTECT)
-    examenesTerapias = models.ForeignKey('clinico.ExamenesTerapias', blank=True, null=True, editable=True,  on_delete=models.PROTECT)
-    examenesNoQx = models.ForeignKey('clinico.ExamenesNoQx', blank=True, null=True, editable=True,on_delete=models.PROTECT)
+    tiposExamen = models.ForeignKey('clinico.TiposExamen', default=1, on_delete=models.PROTECT, null=False)
+    codigoCups = models.CharField(max_length=20, null=False, blank=True)
     consecutivo = models.IntegerField(blank=True, null=True)
     cantidad = models.IntegerField()
     observaciones = models.CharField(max_length=200, editable=True,blank=True, null=True)
@@ -399,6 +333,7 @@ class HistoriaExamenes(models.Model):
     rutaImagen = models.CharField(max_length=100, default='')
     rutaVideo = models.CharField(max_length=100, default='')
     estadoExamenes = models.ForeignKey('clinico.EstadoExamenes', default=1, on_delete=models.PROTECT)
+    observaciones = models.CharField(max_length=200, editable=True,blank=True, null=True)
     usuaroRegistra = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='usuarioRegistra1')
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 

@@ -12,14 +12,15 @@ from django.utils.timezone import now
 from django.db.models import Avg, Max, Min
 from .forms import historiaForm, historiaExamenesForm
 from datetime import datetime
-from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, HistoriaExamenesCabezote, EstadoExamenes
+from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes
 from sitios.models import Dependencias
 from planta.models import Planta
 from contratacion.models import Procedimientos
+from usuarios.models import Usuarios
 
 
 
-from clinico.forms import HistoriaExamenesCabezoteForm, IncapacidadesForm, HistorialDiagnosticosCabezoteForm
+from clinico.forms import  IncapacidadesForm, HistorialDiagnosticosCabezoteForm
 from django.db.models import Avg, Max, Min
 from usuarios.models import Usuarios, TiposDocumento
 
@@ -33,17 +34,10 @@ from django.http import JsonResponse
 import MySQLdb
 import pyodbc
 import psycopg2
-
-
 import json 
 import datetime 
 
-
 # Create your views here.
-
-
-
-
 
 def prueba(request):
     return render(request, "index.html")
@@ -201,51 +195,56 @@ def center_crop(frame):
     return frame[:, start: start + h]
 
 
-
-
 def crearHistoriaClinica(request):
     print("Entre crearHistoriaClinica")
     # form = historiaForm(request.POST)
 
     if request.method == 'POST':
         if request.is_ajax and request.method == "POST":
-            print("Entre Ajax")
 
 
-            tipoDoc = request.POST["tipoDoc"]
+            print ("envio1 = " , envio2)
+
+            print("Entre Ajax   por POST")
+            envio1 = request.POST["envio2"]
+            print ("envio1 = " , envio1)
+
+            tipoDoc = request.POST["tipoDocPaciente"]
             print("tipoDoc = ", tipoDoc)
-
-
-            documento = request.POST["documento"]
-            consecAdmision = request.POST["consecAdmision"]
-            folio = request.POST["folio"]
-            fecha = request.POST["fecha"]
+            documento = request.POST["documentoPaciente"]
+            consecAdmision = request.POST["ingresoPaciente"]
+            #folio = request.POST["folio"]
+            #fecha = request.POST["fecha"]
             tiposFolio = request.POST["tiposFolio"]
             #tiposFolio = 1
             print (tiposFolio)
             causasExterna = request.POST["causasExterna"]
-            dependenciasRealizado = request.POST["dependenciasRealizado"]
+            #dependenciasRealizado = request.POST["dependenciasRealizado"]
 
             espMedico = request.POST["espMedico"]
-            diagnosticos = request.POST["diagnosticos"]
+            #diagnosticos = request.POST["diagnosticos"]
 
-            planta = request.POST["planta"]
+            #planta = request.POST["planta"]
             #planta = 1
             motivo = request.POST["motivo"]
             objetivo = request.POST["objetivo"]
             subjetivo = request.POST["subjetivo"]
             analisis = request.POST["analisis"]
-            plan = request.POST["plan"]
-            usuarioRegistro = request.POST["usuarioRegistro"]
-            now = datetime.now()
-            dnow = now.strftime("%Y-%m-%d %H:%M:%S")
-            print("NOW  = ", dnow)
+            #plan = request.POST["plan"]
+            #usuarioRegistro = request.POST["usuarioRegistro"]
+            #now = datetime.now()
+            #dnow = now.strftime("%Y-%m-%d %H:%M:%S")
+            #print("NOW  = ", dnow)
 
-            fechaRegistro = dnow
+            #fechaRegistro = dnow
             estadoReg = "A"
             print("estadoRegistro =", estadoReg)
             # Busca el folio a asignar
             # Primero el id del paciente:
+
+            laboratorios = request.POST["FormaLaboratorios"]
+            print ("laboratorios =" , laboratorios)
+
 
 
             miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
@@ -453,194 +452,8 @@ def crearHistoriaClinica(request):
 
                 # Grabacion Laboratorios
 
-                SerialiLab = request.POST["serialiLab"]
-                print("SerialiLab = ", SerialiLab)
-
-
-                if SerialiLab != '[]':
-
-                    # Grabacion Cabezote  Laboratorios
-
-                    JsonCabezoteLab = request.POST["jsonCabezoteLab"]
-
-                    print("cabezoteFormLab = ", JsonCabezoteLab)
-
-                    # Convierto ma Diccionario
-
-                    JsonDictCabezoteLab  = json.loads(JsonCabezoteLab)
-
-                    print(JsonDictCabezoteLab)
-
-                    # INSERT DE cabezote de Examenes
-
-                    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-                    curt = miConexiont.cursor()
-
-
-                    comando = "INSERT INTO clinico_HistoriaExamenesCabezote (historia_id , tiposExamen_id , observaciones, estadoReg ) VALUES ('" + str(historiaId) + "', '" + str(JsonDictCabezoteLab['tiposExamen']) + "',  '" + str(JsonDictCabezoteLab['observaciones']) + "',  '" + str(estadoReg) + "');"
-                    print(comando)
-                    resultado = curt.execute(comando)
-                    #cabezoteLabId = miConexiont.insert_id()
-                    cabezoteLabId = curt.execute('SELECT @@IDENTITY AS id;').fetchone()[0]
-                    miConexiont.commit()
-
-                    miConexiont.close()
-
-
-
-                    #HistoriaExamenesCabezote1 = HistoriaExamenesCabezote(
-
-                    #historia =   Historia.objects.get(id=jsonHistoria['id']),
-                     # tiposExamen =  TiposExamen.objects.get(id=JsonDictCabezoteLab['tiposExamen']),
-                     # observaciones=JsonDictCabezoteLab['observaciones'],
-                     # estadoReg=estadoReg)
-
-                    #HistoriaExamenesCabezote1.save()
-
-                    #cabezoteLabId = HistoriaExamenesCabezote1.id
-
-                    # Fin Grabacion Cabezote Laboratorios
-
-                    # Grabacion detalle Laboratorios
-
-
-
-                    JsonDicSerialiLab = json.loads(SerialiLab)
-                    print ("Diccionario seriliLab = ", JsonDicSerialiLab)
-
-
-                    # Voy a iterar
-                    campo = {}
-                    jsoncabezoteLabId = {'cabezoteLabId' : cabezoteLabId}
-
-                    jsonEstadoExamenes = {'id' : 1}
-
-
-                    for x in range(0, len(JsonDicSerialiLab) ):
-                      print(JsonDicSerialiLab[x])
-                      campo1 = JsonDicSerialiLab[x]
-                      campo = json.loads(campo1)
-                      print (campo['tipoExamen'])
-                      #print(campo.tipoExamen)
-                      #print(campo.examen)
-                   
-
-
-
-
-                      # Grabacion Definitiva
-
-                      #HistoriaExamenes1 = HistoriaExamenes(historiaExamenesCabezote = HistoriaExamenesCabezote.objects.get(id=jsoncabezoteLabId['cabezoteLabId']),
-                      #  procedimientos = Procedimientos.objects.get(id=campo['examen']),
-                      #  cantidad =  campo['cantidad'],
-                      #  estadoExamenes =EstadoExamenes.objects.get(id=jsonEstadoExamenes['id']),
-                      #  estadoReg = 'A' )
-
-                      # HistoriaExamenes1.save()
-
-                      # insert detalle examenes
-
-                      miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-                      curt = miConexiont.cursor()
-
-                      comando = "INSERT INTO clinico_HistoriaExamenes (historiaExamenesCabezote_id , procedimientos_id , cantidad, estadoExamenes_id, estadoReg ) VALUES ('" + str(cabezoteLabId) + "', '" + str(campo['examen']) + "',  '" + str(campo['cantidad']) + "',  '" + str(jsonEstadoExamenes['id']) + "',  '" +  str(estadoReg) + "');"
-                      print(comando)
-                      resultado = curt.execute(comando)
-                      miConexiont.commit()
-
-                      miConexiont.close()
-
-                      # Fin Grabacion Detalle Laboratorios
 
                 # Fin Grabacion Laboratorios
-
-
-
-                # Grabacion Radiologia
-
-                SerialiRad = request.POST["serialiRad"]
-                print("SerialiRad = ", SerialiRad)
-
-                if SerialiRad != '[]':
-
-                          # Grabacion Cabezote  Radoliogia
-
-                          JsonCabezoteRad = request.POST["jsonCabezoteRad"]
-
-                          print("JsonCabezoteRad = ", JsonCabezoteRad)
-
-                          # Convierto ma Diccionario
-
-                          JsonDictCabezoteRad = json.loads(JsonCabezoteRad)
-
-                          print(JsonDictCabezoteRad)
-
-                          # Intento guardar el cabezote de Examenes
-
-                          HistoriaExamenesCabezote1 = HistoriaExamenesCabezote(
-
-                              historia=Historia.objects.get(id=jsonHistoria['id']),
-                              tiposExamen=TiposExamen.objects.get(id=JsonDictCabezoteRad['tiposExamen']),
-                              observaciones=JsonDictCabezoteRad['observaciones'],
-                              estadoReg=estadoReg)
-
-                          HistoriaExamenesCabezote1.save()
-
-                          cabezoteRadId = HistoriaExamenesCabezote1.id
-
-                          # Fin Grabacion Cabezote Radiologia
-
-                          # Grabacion detalle Laboratorios
-
-                          JsonDicSerialiRad = json.loads(SerialiRad)
-                          print("Diccionario seriliRad = ", JsonDicSerialiRad)
-
-                          # Voy a iterar
-                          campo = {}
-                          jsoncabezoteRadId = {'cabezoteRadId': cabezoteRadId}
-                          # Estado Ordenado
-
-                          jsonEstadoExamenes = {'id': 1}
-
-                          for x in range(0, len(JsonDicSerialiRad)):
-                              print(JsonDicSerialiRad[x])
-                              campo = JsonDicSerialiRad[x]
-                              print(campo['tipoExamen'])
-                              print(campo['examen'])
-                              print(campo['cantidad'])
-
-                              # Grabacion Definitiva
-
-                              HistoriaExamenes1 = HistoriaExamenes(
-                                  historiaExamenesCabezote=HistoriaExamenesCabezote.objects.get(
-                                      id=jsoncabezoteRadId['cabezoteRadId']),
-                                  procedimientos=Procedimientos.objects.get(id=campo['examen']),
-                                  cantidad=campo['cantidad'],
-                                  estadoExamenes=EstadoExamenes.objects.get(id=jsonEstadoExamenes['id']),
-                                  estadoReg='A')
-
-                              HistoriaExamenes1.save()
-
-                              # Fin Grabacion Detalle Laboratorios
-
-                      # Fin Grabacion Laboratorios
-
-                # Grabacion Terapias
-
-                # Grabacion Diagnosticos
-
-                # Grabacion Antecedentes
-
-                # Grabacion Procedimientos NoQx
-
-                # Grabacion Incapacidades
-
-                # Grabacion Cirugias
-
-                # Grabacion Formulacion
-
-                # Grabacion Signos Vitales
-
 
 
             data = {'Mensaje': 'Folio exitoso : ' + str(ultimofolio2)}
@@ -651,55 +464,53 @@ def crearHistoriaClinica(request):
 
     else:
 
-        print ("Entre por GET Crear Historia Clinica")
+        print("Entre por GET Crear Historia Clinica")
         context = {}
         context['title'] = 'Mi gran Template'
         context['historiaForm'] = historiaForm
-        context['HistoriaExamenesCabezoteForm'] = HistoriaExamenesCabezoteForm
         context['IncapacidadesForm'] = IncapacidadesForm
         context['HistorialDiagnosticosCabezoteForm'] = HistorialDiagnosticosCabezoteForm
 
-
         Sede = request.GET["sede"]
-        #Servicio = request.GET["Servicio"]
-        #Perfil = request.GET["Perfil"]
         Username = request.GET["username"]
         Username_id = request.GET["username_id"]
         Profesional = request.GET["profesional"]
+        EscogeModulo = request.GET["escogeModulo"]
 
-        nombreSede = request.GET["nombreSede"]
-        TipoDocPaciente = request.GET["TipoDocPaciente"]
-        DocumentoPaciente = request.GET["DocumentoPaciente"]
-        IngresoPaciente = request.GET["IngresoPaciente"]
-        espMedico = request.GET["espMedico"]
+        NombreSede = request.GET["nombreSede"]
+        TipoDocPaciente = request.GET["nombreTipoDoc"]
+        DocumentoPaciente = request.GET["documento2"]
+        IngresoPaciente = request.GET["consec"]
+        EspMedico = request.GET["espMedico"]
+        TiposFolio = request.GET["tiposFolio"]
+        DocumentoId = request.GET["documentoId"]
 
-        print("especialidad Medico = ", espMedico)
+        print("especialidad Medico = ", EspMedico)
         print("TipoDocPaciente = ", TipoDocPaciente)
-
         print("DocumentoPaciente = ", DocumentoPaciente)
         print("IngresoPaciente = ", IngresoPaciente)
 
         print("Sede = ", Sede)
-        print("Servicio = ", Servicio)
+
         print("Username = ", Username)
 
         context['Sede'] = Sede
-        context['Servicio'] = Servicio
-        context['Perfil'] = Perfil
         context['Username'] = Username
         context['Username_id'] = Username_id
         context['Profesional'] = Profesional
+        context['EscogeModulo'] = EscogeModulo
 
-        context['nombreSede'] = nombreSede
+        context['NombreSede'] = NombreSede
         context['TipoDocPaciente'] = TipoDocPaciente
         context['DocumentoPaciente'] = DocumentoPaciente
         context['IngresoPaciente'] = IngresoPaciente
-        context['espMedico'] = espMedico
-
+        context['EspMedico'] = EspMedico
+        context['TiposFolio'] = TiposFolio
 
         # Combo Tipos Diagnostico
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
         curt = miConexiont.cursor()
 
         comando = "SELECT t.id id, t.nombre  nombre FROM clinico_tiposDiagnostico t"
@@ -722,7 +533,8 @@ def crearHistoriaClinica(request):
 
         # Combo Diagnostico
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
         curt = miConexiont.cursor()
 
         comando = "SELECT p.id id, p.nombre  nombre FROM clinico_diagnosticos p"
@@ -734,7 +546,7 @@ def crearHistoriaClinica(request):
         diagnosticos.append({'id': '', 'nombre': ''})
 
         for id, nombre in curt.fetchall():
-                diagnosticos.append({'id': id, 'nombre': nombre})
+            diagnosticos.append({'id': id, 'nombre': nombre})
 
         miConexiont.close()
         print(diagnosticos)
@@ -745,7 +557,8 @@ def crearHistoriaClinica(request):
 
         # Combo Especialidades
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
         curt = miConexiont.cursor()
 
         comando = "SELECT e.id id, e.nombre  nombre FROM clinico_especialidades e"
@@ -768,7 +581,8 @@ def crearHistoriaClinica(request):
 
         # Combo TiposFolio
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
         curt = miConexiont.cursor()
 
         comando = "SELECT e.id id, e.nombre nombre FROM clinico_tiposFolio e"
@@ -777,27 +591,26 @@ def crearHistoriaClinica(request):
         print(comando)
 
         tiposFolio = []
-        tiposFolio.append({ 'id': '', 'nombre': ''})
+        tiposFolio.append({'id': '', 'nombre': ''})
 
         for id, nombre in curt.fetchall():
-            tiposFolio.append({ 'id': id, 'nombre': nombre})
+            tiposFolio.append({'id': id, 'nombre': nombre})
 
         miConexiont.close()
         print(tiposFolio)
 
         context['TiposFolio'] = tiposFolio
 
-
         # Fin combo TiposFolio
 
         # Combo Laboratorios
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
         curt = miConexiont.cursor()
 
-        #comando = "SELECT t.id TipoId, e.id id, e.nombre nombre FROM clinico_tiposExamen t, clinico_examenes e WHERE t.id = e.TiposExamen_id and t.id ='2'"
-        comando = "SELECT t.id TipoId, p.id id, p.nombre nombre , p.cups cups FROM clinico_tiposExamen t, contratacion_procedimientos p WHERE t.id = p.TiposExamen_id and t.id ='1'"
-
+        comando = 'SELECT t.id TipoId, e.id id, e.nombre nombre , e."codigoCups" cups FROM clinico_tiposExamen t, clinico_examenes e WHERE t.id = e."TiposExamen_id" and t.nombre = ' + "'" + str(
+            'LABORATORIO') + "'"
         curt.execute(comando)
         print(comando)
 
@@ -805,7 +618,7 @@ def crearHistoriaClinica(request):
         laboratorios.append({'TipoId': '', 'id': '', 'nombre': '', 'cups': ''})
 
         for TipoId, id, nombre, cups in curt.fetchall():
-            laboratorios.append({'TipoId': TipoId, 'id': id, 'nombre': nombre, 'cups' : cups})
+            laboratorios.append({'TipoId': TipoId, 'id': id, 'nombre': nombre, 'cups': cups})
 
         miConexiont.close()
         print(laboratorios)
@@ -817,11 +630,13 @@ def crearHistoriaClinica(request):
 
         # Combo Radiologia
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
         curt = miConexiont.cursor()
 
-        #comando = "SELECT t.id TipoId, e.id id, e.nombre nombre FROM clinico_tiposExamen t, clinico_examenes e WHERE t.id = e.TiposExamen_id and t.id ='1'"
-        comando = "SELECT t.id TipoId, p.id id, p.nombre nombre , p.cups cups FROM clinico_tiposExamen t, contratacion_procedimientos p WHERE t.id = p.TiposExamen_id and t.id ='3'"
+        # comando = "SELECT t.id TipoId, e.id id, e.nombre nombre FROM clinico_tiposExamen t, clinico_examenes e WHERE t.id = e.TiposExamen_id and t.id ='1'"
+        comando = 'SELECT t.id TipoId, e.id id, e.nombre nombre , e."codigoCups" cups FROM clinico_tiposExamen t, clinico_examenes e WHERE t.id = e."TiposExamen_id" and t.nombre = ' + "'" + str(
+            'RADIOLOGIA') + "'"
 
         curt.execute(comando)
         print(comando)
@@ -830,7 +645,7 @@ def crearHistoriaClinica(request):
         radiologias.append({'TipoId': '', 'id': '', 'nombre': '', 'cups': ''})
 
         for TipoId, id, nombre, cups in curt.fetchall():
-            radiologias.append({'TipoId': TipoId, 'id': id, 'nombre': nombre, 'cups' : cups})
+            radiologias.append({'TipoId': TipoId, 'id': id, 'nombre': nombre, 'cups': cups})
 
         miConexiont.close()
         print(radiologias)
@@ -841,26 +656,38 @@ def crearHistoriaClinica(request):
         # Fin combo Radiologia
 
         # Datos Basicos del Paciente
-        filaTipoDoc = TiposDocumento.objects.get(nombre = TipoDocPaciente)
-        print(filaTipoDoc.id)
 
-        fila = Usuarios.objects.get(tipoDoc_id=filaTipoDoc.id,nombre=DocumentoPaciente)
-        print ("OJO LOS DATOS DESNORMALIOZADOS")
+        print("especialidad Medico = ", EspMedico)
+        print("TipoDocPaciente = ", TipoDocPaciente)
+        print("DocumentoPaciente = ", DocumentoPaciente)
+        print("IngresoPaciente = ", IngresoPaciente)
+        print("DocumentoId = ", DocumentoId)
 
-        print (fila.documento)
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        filaTipoDoc = TiposDocumento.objects.get(nombre=TipoDocPaciente)
+        print("id tipodoc = " , filaTipoDoc.id)
+        print("nombre tipodoc = ", filaTipoDoc.nombre)
+
+        fila = Usuarios.objects.get(tipoDoc_id=filaTipoDoc.id, documento=DocumentoPaciente)
+        print("OJO LOS DATOS DESNORMALIOZADOS")
+
+        print(fila.documento)
+
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",   password="pass123")
         curt = miConexiont.cursor()
 
-        comando = "select  tipoDoc_id , tip.nombre tipnombre, documento documentoPaciente, u.nombre nombre, case when genero = 'M' then 'Masculino' when genero= 'F' then 'Femenino' end as genero, cen.nombre as centro, tu.nombre as tipoUsuario, fechaNacio, u.direccion direccion, u.telefono telefono  from usuarios_usuarios u, usuarios_tiposUsuario  tu, sitios_centros cen , usuarios_tiposDocumento tip  where tip.id =u.tipoDoc_id  AND u.tipoDoc_id = '" + str(filaTipoDoc.id) + "' and u.documento = '" + str(fila.documento) + "' and u.tiposUsuario_id = tu.id and u.centrosc_id = cen.id"
+       # comando = "select  tipoDoc_id , tip.nombre tipnombre, documento documentoPaciente, u.nombre nombre, case when genero = 'M' then 'Masculino' when genero= 'F' then 'Femenino' end as genero, cen.nombre as centro, tu.nombre as tipoUsuario, fechaNacio, u.direccion direccion, u.telefono telefono  from usuarios_usuarios u, usuarios_tiposUsuario  tu, sitios_centros cen , usuarios_tiposDocumento tip  where tip.id =u.tipoDoc_id  AND u.tipoDoc_id = '" + str(         filaTipoDoc.id) + "' and u.documento = '" + str(fila.documento) + "' and u.tiposUsuario_id = tu.id and u.centrosc_id = cen.id"
+        comando = 'select  u."tipoDoc_id" , tip.nombre tipnombre, documento documentoPaciente, u.nombre nombre, case when genero = ' + "'" + str('M') + "'" + ' then ' + "'" + str("Masculino") + "'" + ' when genero= ' + "'" + str('F') + "'" + ' then ' + "'" + str('Femenino') + "'" + ' end as genero, cen.nombre as centro, tu.nombre as tipoUsuario,"fechaNacio", u.direccion direccion, u.telefono telefono from usuarios_usuarios u, usuarios_tiposUsuario tu, sitios_centros cen, usuarios_tiposDocumento tip where tip.id = u."tipoDoc_id"  AND u."tipoDoc_id" = ' +"'" + str(filaTipoDoc.id) + "'" + ' and u.documento = ' + "'" + str(fila.documento) + "'" + ' and u."tiposUsuario_id" = tu.id and u."centrosC_id" = cen.id'
+
         curt.execute(comando)
         print(comando)
 
         datosPaciente = []
 
-        for tipoDoc_id, tipnombre, documentoPaciente, nombre,  genero, centro, tipoUsuario, fechaNacio, direccion, telefono in curt.fetchall():
-            datosPaciente.append({'tipoDoc_id': tipoDoc_id, 'tipnombre' : tipnombre , 'documentoPaciente': documentoPaciente, 'nombre': nombre, 'genero': genero,
-                    'centro': centro, 'tipoUsuario': tipoUsuario, 'fechaNacio': fechaNacio, 'direccion': direccion, 'telefono': telefono})
+        for tipoDoc_id, tipnombre, documentoPaciente, nombre, genero, centro, tipoUsuario, fechaNacio, direccion, telefono in curt.fetchall():
+            datosPaciente.append(
+                {'tipoDoc_id': tipoDoc_id, 'tipnombre': tipnombre, 'documentoPaciente': documentoPaciente,
+                 'nombre': nombre, 'genero': genero, 'centro': centro, 'tipoUsuario': tipoUsuario, 'fechaNacio': fechaNacio, 'direccion': direccion,'telefono': telefono})
 
         miConexiont.close()
         print("OJO ESTOS SON LOS DAOS DEL PACIENTE SELECCIONAO")
@@ -873,19 +700,20 @@ def crearHistoriaClinica(request):
 
         # Combo DependenciasRealizado
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
         curt = miConexiont.cursor()
         # 3 = Consultorios Verificar
 
-        comando = "SELECT d.id id, d.nombre nombre FROM sitios_dependencias d WHERE d.sedesClinica_id = '" + str(Sede) + "' And d.dependenciasTipo_id = '3'"
+        comando = 'SELECT d.id id, d.nombre nombre FROM sitios_dependencias d WHERE d."sedesClinica_id" = ' + "'" + str( Sede) + "'" +  ' And d."dependenciasTipo_id" = ' + "'" + str('3') + "'"
 
         curt.execute(comando)
         print(comando)
 
         dependenciasRealizado = []
-        #dependenciasRealizado.append({'id': '', 'nombre': ''})
+        # dependenciasRealizado.append({'id': '', 'nombre': ''})
 
-        for  id, nombre in curt.fetchall():
+        for id, nombre in curt.fetchall():
             dependenciasRealizado.append({'id': id, 'nombre': nombre})
 
         miConexiont.close()
@@ -897,7 +725,8 @@ def crearHistoriaClinica(request):
 
         # Combo causasExterna
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
         curt = miConexiont.cursor()
 
         comando = "SELECT d.id id, d.nombre nombre FROM clinico_causasExterna d "
@@ -919,7 +748,8 @@ def crearHistoriaClinica(request):
 
         # Combo Tiposantecedentes
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
         curt = miConexiont.cursor()
 
         comando = "SELECT id,  nombre FROM clinico_tiposAntecedente  "
@@ -942,7 +772,8 @@ def crearHistoriaClinica(request):
 
         # Combo antecedentes
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
         curt = miConexiont.cursor()
 
         comando = "SELECT id,  nombre FROM clinico_antecedentes t "
@@ -963,18 +794,19 @@ def crearHistoriaClinica(request):
 
         # Combo Terapias
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
         curt = miConexiont.cursor()
 
-        #comando = "SELECT t.id TipoId, e.id id, e.nombre nombre FROM clinico_tiposExamen t, clinico_examenes e WHERE t.id = e.TiposExamen_id and t.id ='3'"
-        comando = "SELECT t.id TipoId, p.id id, p.nombre nombre , p.cups cups FROM clinico_tiposExamen t, contratacion_procedimientos p WHERE t.id = p.TiposExamen_id and t.id ='2'"
+        # comando = "SELECT t.id TipoId, e.id id, e.nombre nombre FROM clinico_tiposExamen t, clinico_examenes e WHERE t.id = e.TiposExamen_id and t.id ='3'"
+        comando = 'SELECT t.id TipoId, e.id id, e.nombre nombre , e."codigoCups" cups FROM clinico_tiposExamen t, clinico_examenes e WHERE t.id = e."TiposExamen_id" and t.nombre = ' + "'" + str(
+            'TERAPIAS') + "'"
 
         curt.execute(comando)
         print(comando)
 
         terapias = []
         terapias.append({'TipoId': '', 'id': '', 'nombre': '', 'cups': ''})
-
 
         for TipoId, id, nombre, cups in curt.fetchall():
             terapias.append({'TipoId': TipoId, 'id': id, 'nombre': nombre, 'cups': cups})
@@ -989,11 +821,12 @@ def crearHistoriaClinica(request):
 
         # Combo No Qx
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
         curt = miConexiont.cursor()
 
-        #comando = "SELECT t.id TipoId, e.id id, e.nombre nombre FROM clinico_tiposExamen t, clinico_examenes e WHERE t.id = e.TiposExamen_id and t.id ='3'"
-        comando = "SELECT t.id TipoId, p.id id, p.nombre nombre , p.cups cups FROM clinico_tiposExamen t, contratacion_procedimientos p WHERE t.id = p.TiposExamen_id and t.id ='4'"
+        comando = 'SELECT t.id TipoId, e.id id, e.nombre nombre , e."codigoCups" cups FROM clinico_tiposExamen t, clinico_examenes e WHERE t.id = e."TiposExamen_id" and t.nombre = ' + "'" + str(
+            'PROCEIMIENTOS NO QX') + "'"
 
         curt.execute(comando)
         print(comando)
@@ -1005,606 +838,32 @@ def crearHistoriaClinica(request):
             noQx.append({'TipoId': TipoId, 'id': id, 'nombre': nombre, 'cups': cups})
 
         miConexiont.close()
-        print(terapias)
+        print(noQx)
 
         context['ProcNoQx'] = noQx
         context['TipoExamenProcNoQx'] = '4'
 
         # Fin combo No Qx
 
-
         return render(request, 'clinico/navegacionClinica.html', context);
 
 
+#def cargaPanelMedico(request):
+#    print("Hola Entre a Cargar el Panel Clinico")
+
+#    Sede = request.POST['Sede']
+#    sede = Sede
+#    Servicio = request.POST['Servicio']
+#    Perfil = request.POST['Perfil']
+#    Username = request.POST['Username']
+#    username = Username
+#    Username_id = request.POST['Username_id']
+#    TipoDocPaciente = request.POST['TipoDocPaciente']
+#    nombreSede = request.POST['nombreSede']
+#    DocumentoPaciente = request.POST['DocumentoPaciente']
+#    #espMedico = request.POST['espMedico']
+#    IngresoPaciente = request.POST['IngresoPaciente']
 
-def buscarAdmisionClinico(request):
-    context = {}
-
-    print("Entre Buscar Admision")
-    BusTipoDoc = request.POST["busTipoDoc"]
-    BusDocumento = request.POST["busDocumento"]
-    BusHabitacion = request.POST["busHabitacion"]
-
-    BusDesde = request.POST["busDesde"]
-    BusHasta = request.POST["busHasta"]
-    BusEspecialidad = request.POST["busEspecialidad"]
-    print("Especialidad = ", BusEspecialidad)
-    BusMedico = request.POST["busMedico"]
-    BusServicio = request.POST["busServicio"]
-    BusPaciente = request.POST["busPaciente"]
-    Perfil = request.POST['Perfil']
-
-    Sede = request.POST["Sede"]
-    context['Sede'] = Sede
-
-    # Consigo la sede Nombre
-
-    miConexion = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    cur = miConexion.cursor()
-    comando = "SELECT nombre   FROM dbo.sitios_sedesClinica WHERE id ='" + Sede + "'"
-    cur.execute(comando)
-    print(comando)
-
-    nombreSedes = []
-
-    for nombre in cur.fetchall():
-        nombreSedes.append({'nombre': nombre})
-
-    miConexion.close()
-    print(nombreSedes)
-    nombresede1 = nombreSedes[0]
-
-    context['NombreSede'] = nombresede1
-
-    Username = request.POST["Username"]
-    context['Username'] = Username
-    Username_id = request.POST["Username_id"]
-    context['Username_id'] = Username_id
-
-    print("Sede  = ", Sede)
-
-    print("BusHabitacion= ", BusHabitacion)
-    print("BusTipoDoc=", BusTipoDoc)
-    print("BusDocumento=", BusDocumento)
-    print("BusDesde=", BusDesde)
-    print("BusHasta=", BusHasta)
-    print("La sede es = ", Sede)
-    print("El busServicio = ", BusServicio)
-    print("El busEspecialidad = ", BusEspecialidad)
-    print("El busSMedico = ", BusMedico)
-    print("El busSMedico = ", BusPaciente)
-
-    ingresos = []
-
-    # Combo de Servicios
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT ser.id id ,ser.nombre nombre FROM sitios_serviciosSedes sed, clinico_servicios ser Where sed.sedesClinica_id ='" + str(
-        Sede) + "' AND sed.servicios_id = ser.id"
-    curt.execute(comando)
-    print(comando)
-
-    servicios = []
-    servicios.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        servicios.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(servicios)
-
-    context['Servicios'] = servicios
-
-    # Fin combo servicios
-
-    # Combo de SubServicios
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT sub.id id ,sub.nombre nombre  FROM sitios_serviciosSedes sed, clinico_servicios ser  , sitios_subserviciossedes sub Where sed.sedesClinica_id ='" + str(
-        Sede) + "' AND sed.servicios_id = ser.id and  sed.sedesClinica_id = sub.sedesClinica_id and sed.servicios_id =sub.servicios_id"
-    curt.execute(comando)
-    print(comando)
-
-    subServicios = []
-    subServicios.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        subServicios.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(subServicios)
-
-    context['SubServicios'] = subServicios
-
-    # Fin combo SubServicios
-
-    # Combo TiposDOc
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT id ,nombre FROM usuarios_TiposDocumento"
-    curt.execute(comando)
-    print(comando)
-
-    tiposDoc = []
-    tiposDoc.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        tiposDoc.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(tiposDoc)
-
-    context['TiposDoc'] = tiposDoc
-
-    # Fin combo TiposDOc
-
-    # Combo Habitaciones
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT id ,nombre FROM sitios_dependencias where sedesClinica_id = '" + str(
-        Sede) + "' AND dependenciasTipo_id = 2"
-    curt.execute(comando)
-    print(comando)
-
-    habitaciones = []
-    habitaciones.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        habitaciones.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(habitaciones)
-
-    context['Habitaciones'] = habitaciones
-
-    # Fin combo Habitaciones
-
-    # Combo Especialidades
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT id ,nombre FROM clinico_Especialidades"
-    curt.execute(comando)
-    print(comando)
-
-    especialidades = []
-    especialidades.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        especialidades.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(especialidades)
-
-    context['Especialidades'] = especialidades
-
-    # Fin combo Especialidades
-
-    # Combo Medicos
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT p.id id, p.nombre  nombre FROM planta_planta p ,  planta_perfilesplanta perf WHERE p.sedesClinica_id = perf.sedesClinica_id and  perf.sedesClinica_id = '" + str(
-        Sede) + "' AND perf.tiposPlanta_id = 1 and p.id = perf.planta_id"
-
-    curt.execute(comando)
-    print(comando)
-
-    medicos = []
-    medicos.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        medicos.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(medicos)
-
-    context['Medicos'] = medicos
-
-    # Fin combo Medicos
-
-    # Busco Nombre de Habitacion
-
-    miConexiont = pyodbc.connect(
-        'DRIVER={SQL Server};SERVER=CMKSISTEPC07\MEDICAL;DATABASE=vulnerable ;UID=sa;pwd=75AAbb??')
-    curt = miConexiont.cursor()
-    comando = "SELECT d.id id, d.nombre  nombre FROM sitios_dependencias d WHERE d.id = '" + str(BusHabitacion) + "'"
-    curt.execute(comando)
-    print(comando)
-
-    NombreHabitacion = ""
-
-    for id, nombre in curt.fetchall():
-        NombreHabitacion = nombre
-
-    miConexiont.close()
-    print("NombreHabitacion = ", NombreHabitacion)
-
-    # Fin busco nombre de habitacion
-
-    miConexion1 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    cur1 = miConexion1.cursor()
-
-
-    detalle = "SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , fechaIngreso , fechaSalida, ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd  WHERE sd.sedesClinica_id = i.sedesClinica_id  and   sd.servicios_id  = ser.id and   i.sedesClinica_id = dep.sedesClinica_id AND i.sedesClinica_id= '" + str(
-        Sede) + "'  AND  deptip.id = dep.dependenciasTipo_id and dep.servicios_id = ser.id AND i.salidaDefinitiva = 'N' and tp.id = u.tipoDoc_id and u.id = i.documento_id and diag.id = i.dxactual_id"
-
-    print(detalle)
-
-    desdeTiempo = BusDesde[11:16]
-    hastaTiempo = BusHasta[11:16]
-    desdeFecha = BusDesde[0:10]
-    hastaFecha = BusHasta[0:10]
-
-    print("desdeTiempo = ", desdeTiempo)
-    print("desdeTiempo = ", hastaTiempo)
-
-    print(" desde fecha = ", desdeFecha)
-    print("hasta "
-          " = ", hastaFecha)
-
-    if BusServicio != "":
-        detalle = detalle + " AND  ser.id = '" + str(BusServicio) + "'"
-    print(detalle)
-
-    if BusDesde != "":
-        detalle = detalle + " AND i.fechaIngreso >= '" + str(desdeFecha) + " " + desdeTiempo + ":00'"
-        print(detalle)
-
-    if BusHasta != "":
-        detalle = detalle + " AND i.fechaIngreso <=  '" + str(hastaFecha) + " " + hastaTiempo + ":00'"
-        print(detalle)
-
-    if BusHabitacion != "":
-        detalle = detalle + " AND dep.id = '" + str(BusHabitacion) + "'"
-        print(detalle)
-
-    if BusTipoDoc != "":
-        detalle = detalle + " AND i.tipoDoc_id= '" + str(BusTipoDoc) + "'"
-        print(detalle)
-
-    if BusDocumento != "":
-        detalle = detalle + " AND u.documento= '" + str(BusDocumento) + "'"
-        print(detalle)
-
-    if BusPaciente != "":
-        detalle = detalle + " AND u.nombre like '%" + str(BusPaciente) + "%'"
-        print(detalle)
-
-    if BusMedico != "":
-        detalle = detalle + " AND i.medicoActual_id = '" + str(BusMedico) + "'"
-        print(detalle)
-
-    if BusEspecialidad != "":
-        detalle = detalle + " AND i.dxIngreso_id = '" + str(BusEspecialidad) + "'"
-        print(detalle)
-
-    cur1.execute(detalle)
-
-    for tipoDoc, documento_id, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual in cur1.fetchall():
-        ingresos.append({'tipoDoc': tipoDoc, 'Documento': documento_id, 'Nombre': nombre, 'Consec': consec,
-                         'FechaIngreso': fechaIngreso, 'FechaSalida': fechaSalida,
-                         'servicioNombreIng': servicioNombreIng, 'camaNombreIng': camaNombreIng, 'DxActual': dxActual})
-
-    miConexion1.close()
-    print(ingresos)
-    context['Ingresos'] = ingresos
-
-    return render(request, "admisiones/panelHospAdmisionesBravo.html", context)
-
-
-# Para cargar el Panel Clinico
-
-
-def cargaPanelMedico(request):
-    print("Hola Entre a Cargar el Panel Clinico")
-
-    Sede = request.POST['Sede']
-    sede = Sede
-    Servicio = request.POST['Servicio']
-    Perfil = request.POST['Perfil']
-    Username = request.POST['Username']
-    username = Username
-    Username_id = request.POST['Username_id']
-    TipoDocPaciente = request.POST['TipoDocPaciente']
-    nombreSede = request.POST['nombreSede']
-    DocumentoPaciente = request.POST['DocumentoPaciente']
-    #espMedico = request.POST['espMedico']
-    IngresoPaciente = request.POST['IngresoPaciente']
-
-
-    context = {}
-
-    context['Sede'] = Sede
-    context['Servicio'] = Servicio
-    context['Perfil'] = Perfil
-    context['Username'] = Username
-
-    context['Username_id'] = Username_id
-    context['TipoDocPaciente'] = TipoDocPaciente
-    context['nombreSede'] = nombreSede
-    context['DocumentoPaciente'] = DocumentoPaciente
-    #context['espMedico'] = espMedico
-    context['IngresoPaciente'] = IngresoPaciente
-
-    # Variables que tengo en context : Documento, Perfil , Sede,   sedes ,NombreSede
-
-    print(context['DocumentoPaciente'])
-
-    # Consigo la sede Nombre
-
-    miConexion = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    cur = miConexion.cursor()
-    comando = "SELECT id, nombre   FROM dbo.sitios_sedesClinica WHERE id ='" + Sede + "'"
-    cur.execute(comando)
-    print(comando)
-
-    nombreSedes = []
-
-    for id, nombre in cur.fetchall():
-        nombreSedes.append({'id': id, 'nombre': nombre})
-
-    miConexion.close()
-    print(nombreSedes)
-
-    context['NombreSede'] = nombreSedes
-
-    # esta consulta por que se pierde de otras pantallas
-
-#    miConexion = pyodbc.connect('DRIVER={SQL Server};SERVER=CMKSISTEPC07\MEDICAL;DATABASE=vulnerable ;UID=sa;pwd=75AAbb??')
-    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    cur = miConexion.cursor()
-    comando = "SELECT id ,nombre FROM dbo.sitios_sedesClinica"
-    cur.execute(comando)
-    print(comando)
-
-    sedes = []
-
-    for id, nombre in cur.fetchall():
-        sedes.append({'id': id, 'nombre': nombre})
-
-    miConexion.close()
-    print(sedes)
-
-    context['Sedes'] = sedes
-
-    ingresos = []
-
-    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curx = miConexionx.cursor()
-
-
-    detalle = "SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , fechaIngreso , fechaSalida, ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd  WHERE sd.sedesClinica_id = i.sedesClinica_id  and   sd.servicios_id  = ser.id and  i.sedesClinica_id = dep.sedesClinica_id AND i.sedesClinica_id= '" + str(
-        Sede) + "'  AND  deptip.id = dep.dependenciasTipo_id and dep.servicios_id = ser.id AND i.salidaDefinitiva = 'N' and tp.id = u.tipoDoc_id and u.id = i.documento_id and diag.id = i.dxactual_id"
-    print(detalle)
-
-    curx.execute(detalle)
-
-    for tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual in curx.fetchall():
-        ingresos.append({'tipoDoc': tipoDoc, 'Documento': documento, 'Nombre': nombre, 'Consec': consec,
-                         'FechaIngreso': fechaIngreso, 'FechaSalida': fechaSalida,
-                         'servicioNombreIng': servicioNombreIng, 'camaNombreIng': camaNombreIng,
-                         'DxActual': dxActual})
-
-    miConexionx.close()
-    print(ingresos)
-    context['Ingresos'] = ingresos
-
-    # Combo de Servicios
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT ser.id id ,ser.nombre nombre FROM sitios_serviciosSedes sed, clinico_servicios ser Where sed.sedesClinica_id ='" + str(
-        Sede) + "' AND sed.servicios_id = ser.id"
-    curt.execute(comando)
-    print(comando)
-
-    servicios = []
-    servicios.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        servicios.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(servicios)
-
-    context['Servicios'] = servicios
-
-    # Fin combo servicios
-
-    # Combo de SubServicios
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT sub.id id ,sub.nombre nombre  FROM sitios_serviciosSedes sed, clinico_servicios ser  , sitios_subserviciossedes sub Where sed.sedesClinica_id ='" + str(
-        Sede) + "' AND sed.servicios_id = ser.id and  sed.sedesClinica_id = sub.sedesClinica_id and sed.servicios_id =sub.servicios_id"
-    curt.execute(comando)
-    print(comando)
-
-    subServicios = []
-    subServicios.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        subServicios.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(subServicios)
-
-    context['SubServicios'] = subServicios
-
-    # Fin combo SubServicios
-
-    # Combo TiposDOc
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT id ,nombre FROM usuarios_TiposDocumento "
-    curt.execute(comando)
-    print(comando)
-
-    tiposDoc = []
-    tiposDoc.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        tiposDoc.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(tiposDoc)
-
-    context['TiposDoc'] = tiposDoc
-
-    # Fin combo TiposDOc
-
-    # Combo Habitaciones
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT id ,nombre FROM sitios_dependencias where sedesClinica_id = '" + str(
-        Sede) + "' AND dependenciasTipo_id = 2"
-    curt.execute(comando)
-    print(comando)
-
-    habitaciones = []
-    habitaciones.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        habitaciones.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(habitaciones)
-
-    context['Habitaciones'] = habitaciones
-
-    # Fin combo Habitaciones
-
-    # Combo Especialidades
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT id ,nombre FROM clinico_Especialidades"
-    curt.execute(comando)
-    print(comando)
-
-    especialidades = []
-    especialidades.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        especialidades.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(especialidades)
-
-    context['Especialidades'] = especialidades
-
-    # Fin combo Especialidades
-
-    # Combo EspecialidadesMedicos
-
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT em.id ,e.nombre FROM clinico_Especialidades e, clinico_EspecialidadesMedicos em,planta_planta pl  where em.especialidades_id = e.id and em.planta_id = pl.id AND pl.documento = '" + str(
-        Username) + "'"
-    curt.execute(comando)
-    print(comando)
-
-    especialidadesMedicos = []
-    #especialidadesMedicos.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        especialidadesMedicos.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(especialidadesMedicos)
-
-    context['EspecialidadesMedicos'] = especialidadesMedicos
-
-
-
-    # Fin combo EspecialidadesMedicos
-
-
-    # Combo Medicos
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-    comando = "SELECT p.id id, p.nombre  nombre FROM planta_planta p ,  planta_perfilesplanta perf WHERE p.sedesClinica_id = perf.sedesClinica_id and  perf.sedesClinica_id = '" + str(
-        Sede) + "' AND perf.tiposPlanta_id = 1 and p.id = perf.planta_id"
-
-    curt.execute(comando)
-    print(comando)
-
-    medicos = []
-    medicos.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        medicos.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(medicos)
-
-    context['Medicos'] = medicos
-
-    # Fin combo Medicos
-
-    # Combo TiposFolio
-
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-
-    comando = "SELECT e.id id, e.nombre nombre FROM clinico_tiposFolio e"
-
-    curt.execute(comando)
-    print(comando)
-
-    tiposFolio = []
-    tiposFolio.append({'id': '', 'nombre': ''})
-
-    for id, nombre in curt.fetchall():
-        tiposFolio.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(tiposFolio)
-
-    context['TiposFolio'] = tiposFolio
-
-    # Fin combo TiposFolio
-
-
-
-    print("passe")
-
-    return render(request, "clinico/panelClinico.html", context)
-
-
-def buscarAntecedentes(request):
-
-
-    context = {}
-
-
-    TiposAntecedente = request.GET["TiposAntecedente"]
-
-
-    print ("Entre buscar  TiposAntecedente =",TiposAntecedente)
-
-
-
-    # Busco la Antecedentes de un Servicio
-
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-    curt = miConexiont.cursor()
-
-
-
-    comando = "SELECT a.id id ,a.nombre nombre  FROM clinico_tiposAntecedente t, clinico_antecedentes a  Where t.id = a.tiposAntecedente_id and t.id = '" + str(TiposAntecedente) +"'"
-
-    curt.execute(comando)
-    print(comando)
-
-    antecedentes =[]
-
-
-    for id, nombre in curt.fetchall():
-        antecedentes.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(antecedentes)
-    context['Antecedentes'] = antecedentes
-
-
-    return JsonResponse(json.dumps(antecedentes), safe=False)
 
 
 def serialize_datetime(obj): 
@@ -1615,7 +874,7 @@ def serialize_datetime(obj):
 
 
 # Create your views here.
-def load_dataAdmisiones(request, data):
+def load_dataClinico(request, data):
     print ("Entre load_data Admisiones")
 
     context = {}
