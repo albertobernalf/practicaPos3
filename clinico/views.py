@@ -16,7 +16,7 @@ from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, Es
 from sitios.models import Dependencias
 from planta.models import Planta
 from contratacion.models import Procedimientos
-from usuarios.models import Usuarios
+from usuarios.models import Usuarios, TiposDocumento
 
 
 
@@ -196,85 +196,70 @@ def center_crop(frame):
 
 
 def crearHistoriaClinica(request):
-    print("Entre crearHistoriaClinica")
+    print("Entre crearHistoriaClinica y el request es :", request.method)
+    print("Entre crearHistoriaClinica y el request AJAX es  :",  request.is_ajax)
     # form = historiaForm(request.POST)
 
     if request.method == 'POST':
+
+
         if request.is_ajax and request.method == "POST":
 
 
-            print ("envio1 = " , envio2)
-
-            print("Entre Ajax   por POST")
-            envio1 = request.POST["envio2"]
-            print ("envio1 = " , envio1)
+            print("Entre Ajax POST")
 
             tipoDoc = request.POST["tipoDocPaciente"]
             print("tipoDoc = ", tipoDoc)
             documento = request.POST["documentoPaciente"]
-            consecAdmision = request.POST["ingresoPaciente"]
-            #folio = request.POST["folio"]
-            #fecha = request.POST["fecha"]
+            print("documento = ", documento)
+            ingresoPaciente = request.POST["ingresoPaciente"]
+            print("ingresoPaciente = ", ingresoPaciente)
+
+
             tiposFolio = request.POST["tiposFolio"]
-            #tiposFolio = 1
-            print (tiposFolio)
+
+            print ("tiposfolios Seleccionado = " , tiposFolio)
+            dependenciasRealizado = request.POST["dependenciasRealizado"]
+            print("dependenciasRealizado", dependenciasRealizado)
             causasExterna = request.POST["causasExterna"]
-            #dependenciasRealizado = request.POST["dependenciasRealizado"]
-
+            print("causasExterna", causasExterna)
             espMedico = request.POST["espMedico"]
-            #diagnosticos = request.POST["diagnosticos"]
+            print("espMedico seleccionado",espMedico)
+            plantados = request.POST["planta"]
+            print("plantaDos = ", plantados)
 
-            #planta = request.POST["planta"]
-            #planta = 1
+            plantaId = Planta.objects.get(documento=plantados.strip())
+            print("plantaId =", plantaId.id)
+
+            tipoDocId = TiposDocumento.objects.get(nombre=tipoDoc)
+            print("tipoDocId =", tipoDocId)
+            documentoId = Usuarios.objects.get(tipoDoc_id=tipoDocId.id, documento=documento)
+            print("documentoId =", documentoId)
+
             motivo = request.POST["motivo"]
             objetivo = request.POST["objetivo"]
             subjetivo = request.POST["subjetivo"]
             analisis = request.POST["analisis"]
-            #plan = request.POST["plan"]
-            #usuarioRegistro = request.POST["usuarioRegistro"]
-            #now = datetime.now()
-            #dnow = now.strftime("%Y-%m-%d %H:%M:%S")
-            #print("NOW  = ", dnow)
+            plan = request.POST["plan"]
+            usuarioRegistro = plantaId.id
+            now = datetime.datetime.now()
+            dnow = now.strftime("%Y-%m-%d %H:%M:%S")
+            print("NOW  = ", dnow)
 
-            #fechaRegistro = dnow
+            fechaRegistro = dnow
             estadoReg = "A"
             print("estadoRegistro =", estadoReg)
             # Busca el folio a asignar
             # Primero el id del paciente:
 
-            laboratorios = request.POST["FormaLaboratorios"]
-            print ("laboratorios =" , laboratorios)
 
-
-
-            miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-            curt = miConexiont.cursor()
-
-            comando = "SELECT cast(id as integer) id FROM usuarios_usuarios  WHERE tipoDoc_id = '" + str(tipoDoc) + "' AND documento ='" + str(documento) +"'"
-
-            curt.execute(comando)
-            print(comando)
-
-            idPacientes = curt.fetchall()
-            for idPaciente in idPacientes:
-                print("dato= ", idPaciente)
-                idePac= idPaciente
-
-
-
-            miConexiont.close()
-            print(idPaciente)
-
-            print ("idePAc", idePac )
-
-            print ("idPacienteFinalll", idePac)
-
-
-            # fIN consegui id del paciente
+            tipoDocId = TiposDocumento.objects.get(nombre=tipoDoc)
+            print("tipoDocId =", tipoDocId)
+            documentoId = Usuarios.objects.get(tipoDoc_id=tipoDocId.id, documento=documento)
+            print("documentoId =", documentoId)
 
             #ultimofolio = Historia.objects.all().filter(tipoDoc_id=tipoDoc).filter(documento_id=idPacienteFinal['id']).aggregate(maximo=Coalesce(Max('folio'), 0))
-            ultimofolio = Historia.objects.all().filter(tipoDoc_id=tipoDoc).filter(
-               documento_id=idePac).aggregate(maximo=Coalesce(Max('folio'), 0 ))
+            ultimofolio = Historia.objects.all().filter(tipoDoc_id=tipoDocId.id).filter(documento_id=documentoId.id).aggregate(maximo=Coalesce(Max('folio'), 0 ))
 
 
             ## Camio lo anteriro por lo que sigue
@@ -300,30 +285,26 @@ def crearHistoriaClinica(request):
 
 
             print("ultimo folio = ", ultimofolio)
-            print("ultimo folio = ", ultimofolio[0])
-            ultimofolio2 = (ultimofolio[0]) + 1
+            print("ultimo folio = ", ultimofolio['maximo'])
+            ultimofolio2 = (ultimofolio['maximo']) + 1
             print("ultimo folio2 = ", ultimofolio2)
 
             print ("documento= ", documento)
             print("tipoDoc = ", tipoDoc)
-            print ("consec admisione = ", consecAdmision)
+            print ("consec admisione = ", ingresoPaciente)
             print("folio = ", ultimofolio2)
-            print("fecha = ", fecha)
+            #print("fecha = ", fecha)
             print("tiposFolio = ", tiposFolio)
             print("causas externa=", causasExterna)
-            print("dependenciasrealizado= ", dependenciasRealizado)
-            print("especmedico = ", espMedico)
-            print("planta = ", planta)
+            print("espemedico = ", espMedico)
+            print("planta = ", plantados)
             print("usuarioRegistro = ", usuarioRegistro)
 
-
-
-            if (dependenciasRealizado  == '' or causasExterna == ''  or diagnosticos == '' ):
-
-
+            #if (causasExterna == ''  or diagnosticos == '' ):
+            if (causasExterna == ''):
 
                 print("Entre GRAVES campos vacios")
-                data1 = {'Tipo' : '"Error', 'Mensaje': 'Favor suministrar causa Externa y/O Dependencia Realiado folio'}
+                data1 = {'Mensaje': 'Favor suministrar Causa externa y/o diagnostico'}
                 data2 = json.dumps(data1)
 
                 data2 = data2.replace("\'", "\"")
@@ -338,84 +319,37 @@ def crearHistoriaClinica(request):
 
                 # Grabacion Historia
 
-                # Consigo la Especialidad de Evolucion
-
-                miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
-                curt = miConexiont.cursor()
-
-                comando = "SELECT e2.id id , e2.nombre nombre FROM clinico_especialidadesMedicos e, clinico_especialidades e2  WHERE e.id = '" +str(espMedico) + "' AND e.especialidades_id = e2.id     "
-
-                curt.execute(comando)
-                print(comando)
-
-                especial = []
-
-                for id, nombre in curt.fetchall():
-                    especial.append({'id': id, 'nombre': nombre})
-
-
-                miConexiont.close()
-                print(especial)
-
-                jsonEspecial = especial[0]
-                campo = jsonEspecial['id']
-
-                # Fin consigo especialidad
-
-                print (campo)
-                print("Especial1 = " , campo)
-
-                jsontiposFolio = {'tiposFolio' : tiposFolio}
-                print("jsontiposFolio = ", jsontiposFolio)
-                print("jsontiposFolio = ", jsontiposFolio ['tiposFolio'])
-
-                jsonPlanta = {'planta': planta}
-                jsonUsuarioRegistro = {'usuarioRegistro': usuarioRegistro}
-
-                print ("jsonusuaroregistr= ", jsonUsuarioRegistro ['usuarioRegistro'])
-                print ("jsonplanta = ", jsonPlanta ['planta'])
-
-                # Fin Consigo la Especialidad de Evolucion
+                print ("VOY A GRABAR DEFINITIVAMENTE LA HISTORIA CLINICA")
 
                 # Inicio grabacion Historia Clinica
 
-                #miConexiont = MySQLdb.connect(host='localhost', user='root', passwd='', db='vulnerable9')
-
                 miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
                 curt = miConexiont.cursor()
 
-                # Consigo el Id del Paciente Documento
-
-                DocumentoId = Usuarios.objects.get(documento = documento)
-                DocumentoIdFinal = DocumentoId.id
-                print ("DocumentoIdFinal", DocumentoIdFinal)
-
-
-                comando = "INSERT INTO clinico_Historia (tipoDoc_id , documento_id , consecAdmision, folio ,fecha , tiposFolio_id ,causasExterna_id , dependenciasRealizado_id ,especialidades_id ,planta_id, motivo , subjetivo,objetivo, analisis ,plann,fechaRegistro ,usuarioRegistro_id, estadoReg ) VALUES ('" + str(
-                    tipoDoc) + "', '" + str(DocumentoIdFinal) + "',  '" + str(consecAdmision) + "', '" + str(
-                    ultimofolio2) + "', '" + str(fechaRegistro) + "', '" + str(tiposFolio) + "', '" + str(
-                    causasExterna) + "', '" + str(dependenciasRealizado) + "', '" + str(
-                    jsonEspecial['id']) + "', '" + str(planta) + "', '" + str(motivo) + "', '" + str(
-                    subjetivo) + "', '" + str(objetivo) + "', '" + str(analisis) + "', '" + str(plan) + "', '" + str(
-                    fechaRegistro) + "', '" + str(usuarioRegistro) + "', '" + str(estadoReg) + "');"
+                comando = 'INSERT INTO clinico_Historia ("tipoDoc_id" , documento_id , "consecAdmision", folio ,fecha , "tiposFolio_id" ,"causasExterna_id" , "dependenciasRealizado_id" , especialidades_id ,planta_id, motivo , subjetivo,objetivo, analisis ,plann,"fechaRegistro" ,"usuarioRegistro_id", "estadoReg" ) VALUES ('  + "'" +  str(
+                    tipoDocId.id) + "','" + str(documentoId.id) + "','" + str(ingresoPaciente) + "','" + str(ultimofolio2) + "','" + str(fechaRegistro) + "','"  +  str(tiposFolio) + "','" + str(causasExterna) + "','" + str(dependenciasRealizado) + "','" + str(espMedico) + "','" + str(plantaId.id) + "','" + str(motivo) + "','" + str(
+                    subjetivo) + "','" + str(objetivo) + "','" + str(analisis) + "','" + str(plan) + "','" + str(fechaRegistro) + "','" + str(usuarioRegistro) + "','" + str(estadoReg) + "');"
                 
                 print(comando)
                 resultado = curt.execute(comando)
                 print("resultado =", resultado)
+                #print("y aqui si trael el historiaId = " , curt.fetchall()[0])
+
                 n = curt.rowcount
                 print ("Registros commit = " , n)
-                #historiaId = miConexiont.insert_id()
-                #historiaId = curt.lastrowid
 
-                historiaId = curt.execute('SELECT @@IDENTITY AS id;').fetchone()[0]
-
-                print ("historiaid = ", historiaId)
 
                 miConexiont.commit()
 
+                #print("historiaid = ", historiaId)
+                historiaIdU = Historia.objects.all().aggregate(maximo=Coalesce(Max('id'), 0))
+                historiaId = (historiaIdU['maximo']) + 0
+                print("1 record inserted, ID:", historiaId)
+
+
                 miConexiont.close()
 
-                print("El id del la hsitoria INSERTADA es ", historiaId)
+                #print("El id del la hsitoria INSERTADA es ", historiaId)
 
                 # Fingrabacion Historia Clinica
 
@@ -449,20 +383,185 @@ def crearHistoriaClinica(request):
 
                 # Fin Grabacion Historia
 
-
                 # Grabacion Laboratorios
+                laboratorios = request.POST["laboratorios"]
+                print("laboratorios =", laboratorios)
 
+		        ## Rutina leer el JSON de laboratorios en python primero
+                consecutivo=0
+                jsonLaboratorios = json.loads(laboratorios)
+                for key in jsonLaboratorios:
+
+                    print("key = " ,key)
+                    queda= key
+                    tiposExamen_Id = key["tiposExamen_Id"]
+                    print ("tiposExamen_Id", tiposExamen_Id)
+                    cups = key["cups"].strip()
+                    print("cups ", cups )
+                    cantidad = key["cantidad"]
+                    print("cantidad", cantidad)
+                    observa = key["observa"]
+                    print("observa", observa)
+                    estadoExamenes_id = "1"
+
+                    if cups != "":
+                        consecutivo = consecutivo + 1
+                        #codigoId = Examenes.objects.get(codigoCups=cups)
+                        a = HistoriaExamenes(tiposExamen_id= tiposExamen_Id ,codigoCups =  cups,consecutivo=consecutivo, cantidad = cantidad, observaciones=observa,estadoReg='A' , estadoExamenes_id= estadoExamenes_id, anulado="N", historia_id=historiaId, usuaroRegistra_id=usuarioRegistro)
+                        a.save()
+
+                    print ("tipoExamen =" , queda["tiposExamen_Id"])
+                    print("cups =", queda["cups"])
+                    print("cantidad =", queda["cantidad"])
+                    print("observaciones =", queda["observa"])
+
+
+		        ## Fin
 
                 # Fin Grabacion Laboratorios
 
+                # Grabacion Radiologia
 
-            data = {'Mensaje': 'Folio exitoso : ' + str(ultimofolio2)}
+                radiologia = request.POST["radiologia"]
+                print("radiologia =", radiologia)
+
+                ## Rutina leer el JSON de laboratorios en python primero
+                consecutivo = 0
+                jsonRadiologia = json.loads(radiologia)
+
+                for key1 in jsonRadiologia:
+
+                     print("key1 = ", key1)
+                     queda = key1
+                     tiposExamen_Id = key1["tiposExamen_Id"]
+                     print("tiposExamen_Id", tiposExamen_Id)
+                     cups = key1["cups"].strip()
+                     print("cups = ", cups)
+                     cantidad = key1["cantidad"]
+                     print("cantidad", cantidad)
+                     observa = key1["observa"]
+                     print("observa", observa)
+                     estadoExamenes_id = "1"
+
+                     if cups != "":
+                         consecutivo = consecutivo + 1
+                         #codigoCups = Examenes.objects.get(nombre=nombreRx)
+                         b = HistoriaExamenes(tiposExamen_id=tiposExamen_Id, codigoCups=cups,
+                                              cantidad=cantidad, consecutivo=consecutivo, observaciones=observa, estadoReg='A',
+                                              estadoExamenes_id=estadoExamenes_id, anulado="N",
+                                              historia_id=historiaId, usuaroRegistra_id=usuarioRegistro)
+                         b.save()
+
+                     print("tipoExamen =", key1["tiposExamen_Id"])
+                     print("cups =", key1["cups"])
+                     print("cantidad =", key1["cantidad"])
+                     print("observaciones =", key1["observa"])
+
+                     ## Fin
+
+                # Fin Grabacion Radiologia
+
+                     # Grabacion Terapias
+
+                terapias = request.POST["terapias"]
+                print("terapias =", terapias)
+
+                ## Rutina leer el JSON de laboratorios en python primero
+                consecutivo = 0
+                jsonTerapias = json.loads(terapias)
+
+                for key2 in jsonTerapias:
+
+                   print("key2 = ", key2)
+                   queda = key2
+                   tiposExamen_Id = key2["tiposExamen_Id"]
+                   print("tiposExamen_Id", tiposExamen_Id)
+                   cups = key2["cups"].strip()
+                   print("cups = ", cups)
+                   cantidad = key2["cantidad"]
+                   print("cantidad", cantidad)
+                   observa = key2["observa"]
+                   print("observa", observa)
+                   estadoExamenes_id = "1"
+
+                   if cups != "":
+                          consecutivo = consecutivo + 1
+                          #codigoCups = Examenes.objects.get(nombre=nombreTerapias)
+                          c = HistoriaExamenes(tiposExamen_id=tiposExamen_Id, codigoCups=cups,
+                                               cantidad=cantidad, consecutivo=consecutivo, observaciones=observa,
+                                               estadoReg='A',
+                                               estadoExamenes_id=estadoExamenes_id, anulado="N",
+                                                historia_id=historiaId, usuaroRegistra_id=usuarioRegistro)
+                          c.save()
+
+                          print("tipoExamen =", key2["tiposExamen_Id"])
+                          print("cups =", key2["cups"])
+                          print("cantidad =", key2["cantidad"])
+                          print("observaciones =", key2["observa"])
+
+                         ## Fin
+
+                     # Fin Grabacion Terapias
+
+                     # Grabacion noQx
+
+                noQx = request.POST["noQx"]
+                print("noQx =", noQx)
+
+                ## Rutina leer el JSON de laboratorios en python primero
+                consecutivo = 0
+                jsonNoQx = json.loads(noQx)
+
+                for key3 in jsonNoQx:
+
+                   print("key2 = ", key3)
+                   queda = key3
+                   tiposExamen_Id = key3["tiposExamen_Id"]
+                   print("tiposExamen_Id", tiposExamen_Id)
+                   cups = key3["cups"].strip()
+                   print("cups = ", cups)
+                   cantidad = key3["cantidad"]
+                   print("cantidad", cantidad)
+                   observa = key3["observa"]
+                   print("observa", observa)
+                   estadoExamenes_id = "1"
+
+                   if cups != "":
+                          consecutivo = consecutivo + 1
+                          #codigoCups = Examenes.objects.get(nombre=nombreTerapias)
+                          c = HistoriaExamenes(tiposExamen_id=tiposExamen_Id, codigoCups=cups,
+                                               cantidad=cantidad, consecutivo=consecutivo, observaciones=observa,
+                                               estadoReg='A',
+                                               estadoExamenes_id=estadoExamenes_id, anulado="N",
+                                                historia_id=historiaId, usuaroRegistra_id=usuarioRegistro)
+                          c.save()
+
+                          print("tipoExamen =", key3["tiposExamen_Id"])
+                          print("cups =", key3["cups"])
+                          print("cantidad =", key3["cantidad"])
+                          print("observaciones =", key3["observa"])
+
+                         ## Fin
+
+                     # Fin Grabacion noQx
 
 
-            #return HttpResponse(json.dumps(data))
-            return HttpResponse('Folio Creado')
+                #data = {'Mensaje': 'Folio exitoso : ' + str(ultimofolio2)}
+                data = {'Mensaje': 'OK'}
 
-    else:
+                return HttpResponse(json.dumps(data))
+                #return HttpResponse('Folio Creado')
+
+
+
+    if request.method == "POST":
+
+        alert("Entre por solo POST falta el context");
+
+        return render(request, 'clinico/panelClinico.html', context);
+
+	
+    if request.method == "GET":
 
         print("Entre por GET Crear Historia Clinica")
         context = {}
@@ -705,7 +804,7 @@ def crearHistoriaClinica(request):
         curt = miConexiont.cursor()
         # 3 = Consultorios Verificar
 
-        comando = 'SELECT d.id id, d.nombre nombre FROM sitios_dependencias d WHERE d."sedesClinica_id" = ' + "'" + str( Sede) + "'" +  ' And d."dependenciasTipo_id" = ' + "'" + str('3') + "'"
+        comando = 'SELECT d.id id, d.nombre nombre FROM sitios_dependencias d WHERE d."sedesClinica_id" = ' + "'" + str( Sede) + "'" +  ' And d."dependenciasTipo_id" = ' + "'" + str('1') + "'"
 
         curt.execute(comando)
         print(comando)
@@ -826,7 +925,7 @@ def crearHistoriaClinica(request):
         curt = miConexiont.cursor()
 
         comando = 'SELECT t.id TipoId, e.id id, e.nombre nombre , e."codigoCups" cups FROM clinico_tiposExamen t, clinico_examenes e WHERE t.id = e."TiposExamen_id" and t.nombre = ' + "'" + str(
-            'PROCEIMIENTOS NO QX') + "'"
+            'PROCEDIMIENTOS NO QX') + "'"
 
         curt.execute(comando)
         print(comando)
@@ -840,29 +939,12 @@ def crearHistoriaClinica(request):
         miConexiont.close()
         print(noQx)
 
-        context['ProcNoQx'] = noQx
+        context['NoQx'] = noQx
         context['TipoExamenProcNoQx'] = '4'
 
         # Fin combo No Qx
 
         return render(request, 'clinico/navegacionClinica.html', context);
-
-
-#def cargaPanelMedico(request):
-#    print("Hola Entre a Cargar el Panel Clinico")
-
-#    Sede = request.POST['Sede']
-#    sede = Sede
-#    Servicio = request.POST['Servicio']
-#    Perfil = request.POST['Perfil']
-#    Username = request.POST['Username']
-#    username = Username
-#    Username_id = request.POST['Username_id']
-#    TipoDocPaciente = request.POST['TipoDocPaciente']
-#    nombreSede = request.POST['nombreSede']
-#    DocumentoPaciente = request.POST['DocumentoPaciente']
-#    #espMedico = request.POST['espMedico']
-#    IngresoPaciente = request.POST['IngresoPaciente']
 
 
 
@@ -968,4 +1050,5 @@ def PostConsultaHcli(request):
 
     else:
         return JsonResponse({'errors':'Something went wrong!'})
+
 

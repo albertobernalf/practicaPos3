@@ -84,13 +84,12 @@ urlpatterns = [
     path('crearHistoriaClinica/', viewsClinico.crearHistoriaClinica),
     # path('crearHistoriaClinica1/', viewsClinico.crearHistoriaClinica1.as_view()),
     #path('buscarAdmisionClinico/', viewsClinico.buscarAdmisionClinico),
-    #path('cargaPanelMedico/', viewsClinico.cargaPanelMedico),
+    path('cargaPanelMedico/<str:data>',  viewsClinico.load_dataClinico, name='loaddataClinico'),
     #path('buscarAntecedentes/', viewsClinico.buscarAntecedentes),
     path('load_dataClinico/<str:data>', viewsClinico.load_dataClinico, name='loaddataClinico'),
     #path('creacionHC/postConsultaHc/<str:id>/edit/', viewsClinico.PostConsultaHc, name='Post_editHc'),
     #path('creacionHC/<str:id>', viewsClinico.PostConsultaHcli),
     path('creacionHc/postConsultaHcli/', viewsClinico.PostConsultaHcli , name='Post_editHc'),
-
 
     # Actividaes Mecanicas
 

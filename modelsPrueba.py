@@ -2,14 +2,13 @@ TIPS THE WORK
 
 -- PARTE I ADMISIONES - ADMINISTRATIVA  - FACTURACION
 
--- OJO EL DIA LUNES 8/07
 En facturacion:
+
 0.1 Tarifas (id, nombre,  convenioId, conceptoId, tipo, codigoCups, codigoSuministro, valor, grupoQx, paquete, Honorarios)
 0.1.1 TiposTarifa(id, nombre ) EPS, ENTE TERRITORIAL Particular, Iss, soat, otros
 0.2 TiposTarifa(id,nombre)  EPS,SOAT, ISS, ENTE TERRITORIAL, IPS, ARL, PARTICULAR)
 0.11 FormasLiquidacion : (id, nombe,  Codigo,tipoCruento ,caracteristica, valorHonorario,tiposHonorarios,cuentaContable,centroCosto)
 
-para el lunes 15/julio
 
 1. Poder grabar una Admision (una vez guarde el nuevo usuario se pueda seguir la modal desaparezca y pueda crear correctamente una admision al igual con actualizar probar)
 2. Probar todos los filtros de consultas en admisiones (por servicios, sedes, subservicios, habitaciones, nombres etc)
@@ -30,16 +29,10 @@ para el lunes 15/julio
 -- ojo como carachas editas los existentes ???(ideas un link en html en la tabla y que llame una modal admisiones). Pero hay que ver que cambio es posible cambioar auqui ? Regimen?, num_manilla, remitido, ips_remite, empresa ???, responsable, acompañante, tipo de cotizante, muerte , defuncion, hclinica,fechaMuerte, causasMuerte,vias_deIngreso, viasdeegreso
         actadedefuncion, estadoSalida, especialidades, dx,  etc
     -- Pues datos como usuaruio no se hacen aqui, contactos, tampoco se hacen aquip,
--- ojo cuando fitra o cuando cre admision No cocerva el modulo, profesioal,sede
 -- Ojo cuando se hace le ingreso no parece no graba bien el Id del medico
--- ojo el combo de especialidad en ingresos trae medicos de las americas error
--- ojo hay que unificar mayuscula y minuscula un estandrad o sino paila por ejemplo Profesional / profesional
 --Ojo que pasa con os estadorREg de todos los modelos ojop definir de una vez despues es inmanejable
 -- OJO NO ESTA PASANDO EL MODELO A LA VISTA ACOMPAN, RESPO, IPS, MANULLA, ETC
 -- cuando voya craer in creadmision por segunda vez pierde los cmbos de empresas, acompanamtes, repospoonsables, ips por  cua ?
--- OJO SE DEBEBN CREAR CONTEXTOS DE ACUERDO A LOS MODULOS EJEMPLO INGRESOS uno HISPTRIA CLINICA OTRO DIRIA YO SOLO LAS TABLAS CLINICAS
--- la funcion retornarAdmision que hace ?
--- ojo cuando retorna en algunas pantallas se pieerde la sede, profesioonal,colaborador
 
 --Hay que organizar todo eso papaberol antes d eseguir adelante si no PAILANDER, la tiene dura el dia LUNES PAPABEROL
 -- TIENE QUE ESTANDARIZAR EL SOFTWARE O SI NOP PAILAS ANTES DE SEGUIR ORDEN SI NO PASA ESTA PRUEBA ADIOS SERVER
@@ -52,8 +45,6 @@ para el lunes 15/julio
 
 FIN 15/julio
 
-
-5. Crear Proceso Traslados de Habitaciones/Servicio/etc
 6. Crear un proceso masivo de actualizacion a una nueva instalacion python, con export de bdatos y creacion global d eun nuevo sitio
    es como ir creando algo asi como un instalador del programa y un backup/restore de la informacion postgres como le parece . AUTOMATIZAR
 7. ojo tengo quemado un centroc_id en 1 creo para que guarde la modal usuario (NO SE PORQUE)/ tambien en main, ausuario1 fecIngreso esta quemado 2024-01-01
@@ -102,15 +93,11 @@ FIN 15/julio
         Lo logre sin activar insert column ni activar oids ni activar insert commands
         planito planito y yap probar mañana TODO
 
-
    3. Restore Bases de Datos a nuevo ambiente (solo data el mismo archivo). correr script SQL
    4. Actualizar Aplicativo (Crear nuevos Modelos, vistas, templates, etc)-  Aplicar makemigrations - migrate
    5. Correr script que pueblan tablas recien creadas o actualizan campos si los hay
    6. Listop
 
-
-7. Seguir con clinico.*, nuevas tablas, campos , logica etc de imh(Ojop)
-7.1 vERIFICAR LOS CHOICES EN EL PROGRAMA
 
 
 9. PENDIENTES (facturacion mae_topsesoat(Facturacion), (mae_tarifasqx(Contratacion),mae_tarifasSoat(Contratacion), 
@@ -160,9 +147,6 @@ subir tablas, buscar ultimas tablas mipres 2024
  
 -- La otra semana crear :
    -- Habitaciones (Mantenimiento)
-   -- OJO MARTES 20 AGOSTO IMPOLEMENTAR EL CLICK AUTOMATICO PERO DE ESTA FORMA : https://www.javatpoint.com/javascript-trigger-click
-      addeventistener, para ver si asip si funciona .-
-
   -- Hay que revisar Ingresos={}, poruqe hay dos diferentes querys y no puede actualziar
      en muchos de ellos la dependenciaActual_id. OJOOO 
    -- ver si se puede arreglar algo de basura pero con mucho cuidado papaberol
@@ -170,15 +154,17 @@ subir tablas, buscar ultimas tablas mipres 2024
    -- Ojo en triage valores NULOS y de numericos o texto arreglar "update", tal como esta en glucometria
    -- Colocar un control en guardar el cambio de servicio so no hay seleccionados datos en la ventana. para mantener robusta la Aplicacion..
 
--- Comenzar con el manejo de DataTables para el moduclo clinico
 -- Para le lunes, no se porque carachos, el boton que llama al  $get que trae info no funciona , dice qur url no existe pailas
    no he podico, socorro , auxiliop
    parece sedr que : $.get("/creacionHc/postConsultaHcli" +'/' + post_id  +'/edit/'  ,function (data) {
-   es cuestion d eeste llamado
-  
--- continuar adaecuando crearHistoria en el views clinico, de acuerdo a nueva situacion.
+ 
+
 -- ojo no edita la Admision Ver mañana JUEVES
--- Ojo cuaNDO SELECCION UNA HISTORI SALE ERROR DE: POST /creacionHc/postConsultaHcli, 
-   VE RMAÑANA JUEVES
--- Ojo los dos botones el de generar Convenios y el de dispara cambio servicio,
-   DESAPARECEN ...
+
+-- Ojo mañlana miercoles 05-sepr
+
+   colocar mensaje bonito cuando no se escibre causa externa o diagnostico ojop
+   porque l¿el datatable de rx diferente de laborat, no ingresa filas en blanco y no bonito // UNIFICAR PRESENTACION
+   mañana si se pued  antecedentes  y Diagnosticos, import, export y datatables etc, todop
+   busacar capturav ronum de la tabla laboratorios , creop en paneladmisiones ,    implementa delete no funciona en ambos lab-rayx
+   hay unos valores nulos que arreglar no recuerdo dondep, es en la tabla clinico_examenes:ejemplo solictaenfermeria
