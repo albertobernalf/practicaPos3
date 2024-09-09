@@ -36,8 +36,6 @@
                 class="tab-text"> </span>Historia Clinica</a></li>
         <li><a href="#Clinica"><span class="fa-solid fa-hand-holding-medical"></span> <span
                 class="tab-text"> </span>Clinica paciente </a></li>
-
-
     </ul>
 </div>
 
@@ -48,8 +46,9 @@
 
 {% for datosPaciente in DatosPaciente %}
 <div class="paciente">
+    <input type="hidden" id="tipoIng" name="tipoIng" value="{{TipoIng}}"> </input>
     <input type="hidden" id="espMedico" name="espMedico" value="{{EspMedico}}"> </input>
-    <input type="hidden" id="tiposFolio" name="tiposFolio" value="1"> </input>
+    <input type="hidden" id="tiposFolio1" name="tiposFolio1" value="{{TiposFolio1}}"> </input>
     <input type="hidden" id="usuarioRegistro" name="usuarioRegistro" value="{{Username_id}}"> </input>
     <input type="hidden" id="perfil" name="perfil" value="{{perfil}}"> </input>
     <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}"> </input>
@@ -74,48 +73,39 @@
 	<input type="hidden" id="permisosDetalle" name="permisosDetalle" value = "{{PermisosDetalle}}">
 	<input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
 
-
-
     <div class="form-row">
-         <div class="form-group col-md-1 ">
+         <div class="form-group col-md-1">
          </div>
-        <div class="form-group col-md-2 ">
+        <div class="form-group col-md-2">
             Tipo Doc:
             {{ datosPaciente.tipnombre}}
-            <input type="hidden" id="tipoDoc_id" name="tipoDoc_id" value="{{ datosPaciente.tipoDoc_id}}"
-                   readonly></input>
+            <input type="hidden" id="tipoDoc_id" name="tipoDoc_id" value="{{ datosPaciente.tipoDoc_id}}"  readonly></input>
         </div>
 
         <div class="form-group col-md-1">
             No:
             {{ datosPaciente.documentoPaciente}}
-            <input type="hidden" id="documentoPaciente" name="documentoPaciente"
-                   value="{{ datosPaciente.documentoPaciente}}" readonly></input>
+            <input type="hidden" id="documentoPaciente" name="documentoPaciente"  value="{{ datosPaciente.documentoPaciente}}" readonly> </input>
         </div>
         <div class="form-group col-md-3 ">
             Nombre:
             {{ datosPaciente.nombre}}
         </div>
         <div class="form-group col-md-1 ">
-            Ing#:
+            Ing:
             {{ IngresoPaciente}}
-            <input type="hidden" id="IngresoPaciente" name="IngresoPaciente" value="{{ IngresoPaciente}}"
-                   readonly></input>
+            <input type="hidden" id="IngresoPaciente" name="IngresoPaciente" value="{{ IngresoPaciente}}" readonly> </input>
             <input type="hidden" class="form-control" id="fecha" name="fecha" value={{ form.fecha }}>
-
         </div>
 
-        <div class="form-group col-md-2">
-            Gen:
+        <div class="form-group col-md-1">
             {{ datosPaciente.genero}}
         </div>
-        <div class="form-group col-md-2">
-
+        <div class="form-group col-md-3">
             {{ datosPaciente.centro}}
         </div>
     </div>
     <div class="form-row">
-
          <div class="form-group col-md-1 ">
          </div>
 
@@ -134,35 +124,34 @@
             {{ datosPaciente.telefono}}
         </div>
 
-         <div class="form-group col-md-3 ">
-             Hab:
-            <select class="form-select  h-40 w-150" aria-label="" id="dependenciasRealizado" name="dependenciasRealizado">
+         <div class="form-group col-md-2">
+
+             <select class="form-select  h-40 w-50" aria-label="" id="dependenciasRealizado" name="dependenciasRealizado">
                 {% for dependenciasRealizado in DependenciasRealizado %}
-                <option value="{{dependenciasRealizado.id}}"> {{dependenciasRealizado.nombre}}</option>
+                <option value="{{dependenciasRealizado.id}}">{{dependenciasRealizado.nombre}}</option>
                 {% endfor %}
             </select>
-
         </div>
 
         <div class="form-group col-md-3">
             Usuario:
-            {{ Profesional}}
-
+            {{Profesional}}
         </div>
-
     </div>
 </div>
 {% endfor %}
 
   <span id="mensajes" name="mensajes">Aqui mensajes </span>
+
 {% endblock %}
 
 {% block content %}
-
 <div class="secciones">
     <article id="Evoluciones">
+        <br>
+        <center><h3>Evoluciones</h3></center>
 
-        <center><br><br>><h3>Evoluciones</h3></center>
+
         <div class="form-row">
             <div class="form-group col-md-4 ">
                 {{ historiaForm.motivo.label }}
@@ -228,7 +217,7 @@
 
 
     <article id="SignosVitales">
-        <center><br><br>
+        <center>
             <h3>Signos Vitales</h3>
         </center>
 
@@ -236,7 +225,7 @@
 
 
     <article id="Laboratorios">
-        <center><br><br>
+        <center><br>
             <h3>Ordenes de Laboratorio</h3></center>
 
         <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
@@ -257,7 +246,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="card">
-                                        <div class="card-header">
+                                        <div class="card-header" style="height:50px;">
                                             <center>
                                                 <div class="row">
                                                     <div class="col-sm-3">
@@ -268,10 +257,9 @@
                                                     </div>
 
                                                     <div class="col-sm-2">
-                                                        <label for="lab"
-                                                               class="col-sm-12 control-label">Laboratorio:</label>
-                                                        <select class="form-select  h-10 w-50" aria-label="" id="lab"
-                                                                name="lab">
+                                                      <label for="lab"  class="col-sm-6 col-form-label col-form-label-sm">Laboratorio:</label>
+
+                                                        <select class="form-select  h-10 w-50" aria-label="" id="lab"  name="lab">
                                                             {% for laboratorios in Laboratorios %}
                                                             <option value="{{laboratorios.cups}}">
                                                                 {{laboratorios.nombre}}
@@ -351,9 +339,9 @@
     </article>
 
     <article id="Radiologia">
-
+        <br>
         <center>
-            <br><br>
+
             <h3>Ordenes de Radiologia</h3></center>
 
         <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
@@ -376,7 +364,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="card">
-                                        <div class="card-header">
+                                        <div class="card-header" style="height:50px;">
                                             <center>
                                                 <div class="row">
                                                     <div class="col-sm-3">
@@ -470,7 +458,8 @@
 
 
     <article id="Terapias">
-        <center><br><br>
+                <br>
+        <center>
             <h3>Terapias</h3></center>
 
                 <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
@@ -491,7 +480,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="card">
-                                        <div class="card-header">
+                                        <div class="card-header" style="height:50px;">
                                             <center>
                                                 <div class="row">
                                                     <div class="col-sm-3">
@@ -586,29 +575,34 @@
     </article>
 
     <article id="Formulacion">
-        <center><br><br>
+                <br>
+        <center>
             <h3>Formulacion</h3></center>
     </article>
 
     <article id="Consulta">
-        <center><br><br>
+        <br>
+        <center>
             <h3>Consulta Historia Clinica</h3></center>
     </article>
 
     <article id="Clinica">
-        <center><br><br>
+        <br>
+        <center>
             <h3>Clinica del paciente</h3></center>
     </article>
 
 
     <article id="Cirugias">
-        <center><br><br>
+        <br>
+        <center>
             <h3>Cirugias</h3></center>
     </article>
 
 
     <article id="ProcedimientosNoQx">
-        <center><br><br>
+        <br>
+        <center>
             <h3>ProcedimientosNoQx</h3></center>
 
 
@@ -630,7 +624,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="card">
-                                        <div class="card-header">
+                                        <div class="card-header" style="height:50px;">
                                             <center>
                                                 <div class="row">
                                                     <div class="col-sm-3">
@@ -724,35 +718,417 @@
     </article>
 
     <article id="Diagnosticos">
-        <center><br><br>
+                <br>
+        <center>
             <h3>Diagnosticos</h3></center>
+
+
+             <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+             <!-- DESDE AQUIP DATATABLE  -->
+
+                    <table class="table"
+                           style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+                        <form class="form-inline" action="/crearDiagnisticosDef/" method="POST"
+                              id="FormaDiagnosticos">
+
+                            <!-- INICIO TABLE DE  EL DATATABLE  -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header" style="height:50px;">
+                                            <center>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+
+                                                        <div class="alert alert-success success-msg"
+                                                             style="display:none"></div>
+
+                                                    </div>
+
+
+                                                    <div class="col-sm-2">
+                                                        <label for="tiposDiagnosticos"
+                                                               class="col-sm-12 control-label">Tipos Diagnostico:</label>
+                                                        <select class="form-select  h-10 w-50" aria-label="" id="tiposDiagnosticos"
+                                                                name="tiposDiagnosticos">
+                                                            {% for tiposDiagnostico in TiposDiagnostico %}
+                                                            <option value="{{tiposDiagnostico.id}}">
+                                                                {{tiposDiagnostico.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="col-sm-2">
+                                                        <label for="diagnosticos"
+                                                               class="col-sm-12 control-label">Diagnosticos:</label>
+                                                        <select class="form-select  h-10 w-50" aria-label="" id="diagnosticos"
+                                                                name="diagnosticos">
+                                                            {% for diagnosticos in Diagnosticos %}
+                                                            <option value="{{diagnosticos.id}}">
+                                                                {{diagnosticos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="col-sm-3">
+                                                        <label for="observa7" class="col-sm-8 control-label">Observaciones:</label>
+                                                        <input type="text" id="observa7" name="observa7" value="">
+                                                    </div>
+
+
+                                                    <div class="col-sm-2 text-end">
+                                                        <span class="text-secondary">Adicionar</span>
+                                                        <a class="btn btn-success" href="javascript:void(0)"
+                                                           id="BtnAdicionarDiagnosticos"> <i class="fa fa-plus"></i></a>
+                                                    </div>
+                                                </div>
+                                            </center>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table id="tablaDiagnosticos"
+                                                           class="display nowrap table table table-bordered  tablaDiagnosticos table-hover table-sm dtr-inline">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="width:5%;">IdTipo</th>
+                                                            <th style="width:5%;">Tipo Diagnostico</th>
+                                                            <th style="width:5%;">IdDiag</th>
+                                                            <th style="width:5%;">Diagnostico</th>
+                                                            <th style="width:5%;">Observaciones</th>
+                                                            <th style="width:3%;">Borrar</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody style="vertical-align:bottom">
+                                                        <tr style="height:10%">
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+
+
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FIN TABLE DE  EL DATATABLE  -->
+                        </form>
+                    </table>
+
+             <!-- HASTA AQUI DATATABLE -->
+
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+
+
 
     </article>
 
     <article id="Antecedentes">
-        <center><br><br>
+                <br>
+        <center>
             <h3>Antecedentes</h3></center>
+
+             <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+             <!-- DESDE AQUIP DATATABLE  -->
+
+                    <table class="table"
+                           style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+                        <form class="form-inline" action="/crearAntecedentesDef/" method="POST"
+                              id="FormaAntecedentes">
+
+                            <!-- INICIO TABLE DE  EL DATATABLE  -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header" style="height:50px;">
+                                            <center>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+
+                                                        <div class="alert alert-success success-msg"
+                                                             style="display:none"></div>
+
+                                                    </div>
+
+                                                    <div class="col-sm-2">
+                                                        <label for="antecedentes"
+                                                               class="col-sm-12 control-label">Antecedente:</label>
+                                                        <select class="form-select  h-10 w-50" aria-label="" id="antecedentes"
+                                                                name="antecedentes">
+                                                            {% for antecedentes in Antecedentes %}
+                                                            <option value="{{antecedentes.id}}">
+                                                                {{antecedentes.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+
+
+
+                                                    <div class="col-sm-3">
+                                                        <label for="observa6" class="col-sm-8 control-label">Observaciones:</label>
+                                                        <input type="text" id="observa6" name="observa6" value="">
+                                                    </div>
+
+
+                                                    <div class="col-sm-2 text-end">
+                                                        <span class="text-secondary">Adicionar</span>
+                                                        <a class="btn btn-success" href="javascript:void(0)"
+                                                           id="BtnAdicionarAntecedentes"> <i class="fa fa-plus"></i></a>
+                                                    </div>
+                                                </div>
+                                            </center>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table id="tablaAntecedentes"
+                                                           class="display nowrap table table table-bordered  tablaAntecedentes table-hover table-sm dtr-inline">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="width:5%;">id</th>
+                                                            <th style="width:5%;">Nombres</th>
+                                                            <th style="width:5%;">Descripcion</th>
+                                                            <th style="width:3%;">Borrar</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody style="vertical-align:bottom">
+                                                        <tr style="height:10%">
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+
+
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FIN TABLE DE  EL DATATABLE  -->
+                        </form>
+                    </table>
+
+             <!-- HASTA AQUI DATATABLE -->
+
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+
     </article>
 
     <article id="Incapacidades">
-        <center><br><br>
+                <br> <center>
             <h3>Incapacidades</h3></center>
     </article>
 
     <article id="InterConsultas">
-        <center><br><br>
-            <h3>CInterConsultas</h3></center>
+                <br><center>
+            <h3>InterConsultas</h3></center>
+
+
+             <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+             <!-- DESDE AQUIP DATATABLE  -->
+                    <table class="table"
+                           style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+                        <form class="form-inline" action="/crearInterconsultassDef/" method="POST"
+                              id="FormaInterconsultas">
+
+                            <!-- INICIO TABLE DE  EL DATATABLE  -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header" style="height:50px;">
+                                            <center>
+                                                <div class="row">
+                                                    <div class="col-sm-1">
+
+                                                        <div class="alert alert-success success-msg"
+                                                             style="display:none"></div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <label for="tiposInterconsulta"
+                                                               class="col-sm-12 control-label">Tipos Interconsulta:</label>
+                                                        <select class="form-select  h-10 w-50" aria-label="" id="tiposInterconsulta"
+                                                                name="tiposInterconsulta">
+                                                            {% for tiposInterconsulta in TiposInterconsulta %}
+                                                            <option value="{{tiposInterconsulta.id}}">
+                                                                {{tiposInterconsulta.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                   </div>
+
+                                                    <div class="col-sm-2">
+                                                        <label for="especialidadConsultada"
+                                                               class="col-sm-12 control-label">Especialidad consultada:</label>
+                                                        <select class="form-select  h-10 w-50" aria-label="" id="especialidadConsultada"
+                                                                name="especialidadConsultada">
+                                                            {% for especialidades in Especialidades %}
+                                                            <option value="{{especialidades.id}}">
+                                                                {{especialidades.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="col-sm-2">
+                                                        <label for="medicoConsultado"
+                                                               class="col-sm-12 control-label">Medico consultado:</label>
+                                                        <select class="form-select  h-10 w-50" aria-label="" id="medicoConsultado" name="medicoConsultado">
+                                                            {% for medicos in Medicos %}
+                                                            <option value="{{medicos.id}}">
+                                                                {{medicos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="col-sm-2">
+                                                        <label for="descripcion" class="col-sm-8 control-label">Descripcion:</label>
+                                                        <input type="text" id="descripcion" name="descripcion" value="">
+                                                    </div>
+
+
+
+                                                    <div class="col-sm-2">
+                                                        <label for="diagnosticosI"
+                                                               class="col-sm-12 control-label">Diagnostico:</label>
+                                                        <select class="form-select  h-10 w-50" aria-label="" id="diagnosticosI"
+                                                                name="diagnosticosI">
+                                                            {% for diagnosticos in Diagnosticos %}
+                                                            <option value="{{diagnosticos.id}}">
+                                                                {{diagnosticos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+
+
+                                                    <div class="col-sm-2 text-end">
+                                                        <span class="text-secondary">Adicionar</span>
+                                                        <a class="btn btn-success" href="javascript:void(0)"
+                                                           id="BtnAdicionarInterconsultas"> <i class="fa fa-plus"></i></a>
+                                                    </div>
+                                                </div>
+                                            </center>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table id="tablaInterconsultas"
+                                                           class="display nowrap table table table-bordered  tablaInterconsultas table-hover table-sm dtr-inline">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="width:5%;">TipoInterconsulta</th>
+                                                            <th style="width:5%;">Tipo</th>
+
+                                                            <th style="width:5%;">Esp.Consultada</th>
+                                                            <th style="width:5%;">Especial</th>
+
+                                                            <th style="width:5%;">Medico Consultado</th>
+                                                            <th style="width:5%;">Medico </th>
+
+                                                            <th style="width:5%;">Descripcion</th>
+                                                            <th style="width:5%;">Diagnostico</th>
+                                                            <th style="width:5%;">DiagnosticoNombre</th>
+                                                            <th style="width:3%;">Borrar</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody style="vertical-align:bottom">
+                                                        <tr style="height:10%">
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FIN TABLE DE  EL DATATABLE  -->
+                        </form>
+                    </table>
+
+             <!-- HASTA AQUI DATATABLE -->
+
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+
     </article>
 
     <article id="SalidaClinica">
-        <center>
-            <br><br>
+                <br><center>
+
             <h3>SalidaClinica</h3></center>
     </article>
 
     <article id="GuardarFolio">
-        <center>
-            <br><br>
+        <center><br>
+
             <h3>GuardarFolio</h3></center>
 
         <form class="form-inline" action="" method="POST" id="formHistoriaClinica">
@@ -793,7 +1169,7 @@
     </article>
 
     <article id="Retornar">
-        <center><br><br>
+        <center><br>
             <h3>Retornar</h3></center>
 
         <form class="form-inline" action="/escoge/{{Sede}}, {{Username}}, {{Profesional}}, {{Documento}} ,{{NombreSede}} ,{{EscogeModulo}}" method="POST" id="formRetornaHistoria">

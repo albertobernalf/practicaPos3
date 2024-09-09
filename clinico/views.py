@@ -12,7 +12,7 @@ from django.utils.timezone import now
 from django.db.models import Avg, Max, Min
 from .forms import historiaForm, historiaExamenesForm
 from datetime import datetime
-from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes
+from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos
 from sitios.models import Dependencias
 from planta.models import Planta
 from contratacion.models import Procedimientos
@@ -241,6 +241,7 @@ def crearHistoriaClinica(request):
             subjetivo = request.POST["subjetivo"]
             analisis = request.POST["analisis"]
             plan = request.POST["plan"]
+            tipoIng = request.POST["tipoIng"]
             usuarioRegistro = plantaId.id
             now = datetime.datetime.now()
             dnow = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -300,11 +301,12 @@ def crearHistoriaClinica(request):
             print("planta = ", plantados)
             print("usuarioRegistro = ", usuarioRegistro)
 
-            #if (causasExterna == ''  or diagnosticos == '' ):
-            if (causasExterna == ''):
+            diagnosticos = request.POST["diagnosticos"]
+
+            if (causasExterna == ''  or diagnosticos == ''):
 
                 print("Entre GRAVES campos vacios")
-                data1 = {'Mensaje': 'Favor suministrar Causa externa y/o diagnostico'}
+                data1 = {'Mensaje': 'Favor suministrar Causa externa y/o diagnostico Obligatorios'}
                 data2 = json.dumps(data1)
 
                 data2 = data2.replace("\'", "\"")
@@ -545,6 +547,160 @@ def crearHistoriaClinica(request):
 
                      # Fin Grabacion noQx
 
+                     # Grabacion Antecedentes
+
+                antecedentes = request.POST["antecedentes"]
+                print("antecedentes =", antecedentes)
+
+                ## Rutina leer el JSON de laboratorios en python primero
+                jsonAntecedentes = json.loads(antecedentes)
+
+                for key4 in jsonAntecedentes:
+
+                   print("key4 = ", key4)
+                   queda = key4
+                   id = key4["id"].strip()
+                   print("id = ", id)
+                   tipo = key4["tipo"]
+                   print("tipo", tipo)
+                   descripcion = key4["descripcion"]
+
+                   estadoExamenes_id = "1"
+
+                   if tipo != "":
+
+
+                          d = HistorialAntecedentes(descripcion=descripcion, fechaRegistro=fechaRegistro,
+                                               tiposAntecedente_id=id,
+                                               estadoReg='A', historia_id=historiaId, usuarioRegistro_id=usuarioRegistro)
+                          d.save()
+
+                          print("id =", key4["id"])
+                          print("tipo =", key4["tipo"])
+                          print("descripcion =", key4["descripcion"])
+
+
+                         ## Fin
+
+                     # Fin Grabacion Antecedentes
+
+                     # Grabacion Diagnosticos
+
+                diagnosticos = request.POST["diagnosticos"]
+                print("diagnosticos =", diagnosticos)
+
+                ## Rutina leer el JSON de laboratorios en python primero
+                consecutivo=0
+                jsonDiagnosticos = json.loads(diagnosticos)
+
+                for key5 in jsonDiagnosticos:
+
+                   print("key5 = ", key5)
+                   queda = key5
+
+                   diagnosticoId = key5["diagnosticos"]
+                   print("diagnosticoId", diagnosticoId)
+                   tiposDiagnosticoId = key5["tiposDiagnosticos"]
+                   print("tiposDiagnosticoId", tiposDiagnosticoId)
+                   observa = key5["observa"]
+
+                   if diagnosticoId != "":
+                          consecutivo = consecutivo + 1
+                          e = HistorialDiagnosticos(observaciones=observa, diagnosticos_id=diagnosticoId,tiposDiagnostico_id=tiposDiagnosticoId,
+                                        estadoReg='A', historia_id=historiaId, consecutivo=consecutivo)
+                          e.save()
+
+
+                         ## Fin
+
+                     # Fin Grabacion Diagnosticos
+
+                # Antecedentes
+
+                ## Rutina leer el JSON de laboratorios en python primero
+
+                jsonAntecedentes = json.loads(antecedentes)
+
+                for key4 in jsonAntecedentes:
+
+                   print("key4 = ", key4)
+                   queda = key4
+                   id = key4["id"].strip()
+                   print("id = ", id)
+                   tipo = key4["tipo"]
+                   print("tipo", tipo)
+                   descripcion = key4["descripcion"]
+
+                   estadoExamenes_id = "1"
+
+                   if tipo != "":
+
+
+                          d = HistorialAntecedentes(descripcion=descripcion, fechaRegistro=fechaRegistro,
+                                               tiposAntecedente_id=id,
+                                               estadoReg='A', historia_id=historiaId, usuarioRegistro_id=usuarioRegistro)
+                          d.save()
+
+                          print("id =", key4["id"])
+                          print("tipo =", key4["tipo"])
+                          print("descripcion =", key4["descripcion"])
+
+
+                         ## Fin
+
+                     # Fin Grabacion Antecedentes
+
+                   # Grabacion Interconsultas
+
+                interconsultas = request.POST["interconsultas"]
+                print("interconsultas =", interconsultas)
+
+                ## Rutina leer el JSON de laboratorios en python primero
+
+                jsonInterconsultas = json.loads(interconsultas)
+
+                for key6 in jsonInterconsultas:
+
+                    print("key6 = ", key6)
+                    queda = key6
+
+                    diagnosticoId = key6["diagnosticos"]
+                    print("diagnosticoId", diagnosticoId)
+
+                    especialidadConsultadaId = key6["especialidadConsultada"]
+                    print("especialidadConsultadaId", especialidadConsultadaId)
+
+                    medicoConsultadoId = key6["medicoConsultado"]
+                    print("medicoConsultadoId", medicoConsultadoId)
+
+                    tiposInterconsultaId = key6["tiposInterconsulta"]
+                    print("tiposInterconsultaId", tiposInterconsultaId)
+
+                    especialidadConsultadaId = key6["especialidadConsultada"]
+                    print("especialidadConsultaId", especialidadConsultaId)
+
+                    especialidadConsultaId = key6["especialidadConsulta"]
+                    print("especialidadConsultaId", especialidadConsultaId)
+
+                    tiposInterconsultaId = key6["tiposInterconsulta"]
+                    print("tiposInterconsultaId", tiposInterconsultaId)
+
+
+                    descripcionConsulta = key6["descripcion"]
+
+                    if medicoConsultadoId != "":
+
+                        f = Interconsultas(descripcionConsulta=descripcionConsulta, diagnosticos_id=diagnosticoId,
+                                                  especialidadConsultada_id=especialidadConsultadaId,medicoConsultado_id=medicoConsultadoId,
+                                           especialidadConsulta_id=espMed, medicoConsulta_id=medicoCo,
+                                                  historia_id=historiaId, tiposInterconsulta_id=tiposInterconsultaId)
+                        f.save()
+
+                    ## Fin
+
+
+
+                    # Fin Grabacion Diagnosticos
 
                 #data = {'Mensaje': 'Folio exitoso : ' + str(ultimofolio2)}
                 data = {'Mensaje': 'OK'}
@@ -581,13 +737,19 @@ def crearHistoriaClinica(request):
         DocumentoPaciente = request.GET["documento2"]
         IngresoPaciente = request.GET["consec"]
         EspMedico = request.GET["espMedico"]
-        TiposFolio = request.GET["tiposFolio"]
+        TiposFolio1 = request.GET["tiposFolio"]
         DocumentoId = request.GET["documentoId"]
 
         print("especialidad Medico = ", EspMedico)
         print("TipoDocPaciente = ", TipoDocPaciente)
         print("DocumentoPaciente = ", DocumentoPaciente)
         print("IngresoPaciente = ", IngresoPaciente)
+
+
+        TipoIng = request.GET["tipoIng"]
+        print("TipoIng = ", TipoIng )
+
+
 
         print("Sede = ", Sede)
 
@@ -604,7 +766,7 @@ def crearHistoriaClinica(request):
         context['DocumentoPaciente'] = DocumentoPaciente
         context['IngresoPaciente'] = IngresoPaciente
         context['EspMedico'] = EspMedico
-        context['TiposFolio'] = TiposFolio
+        context['TiposFolio1'] = TiposFolio1
 
         # Combo Tipos Diagnostico
 
@@ -680,25 +842,25 @@ def crearHistoriaClinica(request):
 
         # Combo TiposFolio
 
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
-                                       password="pass123")
-        curt = miConexiont.cursor()
+        #miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+        #                               password="pass123")
+        #curt = miConexiont.cursor()
 
-        comando = "SELECT e.id id, e.nombre nombre FROM clinico_tiposFolio e"
+        #comando = "SELECT e.id id, e.nombre nombre FROM clinico_tiposFolio e"
 
-        curt.execute(comando)
-        print(comando)
+        #curt.execute(comando)
+        #print(comando)
 
-        tiposFolio = []
-        tiposFolio.append({'id': '', 'nombre': ''})
+        #tiposFolio = []
+        #tiposFolio.append({'id': '', 'nombre': ''})
 
-        for id, nombre in curt.fetchall():
-            tiposFolio.append({'id': id, 'nombre': nombre})
+        #for id, nombre in curt.fetchall():
+        #    tiposFolio.append({'id': id, 'nombre': nombre})
 
-        miConexiont.close()
-        print(tiposFolio)
+        #miConexiont.close()
+        #print(tiposFolio)
 
-        context['TiposFolio'] = tiposFolio
+        #context['TiposFolio'] = tiposFolio
 
         # Fin combo TiposFolio
 
@@ -756,6 +918,7 @@ def crearHistoriaClinica(request):
 
         # Datos Basicos del Paciente
 
+
         print("especialidad Medico = ", EspMedico)
         print("TipoDocPaciente = ", TipoDocPaciente)
         print("DocumentoPaciente = ", DocumentoPaciente)
@@ -774,9 +937,11 @@ def crearHistoriaClinica(request):
 
         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",   password="pass123")
         curt = miConexiont.cursor()
+        if (TipoIng == 'INGRESO'):
+            comando = 'select  u."tipoDoc_id" , tip.nombre tipnombre, documento documentoPaciente, u.nombre nombre, case when genero = ' + "'" + str('M') + "'" + ' then ' + "'" + str("Masculino") + "'" + ' when genero= ' + "'" + str('F') + "'" + ' then ' + "'" + str('Femenino') + "'" + ' end as genero, cen.nombre as centro, tu.nombre as tipoUsuario,"fechaNacio", u.direccion direccion, u.telefono telefono from usuarios_usuarios u, usuarios_tiposUsuario tu, sitios_centros cen, usuarios_tiposDocumento tip where tip.id = u."tipoDoc_id"  AND u."tipoDoc_id" = ' +"'" + str(filaTipoDoc.id) + "'" + ' and u.documento = ' + "'" + str(fila.documento) + "'" + ' and u."tiposUsuario_id" = tu.id and u."centrosC_id" = cen.id'
+        else:
+            comando = 'select  u."tipoDoc_id" , tip.nombre tipnombre, documento documentoPaciente, u.nombre nombre, case when genero = ' + "'" + str('M') + "'" + ' then ' + "'" + str("Masculino") + "'" + ' when genero= ' + "'" + str('F') + "'" + ' then ' + "'" + str('Femenino') + "'" + ' end as genero, cen.nombre as centro, tu.nombre as tipoUsuario,"fechaNacio", u.direccion direccion, u.telefono telefono from usuarios_usuarios u, usuarios_tiposUsuario tu, sitios_centros cen, usuarios_tiposDocumento tip where tip.id = u."tipoDoc_id"  AND u."tipoDoc_id" = ' +"'" + str(filaTipoDoc.id) + "'" + ' and u.documento = ' + "'" + str(fila.documento) + "'" + ' and u."tiposUsuario_id" = tu.id and u."centrosC_id" = cen.id'
 
-       # comando = "select  tipoDoc_id , tip.nombre tipnombre, documento documentoPaciente, u.nombre nombre, case when genero = 'M' then 'Masculino' when genero= 'F' then 'Femenino' end as genero, cen.nombre as centro, tu.nombre as tipoUsuario, fechaNacio, u.direccion direccion, u.telefono telefono  from usuarios_usuarios u, usuarios_tiposUsuario  tu, sitios_centros cen , usuarios_tiposDocumento tip  where tip.id =u.tipoDoc_id  AND u.tipoDoc_id = '" + str(         filaTipoDoc.id) + "' and u.documento = '" + str(fila.documento) + "' and u.tiposUsuario_id = tu.id and u.centrosc_id = cen.id"
-        comando = 'select  u."tipoDoc_id" , tip.nombre tipnombre, documento documentoPaciente, u.nombre nombre, case when genero = ' + "'" + str('M') + "'" + ' then ' + "'" + str("Masculino") + "'" + ' when genero= ' + "'" + str('F') + "'" + ' then ' + "'" + str('Femenino') + "'" + ' end as genero, cen.nombre as centro, tu.nombre as tipoUsuario,"fechaNacio", u.direccion direccion, u.telefono telefono from usuarios_usuarios u, usuarios_tiposUsuario tu, sitios_centros cen, usuarios_tiposDocumento tip where tip.id = u."tipoDoc_id"  AND u."tipoDoc_id" = ' +"'" + str(filaTipoDoc.id) + "'" + ' and u.documento = ' + "'" + str(fila.documento) + "'" + ' and u."tiposUsuario_id" = tu.id and u."centrosC_id" = cen.id'
 
         curt.execute(comando)
         print(comando)
@@ -794,6 +959,7 @@ def crearHistoriaClinica(request):
         print(datosPaciente)
 
         context['DatosPaciente'] = datosPaciente
+        context['TipoIng'] = TipoIng
 
         # Combo Fin Datos BAsicos paciente
 
@@ -869,27 +1035,6 @@ def crearHistoriaClinica(request):
 
         # Fin Combo Tiposantecedentes
 
-        # Combo antecedentes
-
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
-                                       password="pass123")
-        curt = miConexiont.cursor()
-
-        comando = "SELECT id,  nombre FROM clinico_antecedentes t "
-
-        curt.execute(comando)
-        print(comando)
-
-        antecedentes = []
-        antecedentes.append({'id': '', 'nombre': ''})
-
-        # Se va en blanco si antecedentes
-
-        print(antecedentes)
-
-        context['Antecedentes'] = antecedentes
-
-        # Fin Combo antecedentes
 
         # Combo Terapias
 
@@ -944,6 +1089,82 @@ def crearHistoriaClinica(request):
 
         # Fin combo No Qx
 
+        # Combo Antecedentes
+
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = 'SELECT e.id id, e.nombre nombre  FROM clinico_tiposAntecedente e'
+
+        curt.execute(comando)
+        print(comando)
+
+        antecedentes = []
+        antecedentes.append({'id': '', 'nombre': ''})
+
+        for  id, nombre in curt.fetchall():
+            antecedentes.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(antecedentes)
+
+        context['Antecedentes'] = antecedentes
+
+        # Fin combo Antecednetes
+
+        # Combo TipoInterconsulta
+
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = 'SELECT e.id id, e.nombre nombre  FROM clinico_tiposInterconsulta e'
+
+        curt.execute(comando)
+        print(comando)
+
+        tiposInterconsulta = []
+        tiposInterconsulta.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            tiposInterconsulta.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(tiposInterconsulta)
+
+        context['TiposInterconsulta'] = tiposInterconsulta
+
+        # Fin combo Antecednetes
+
+        # Combo Medicos
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = 'SELECT med.id id, med.nombre nombre FROM planta_planta p,clinico_medicos med, planta_tiposPlanta tp WHERE p."sedesClinica_id" = ' + "'" + str(
+            Sede) + "'" + ' and p."tiposPlanta_id" = tp.id and tp.nombre = ' + "'" + str('MEDICO') + "'" + ' and med.planta_id = p.id'
+
+        curt.execute(comando)
+        print(comando)
+
+        medicos = []
+        medicos.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            medicos.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(medicos)
+
+        context['Medicos'] = medicos
+
+        # Fin combo Medicos
+
+
+        print ("tiposFolio = " ,TiposFolio)
+
         return render(request, 'clinico/navegacionClinica.html', context);
 
 
@@ -980,16 +1201,17 @@ def load_dataClinico(request, data):
     miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",     password="pass123")
     curx = miConexionx.cursor()
    
-    #detalle = 'SELECT i.id id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id"'
-    detalle = 'SELECT i.id id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id" UNION SELECT t.id id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,t.consec consec , t."fechaSolicita" , cast(' + "'" + str('0001-01-01 00:00:00') + "'" + ' as timestamp) fechaSalida,ser.nombre servicioNombreIng, dep.nombre camaNombreIng , ' + "''" + ' dxActual FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  ,sitios_serviciosSedes sd, clinico_servicios ser WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND t."sedesClinica_id" = ' "'" + str(sede) + "'" + ' AND dep."sedesClinica_id" =  sd."sedesClinica_id" AND dep.id = t.dependencias_id AND t."serviciosSedes_id" = sd.id  AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and t."tipoDoc_id" = u."tipoDoc_id" and u.id = t."documento_id"  and ser.id = sd.servicios_id and dep."serviciosSedes_id" = sd.id and t."serviciosSedes_id" = sd.id and dep."tipoDoc_id" = t."tipoDoc_id" and dep."documento_id" = t."documento_id" and ser.nombre = ' + "'" + str('TRIAGE') + "'"
+
+    detalle = 'SELECT ' + "'" + str("INGRESO") + "'" +  ' tipoIng, i.id'  + "||" +"'" + '-INGRESO' + "'" + ' id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id" UNION SELECT ' + "'"  + str("TRIAGE") + "'" + ' tipoIng, t.id'  + "||" +"'" + '-TRIAGE' + "'" + ' id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,t.consec consec , t."fechaSolicita" , cast(' + "'" + str('0001-01-01 00:00:00') + "'" + ' as timestamp) fechaSalida,ser.nombre servicioNombreIng, dep.nombre camaNombreIng , ' + "''" + ' dxActual FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  ,sitios_serviciosSedes sd, clinico_servicios ser WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND t."sedesClinica_id" = ' "'" + str(sede) + "'" + ' AND dep."sedesClinica_id" =  sd."sedesClinica_id" AND dep.id = t.dependencias_id AND t."serviciosSedes_id" = sd.id  AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and t."tipoDoc_id" = u."tipoDoc_id" and u.id = t."documento_id"  and ser.id = sd.servicios_id and dep."serviciosSedes_id" = sd.id and t."serviciosSedes_id" = sd.id and dep."tipoDoc_id" = t."tipoDoc_id" and dep."documento_id" = t."documento_id" and ser.nombre = ' + "'" + str('TRIAGE') + "'"
+
     print(detalle)
 
     curx.execute(detalle)
 
-    for id, tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual in curx.fetchall():
+    for tipoIng, id, tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual in curx.fetchall():
         ingresos.append(
 		{"model":"ingresos.ingresos","pk":id,"fields":
-			{'id':id, 'tipoDoc': tipoDoc, 'documento': documento, 'nombre': nombre, 'consec': consec,
+			{'tipoIng':tipoIng, 'id':id, 'tipoDoc': tipoDoc, 'documento': documento, 'nombre': nombre, 'consec': consec,
                          'fechaIngreso': fechaIngreso, 'fechaSalida': fechaSalida,
                          'servicioNombreIng': servicioNombreIng, 'camaNombreIng': camaNombreIng,
                          'dxActual': dxActual}})
@@ -998,10 +1220,6 @@ def load_dataClinico(request, data):
     print(ingresos)
     context['Ingresos'] = ingresos
 
-
-    ## Voy a enviar tickets
-
-    #ingresos['EspecialidadesMedicos'] =
 
     serialized1 = json.dumps(ingresos, default=serialize_datetime)
 
@@ -1017,6 +1235,11 @@ def PostConsultaHcli(request):
     Post_id = request.POST["post_id"]
 
     print("id = ", Post_id)
+    llave = Post_id.split('-')
+    print ("llave = " ,llave)
+    print ("primero=" ,llave[0])
+    print("segundo = " ,llave[1])
+
 
     if request.method == 'POST':
 
@@ -1025,7 +1248,12 @@ def PostConsultaHcli(request):
 
         miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",password="pass123")
         cur = miConexionx.cursor()
-        comando = 'SELECT i.id id, i."tipoDoc_id" tipoDocId,td.nombre nombreTipoDoc, i.documento_id documentoId, u.documento documento , i.consec consec FROM admisiones_ingresos i, usuarios_usuarios u, usuarios_tiposDocumento td where i.id=' + "'" +  str(Post_id) + "'" + ' and i."tipoDoc_id" =td.id and i.documento_id=u.id'
+
+        if (llave[1].strip() == 'INGRESO'):
+            comando = 'SELECT i.id id, i."tipoDoc_id" tipoDocId,td.nombre nombreTipoDoc, i.documento_id documentoId, u.documento documento , i.consec consec FROM admisiones_ingresos i, usuarios_usuarios u, usuarios_tiposDocumento td where i.id=' + "'" +  str(llave[0].strip()) + "'" + ' and i."tipoDoc_id" =td.id and i.documento_id=u.id'
+        else:
+            comando = 'SELECT t.id id, t."tipoDoc_id" tipoDocId,td.nombre nombreTipoDoc, t.documento_id documentoId, u.documento documento , t.consec consec FROM triage_triage t, usuarios_usuarios u, usuarios_tiposDocumento td where t.id=' + "'" + str(llave[0].strip()) + "'" + ' and t."tipoDoc_id" =td.id and t.documento_id=u.id'
+
         print(comando)
 
         cur.execute(comando)

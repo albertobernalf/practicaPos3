@@ -154,11 +154,6 @@ subir tablas, buscar ultimas tablas mipres 2024
    -- Ojo en triage valores NULOS y de numericos o texto arreglar "update", tal como esta en glucometria
    -- Colocar un control en guardar el cambio de servicio so no hay seleccionados datos en la ventana. para mantener robusta la Aplicacion..
 
--- Para le lunes, no se porque carachos, el boton que llama al  $get que trae info no funciona , dice qur url no existe pailas
-   no he podico, socorro , auxiliop
-   parece sedr que : $.get("/creacionHc/postConsultaHcli" +'/' + post_id  +'/edit/'  ,function (data) {
- 
-
 -- ojo no edita la Admision Ver mañana JUEVES
 
 -- Ojo mañlana miercoles 05-sepr
@@ -168,3 +163,6 @@ subir tablas, buscar ultimas tablas mipres 2024
    mañana si se pued  antecedentes  y Diagnosticos, import, export y datatables etc, todop
    busacar capturav ronum de la tabla laboratorios , creop en paneladmisiones ,    implementa delete no funciona en ambos lab-rayx
    hay unos valores nulos que arreglar no recuerdo dondep, es en la tabla clinico_examenes:ejemplo solictaenfermeria
+   el tiposFolio aun no funciona solo trae 1 , no he podido pailas 
+   el causaexterna or diagnosticos ='' No funciona
+   crear prioridad en cliniuco examenes y clinico_prioridad

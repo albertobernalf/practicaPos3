@@ -49,7 +49,7 @@ ul.tabs li a .tab-text{
 .secciones{
 	width: 100%;
 	background: #fff;
-	height: 450px;
+	height: 350px;
 }
 
 .paciente{
@@ -94,6 +94,6 @@ ul.tabs li a .tab-text{
 .scrollable
 {
 
-    height: 200px;
+    height: 150px;
     overflow:scroll;
 }
