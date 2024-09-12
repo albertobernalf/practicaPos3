@@ -3,7 +3,8 @@ from django.contrib import admin
 # Register your models here.
 
 from clinico.models import Medicos, Especialidades , TiposExamen, Examenes, Historia, HistoriaExamenes, HistoriaResultados, EspecialidadesMedicos, Servicios, Diagnosticos, EstadosSalida,   EstadoExamenes,  Enfermedades, TiposFolio, TiposAntecedente,  CausasExterna, ViasIngreso , TiposIncapacidad,  HistorialAntecedentes, TiposDiagnostico, HistorialDiagnosticos, Interconsultas, EstadosInterconsulta
-from clinico.models import TiposRadiologia,ViasEgreso, RevisionSistemas, NivelesClinica, TiposTriage, TurnosEnfermeria, TiposSalidas, Eps, TiposCotizante,  Regimenes, Recomendaciones, Hallazgos, NivelesRegimenes, Ips, TiposInterconsulta
+from clinico.models import TiposRadiologia,ViasEgreso, RevisionSistemas, NivelesClinica, TiposTriage, TurnosEnfermeria, TiposSalidas, Eps, TiposCotizante,  Regimenes, Recomendaciones, Hallazgos, NivelesRegimenes, Ips, TiposInterconsulta, ViasAdministracion, UnidadesDeMedidaDosis, FrecuenciasAplicacion, HistoriaMedicamentos, PrincipiosActivos, Medicamentos
+from clinico.models import CodigosAtc, FormasFarmaceuticas
 
 @admin.register(Servicios)
 class serviciosAdmin(admin.ModelAdmin):
@@ -300,3 +301,66 @@ class tiposRadiologiaAdmin(admin.ModelAdmin):
     search_fields = ("id", "nombre")
     # Filtrar
     list_filter = ("id", "nombre")
+
+@admin.register(ViasAdministracion)
+class viasAdministracionAdmin(admin.ModelAdmin):
+    list_display = ("id", "nombre","codigoMipres","habilitadoMipres")
+    search_fields = ("id", "nombre","codigoMipres","habilitadoMipres")
+    # Filtrar
+    list_filter = ("id", "nombre","codigoMipres","habilitadoMipres")
+
+
+@admin.register(UnidadesDeMedidaDosis)
+class UnidadesDeMedidaDosisAdmin(admin.ModelAdmin):
+    list_display = ("id", "descripcion","codigoMipres","habilitadoMipres","unidadaDeMedidaPrincipioA")
+    search_fields = ("id", "descripcion","codigoMipres","habilitadoMipres","unidadaDeMedidaPrincipioA")
+    # Filtrar
+    list_filter = ("id", "descripcion","codigoMipres","habilitadoMipres","unidadaDeMedidaPrincipioA")
+
+
+
+@admin.register(FrecuenciasAplicacion)
+class frecuenciasAplicacionAdmin(admin.ModelAdmin):
+    list_display = ("id", "descripcion","codigoMipres","habilitadoMipres")
+    search_fields = ("id", "descripcion","codigoMipres","habilitadoMipres")
+    # Filtrar
+    list_filter = ("id", "descripcion","codigoMipres","habilitadoMipres")
+
+
+@admin.register(HistoriaMedicamentos)
+class historiaMedicamentosAdmin(admin.ModelAdmin):
+    list_display = ("id","suministro","historia")
+    search_fields = ("id","suministro","historia")
+    # Filtrar
+    list_filter = ("id","suministro","historia")
+
+@admin.register(Medicamentos)
+class medicamentosAdmin(admin.ModelAdmin):
+    list_display = ("id","nombre")
+    search_fields = ("id","nombre")
+    # Filtrar
+    list_filter = ("id","nombre")
+
+@admin.register(PrincipiosActivos)
+class principiosActivosAdmin(admin.ModelAdmin):
+    list_display = ("id", "nombre")
+    search_fields = ("id", "nombre")
+    # Filtrar
+    list_filter = ("id", "nombre")
+
+
+@admin.register(CodigosAtc)
+class codigoAtcAdmin(admin.ModelAdmin):
+    list_display = ("id","codigo",  "nombre")
+    search_fields =  ("id","codigo",  "nombre")
+    # Filtrar
+    list_filter =  ("id","codigo",  "nombre")
+
+
+@admin.register(FormasFarmaceuticas)
+class formasFarmaceuticasAdmin(admin.ModelAdmin):
+
+        list_display = ("id", "nombre","codigoMipres")
+        search_fields = ("id", "nombre","codigoMipres")
+        # Filtrar
+        list_filter = ('nombre',"codigoMipres")

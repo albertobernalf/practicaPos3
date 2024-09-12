@@ -74,11 +74,11 @@ class Ingresos(models.Model):
 
 
 class Furips(models.Model):
-    ACTIVO = 'ACTIVO'
-    INACTIVO = 'INACTIVO'
+    A = 'A'
+    I = 'I'
     TIPO_CHOICES = (
-        (ACTIVO, 'ACTIVO'),
-        (INACTIVO, 'INACTIVO'),
+        (A, 'ACTIVO'),
+        (I, 'INACTIVO'),
     )
     S = 'S'
     N = 'N'

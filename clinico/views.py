@@ -12,7 +12,7 @@ from django.utils.timezone import now
 from django.db.models import Avg, Max, Min
 from .forms import historiaForm, historiaExamenesForm
 from datetime import datetime
-from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos
+from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos, Interconsultas, EstadosInterconsulta, Incapacidades, SignosVitales, HistoriaSignosVitales
 from sitios.models import Dependencias
 from planta.models import Planta
 from contratacion.models import Procedimientos
@@ -20,7 +20,7 @@ from usuarios.models import Usuarios, TiposDocumento
 
 
 
-from clinico.forms import  IncapacidadesForm, HistorialDiagnosticosCabezoteForm
+from clinico.forms import  IncapacidadesForm, HistorialDiagnosticosCabezoteForm, HistoriaSignosVitalesForm
 from django.db.models import Avg, Max, Min
 from usuarios.models import Usuarios, TiposDocumento
 
@@ -208,6 +208,7 @@ def crearHistoriaClinica(request):
 
             print("Entre Ajax POST")
 
+
             tipoDoc = request.POST["tipoDocPaciente"]
             print("tipoDoc = ", tipoDoc)
             documento = request.POST["documentoPaciente"]
@@ -216,7 +217,7 @@ def crearHistoriaClinica(request):
             print("ingresoPaciente = ", ingresoPaciente)
 
 
-            tiposFolio = request.POST["tiposFolio"]
+            tiposFolio = request.POST["tiposFolioEscogido"]
 
             print ("tiposfolios Seleccionado = " , tiposFolio)
             dependenciasRealizado = request.POST["dependenciasRealizado"]
@@ -231,6 +232,9 @@ def crearHistoriaClinica(request):
             plantaId = Planta.objects.get(documento=plantados.strip())
             print("plantaId =", plantaId.id)
 
+            medicoId = Medicos.objects.get(planta_id= plantaId.id)
+            print ("medicoId = ", medicoId.id)
+
             tipoDocId = TiposDocumento.objects.get(nombre=tipoDoc)
             print("tipoDocId =", tipoDocId)
             documentoId = Usuarios.objects.get(tipoDoc_id=tipoDocId.id, documento=documento)
@@ -241,6 +245,8 @@ def crearHistoriaClinica(request):
             subjetivo = request.POST["subjetivo"]
             analisis = request.POST["analisis"]
             plan = request.POST["plan"]
+            tratamiento = request.POST["tratamiento"]
+            print("tratamiento =", tratamiento)
             tipoIng = request.POST["tipoIng"]
             usuarioRegistro = plantaId.id
             now = datetime.datetime.now()
@@ -252,6 +258,67 @@ def crearHistoriaClinica(request):
             print("estadoRegistro =", estadoReg)
             # Busca el folio a asignar
             # Primero el id del paciente:
+            # Se recogen los datos Clinicos
+
+            apache2 = request.POST["apache2"]
+            print("apache2 =", apache2)
+            antibioticos = request.POST["antibioticos"]
+            print("antibioticos =", antibioticos)
+            monitoreo = request.POST["monitoreo"]
+            print("monitoreo =", monitoreo)
+            movilidadLimitada = request.POST["movilidadLimitada"]
+            print("movilidadLimitada =", movilidadLimitada)
+            nauseas = request.POST["nauseas"]
+            print("nauseas =", nauseas)
+            llenadoCapilar = request.POST["llenadoCapilar"]
+            print("llenadoCapilar =", llenadoCapilar)
+            neurologia = request.POST["neurologia"]
+            print("neurologia =", neurologia)
+            irritacion = request.POST["irritacion"]
+            print("pulsos =", pulsos)
+            pulsos = request.POST["pulsos"]
+            print("retiroPuntos =", retiroPuntos)
+            retiroPuntos = request.POST["retiroPuntos"]
+            print("retiroPuntos =", retiroPuntos)
+            inmovilizacion = request.POST["inmovilizacion"]
+            print("inmovilizacion =", inmovilizacion)
+            notaAclaratoria = request.POST["notaAclaratoria"]
+            print("notaAclaratoria =", notaAclaratoria)
+            fecNotaAclaratoria = request.POST["fecNotaAclaratoria"]
+            print("fecNotaAclaratoria =", fecNotaAclaratoria)
+
+            fecNotaAclaratoria = request.POST["fecNotaAclaratoria"]
+            print("fecNotaAclaratoria =", fecNotaAclaratoria)
+            examenFisico = request.POST["examenFisico"]
+            print("examenFisico =", examenFisico)
+            noQx = request.POST["noQx"]
+            print("noQx =", noQx)
+            observaciones = request.POST["observaciones"]
+            print("observaciones =", observaciones)
+            riesgoHemodinamico = request.POST["riesgoHemodinamico"]
+            print("riesgoHemodinamico =", riesgoHemodinamico)
+            riesgoVentilatorio = request.POST["riesgoVentilatorio"]
+            print("riesgoVentilatorio =", riesgoVentilatorio)
+            riesgos = request.POST["riesgos"]
+            print("riesgos =", riesgos)
+            trombocitopenia = request.POST["trombocitopenia"]
+            print("trombocitopenia =", trombocitopenia)
+            hipotension = request.POST["hipotension"]
+            print("hipotension =", hipotension)
+            indiceMortalidad = request.POST["indiceMortalidad"]
+            print("indiceMortalidad =", indiceMortalidad)
+            ingestaAlcohol = request.POST["ingestaAlcohol"]
+            print("ingestaAlcohol =", ingestaAlcohol)
+            tratamiento = request.POST["tratamiento"]
+            print("tratamiento =", tratamiento)
+            inmovilizacionObservaciones = request.POST["inmovilizacionObservaciones"]
+            print("inmovilizacionObservaciones =", inmovilizacionObservaciones)
+            justificacion = request.POST["justificacion"]
+            print("justificacion =", justificacion)
+            leucopenia = request.POST["leucopenia"]
+            print("leucopenia =", leucopenia)
+            manejoQx = request.POST["manejoQx"]
+            print("manejoQx =", manejoQx)
 
 
             tipoDocId = TiposDocumento.objects.get(nombre=tipoDoc)
@@ -299,6 +366,9 @@ def crearHistoriaClinica(request):
             print("causas externa=", causasExterna)
             print("espemedico = ", espMedico)
             print("planta = ", plantados)
+
+
+
             print("usuarioRegistro = ", usuarioRegistro)
 
             diagnosticos = request.POST["diagnosticos"]
@@ -328,9 +398,9 @@ def crearHistoriaClinica(request):
                 miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
                 curt = miConexiont.cursor()
 
-                comando = 'INSERT INTO clinico_Historia ("tipoDoc_id" , documento_id , "consecAdmision", folio ,fecha , "tiposFolio_id" ,"causasExterna_id" , "dependenciasRealizado_id" , especialidades_id ,planta_id, motivo , subjetivo,objetivo, analisis ,plann,"fechaRegistro" ,"usuarioRegistro_id", "estadoReg" ) VALUES ('  + "'" +  str(
+                comando = 'INSERT INTO clinico_Historia ("tipoDoc_id" , documento_id , "consecAdmision", folio ,fecha , "tiposFolio_id" ,"causasExterna_id" , "dependenciasRealizado_id" , especialidades_id ,planta_id, motivo , subjetivo,objetivo, analisis ,plann, tratamiento , "fechaRegistro"  ,"usuarioRegistro_id", "estadoReg" ) VALUES ('  + "'" +  str(
                     tipoDocId.id) + "','" + str(documentoId.id) + "','" + str(ingresoPaciente) + "','" + str(ultimofolio2) + "','" + str(fechaRegistro) + "','"  +  str(tiposFolio) + "','" + str(causasExterna) + "','" + str(dependenciasRealizado) + "','" + str(espMedico) + "','" + str(plantaId.id) + "','" + str(motivo) + "','" + str(
-                    subjetivo) + "','" + str(objetivo) + "','" + str(analisis) + "','" + str(plan) + "','" + str(fechaRegistro) + "','" + str(usuarioRegistro) + "','" + str(estadoReg) + "');"
+                    subjetivo) + "','" + str(objetivo) + "','" + str(analisis) + "','" + str(plan) + "','" + str(tratamiento) +  "','" + str(fechaRegistro) + "','" + str(usuarioRegistro) + "','" + str(estadoReg) + "');"
                 
                 print(comando)
                 resultado = curt.execute(comando)
@@ -384,6 +454,7 @@ def crearHistoriaClinica(request):
 
 
                 # Fin Grabacion Historia
+
 
                 # Grabacion Laboratorios
                 laboratorios = request.POST["laboratorios"]
@@ -677,30 +748,99 @@ def crearHistoriaClinica(request):
                     print("tiposInterconsultaId", tiposInterconsultaId)
 
                     especialidadConsultadaId = key6["especialidadConsultada"]
-                    print("especialidadConsultaId", especialidadConsultaId)
+                    print("especialidadConsultaId", especialidadConsultadaId)
 
-                    especialidadConsultaId = key6["especialidadConsulta"]
-                    print("especialidadConsultaId", especialidadConsultaId)
 
                     tiposInterconsultaId = key6["tiposInterconsulta"]
                     print("tiposInterconsultaId", tiposInterconsultaId)
 
-
                     descripcionConsulta = key6["descripcion"]
+
+                    estado = EstadosInterconsulta.objects.get(nombre='PENDIENTE')
+                    print ("estadoInterconsulta", estado.id)
 
                     if medicoConsultadoId != "":
 
                         f = Interconsultas(descripcionConsulta=descripcionConsulta, diagnosticos_id=diagnosticoId,
                                                   especialidadConsultada_id=especialidadConsultadaId,medicoConsultado_id=medicoConsultadoId,
-                                           especialidadConsulta_id=espMed, medicoConsulta_id=medicoCo,
-                                                  historia_id=historiaId, tiposInterconsulta_id=tiposInterconsultaId)
+                                           especialidadConsulta_id=espMedico, medicoConsulta_id=medicoId.id,
+                                                  historia_id=historiaId, tipoInterconsulta_id=tiposInterconsultaId,estadosInterconsulta_id=estado.id)
                         f.save()
 
                     ## Fin
 
 
 
-                    # Fin Grabacion Diagnosticos
+                    # Fin Grabacion Interconsultas
+
+                        # Grabacion incapacidades
+
+                incapForm = request.POST['incapacidades']
+
+                 #incapForm = incapacidades(request.POST)
+                print("incapForm= ", incapForm )
+
+
+                print("voy a validar incapacidad")
+
+                jsonIncapacidades = json.loads(incapForm)
+
+                for key7 in jsonIncapacidades:
+
+                    tiposIncapacidad=key7["tiposIncapacidad"]
+                    diagnosticosIncapacidad=key7["diagnosticosIncapacidad"]
+                    desdeFecha=key7["desdeFecha"]
+                    hastaFecha=key7["hastaFecha"]
+                    numDias=key7["numDias"]
+                    descripcion=key7["descripcion"]
+
+                    if tiposIncapacidad != "":
+                        g = Incapacidades(tiposIncapacidad_id=tiposIncapacidad, diagnosticosIncapacidad_id=diagnosticosIncapacidad,
+                                          descripcion=descripcion,desdeFecha=desdeFecha,  hastaFecha=hastaFecha, numDias=numDias,  historia_id=historiaId,estadoReg='A')
+                        g.save()
+
+
+                # Fin Grabacion incapacidades
+
+
+            # Grabacion signos
+
+                signosForm = request.POST['signos']
+                print("signosForm= ", signosForm )
+                print("voy a validar signos")
+                jsonSignos = json.loads(signosForm)
+
+                for key8 in jsonSignos:
+
+                    fecha=key8["fecha"]
+                    frecCardiaca=key8["frecCardiaca"]
+                    frecRespiratoria=key8["frecRespiratoria"]
+                    tensionADiastolica=key8["tensionADiastolica"]
+                    tensionASistolica=key8["tensionASistolica"]
+                    temperatura=key8["temperatura"]
+                    saturacion = key8["saturacion"]
+                    glucometria = key8["glucometria"]
+                    glasgow = key8["apache"]
+                    pvc = key8["pvc"]
+                    ic = key8["ic"]
+                    cuna = key8["cuna"]
+                    glasgowOcular = key8["glasgowOcular"]
+                    glasgowVerbal = key8["glasgowVerbal"]
+                    glasgowMotora = key8["glasgowMotora"]
+
+                    print ("VOY A GRABAR")
+
+                    if fecha != "":
+                        h = HistoriaSignosVitales(fecha=fecha, frecCardiaca=frecCardiaca,
+                                       frecRespiratoria=frecRespiratoria,  tensionADiastolica=tensionADiastolica, tensionASistolica=tensionASistolica,
+                                          temperatura=temperatura,saturacion=saturacion,glucometria=glucometria,glasgow=glasgow,pvc=pvc,ic=ic,cuna=cuna,
+                                          glasgowOcular=glasgowOcular,glasgowVerbal=glasgowVerbal,glasgowMotora=glasgowMotora,
+                                          historia_id=historiaId,estadoReg='A', fechaRegistro=dnow  ,usuarioRegistro_id=plantaId.id )
+                        h.save()
+
+
+                # Fin Grabacion signos
+
 
                 #data = {'Mensaje': 'Folio exitoso : ' + str(ultimofolio2)}
                 data = {'Mensaje': 'OK'}
@@ -724,7 +864,8 @@ def crearHistoriaClinica(request):
         context['title'] = 'Mi gran Template'
         context['historiaForm'] = historiaForm
         context['IncapacidadesForm'] = IncapacidadesForm
-        context['HistorialDiagnosticosCabezoteForm'] = HistorialDiagnosticosCabezoteForm
+        #context['HistorialDiagnosticosCabezoteForm'] = HistorialDiagnosticosCabezoteForm
+        context['HistoriaSignosVitalesForm']  = HistoriaSignosVitalesForm
 
         Sede = request.GET["sede"]
         Username = request.GET["username"]
@@ -737,7 +878,7 @@ def crearHistoriaClinica(request):
         DocumentoPaciente = request.GET["documento2"]
         IngresoPaciente = request.GET["consec"]
         EspMedico = request.GET["espMedico"]
-        TiposFolio1 = request.GET["tiposFolio"]
+        TiposFolioEscogido = request.GET['tiposFolio']
         DocumentoId = request.GET["documentoId"]
 
         print("especialidad Medico = ", EspMedico)
@@ -766,7 +907,7 @@ def crearHistoriaClinica(request):
         context['DocumentoPaciente'] = DocumentoPaciente
         context['IngresoPaciente'] = IngresoPaciente
         context['EspMedico'] = EspMedico
-        context['TiposFolio1'] = TiposFolio1
+        context['TiposFolioEscogido'] = TiposFolioEscogido
 
         # Combo Tipos Diagnostico
 
@@ -1202,7 +1343,7 @@ def load_dataClinico(request, data):
     curx = miConexionx.cursor()
    
 
-    detalle = 'SELECT ' + "'" + str("INGRESO") + "'" +  ' tipoIng, i.id'  + "||" +"'" + '-INGRESO' + "'" + ' id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id" UNION SELECT ' + "'"  + str("TRIAGE") + "'" + ' tipoIng, t.id'  + "||" +"'" + '-TRIAGE' + "'" + ' id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,t.consec consec , t."fechaSolicita" , cast(' + "'" + str('0001-01-01 00:00:00') + "'" + ' as timestamp) fechaSalida,ser.nombre servicioNombreIng, dep.nombre camaNombreIng , ' + "''" + ' dxActual FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  ,sitios_serviciosSedes sd, clinico_servicios ser WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND t."sedesClinica_id" = ' "'" + str(sede) + "'" + ' AND dep."sedesClinica_id" =  sd."sedesClinica_id" AND dep.id = t.dependencias_id AND t."serviciosSedes_id" = sd.id  AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and t."tipoDoc_id" = u."tipoDoc_id" and u.id = t."documento_id"  and ser.id = sd.servicios_id and dep."serviciosSedes_id" = sd.id and t."serviciosSedes_id" = sd.id and dep."tipoDoc_id" = t."tipoDoc_id" and dep."documento_id" = t."documento_id" and ser.nombre = ' + "'" + str('TRIAGE') + "'"
+    detalle = 'SELECT ' + "'" + str("INGRESO") + "'" +  ' tipoIng, i.id'  + "||" +"'" + '-INGRESO' + "'" + ' id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id" UNION SELECT ' + "'"  + str("TRIAGE") + "'" + ' tipoIng, t.id'  + "||" +"'" + '-TRIAGE' + "'" + ' id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,t.consec consec , t."fechaSolicita" , cast(' + "'" + str('0001-01-01 00:00:00') + "'" + ' as timestamp) fechaSalida,ser.nombre servicioNombreIng, dep.nombre camaNombreIng , ' + "''" + ' dxActual FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  ,sitios_serviciosSedes sd, clinico_servicios ser WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND t."sedesClinica_id" = ' "'" + str(sede) + "'" + ' AND dep."sedesClinica_id" =  sd."sedesClinica_id" AND dep.id = t.dependencias_id AND t."serviciosSedes_id" = sd.id  AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and t."tipoDoc_id" = u."tipoDoc_id" and u.id = t."documento_id"  and ser.id = sd.servicios_id and dep."serviciosSedes_id" = sd.id and t."serviciosSedes_id" = sd.id and dep."tipoDoc_id" = t."tipoDoc_id" and t."consecAdmision" = 0 and dep."documento_id" = t."documento_id" and ser.nombre = ' + "'" + str('TRIAGE') + "'"
 
     print(detalle)
 
@@ -1278,5 +1419,6 @@ def PostConsultaHcli(request):
 
     else:
         return JsonResponse({'errors':'Something went wrong!'})
+
 
 

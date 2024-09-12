@@ -156,7 +156,7 @@ subir tablas, buscar ultimas tablas mipres 2024
 
 -- ojo no edita la Admision Ver mañana JUEVES
 
--- Ojo mañlana miercoles 05-sepr
+-- Ojo mañana miercoles 05-sepr
 
    colocar mensaje bonito cuando no se escibre causa externa o diagnostico ojop
    porque l¿el datatable de rx diferente de laborat, no ingresa filas en blanco y no bonito // UNIFICAR PRESENTACION
@@ -165,4 +165,23 @@ subir tablas, buscar ultimas tablas mipres 2024
    hay unos valores nulos que arreglar no recuerdo dondep, es en la tabla clinico_examenes:ejemplo solictaenfermeria
    el tiposFolio aun no funciona solo trae 1 , no he podido pailas 
    el causaexterna or diagnosticos ='' No funciona
-   crear prioridad en cliniuco examenes y clinico_prioridad
+   crear prioridad en clinico examenes y clinico_prioridad
+
+-- PROPUESTA actividades hoy
+
+   1. colocar campo ingreso a triage_triage cuando hay admision, el numero del ingreso
+   2. la edicion de la hoja de admision
+   3. Verificar la creacion de ADMISION DESDE TRIAGE , PRESENTO ERRORE COMO EN SERVICIOS, HABITACIONES LIBRES, etc, NO QUITO LA MODAL NO REFRESH
+   4. limpiar datos y comenzar pruebas de ceros
+
+
+     tiposfolio (Pendiente que guarde y no se bloquee no se que pasa)
+
+   Mañana:
+
+   1. create facturacion_facturacion, facturacion_facturacionDetalle, involucrar glosas
+   2.   bajar anexosa tecnicos de glosas. Crear carpetasde anexos tecnicos
+   3. crear datatable medicamentos
+   4. crear historia-clinicos con form
+
+

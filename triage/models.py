@@ -5,12 +5,12 @@ from django.db import models
 
 class Triage(models.Model):
 
-    ACTIVO = 'ACTIVO'
-    INACTIVO = 'INACTIVO'
+    A = 'A'
+    I = 'I'
 
     TIPO_CHOICES = (
-        (ACTIVO, 'ACTIVO'),
-        (INACTIVO, 'INACTIVO')
+        (A, 'ACTIVO'),
+        (I, 'INACTIVO')
     )
     id = models.AutoField(primary_key=True)
     sedesClinica   = models.ForeignKey('sitios.SedesClinica', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name = 'SedesClinica1')
@@ -22,6 +22,7 @@ class Triage(models.Model):
     tipoDoc        = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     documento      = models.ForeignKey('usuarios.Usuarios',blank=True,null= True, editable=True, on_delete=models.PROTECT,  related_name='Documento1')
     consec         = models.IntegerField()
+    consecAdmision = models.IntegerField(default=0)
     hClinica       = models.CharField(max_length=50,  blank=True, null=True, editable=True,)
     regimen        = models.ForeignKey('clinico.Regimenes', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     tiposCotizante  = models.ForeignKey('clinico.TiposCotizante', blank=True,null= True, editable=True, on_delete=models.PROTECT)

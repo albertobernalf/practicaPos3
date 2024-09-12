@@ -407,7 +407,7 @@ $('#tablaDInterconsultas tbody').on('click', 'tr', function () {
 
    	   var table7 = $('#tablaInterconsultas').DataTable();   // accede de nuevo a la DataTable.
 
-       var descripcion = document.getElementById("descripcion").value;
+       var descripcion = document.getElementById("descripcionI").value;
 
            var select = document.getElementById("diagnosticosI"); /*Obtener el SELECT */
       	   var diagnosticos = select.options[select.selectedIndex].value; /* Obtener el valor */
@@ -426,9 +426,7 @@ $('#tablaDInterconsultas tbody').on('click', 'tr', function () {
       	   textmedicoConsultado = select3.options[select3.selectedIndex].innerText; //El texto de la opción seleccionada
 
 
-	        table7.row.add([
-                 tiposInterconsulta, texttiposInterconsulta,   especialidadConsultada ,  textespecialidadConsultada ,medicoConsultado, textmedicoConsultado  ,diagnosticos,  textDiagnosticos,  descripcion, ""
-                ]).draw(false);
+	        table7.row.add([ tiposInterconsulta, texttiposInterconsulta,   especialidadConsultada ,  textespecialidadConsultada ,medicoConsultado, textmedicoConsultado , descripcion, diagnosticos,  textDiagnosticos,  ""]).draw(false);
         });
 
 
@@ -747,11 +745,10 @@ function tableActionsInterconsultas() {
 
 // FIN INTERCONSULTAS
 
-
-
 formHistoriaClinica.addEventListener('submit', e=>{
             confirm("Confirma Guardar Folio !");
-         alert("Entre Form formHistoriaClinica");
+
+
         e.preventDefault()
         // Ah peros si se puede solo hay que recorrer y yap
 
@@ -763,8 +760,6 @@ formHistoriaClinica.addEventListener('submit', e=>{
 
         laboratorios=[]
         cadenas = {}
-
-    	alert("longitud d ela tabla = " + datos_tabla.length);
 
 
 	for(var i= 0; i < datos_tabla.length; i++) {
@@ -778,10 +773,8 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	   };
 
 	laboratorios  = JSON.stringify(laboratorios);
-        alert("asi quedo laboratorios  " + laboratorios);
 
         // FIN LABORATORIO
-
 
         // RADIOLOGIA
 
@@ -790,9 +783,6 @@ formHistoriaClinica.addEventListener('submit', e=>{
 
         radiologia=[]
         cadenas = {}
-
-    	alert("longitud d ela tabla = " + datos_tabla1.length);
-
 
 
 	for(var i= 0; i < datos_tabla1.length; i++) {
@@ -806,7 +796,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	   };
 
 	    radiologia  = JSON.stringify(radiologia);
-        alert("asi quedo radiologia  " + radiologia);
+
 
 
         // FIN RADIOLOGIA
@@ -819,11 +809,6 @@ formHistoriaClinica.addEventListener('submit', e=>{
 
         terapias=[]
 
-
-    	alert("longitud d ela tabla = " + datos_tabla3.length);
-
-
-
 	for(var i= 0; i < datos_tabla3.length; i++) {
 
 	    terapias.push({
@@ -835,7 +820,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	   };
 
 	    terapias  = JSON.stringify(terapias);
-        alert("asi quedo terapisa  " + terapias);
+
 
 
         // FIN TERAPIAS
@@ -848,11 +833,6 @@ formHistoriaClinica.addEventListener('submit', e=>{
 
         noQx=[]
 
-
-    	alert("longitud d ela tabla = " + datos_tabla4.length);
-
-
-
 	for(var i= 0; i < datos_tabla4.length; i++) {
 
 	    noQx.push({
@@ -864,7 +844,6 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	   };
 
 	    noQx  = JSON.stringify(noQx);
-        alert("asi quedo noQx  " + noQx);
 
 
         // FIN noQx
@@ -875,10 +854,6 @@ formHistoriaClinica.addEventListener('submit', e=>{
                 var datos_tabla5 = table5.rows().data().toArray();
 
         antecedentes=[]
-
-
-    	alert("longitud d ela tabla = " + datos_tabla5.length);
-
 
 
 	for(var i= 0; i < datos_tabla5.length; i++) {
@@ -892,9 +867,6 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	   };
 
 	    antecedentes  = JSON.stringify(antecedentes);
-        alert("asi quedo antecedentes  " + antecedentes);
-
-
 
  	// Fin Antecedentes
 
@@ -904,10 +876,6 @@ formHistoriaClinica.addEventListener('submit', e=>{
      var datos_tabla6 = table6.rows().data().toArray();
 
         diagnosticos=[]
-
-
-    	alert("longitud d ela tabla = " + datos_tabla6.length);
-
 
 
 	for(var i= 0; i < datos_tabla6.length; i++) {
@@ -920,12 +888,13 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	   };
 
 	    diagnosticos  = JSON.stringify(diagnosticos);
-        alert("asi quedo diagnosticos  " + diagnosticos);
+
 
 
  	// Fin Diagnosticos
 
 	// Cirugias
+
 	// Fin Cirugias
 
 
@@ -938,10 +907,6 @@ formHistoriaClinica.addEventListener('submit', e=>{
         interconsultas=[]
 
 
-    	alert("longitud d ela tabla = " + datos_tabla7.length);
-
-
-
 	for(var i= 0; i < datos_tabla7.length; i++) {
 
 	    interconsultas.push({
@@ -951,70 +916,131 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	        "especialidadConsultadaNombre"    : datos_tabla7[i][3] ,
 	        "medicoConsultado"    : datos_tabla7[i][4] ,
 	        "medicoConsultadoNombre"    : datos_tabla7[i][5] ,
-	        "descripcion"    : datos_tabla7[i][8] ,
+	        "descripcion"    : datos_tabla7[i][6] ,
 	        "diagnosticos"    : datos_tabla7[i][7],
-	        "diagnosticosNombre"    : datos_tabla7[i][6]
+	        "diagnosticosNombre"    : datos_tabla7[i][8]
 	      });
 	   };
 
 	    interconsultas  = JSON.stringify(interconsultas);
-        alert("asi quedo interconsultas  " + interconsultas);
-
-    alert("datos_tabla7[i][0]" +  datos_tabla7[1][0]);
-    alert("1" +  datos_tabla7[1][1]);
-    alert("2" +  datos_tabla7[1][2]);
-    alert("3" +  datos_tabla7[1][3]);
-    alert("4" +  datos_tabla7[1][4]);
-    alert("5" +  datos_tabla7[1][5]);
-    alert("6" +  datos_tabla7[1][6]);
-    alert("7" +  datos_tabla7[1][7]);
-    alert("8" +  datos_tabla7[1][8]);
-
+        alert("y por que no llegamos aqui");
 
  	// Fin Interconsulta
 
 	// Incapacidades
+
+	const forma = document.getElementById("formIncapacidades");
+	const vale = new FormData(forma);
+
+	inca = [];
+
+	tiposIncapacidad=vale.get("tiposIncapacidad");
+	diagnosticosIncapacidad=vale.get("diagnosticosIncapacidad");
+	desdeFecha=vale.get("desdeFecha");
+	hastaFecha=vale.get("hastaFecha");
+	numDias=vale.get("numDias");
+	descripcion=vale.get("descripcion");
+
+
+   inca.push({"tiposIncapacidad":tiposIncapacidad,
+            "diagnosticosIncapacidad":diagnosticosIncapacidad,
+            "desdeFecha":desdeFecha,
+            "hastaFecha" :hastaFecha,
+            "numDias" :numDias,
+            "descripcion" :descripcion   });
+
+	alert("incapacidades = final  = " + inca);
+	inca  = JSON.stringify(inca);
+
  	// Fin Incapacidades
 
+    // Signos vitales
+
+	const formaSignos = document.getElementById("formSignos");
+	const vale2 = new FormData(formaSignos);
+
+	signos = [];
+
+	fecha=vale2.get("fecha");
+	frecCardiaca=vale2.get("frecCardiaca");
+	frecRespiratoria=vale2.get("frecRespiratoria");
+	tensionADiastolica=vale2.get("tensionADiastolica");
+	tensionASistolica=vale2.get("tensionASistolica");
+	tensionAMedia=vale2.get("tensionAMedia");
+	temperatura=vale2.get("temperatura");
+	saturacion=vale2.get("saturacion");
+	glucometria=vale2.get("glucometria");
+	glasgow=vale2.get("glasgow");
+	apache=vale2.get("apache");
+	pvc=vale2.get("pvc");
+	cuna=vale2.get("cuna");
+	ic=vale2.get("ic");
+	glasgowOcular=vale2.get("glasgowOcular");
+	glasgowVerbal=vale2.get("glasgowVerbal");
+	glasgowMotora=vale2.get("glasgowMotora");
+
+
+   signos.push({"fecha":fecha,
+            "frecCardiaca":frecCardiaca,
+            "frecRespiratoria":frecRespiratoria,
+            "tensionADiastolica" :tensionADiastolica,
+            "tensionASistolica" :tensionASistolica,
+            "tensionAMedia" :tensionAMedia,
+            "temperatura" :temperatura,
+            "saturacion" :saturacion,
+            "glucometria" :glucometria,
+            "glasgow" :glasgow,
+            "apache" :apache,
+            "pvc" :pvc,
+            "cuna" :cuna,
+            "ic" :ic,
+            "glasgowOcular" :glasgowOcular,
+            "glasgowVerbal" :glasgowVerbal,
+            "glasgowMotora" :glasgowMotora});
+
+	alert("signos = final  = " + signos[0]);
+	alert("signos = final  = " + signos[0]['temperatura']);
+	alert("signos = final  = " + JSON.stringify(signos));
+	signos  = JSON.stringify(signos);
+
+ 	// Fin Signos vitales
 
 	// Medicamentos
+
  	// Fin Medicamentos
 
 
          var tipoDocPaciente    =  document.getElementById("tipoDocPaciente1").value
          var documentoPaciente  =  document.getElementById("documentoPaciente1").value;
          var folio      = "0";
-         alert("tipoDoc y documento = " + tipoDocPaciente + " " + documentoPaciente )
          var fecha      =  document.getElementById("fecha").value;
          var motivo     =  document.getElementById("id_motivo").value;
          var subjetivo  =  document.getElementById("id_subjetivo").value;
          var objetivo   =  document.getElementById("id_objetivo").value;
          var analisis   =  document.getElementById("id_analisis").value;
          var plan =           document.getElementById("id_plann").value;
+         var tratamiento =           document.getElementById("id_tratamiento").value;
          var causasExterna = document.getElementById("causasExterna").value;
          var dependenciasRealizado = document.getElementById("dependenciasRealizado").value;
          var usuarioRegistro = document.getElementById("usuarioRegistro").value;
          var ingresoPaciente=document.getElementById("ingresoPaciente1").value;
 
-   	     var tiposfolio  =  document.getElementById("tiposFolio1").value;
-         alert("tiposFolio =" + tiposFolio);
+         var tiposfolioEscogido  =  document.getElementById("tiposFolioEscogido").value;
+         alert("tiposfolioEscogido =" + tiposfolioEscogido);
          var profesional = document.getElementById("profesional").value;
          alert("Profesional = ", profesional);
 
    	    var espMedico  =  document.getElementById("espMedico").value;
-         alert("espMedico =" + espMedico);
-       
+
          var planta = document.getElementById("username").value;
          alert("planta =" + planta);
          var fechaRegistro = document.getElementById("fechaRegistro").value;
          var estadoReg = "A"
          var tipoIng = document.getElementById("tipoIng").value;
-        // Provisional
-        tiposFolio=1
-        // Fin provisinal
-
 
             var form_valido;
+
+            alert("VOY AJASX A GUARDAR HC");
 
                $.ajax({
             	   type: 'POST',
@@ -1032,8 +1058,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	                        'dependenciasRealizado':dependenciasRealizado,
 			                'usuarioRegistro':usuarioRegistro,
 			                'ingresoPaciente':ingresoPaciente,
-				            'tiposFolio':tiposFolio,
-				            'profesional':profesional,
+			                'profesional':profesional,
 				            'espMedico':espMedico,
 				            'planta':planta,
 				            'estadoReg':estadoReg,
@@ -1044,7 +1069,11 @@ formHistoriaClinica.addEventListener('submit', e=>{
 				           'tipoIng':tipoIng,
 				           'antecedentes':antecedentes,
 				           'diagnosticos':diagnosticos,
-				           'interconsultas':interconsultas},
+				           'interconsultas':interconsultas,
+				           'incapacidades':inca,
+				           'tiposFolioEscogido':"1",
+				           'signos':signos ,
+				           'tratamiento':tratamiento},
  	      		success: function (respuesta2) {
  	      		       // var data = JSON.parse(respuesta2);
  	      		        alert("Esto llega :  " + JSON.stringify(respuesta2));
@@ -1072,3 +1101,4 @@ formHistoriaClinica.addEventListener('submit', e=>{
   	        });  // cierra ajax
 
 });  // cierra commit
+

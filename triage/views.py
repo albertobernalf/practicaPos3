@@ -183,6 +183,7 @@ def crearTriage(request):
                          clasificacionTriage_id=clasificacionTriage,
                          fechaRegistro=fechaRegistro,
                          usuarioCrea_id=usernameId.id,
+			 consecAdmision=0,
                          #estadoReg=estadoReg,
 
         )
@@ -2159,6 +2160,13 @@ def guardarAdmisionTriage(request):
         print("yA grabe dependencias historico", grabo2.id)
 
         print("Grabe HISTPRICO DEPENDENCIAS")
+
+    	# Actualizo consecutivo de admision en TRIAGE
+
+        grabo55 = Triage.objects.filter( tipoDoc_id=idTipoDocFinal,documento_id=documento_llave.id,consecAdmision=0).update(consecAdmision=consecAdmision)
+
+        grabo55.save()
+        print("Actualizo ingreso en tabala TRIAGE id = ", grabo55.id)
 
         # RUTINA ARMADO CONTEXT
 

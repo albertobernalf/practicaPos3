@@ -4,7 +4,7 @@ from django.contrib import admin
 
 
 
-from basicas.models import EstadoCivil,  Ocupaciones, CentrosCosto, Eventos, TiposFamilia, TiposContacto, Periodos, FuripsLista, FuripsParametro
+from basicas.models import EstadoCivil,  Ocupaciones, CentrosCosto, Eventos, TiposFamilia, TiposContacto, Periodos, FuripsLista, FuripsParametro, Archivos
 
 @admin.register(EstadoCivil)
 class estadoCivilAdmin(admin.ModelAdmin):
@@ -69,3 +69,10 @@ class furipsParametroAdmin(admin.ModelAdmin):
     search_fields = ("id", "nombre","furipsLista")
     # Filtrar
     list_filter = ('nombre',"furipsLista")
+
+@admin.register(Archivos)
+class archivosAdmin(admin.ModelAdmin):
+    list_display = ("id", "tipo", "nombre")
+    search_fields = ("id", "tipo", "nombre")
+    # Filtrar
+    list_filter = ('nombre',"tipo")

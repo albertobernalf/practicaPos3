@@ -48,14 +48,17 @@
 <div class="paciente">
     <input type="hidden" id="tipoIng" name="tipoIng" value="{{TipoIng}}"> </input>
     <input type="hidden" id="espMedico" name="espMedico" value="{{EspMedico}}"> </input>
-    <input type="hidden" id="tiposFolio1" name="tiposFolio1" value="{{TiposFolio1}}"> </input>
+    <input type="hidden" id="tiposFolio" name="tiposFolio" value="{{TiposFolio}}"> </input>
+    <input type="hidden" id="tiposFolioEscogido" name="tiposFolioEscogido" value="{{TiposFolioEscogido}}"> </input>
     <input type="hidden" id="usuarioRegistro" name="usuarioRegistro" value="{{Username_id}}"> </input>
     <input type="hidden" id="perfil" name="perfil" value="{{perfil}}"> </input>
     <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}"> </input>
     <input type="hidden" id="fechaRegistro" name="fechaRegistro" value=""> </input>
-    <input type="hidden" id="tipoDocPaciente" name="tipoDocPaciente" value="">
-    <input type="hidden" id="documentoPaciente" name="documentoPaciente" value="">
-    <input type="hidden" id="ingresoPaciente" name="ingresoPaciente" value="">
+
+    <input type="hidden" id="tipoDocPaciente" name="tipoDocPaciente" value="{{TipoDocPaciente}}">
+    <input type="hidden" id="documentoPaciente" name="documentoPaciente" value="{{DocumentoPaciente}}">
+    <input type="hidden" id="ingresoPaciente" name="ingresoPaciente" value="{{IngresoPaciente}}">
+
     <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
     <input type="hidden" id="username" name="username" value = "{{Username}}">
 	<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
@@ -141,52 +144,66 @@
 </div>
 {% endfor %}
 
-  <span id="mensajes" name="mensajes">Aqui mensajes </span>
+
 
 {% endblock %}
 
 {% block content %}
 <div class="secciones">
     <article id="Evoluciones">
-        <br>
+
         <center><h3>Evoluciones</h3></center>
+        <span id="mensajes" name="mensajes">Aqui mensajes </span>
 
+        <div class="row row-cols-8 mt-3">
+            <div class="col">
+                </div>
 
-        <div class="form-row">
-            <div class="form-group col-md-4 ">
-                {{ historiaForm.motivo.label }}
+            <div class="col">
+                {{ historiaForm.motivo.label }} Consulta
                 {{ historiaForm.motivo }}
             </div>
 
-            <div class="form-group col-md-4 ">
+            <div class="col">
                 {{ historiaForm.objetivo.label }}
                 {{ historiaForm.objetivo }}
             </div>
-            <div class="form-group col-md-4 ">
+
+            <div class="col">
                 {{ historiaForm.subjetivo.label }}
                 {{ historiaForm.subjetivo }}
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6 ">
+
+            <div class="col">
                 {{ historiaForm.analisis.label }}
                 {{ historiaForm.analisis }}
             </div>
 
-            <div class="form-group col-md-6 ">
-                {{ historiaForm.plan.label }}
+            <div class="col">
+                {{ historiaForm.plann.label }}
                 {{ historiaForm.plann }}
             </div>
+      
+            <div class="col">
+                {{ historiaForm.tratamiento.label }}
+                {{ historiaForm.tratamiento }}
+            </div>
+
+            <div class="col">
+                </div>
+
 
         </div>
+
+
     </article>
 
     <article id="CausaExterna">
-        <center><br><br>
+        <center>
             <h3>Causas Externas</h3>
         </center>
 
-        <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
+        <table class="table  " style="height: 50px; background-color:LightGray;  width:95%;">
             <tr>
                 <td>
                 </td>
@@ -196,9 +213,9 @@
 
         <div class="form-row">
             <div class="form-group col-md-12">
-                <label for="causasExterna" class="col-form-label">Seleccion:</label>
-                <center>
-                    <select class="form-control" id="causasExterna" name="causasExterna">
+		 <center>
+		Seleccion:
+                    <select class="select-css" id="causasExterna" name="causasExterna">
                         {% for causasExterna in CausasExterna %}
                         <option value="{{causasExterna.id}}"> {{causasExterna.nombre}}</option>
                         {% endfor %}
@@ -217,8 +234,93 @@
 
 
     <article id="SignosVitales">
-        <center>
+        <center> <br>
             <h3>Signos Vitales</h3>
+
+
+	<div class="container">
+        <form   method="POST"  id="formSignos">
+        <div class="row row-cols-4 mt-3">
+
+            <div class="col">
+                Fecha:
+                {{HistoriaSignosVitalesForm.fecha}}
+            </div>
+
+            <div class="col">
+                Frecuencia Cardiaca:
+                {{HistoriaSignosVitalesForm.frecCardiaca}}
+            </div>
+
+            <div class="col">
+                Frecuencia Respiratoria
+                {{HistoriaSignosVitalesForm.frecRespiratoria}}
+            </div>
+
+            <div class="col">
+                TA Diastolica:
+                {{HistoriaSignosVitalesForm.tensionADiastolica}}
+            </div>
+            <div class="col">
+                TA Sistolica:
+                {{HistoriaSignosVitalesForm.tensionASistolica}}
+            </div>
+		 <div class="col">
+                TA Media:
+                {{HistoriaSignosVitalesForm.tensionAMedia}}
+            </div>
+
+            <div class="col">
+                Temperatura:
+                {{HistoriaSignosVitalesForm.temperatura}}
+            </div>
+                        <div class="col">
+                saturacion:
+                {{HistoriaSignosVitalesForm.saturacion}}
+            </div>
+
+                        <div class="col">
+                Glucometria:
+                {{HistoriaSignosVitalesForm.glucometria}}
+            </div>
+
+                        <div class="col">
+                Glasgow:
+                {{HistoriaSignosVitalesForm.glasgow}}
+            </div>
+
+            <div class="col">
+                Apache:
+                {{HistoriaSignosVitalesForm.apache}}
+            </div>
+
+            <div class="col">
+                Pvc:
+                {{HistoriaSignosVitalesForm.pvc}}
+            </div>
+            <div class="col">
+                Cuna:
+                {{HistoriaSignosVitalesForm.cuna}}
+            </div>
+            <div class="col">
+                IC:
+                {{HistoriaSignosVitalesForm.ic}}
+            </div>
+            <div class="col">
+                Glasgow ocular:
+                {{HistoriaSignosVitalesForm.glasgowOcular}}
+            </div>
+            <div class="col">
+                Glasgow verbal:
+                {{HistoriaSignosVitalesForm.glasgowVerbal}}
+            </div>
+            <div class="col">
+                Glasgow motora:
+                {{HistoriaSignosVitalesForm.glasgowMotora}}
+            </div>
+         </div>
+        </form>
+        </div>
         </center>
 
     </article>
@@ -246,20 +348,16 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="card">
-                                        <div class="card-header" style="height:50px;">
+                                        <div class="card-header" style="height:45px;">
                                             <center>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
 
-                                                        <div class="alert alert-success success-msg"
-                                                             style="display:none"></div>
-
-                                                    </div>
-
+						 <div class="col-sm-1">
+						 </div>
+                               
                                                     <div class="col-sm-2">
-                                                      <label for="lab"  class="col-sm-6 col-form-label col-form-label-sm">Laboratorio:</label>
-
-                                                        <select class="form-select  h-10 w-50" aria-label="" id="lab"  name="lab">
+                                              
+                                                        <select class="select-css" id="lab"  name="lab">
                                                             {% for laboratorios in Laboratorios %}
                                                             <option value="{{laboratorios.cups}}">
                                                                 {{laboratorios.nombre}}
@@ -269,8 +367,7 @@
                                                     </div>
 
                                                     <div class="col-sm-2">
-                                                        <label for="cantidad"
-                                                               class="col-sm-8 control-label">Cantidad:</label>
+							Cant:
                                                         <input type="text" id="cantidad" name="cantidad" value="1">
 
 
@@ -278,7 +375,7 @@
 
 
                                                     <div class="col-sm-3">
-                                                        <label for="observa" class="col-sm-8 control-label">Observaciones:</label>
+                                                 	Observaciones:
                                                         <input type="text" id="observa" name="observa" value="">
                                                     </div>
 
@@ -291,7 +388,7 @@
                                                 </div>
                                             </center>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="card-body" style="height:1px;">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <table id=tablaLaboratorios
@@ -367,17 +464,13 @@
                                         <div class="card-header" style="height:50px;">
                                             <center>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-
-                                                        <div class="alert alert-success success-msg"
-                                                             style="display:none"></div>
+                                                    <div class="col-sm-1">
 
                                                     </div>
 
-                                                    <div class="col-sm-2">
-                                                        <label for="rad"
-                                                               class="col-sm-12 control-label">Radiologia:</label>
-                                                        <select class="form-select  h-10 w-50" aria-label="" id="rad"
+                                                    <div class="col-sm-3">
+
+                                                        <select class="select-css"  id="rad"
                                                                 name="rad">
                                                             {% for radiologias in Radiologias %}
                                                             <option value="{{radiologias.cups}}"> {{radiologias.nombre}}
@@ -387,8 +480,7 @@
                                                     </div>
 
                                                     <div class="col-sm-2">
-                                                        <label for="cantidad3"
-                                                               class="col-sm-8 control-label">Cantidad:</label>
+                                                        Cantidad:
                                                         <input type="text" id="cantidad3" name="cantidad3" value="1">
 
 
@@ -396,7 +488,7 @@
 
 
                                                     <div class="col-sm-3">
-                                                        <label for="observa3" class="col-sm-8 control-label">Observaciones:</label>
+							Observaciones:
                                                         <input type="text" id="observa3" name="observa3" value="">
                                                     </div>
 
@@ -483,17 +575,13 @@
                                         <div class="card-header" style="height:50px;">
                                             <center>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-
-                                                        <div class="alert alert-success success-msg"
-                                                             style="display:none"></div>
+                                                    <div class="col-sm-1">
 
                                                     </div>
 
-                                                    <div class="col-sm-2">
-                                                        <label for="ter"
-                                                               class="col-sm-12 control-label">Terapia:</label>
-                                                        <select class="form-select  h-10 w-50" aria-label="" id="ter"
+                                                    <div class="col-sm-3">
+                                                	
+                                                        <select class="select-css"  id="ter"
                                                                 name="ter">
                                                             {% for terapias in Terapias %}
                                                             <option value="{{terapias.cups}}">
@@ -504,8 +592,7 @@
                                                     </div>
 
                                                     <div class="col-sm-2">
-                                                        <label for="cantidad4"
-                                                               class="col-sm-8 control-label">Cantidad:</label>
+							Cantidad:
                                                         <input type="text" id="cantidad4" name="cantidad4" value="1">
 
 
@@ -513,7 +600,7 @@
 
 
                                                     <div class="col-sm-3">
-                                                        <label for="observa4" class="col-sm-8 control-label">Observaciones:</label>
+							Observaciones:
                                                         <input type="text" id="observa4" name="observa4" value="">
                                                     </div>
 
@@ -587,9 +674,177 @@
     </article>
 
     <article id="Clinica">
-        <br>
-        <center>
-            <h3>Clinica del paciente</h3></center>
+         <center>     <h3>Clinica del paciente</h3></center>
+
+        <div class="row row-cols-10 mt-3">
+
+            <div class="col">
+            </div>
+               <div class="col">
+            </div>
+            <div class="col">
+                {{historiaForm.apache2.label}}
+                {{historiaForm.apache2}}
+            </div>
+            <div class="col">
+                {{ historiaForm.antibioticos.label }}
+                {{ historiaForm.antibioticos }}
+            </div>
+
+            <div class="col">
+                {{ historiaForm.monitoreo.label }}
+                {{ historiaForm.monitoreo}}
+            </div>
+
+            <div class="col">
+                {{ historiaForm.movilidadLimitada.label }}
+                {{ historiaForm.movilidadLimitada }}
+            </div>
+
+            <div class="col">
+                {{ historiaForm.nauseas.label }}
+                {{ historiaForm.nauseas}}
+            </div>
+      
+            <div class="col">
+                {{ historiaForm.llenadoCapilar.label }}
+                {{ historiaForm.llenadoCapilar }}
+            </div>
+
+            <div class="col">
+                {{ historiaForm.llenadoCapilar.label }}
+                {{ historiaForm.llenadoCapilar }}
+            </div>
+            <div class="col">
+                {{ historiaForm.neurologia.label }}
+                {{ historiaForm.neurologia }}
+            </div>
+            <div class="col">
+                {{ historiaForm.irritacion.label }}
+                {{ historiaForm.irritacion }}
+            </div>
+            <div class="col">
+                {{ historiaForm.pulsos.label }}
+                {{ historiaForm.pulsos}}
+            </div>
+            <div class="col">
+                {{ historiaForm.retiroPuntos.label }}
+                {{ historiaForm.retiroPuntos }}
+            </div>
+
+             <div class="col">
+
+            </div>
+             <div class="col">
+
+            </div>
+
+            </div>
+        <div class="row row-cols-10 mt-3">
+                           <div class="col">
+            </div>
+               <div class="col">
+            </div>
+
+            <div class="col">
+                {{ historiaForm.vomito.label }}
+                {{ historiaForm.vomito }}
+            </div>
+            <div class="col">
+                {{ historiaForm.inmovilizacion.label }}
+                {{ historiaForm.inmovilizacion }}
+            </div>
+            <div class="col">
+                {{ historiaForm.notaAclaratoria.label }}
+                {{ historiaForm.notaAclaratoria }}
+            </div>
+            <div class="col">
+                {{ historiaForm.fecNotaAclaratoria.label }}
+                {{ historiaForm.fecNotaAclaratoria}}
+            </div>
+
+            <div class="col">
+                {{ historiaForm.textoNotaAclaratoria.label }}
+                {{ historiaForm.textoNotaAclaratoria}}
+            </div>
+            <div class="col">
+                {{ historiaForm.examenFisico.label }}
+                {{ historiaForm.examenFisico}}
+            </div>
+            <div class="col">
+                {{ historiaForm.noQx.label }}
+                {{ historiaForm.noQx}}
+            </div>
+            <div class="col">
+                {{ historiaForm.observaciones.label }}
+                {{ historiaForm.observaciones}}
+            </div>
+            <div class="col">
+                {{ historiaForm.riesgoHemodinamico.label }}
+                {{ historiaForm.riesgoHemodinamico}}
+            </div>
+                           <div class="col">
+            </div>
+               <div class="col">
+            </div>
+
+        </div>
+        <div class="row row-cols-15 mt-3">
+               <div class="col">
+            </div>
+               <div class="col">
+            </div>
+
+            <div class="col">
+                {{ historiaForm.riesgos.label }}
+                {{ historiaForm.riesgos}}
+            </div>
+
+            <div class="col">
+                {{ historiaForm.trombocitopenia.label }}
+                {{ historiaForm.trombocitopenia}}
+            </div>
+            <div class="col">
+                {{ historiaForm.hipotension.label }}
+                {{ historiaForm.hipotension}}
+            </div>
+            <div class="col">
+                {{ historiaForm.indiceMortalidad.label }}
+                {{ historiaForm.indiceMortalidad}}
+            </div>
+            <div class="col">
+                {{ historiaForm.ingestaAlcohol.label }}
+                {{ historiaForm.ingestaAlcohol}}
+            </div>
+
+            <div class="col">
+                {{ historiaForm.inmovilizacionObservaciones.label }}
+                {{ historiaForm.inmovilizacionObservaciones}}
+            </div>
+            <div class="col">
+                {{ historiaForm.ingestaAlcohol.label }}
+                {{ historiaForm.ingestaAlcohol}}
+            </div>
+
+            <div class="col">
+                {{ historiaForm.justificacion.label }}
+                {{ historiaForm.justificacion}}
+            </div>
+            <div class="col">
+                {{ historiaForm.leucopenia.label }}
+                {{ historiaForm.leucopenia}}
+            </div>
+            <div class="col">
+                {{ historiaForm.manejoQx.label }}
+                {{ historiaForm.manejoQx}}
+            </div>
+             <div class="col">
+
+            </div>
+             <div class="col">
+
+            </div>
+        </div>
     </article>
 
 
@@ -629,15 +884,12 @@
                                                 <div class="row">
                                                     <div class="col-sm-3">
 
-                                                        <div class="alert alert-success success-msg"
-                                                             style="display:none"></div>
 
                                                     </div>
 
-                                                    <div class="col-sm-2">
-                                                        <label for="noQx"
-                                                               class="col-sm-12 control-label">No Qx:</label>
-                                                        <select class="form-select  h-10 w-50" aria-label="" id="noQx"
+                                                    <div class="col-sm-3">
+
+                                                        <select class="select-css"  id="noQx"
                                                                 name="noQx">
                                                             {% for noQx in NoQx %}
                                                             <option value="{{noQx.cups}}">
@@ -648,16 +900,13 @@
                                                     </div>
 
                                                     <div class="col-sm-2">
-                                                        <label for="cantidad5"
-                                                               class="col-sm-8 control-label">Cantidad:</label>
+							Cantidad:
                                                         <input type="text" id="cantidad5" name="cantidad5" value="1">
-
 
                                                     </div>
 
-
                                                     <div class="col-sm-3">
-                                                        <label for="observa5" class="col-sm-8 control-label">Observaciones:</label>
+							Observaciones:
                                                         <input type="text" id="observa5" name="observa5" value="">
                                                     </div>
 
@@ -744,18 +993,14 @@
                                         <div class="card-header" style="height:50px;">
                                             <center>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-
-                                                        <div class="alert alert-success success-msg"
-                                                             style="display:none"></div>
+                                                    <div class="col-sm-1">
 
                                                     </div>
 
 
-                                                    <div class="col-sm-2">
-                                                        <label for="tiposDiagnosticos"
-                                                               class="col-sm-12 control-label">Tipos Diagnostico:</label>
-                                                        <select class="form-select  h-10 w-50" aria-label="" id="tiposDiagnosticos"
+                                                    <div class="col-sm-3">
+
+                                                        <select class="select-css"  id="tiposDiagnosticos"
                                                                 name="tiposDiagnosticos">
                                                             {% for tiposDiagnostico in TiposDiagnostico %}
                                                             <option value="{{tiposDiagnostico.id}}">
@@ -767,9 +1012,8 @@
 
 
                                                     <div class="col-sm-2">
-                                                        <label for="diagnosticos"
-                                                               class="col-sm-12 control-label">Diagnosticos:</label>
-                                                        <select class="form-select  h-10 w-50" aria-label="" id="diagnosticos"
+
+                                                        <select class="select-css" id="diagnosticos"
                                                                 name="diagnosticos">
                                                             {% for diagnosticos in Diagnosticos %}
                                                             <option value="{{diagnosticos.id}}">
@@ -781,7 +1025,7 @@
 
 
                                                     <div class="col-sm-3">
-                                                        <label for="observa7" class="col-sm-8 control-label">Observaciones:</label>
+							Observaciones:
                                                         <input type="text" id="observa7" name="observa7" value="">
                                                     </div>
 
@@ -872,17 +1116,14 @@
                                         <div class="card-header" style="height:50px;">
                                             <center>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-1">
 
-                                                        <div class="alert alert-success success-msg"
-                                                             style="display:none"></div>
 
                                                     </div>
 
-                                                    <div class="col-sm-2">
-                                                        <label for="antecedentes"
-                                                               class="col-sm-12 control-label">Antecedente:</label>
-                                                        <select class="form-select  h-10 w-50" aria-label="" id="antecedentes"
+                                                    <div class="col-sm-3">
+
+                                                        <select class="select-css"  id="antecedentes"
                                                                 name="antecedentes">
                                                             {% for antecedentes in Antecedentes %}
                                                             <option value="{{antecedentes.id}}">
@@ -896,7 +1137,7 @@
 
 
                                                     <div class="col-sm-3">
-                                                        <label for="observa6" class="col-sm-8 control-label">Observaciones:</label>
+							Observaciones:
                                                         <input type="text" id="observa6" name="observa6" value="">
                                                     </div>
 
@@ -958,6 +1199,43 @@
     <article id="Incapacidades">
                 <br> <center>
             <h3>Incapacidades</h3></center>
+
+	<div class="container">
+
+            <form   method="POST"  id="formIncapacidades">
+             <div class="row row-cols-4 mt-3">
+
+            <div class="col">
+                Tipo Incapacidad:
+                {{IncapacidadesForm.tiposIncapacidad}}
+            </div>
+
+            <div class="col">
+                Diagnostico:
+                {{IncapacidadesForm.diagnosticosIncapacidad}}
+            </div>
+            <div class="col">
+                Inicia:
+                {{IncapacidadesForm.desdeFecha}}
+            </div>
+            <div class="col">
+                Termina:
+                {{IncapacidadesForm.hastaFecha}}
+            </div>
+    		 <div class="col">
+                Numero de dias:
+                {{IncapacidadesForm.numDias}}
+            </div>
+            <div class="col">
+                Descripcion:
+                {{IncapacidadesForm.descripcion}}
+            </div>
+                 </div>
+            </form>
+
+    </div>
+
+
     </article>
 
     <article id="InterConsultas">
@@ -985,15 +1263,10 @@
                                         <div class="card-header" style="height:50px;">
                                             <center>
                                                 <div class="row">
-                                                    <div class="col-sm-1">
 
-                                                        <div class="alert alert-success success-msg"
-                                                             style="display:none"></div>
-                                                    </div>
                                                     <div class="col-sm-2">
-                                                        <label for="tiposInterconsulta"
-                                                               class="col-sm-12 control-label">Tipos Interconsulta:</label>
-                                                        <select class="form-select  h-10 w-50" aria-label="" id="tiposInterconsulta"
+                                                        Tipo Interconsulta:
+                                                        <select class="select-css"  id="tiposInterconsulta"
                                                                 name="tiposInterconsulta">
                                                             {% for tiposInterconsulta in TiposInterconsulta %}
                                                             <option value="{{tiposInterconsulta.id}}">
@@ -1004,9 +1277,8 @@
                                                    </div>
 
                                                     <div class="col-sm-2">
-                                                        <label for="especialidadConsultada"
-                                                               class="col-sm-12 control-label">Especialidad consultada:</label>
-                                                        <select class="form-select  h-10 w-50" aria-label="" id="especialidadConsultada"
+                                                        Especialidad consultada:</label>
+                                                        <select class="select-css"  id="especialidadConsultada"
                                                                 name="especialidadConsultada">
                                                             {% for especialidades in Especialidades %}
                                                             <option value="{{especialidades.id}}">
@@ -1020,7 +1292,7 @@
                                                     <div class="col-sm-2">
                                                         <label for="medicoConsultado"
                                                                class="col-sm-12 control-label">Medico consultado:</label>
-                                                        <select class="form-select  h-10 w-50" aria-label="" id="medicoConsultado" name="medicoConsultado">
+                                                        <select class="select-css" aria-label="" id="medicoConsultado" name="medicoConsultado">
                                                             {% for medicos in Medicos %}
                                                             <option value="{{medicos.id}}">
                                                                 {{medicos.nombre}}
@@ -1031,16 +1303,15 @@
 
 
                                                     <div class="col-sm-2">
-                                                        <label for="descripcion" class="col-sm-8 control-label">Descripcion:</label>
-                                                        <input type="text" id="descripcion" name="descripcion" value="">
+                                                        Descripcion:
+                                                        <input type="text" id="descripcionI" name="descripcionI" value="">
                                                     </div>
 
 
 
                                                     <div class="col-sm-2">
-                                                        <label for="diagnosticosI"
-                                                               class="col-sm-12 control-label">Diagnostico:</label>
-                                                        <select class="form-select  h-10 w-50" aria-label="" id="diagnosticosI"
+                                                        Diagnostico:
+                                                        <select class="select-css" aria-label="" id="diagnosticosI"
                                                                 name="diagnosticosI">
                                                             {% for diagnosticos in Diagnosticos %}
                                                             <option value="{{diagnosticos.id}}">
@@ -1134,7 +1405,8 @@
         <form class="form-inline" action="" method="POST" id="formHistoriaClinica">
 
             <input type="hidden" id="espMedico" name="espMedico" value="{{EspMedico}}"> </input>
-	    <input type="hidden" id="tiposFolio" name="tiposFolio" value="{{TiposFolio"> </input>
+	    <input type="hidden" id="tiposFolio" name="tiposFolio" value="{{TiposFolio}}"> </input>
+	    <input type="hidden" id="tiposFolioEscogido" name="tiposFolioEscogido" value="{{TiposFolioEscogido}}"> </input>
 	    <input type="hidden" id="usuarioRegistro" name="usuarioRegistro" value="{{Username_id}}"> </input>
 	    <input type="hidden" id="perfil" name="perfil" value="{{perfil}}"> </input>
 	    <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}"> </input>
@@ -1142,6 +1414,9 @@
 	    <input type="text" id="tipoDocPaciente1" name="tipoDocPaciente1" value="{{TipoDocPaciente}}">
 	    <input type="text" id="documentoPaciente1" name="documentoPaciente1" value="{{DocumentoPaciente}}">
 	    <input type="text" id="ingresoPaciente1" name="ingresoPaciente1" value="{{IngresoPaciente}}">
+     	    <input type="hidden" id="tipoDocPaciente" name="tipoDocPaciente" value="{{TipoDocPaciente}}">
+	    <input type="hidden" id="documentoPaciente" name="documentoPaciente" value="{{DocumentoPaciente}}">
+	    <input type="hidden" id="ingresoPaciente" name="ingresoPaciente" value="{{IngresoPaciente}}">
 	    <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
 	    <input type="hidden" id="username" name="username" value = "{{Username}}">
 	    <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
@@ -1187,6 +1462,10 @@
             <input type="text" id="tipoDocPaciente2" name="tipoDocPaciente2" value="{{TipoDocPaciente}}">
 	    <input type="text" id="documentoPaciente2" name="documentoPaciente2" value="{{DocumentoPaciente}}">
 	    <input type="text" id="ingresoPaciente2" name="ingresoPaciente2" value="{{IngresoPaciente}}">
+            <input type="hidden" id="espMedico" name="espMedico" value="{{EspMedico}}"> </input>
+	    <input type="hidden" id="tiposFolio" name="tiposFolio" value="{{TiposFolio}}"> </input>
+	    <input type="hidden" id="tiposFolioEscogido" name="tiposFolioEscogido" value="{{TiposFolioEscogido}}"> </input>
+
 
 		<!--  Estos si de la Aplixcacion bse -->
 
@@ -1199,15 +1478,14 @@
 		<input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
 
 		<input type="submit" id="btnRetornaHistoria" name="btnRetornaHistoria" value="RETORNAR"> </input>
-
-
         </form>
     </article>
 
     <form class="form-inline" action="/escoge/{{Sede}}, {{Username}}, {{Profesional}}, {{Documento}} ,{{NombreSede}} ,{{EscogeModulo}}" method="POST"  id="formHistoriaClinicaT">
 
             <input type="hidden" id="espMedico" name="espMedico" value="{{EspMedico}}"> </input>
-	    <input type="hidden" id="tiposFolio" name="tiposFolio" value="{{TiposFolio"> </input>
+	    <input type="hidden" id="tiposFolio" name="tiposFolio" value="{{TiposFolio}}"> </input>
+	    <input type="hidden" id="tiposFolioEscogido" name="tiposFolioEscogido" value="{{TiposFolioEscogido}}"> </input>
 	    <input type="hidden" id="usuarioRegistro" name="usuarioRegistro" value="{{Username_id}}"> </input>
 	    <input type="hidden" id="perfil" name="perfil" value="{{perfil}}"> </input>
 	    <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}"> </input>
@@ -1215,6 +1493,10 @@
 	    <input type="hidden" id="tipoDocPaciente1" name="tipoDocPaciente1" value="{{TipoDocPaciente}}">
 	    <input type="hidden" id="documentoPaciente1" name="documentoPaciente1" value="{{DocumentoPaciente}}">
 	    <input type="hidden" id="ingresoPaciente1" name="ingresoPaciente1" value="{{IngresoPaciente}}">
+
+        <input type="hidden" id="tipoDocPaciente" name="tipoDocPaciente" value="{{TipoDocPaciente}}">
+	    <input type="hidden" id="documentoPaciente" name="documentoPaciente" value="{{DocumentoPaciente}}">
+	    <input type="hidden" id="ingresoPaciente" name="ingresoPaciente" value="{{IngresoPaciente}}">
 	    <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
 	    <input type="hidden" id="username" name="username" value = "{{Username}}">
 	    <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
@@ -1231,9 +1513,6 @@
 	<input type="hidden" id="permisosGrales" name="permisosGrales" value = "{{PermisosGrales}}">
 	<input type="hidden" id="permisosDetalle" name="permisosDetalle" value = "{{PermisosDetalle}}">
 	<input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
-
-
-
 
 
         </form>

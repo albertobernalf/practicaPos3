@@ -119,14 +119,22 @@ class Suministros (models.Model):
     nombre = models.CharField(max_length=30, blank=True,null= True, editable=True)
     tipoSuministro =   models.ForeignKey('facturacion.TiposSuministro', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     nombreGenerico  =  models.CharField(max_length=250, default='A', editable=False )
+    descripcionComercial  =  models.CharField(max_length=250, default='A', editable=False )
     concepto = models.ForeignKey('facturacion.Conceptos', blank=True,null= True, editable=True, on_delete=models.PROTECT)
-    concentracion = models.ForeignKey('clinico.MedicamentosDci', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     grupo =  models.ForeignKey('clinico.Grupos', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     subGrupo = models.ForeignKey('clinico.Grupos', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Subgrupo01i01')
     unidadMedida =  models.ForeignKey('clinico.UnidadesDeMedidaDosis', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    principioActivo =  models.ForeignKey('clinico.PrincipiosActivos', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    concentracion = models.ForeignKey('clinico.MedicamentosDci', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    formasFarmaceutica = models.ForeignKey('clinico.FormasFarmaceuticas', blank=True,null= True, editable=True, on_delete=models.PROTECT )
+    viaAdministracion = models.ForeignKey('clinico.ViasAdministracion', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    codigoAtc  =  models.ForeignKey('clinico.Atc', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    cums = models.CharField(max_length=30, blank=True,null= True, editable=True)
+    registroSanitario = models.CharField(max_length=50, blank=True,null= True, editable=True)
+    fechaExpedicion = models.DateTimeField(editable=True, null=True, blank=True)
+    fechaVencimiento =  models.DateTimeField(editable=True, null=True, blank=True)
     fraccion =  models.DecimalField( max_digits=20, decimal_places=2)
     unidadFraccion =    models.CharField(max_length=20, blank=True,null= True, editable=True)
-    viaAdministracion = models.ForeignKey('clinico.ViasAdministracion', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     vence =   models.CharField(max_length=1, blank=True,null= True, editable=True)
     control =   models.CharField(max_length=1, blank=True,null= True, editable=True)
     antibiotico =   models.CharField(max_length=1, blank=True,null= True, editable=True)
@@ -142,8 +150,6 @@ class Suministros (models.Model):
     terapia = models.CharField(max_length=1, blank=True,null= True, editable=True)
     nutricion = models.CharField(max_length=1, blank=True,null= True, editable=True)
     cantidad	 = models.DecimalField( max_digits=20, decimal_places=2)
-    cums = models.CharField(max_length=30, blank=True,null= True, editable=True)
-    formaFarmaceutica = models.CharField(max_length=250, blank=True,null= True, editable=True)
     regSanitario = models.CharField(max_length=30, blank=True,null= True, editable=True)
     altoCosto = models.CharField(max_length=1, blank=True,null= True, editable=True)
     vrCompra = models.DecimalField( max_digits=20, decimal_places=2)
@@ -207,6 +213,27 @@ class ConveniosPacienteIngresos(models.Model):
         return str(self.id)
 
 
+class SalariosLegales(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False )
 
+    def __str__(self):
+        return str(self.id)
 
+class RegimenesTipoPago(models.Model):
+    id = models.AutoField(primary_key=True)
+    regimen =  models.ForeignKey('clinico.Regimenes', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    salarioLegal =  models.ForeignKey('facturacion.SalariosLegales', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    año =  models.IntegerField(editable=True, null=True, blank=True)
+    valorModeradora = models.DecimalField( max_digits=20, decimal_places=2)
+    valorCopago = models.DecimalField( max_digits=20, decimal_places=2)
+    valorTopeMaximoCopagoEvento= models.DecimalField( max_digits=20, decimal_places=2)
+    valorTopeMaximoCopagoCalendario=models.DecimalField( max_digits=20, decimal_places=2)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False )
+
+    def __str__(self):
+        return str(self.id)
 

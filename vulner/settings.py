@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'cirugia',
     'enfermeria',
     'triage',
+    'cartera',
 
 ]
 
