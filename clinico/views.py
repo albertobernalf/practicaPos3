@@ -12,7 +12,7 @@ from django.utils.timezone import now
 from django.db.models import Avg, Max, Min
 from .forms import historiaForm, historiaExamenesForm
 from datetime import datetime
-from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos, Interconsultas, EstadosInterconsulta, Incapacidades, SignosVitales, HistoriaSignosVitales
+from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos, Interconsultas, EstadosInterconsulta, Incapacidades, SignosVitales, HistoriaSignosVitales, HistoriaRevisionSistemas
 from sitios.models import Dependencias
 from planta.models import Planta
 from contratacion.models import Procedimientos
@@ -259,11 +259,11 @@ def crearHistoriaClinica(request):
             # Busca el folio a asignar
             # Primero el id del paciente:
             # Se recogen los datos Clinicos
+            antibioticos = request.POST["antibioticos"]
+            print("antibioticos =", antibioticos)
 
             apache2 = request.POST["apache2"]
             print("apache2 =", apache2)
-            antibioticos = request.POST["antibioticos"]
-            print("antibioticos =", antibioticos)
             monitoreo = request.POST["monitoreo"]
             print("monitoreo =", monitoreo)
             movilidadLimitada = request.POST["movilidadLimitada"]
@@ -275,9 +275,9 @@ def crearHistoriaClinica(request):
             neurologia = request.POST["neurologia"]
             print("neurologia =", neurologia)
             irritacion = request.POST["irritacion"]
-            print("pulsos =", pulsos)
             pulsos = request.POST["pulsos"]
-            print("retiroPuntos =", retiroPuntos)
+            print("pulsos =", pulsos)
+
             retiroPuntos = request.POST["retiroPuntos"]
             print("retiroPuntos =", retiroPuntos)
             inmovilizacion = request.POST["inmovilizacion"]
@@ -291,14 +291,14 @@ def crearHistoriaClinica(request):
             print("fecNotaAclaratoria =", fecNotaAclaratoria)
             examenFisico = request.POST["examenFisico"]
             print("examenFisico =", examenFisico)
-            noQx = request.POST["noQx"]
-            print("noQx =", noQx)
+            noQx1 = request.POST["noQx1"]
+            print("noQx1 =", noQx1)
             observaciones = request.POST["observaciones"]
             print("observaciones =", observaciones)
             riesgoHemodinamico = request.POST["riesgoHemodinamico"]
             print("riesgoHemodinamico =", riesgoHemodinamico)
-            riesgoVentilatorio = request.POST["riesgoVentilatorio"]
-            print("riesgoVentilatorio =", riesgoVentilatorio)
+            #riesgoVentilatorio = request.POST["riesgoVentilatorio"]
+            #print("riesgoVentilatorio =", riesgoVentilatorio)
             riesgos = request.POST["riesgos"]
             print("riesgos =", riesgos)
             trombocitopenia = request.POST["trombocitopenia"]
@@ -398,10 +398,16 @@ def crearHistoriaClinica(request):
                 miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
                 curt = miConexiont.cursor()
 
-                comando = 'INSERT INTO clinico_Historia ("tipoDoc_id" , documento_id , "consecAdmision", folio ,fecha , "tiposFolio_id" ,"causasExterna_id" , "dependenciasRealizado_id" , especialidades_id ,planta_id, motivo , subjetivo,objetivo, analisis ,plann, tratamiento , "fechaRegistro"  ,"usuarioRegistro_id", "estadoReg" ) VALUES ('  + "'" +  str(
-                    tipoDocId.id) + "','" + str(documentoId.id) + "','" + str(ingresoPaciente) + "','" + str(ultimofolio2) + "','" + str(fechaRegistro) + "','"  +  str(tiposFolio) + "','" + str(causasExterna) + "','" + str(dependenciasRealizado) + "','" + str(espMedico) + "','" + str(plantaId.id) + "','" + str(motivo) + "','" + str(
-                    subjetivo) + "','" + str(objetivo) + "','" + str(analisis) + "','" + str(plan) + "','" + str(tratamiento) +  "','" + str(fechaRegistro) + "','" + str(usuarioRegistro) + "','" + str(estadoReg) + "');"
-                
+                #comando = 'INSERT INTO clinico_Historia ("tipoDoc_id" , documento_id , "consecAdmision", folio ,fecha , "tiposFolio_id" ,"causasExterna_id" , "dependenciasRealizado_id" , especialidades_id ,planta_id, motivo , subjetivo,objetivo, analisis ,plann, tratamiento , "fechaRegistro"  ,"usuarioRegistro_id", "estadoReg" ) VALUES ('  + "'" +  str(
+                #   tipoDocId.id) + "','" + str(documentoId.id) + "','" + str(ingresoPaciente) + "','" + str(ultimofolio2) + "','" + str(fechaRegistro) + "','"  +  str(tiposFolio) + "','" + str(causasExterna) + "','" + str(dependenciasRealizado) + "','" + str(espMedico) + "','" + str(plantaId.id) + "','" + str(motivo) + "','" + str(
+                #   subjetivo) + "','" + str(objetivo) + "','" + str(analisis) + "','" + str(plan) + "','" + str(tratamiento) +  "','" + str(fechaRegistro) + "','" + str(usuarioRegistro) + "','" + str(estadoReg) + "');"
+
+                ## aqui tentativo insert
+
+                comando = 'INSERT INTO clinico_Historia ("tipoDoc_id" , documento_id , "consecAdmision", folio ,fecha , "tiposFolio_id" ,"causasExterna_id" , "dependenciasRealizado_id" , especialidades_id ,planta_id, motivo , subjetivo,objetivo, analisis ,plann, tratamiento ,                apache2, antibioticos, monitoreo, "movilidadLimitada", nauseas, "llenadoCapilar", neurologia, irritacion, pulsos, "retiroPuntos",             inmovilizacion, "notaAclaratoria", "fecNotaAclaratoria", "examenFisico", "noQx", observaciones, "riesgoHemodinamico", riesgos, trombocitopenia, hipotension, "indiceMortalidad", "ingestaAlcohol", "inmovilizacionObservaciones", justificacion, leucopenia, manejoQx, "fechaRegistro", "usuarioRegistro_id", "estadoReg" )  VALUES('  + "'" +  str(tipoDocId.id) + "','" + str(documentoId.id) + "','" + str(ingresoPaciente) + "','" + str(ultimofolio2) + "','" + str(fechaRegistro) + "','"  +  str(tiposFolio) + "','" + str(causasExterna) + "','" + str(dependenciasRealizado) + "','" + str(espMedico) + "','" + str(plantaId.id) + "','" + str(motivo) + "','" + str(subjetivo) + "','" + str(objetivo) + "','" + str(analisis) + "','" + str(plan) + "','" + str(tratamiento)  + "','" + str(apache2) + "','" + "','" + str(antibioticos) + "','" + "','" + str(monitoreo) + "','" + "','" + str(movilidadLimitada) + "','" + "','" + str(nauseas) + "','" + "','" + str(neurologia) + "','"  + "','" + str(irritacion) + "','" + "','" + str(pulsos) + "','" + "','" + str(inmovilizacion) + "','" + "','" + str(notaAclaratoria) + "','"  + "','" + str(fecNotaAclaratoria) + "','" + "','" + str(noQx1) + "','" + "','" + str(observaciones) + "','" + "','" + str(riesgoHemodinamico) + "','" + "','" + str(riesgos) + "','" + "','" + str(trombocitopenia) + "','" + "','" + str(hipotension) + "','" + "','" + str(indiceMortalidad) + "','" + "','" + str(ingestaAlcohol) + "','" + str(inmovilizacionObservaciones) + "','" + "','" + str(justificacion) + "','" + "','" + str(leucopenia) + "','" + "','" + str(manejoQx) + "','" + "','" + str(fechaRegistro) + "','" + str(usuarioRegistro) + "','" + str(estadoReg) + "');"
+
+                ## fin tentativo insert
+
                 print(comando)
                 resultado = curt.execute(comando)
                 print("resultado =", resultado)
@@ -841,6 +847,29 @@ def crearHistoriaClinica(request):
 
                 # Fin Grabacion signos
 
+               # Grabacion Revision Sistemas
+
+                revisionSistemas = request.POST['revisionSistemas']
+                print("revisionSistemas =", revisionSistemas)
+
+                print("voy a validar revisionSistemas")
+
+                jsonRevisionSistemas = json.loads(revisionSistemas)
+
+                for key9 in jsonRevisionSistemas:
+
+                    revisionSistemas=key9["revisionSistemas"]
+                    observa=key9["observa"]
+
+                    if revisionSistemas != "":
+                        h = HistoriaRevisionSistemas(observacion=observa, revisionSistemas_id= revisionSistemas,
+                                          historia_id=historiaId,usuarioRegistro_id=usuarioRegistro  , estadoReg='A', fechaRegistro=fechaRegistro )
+                        h.save()
+
+
+                # Fin Grabacion Revision Sistemas
+
+
 
                 #data = {'Mensaje': 'Folio exitoso : ' + str(ultimofolio2)}
                 data = {'Mensaje': 'OK'}
@@ -1276,7 +1305,7 @@ def crearHistoriaClinica(request):
 
         context['TiposInterconsulta'] = tiposInterconsulta
 
-        # Fin combo Antecednetes
+        # Fin combo TipoInterconsulta
 
         # Combo Medicos
         # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
@@ -1304,9 +1333,33 @@ def crearHistoriaClinica(request):
         # Fin combo Medicos
 
 
+        # Combo RevisionSistemas
+
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = 'SELECT e.id id, e.nombre nombre  FROM clinico_RevisionSistemas e'
+
+        curt.execute(comando)
+        print(comando)
+
+        revisionSistemas = []
+        revisionSistemas.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            revisionSistemas.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(revisionSistemas)
+
+        context['RevisionSistemas'] = revisionSistemas
+
+        # Fin combo RevisionSistemas
+
         print ("tiposFolio = " ,TiposFolio)
 
-        return render(request, 'clinico/navegacionClinica.html', context);
+        return render(request, 'clinico/navegacionClinicaPrueba.html', context);
 
 
 

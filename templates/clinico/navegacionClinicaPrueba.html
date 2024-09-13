@@ -1,53 +1,60 @@
-{% extends "clinico/menuMedico1.html" %}
+{% extends "clinico/menuMedico1Prueba.html" %}
 {% load static %}
 
 {% block head %}
 <!-- Custom css -->
-<link rel="stylesheet" type="text/css" href={% static 'css/navegacionClinica.css' %} >
+<link rel="stylesheet" type="text/css" href={% static 'css/navegacionClinicaPrueba.css' %} >
 <link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %} >
 <script src="https://kit.fontawesome.com/5d0337a043.js" crossorigin="anonymous"></script>
 <script src={% static 'js/navegacionClinica.js' %} defer >         </script>
 <script src={% static 'js/navegacionTabsClinica.js' %} defer> </script>
 
-<div class="wrap">
-    <ul class="tabs">
+<div class="marco">
 
-        <li><a href="#Evoluciones"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>Consulta
-            - evolucion
-        </a></li>
-        <li><a href="#CausaExterna"><span class="fa-solid fa-truck-medical"></span> <span class="tab-text"> </span>CausaExterna
-        </a>
-	<li><a href="#RevisionSistemas"><span class="fa-solid fa-truck-medical"></span> <span class="tab-text"> </span>RevisionSistemas
-        </a>
-        </li>
-        <li><a href="#SignosVitales"><span class="fa-solid fa-wave-pulse"></span> <span class="tab-text"> </span>Signos
-            Vitales
-        </a>
-        </li>
+ <!--   <div class="wrap">  -->
+        <ul class="tabs">
 
-        <li><a href="#Laboratorios"><span class="fa-solid fa-bong"></span> <span class="tab-text"> </span>Laboratorios
-        </a>
-        </li>
-        <li><a href="#Radiologia"><span class="fa fa-house-medical"></span> <span class="tab-text"> </span>Radiologia
-        </a></li>
-        <li><a href="#Terapias"> <span class="fa-solid fa-user-nurse-hair-long"></span> <span class="tab-text"> </span>Terapias
-        </a></li>
-        <li><a href="#Formulacion"><span class="fa-solid fa-hand-holding-medical"></span> <span
-                class="tab-text"> </span>Formulacion </a></li>
-        <li><a href="#Consulta"><span class="fa-solid fa-hand-holding-medical"></span> <span
-                class="tab-text"> </span>Historia Clinica</a></li>
-        <li><a href="#Clinica"><span class="fa-solid fa-hand-holding-medical"></span> <span
-                class="tab-text"> </span>Clinica paciente </a></li>
-    </ul>
+            <li><a href="#Evoluciones"><span class="fa-solid fa-user-doctor-message"></span> <span
+                    class="tab-text"> </span>Consulta
+                - evolucion
+            </a></li>
+            <li><a href="#CausaExterna"><span class="fa-solid fa-truck-medical"></span> <span class="tab-text"> </span>CausaExterna
+            </a>
+            <li><a href="#RevisionSistemas"><span class="fa-solid fa-truck-medical"></span> <span
+                    class="tab-text"> </span>RevisionSistemas
+            </a>
+            </li>
+            <li><a href="#SignosVitales"><span class="fa-solid fa-wave-pulse"></span> <span class="tab-text"> </span>Signos
+                Vitales
+            </a>
+            </li>
+
+            <li><a href="#Laboratorios"><span class="fa-solid fa-bong"></span> <span class="tab-text"> </span>Laboratorios
+            </a>
+            </li>
+            <li><a href="#Radiologia"><span class="fa fa-house-medical"></span> <span class="tab-text"> </span>Radiologia
+            </a></li>
+            <li><a href="#Terapias"> <span class="fa-solid fa-user-nurse-hair-long"></span> <span
+                    class="tab-text"> </span>Terapias
+            </a></li>
+            <li><a href="#Formulacion"><span class="fa-solid fa-hand-holding-medical"></span> <span
+                    class="tab-text"> </span>Formulacion </a></li>
+            <li><a href="#Consulta"><span class="fa-solid fa-hand-holding-medical"></span> <span
+                    class="tab-text"> </span>Historia Clinica</a></li>
+            <li><a href="#Clinica"><span class="fa-solid fa-hand-holding-medical"></span> <span
+                    class="tab-text"> </span>Clinica paciente </a></li>
+        </ul>
+<!--    </div> -->
 </div>
-
 
 {% endblock %}
 
-{% block paciente  %}
+{% block paciente %}
+<div class="marco">
 
 {% for datosPaciente in DatosPaciente %}
-<div class="paciente">
+<!-- <div class="paciente"> -->
+<div>
     <input type="hidden" id="tipoIng" name="tipoIng" value="{{TipoIng}}"> </input>
     <input type="hidden" id="espMedico" name="espMedico" value="{{EspMedico}}"> </input>
     <input type="hidden" id="tiposFolio" name="tiposFolio" value="{{TiposFolio}}"> </input>
@@ -144,13 +151,16 @@
         </div>
     </div>
 </div>
+
 {% endfor %}
-
-
-
+</div>
 {% endblock %}
 
+
+
 {% block content %}
+<div class="marco">
+
 <div class="secciones">
     <article id="Evoluciones">
 
@@ -437,18 +447,17 @@
 
 
     <article id="Laboratorios">
+		<div class="marco">
         <center><br>
-            <h3>Ordenes de Laboratorio</h3></center>
-
-        <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
+            Ordenes de Laboratorio </center>
+             <!-- DESDE AQUIP DATATABLE  -->
+      <table class="table" style="height: 100px; background-color:LightGray;  width:100%;">
             <tr>
                 <td>
                 </td>
                 <td>
                 </td>
                 <td>
-             <!-- DESDE AQUIP DATATABLE  -->
-
                     <table class="table"
                            style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
                         <form class="form-inline" action="/crearLaboratoriosDef/" method="POST"
@@ -458,14 +467,14 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="card">
-                                        <div class="card-header" style="height:45px;">
+                                        <div class="card-header" style="height:5px;">
                                             <center>
                                                 <div class="row">
 
-						 <div class="col-sm-1">
+						 <div class="col-1 col-sm-1">
 						 </div>
                                
-                                                    <div class="col-sm-2">
+                                                    <div class="col-3 col-sm-2">
                                               
                                                         <select class="select-css" id="lab"  name="lab">
                                                             {% for laboratorios in Laboratorios %}
@@ -476,24 +485,18 @@
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-sm-2">
+                                                    <div class="col3 col-sm-2">
 							Cant:
                                                         <input type="text" id="cantidad" name="cantidad" value="1">
-
-
                                                     </div>
-
-
-                                                    <div class="col-sm-3">
+                                                    <div class="col-3 col-sm-3">
                                                  	Observaciones:
                                                         <input type="text" id="observa" name="observa" value="">
-                                                    </div>
-
-
-                                                    <div class="col-sm-2 text-end">
+                                                   </div>
+                                                    <div class="col-2 col-sm-2 text-end">
                                                         <span class="text-secondary">Adicionar</span>
                                                         <a class="btn btn-success" href="javascript:void(0)"
-                                                           id="BtnAdicionarLaboratorio"> <i class="fa fa-plus"></i></a>
+                                                           id="BtnAdicionarLaboratorio"> <i class="fa fa-battery-half"></i></a>
                                                     </div>
                                                 </div>
                                             </center>
@@ -542,7 +545,7 @@
                 </td>
             </tr>
         </table>
-
+	</div>
     </article>
 
     <article id="Radiologia">
@@ -1628,32 +1631,45 @@
         </form>
 
 </div>
+</div>
 
-
+{% endblock %}
+{% block mensajeria %}
+<div class="marco">
+<span> Avisos ... </span> 
+<span id="mensajes">xxxx</span> 
+</div>
 {% endblock %}
 
 {% block footer %}
-<div class="wrap">
-    <ul class="tabs">
+<div class="marco">
+<!--    <div class="wrap">  -->
+        <ul class="tabs">
 
-        <li><a href="#Cirugias"><span class="fa fa-home"></span> <span class="tab-text"> </span>Cirugias </a></li>
-        <li><a href="#ProcedimientosNoQx"><span class="fa fa-home"></span> <span class="tab-text"> </span>ProcedimientosNoQx
-        </a></li>
-        <li><a href="#Diagnosticos"><span class="fa fa-home"></span> <span class="tab-text"> </span>Diagnosticos </a>
-        </li>
-        <li><a href="#Antecedentes"><span class="fa fa-home"></span> <span class="tab-text"> </span>Antecedentes </a>
-        </li>
-        <li><a href="#Incapacidades"><span class="fa-solid fa-wheelchair-move"></span> <span class="tab-text"> </span>Incapacidades
-        </a>
-        </li>
-        <li><a href="#InterConsultas"><span class="fa fa-home"></span> <span class="tab-text"> </span>InterConsultas
-        </a></li>
-        <li><a href="#SalidaClinica"><span class="fa fa-home"></span> <span class="tab-text"> </span>SalidaClinica </a>
-        </li>
-        <li><a href="#GuardarFolio"><span class="fa fa-home"></span> <span class="tab-text"> </span>GuardarFolio </a>
-        </li>
-        <li><a href="#Retornar"><span class="fa fa-home"></span> <span class="tab-text"> </span>Retornar
-        </a></li>
-    </ul>
+            <li><a href="#Cirugias"><span class="fa fa-home"></span> <span class="tab-text"> </span>Cirugias </a></li>
+            <li><a href="#ProcedimientosNoQx"><span class="fa fa-home"></span> <span class="tab-text"> </span>ProcedimientosNoQx
+            </a></li>
+            <li><a href="#Diagnosticos"><span class="fa fa-home"></span> <span class="tab-text"> </span>Diagnosticos
+            </a>
+            </li>
+            <li><a href="#Antecedentes"><span class="fa fa-home"></span> <span class="tab-text"> </span>Antecedentes
+            </a>
+            </li>
+            <li><a href="#Incapacidades"><span class="fa-solid fa-wheelchair-move"></span> <span
+                    class="tab-text"> </span>Incapacidades
+            </a>
+            </li>
+            <li><a href="#InterConsultas"><span class="fa fa-home"></span> <span class="tab-text"> </span>InterConsultas
+            </a></li>
+            <li><a href="#SalidaClinica"><span class="fa fa-home"></span> <span class="tab-text"> </span>SalidaClinica
+            </a>
+            </li>
+            <li><a href="#GuardarFolio"><span class="fa fa-home"></span> <span class="tab-text"> </span>GuardarFolio
+            </a>
+            </li>
+            <li><a href="#Retornar"><span class="fa fa-home"></span> <span class="tab-text"> </span>Retornar
+            </a></li>
+        </ul>
+<!--    </div> -->
 </div>
 {% endblock %}

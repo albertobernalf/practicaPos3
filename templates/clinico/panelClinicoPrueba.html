@@ -8,21 +8,9 @@
 <script src={% static 'js/panelTabsClinico.js' %} defer>         </script>
 <script src="https://kit.fontawesome.com/5d0337a043.js" crossorigin="anonymous"></script>
 <script src={% static 'js/panelClinico.js' %} defer >         </script>
-
-
-<div class="wrap">
-    <ul class="tabs">
-        <li><a href="#Clinica"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
-            Ingresos Clinicos </a></li>
-    </ul>
-</div>
-
-
 {% endblock %}
 
 {% block content %}
-
-
 <style>
 tablaClinico td {
 
@@ -41,6 +29,14 @@ tablaClinico tr {
 
 }
 </style>
+<div class="marco">
+<!-- <div class="wrap"> -->
+    <ul class="tabs">
+        <li><a href="#Clinica"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
+            Ingresos Clinicos </a></li>
+    </ul>
+<!-- </div> -->
+</div>
 
 
 <div class="secciones">

@@ -26,6 +26,7 @@ $(document).ready(function() {
 	tableActionsAntecedentes();
 	tableActionsDiagnosticos();
 	tableActionsInterconsultas();
+	tableActionsRevisionSistemas();
 
         /*------------------------------------------
         --------------------------------------------
@@ -187,7 +188,7 @@ $(document).ready(function() {
             var id = current_object.attr('data-pk');
 	     	alert("Entre a borrar el Interconsultas Nro" + id);
 	     	var table7 = $('#tablaInterconsultas');
-            table6.find( 'tbody tr:eq(0)' ).remove();
+            table7.find( 'tbody tr:eq(0)' ).remove();
 
             alert("valores = " + valores);
 		        	  $('.success-msg').css('display','block');
@@ -195,6 +196,25 @@ $(document).ready(function() {
 			              table7.ajax.reload();
 	});
 
+        /*--------------------------------------------
+        Delete Post Code Revision Sistemas
+        --------------------------------------------
+        --------------------------------------------*/
+        $("body").on("click",".deletePostRevisionSistemas",function(){
+            var current_object = $(this);
+            alert("current_object =" +current_object );
+            var action = current_object.attr('data-action');
+            var token = $("input[name=csrfmiddlewaretoken]").val();
+            var id = current_object.attr('data-pk');
+	     	alert("Entre a borrar el Interconsultas Nro" + id);
+	     	var table8 = $('#tablaRevisionSistemas');
+            table8.find( 'tbody tr:eq(0)' ).remove();
+
+            alert("valores = " + valores);
+		        	  $('.success-msg').css('display','block');
+                        $('.success-msg').text(data.message);
+			              table8.ajax.reload();
+	});
 
 
 $('#tablaLaboratorios tbody').on('click', 'tr', function () {
@@ -265,6 +285,18 @@ $('#tablaDInterconsultas tbody').on('click', 'tr', function () {
 
         table7.ajax.reload();
 } );
+
+$('#tablaRevisionSistemas tbody').on('click', 'tr', function () {
+    confirm("Desea eliminar LA FILA: ");
+       var table8 = $('#tablaRevisionSistemas').DataTable();
+      var valor3 = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
+
+      document.getElementById("tablaRevisionSistemas").deleteRow(valor3);
+         table8.row.remove(valor3).draw(false);
+
+        table8.ajax.reload();
+} );
+
 
         /*------------------------------------------
         --------------------------------------------
@@ -427,6 +459,28 @@ $('#tablaDInterconsultas tbody').on('click', 'tr', function () {
 
 
 	        table7.row.add([ tiposInterconsulta, texttiposInterconsulta,   especialidadConsultada ,  textespecialidadConsultada ,medicoConsultado, textmedicoConsultado , descripcion, diagnosticos,  textDiagnosticos,  ""]).draw(false);
+        });
+
+
+
+    /*------------------------------------------
+        --------------------------------------------
+        Create Post Code RevisionSistemas
+        --------------------------------------------
+        --------------------------------------------*/
+        $('#BtnAdicionarRevisionSistemas').click(function (e) {
+            e.preventDefault();
+
+   	   var table9 = $('#tablaRevisionSistemas').DataTable();   // accede de nuevo a la DataTable.
+
+          var observa= document.getElementById("observa9").value;
+
+           var select3 = document.getElementById("rev"); /*Obtener el SELECT */
+      	   var revisionSistemas = select3.options[select3.selectedIndex].value; /* Obtener el valor */
+      	   textRevisionSistemas = select3.options[select3.selectedIndex].innerText; //El texto de la opción seleccionada
+
+
+	        table9.row.add([ revisionSistemas, textRevisionSistemas,  observa,  ""]).draw(false);
         });
 
 
@@ -745,6 +799,49 @@ function tableActionsInterconsultas() {
 
 // FIN INTERCONSULTAS
 
+
+
+
+// IV. REVISION SISTEMAS
+
+function tableActionsRevisionSistemas() {
+
+   var table9 = $('#tablaRevisionSistemas').DataTable({
+                "language": {
+                  "lengthMenu": "Display _MENU_ registros",
+                   "search": "Filtrar registros:",
+                    },
+                processing: true,
+                serverSide: false,
+                scrollY: '130px',
+	            scrollX: true,
+	            scrollCollapse: true,
+                paging:false,
+                 columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        var btn = '';
+			  btn = btn + " <button class='btn btn-danger deleteRevisionSistemas' id='borraDiag'>" + '<i class="fa fa-trash"></i>' + "</button>";
+                        return btn;
+                    },
+                    "targets": 3
+               }
+            ],
+        lengthMenu: [5],
+    columns:[
+    //"dummy" configuration
+        { visible: true }, //col 1
+        { visible: true }, //col 2
+        { visible: true }, //col 3
+      
+
+            ],
+    });
+}
+
+// FIN REVISION SISTEMAS
+
+
 formHistoriaClinica.addEventListener('submit', e=>{
             confirm("Confirma Guardar Folio !");
 
@@ -1010,6 +1107,28 @@ formHistoriaClinica.addEventListener('submit', e=>{
  	// Fin Medicamentos
 
 
+	// Revision Sistemas
+
+
+    const table9 = $('#tablaRevisionSistemas').DataTable();
+     var datos_tabla9 = table9.rows().data().toArray();
+
+        revisionSistemas=[]
+
+
+	for(var i= 0; i < datos_tabla9.length; i++) {
+
+	    revisionSistemas.push({
+	        "revisionSistemas"    : datos_tabla9[i][0] ,
+	        "observa"    : datos_tabla9[i][2] ,
+	      });
+	   };
+
+	    revisionSistemas  = JSON.stringify(revisionSistemas);
+        alert("y por que no llegamos aqui");
+
+ 	// Fin Revision Sistemas
+
          var tipoDocPaciente    =  document.getElementById("tipoDocPaciente1").value
          var documentoPaciente  =  document.getElementById("documentoPaciente1").value;
          var folio      = "0";
@@ -1019,6 +1138,40 @@ formHistoriaClinica.addEventListener('submit', e=>{
          var objetivo   =  document.getElementById("id_objetivo").value;
          var analisis   =  document.getElementById("id_analisis").value;
          var plan =           document.getElementById("id_plann").value;
+
+
+          var apache2 =  document.getElementById("id_apache2").value;
+          var antibioticos =  document.getElementById("id_antibioticos").value;
+            var monitoreo =  document.getElementById("id_monitoreo").value;
+            var movilidadLimitada = document.getElementById("id_movilidadLimitada").value;
+
+            var nauseas = document.getElementById("id_nauseas").value;
+            var llenadoCapilar = document.getElementById("id_llenadoCapilar").value;
+            var neurologia =document.getElementById("id_neurologia").value;
+            var irritacion =document.getElementById("id_irritacion").value;
+            var pulsos = document.getElementById("id_pulsos").value;
+            var retiroPuntos = document.getElementById("id_retiroPuntos").value;
+            var inmovilizacion = document.getElementById("id_apache2").value;
+            var notaAclaratoria = document.getElementById("id_inmovilizacion").value;
+            var fecNotaAclaratoria = document.getElementById("id_fecNotaAclaratoria").value;
+            var fecNotaAclaratoria = document.getElementById("id_fecNotaAclaratoria").value;
+            var examenFisico = document.getElementById("id_examenFisico").value;
+            var noQx1 = document.getElementById("id_noQx").value;
+            var observaciones = document.getElementById("id_observaciones").value;
+            var riesgoHemodinamico = document.getElementById("id_riesgoHemodinamico").value;
+            //var riesgoVentilatorio = document.getElementById("id_riesgoVentilatorio").value;
+            var riesgos = document.getElementById("id_riesgos").value;
+            var trombocitopenia = document.getElementById("id_trombocitopenia").value;
+            var hipotension = document.getElementById("id_hipotension").value;
+            var indiceMortalidad = document.getElementById("id_indiceMortalidad").value;
+            var ingestaAlcohol = document.getElementById("id_ingestaAlcohol").value;
+
+            var inmovilizacionObservaciones = document.getElementById("id_inmovilizacionObservaciones").value;
+            var justificacion = document.getElementById("id_justificacion").value;
+            var leucopenia = document.getElementById("id_leucopenia").value;
+            var manejoQx = document.getElementById("id_manejoQx").value;
+
+
          var tratamiento =           document.getElementById("id_tratamiento").value;
          var causasExterna = document.getElementById("causasExterna").value;
          var dependenciasRealizado = document.getElementById("dependenciasRealizado").value;
@@ -1041,6 +1194,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
             var form_valido;
 
             alert("VOY AJASX A GUARDAR HC");
+            alert("envio revisionSistemas " + revisionSistemas)
 
                $.ajax({
             	   type: 'POST',
@@ -1073,7 +1227,39 @@ formHistoriaClinica.addEventListener('submit', e=>{
 				           'incapacidades':inca,
 				           'tiposFolioEscogido':"1",
 				           'signos':signos ,
-				           'tratamiento':tratamiento},
+				           'tratamiento':tratamiento,
+					      'revisionSistemas':revisionSistemas,
+		                  'apache2':apache2,
+		                  'antibioticos':antibioticos,
+                         'monitoreo':monitoreo,
+                        'movilidadLimitada':movilidadLimitada,
+                        'nauseas':nauseas,
+                        'llenadoCapilar':llenadoCapilar,
+                        'neurologia':neurologia,
+                        'irritacion':irritacion,
+                        'pulsos':pulsos,
+                        'retiroPuntos':retiroPuntos,
+                        'inmovilizacion':inmovilizacion,
+                        'notaAclaratoria':inmovilizacion,
+                        'fecNotaAclaratoria':fecNotaAclaratoria,
+                        'fecNotaAclaratoria':fecNotaAclaratoria,
+                        'examenFisico':examenFisico,
+                        'noQx1':noQx1,
+                        'observaciones':observaciones,
+                        'riesgoHemodinamico':riesgoHemodinamico,
+                       // 'riesgoVentilatorio':_riesgoVentilatorio,
+                        'riesgos':riesgos,
+                        'trombocitopenia':trombocitopenia,
+                        'hipotension':hipotension,
+                        'indiceMortalidad':indiceMortalidad,
+                        'ingestaAlcohol':ingestaAlcohol,
+                        'tratamiento':tratamiento,
+                        'inmovilizacionObservaciones':inmovilizacionObservaciones,
+                        'justificacion':justificacion,
+                        'leucopenia':leucopenia,
+                        'manejoQx':manejoQx
+
+					   },
  	      		success: function (respuesta2) {
  	      		       // var data = JSON.parse(respuesta2);
  	      		        alert("Esto llega :  " + JSON.stringify(respuesta2));

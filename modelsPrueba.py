@@ -183,5 +183,5 @@ subir tablas, buscar ultimas tablas mipres 2024
    2.   bajar anexosa tecnicos de glosas. Crear carpetasde anexos tecnicos
    3. crear datatable medicamentos
    4. crear historia-clinicos con form
-
+   5.que crajop pasa con las fechas-hora
 
