@@ -7,20 +7,50 @@
 }
 
 body{
-	background: #D4D4D4;
+/*	background: #D4D4D4;*/
+	background:#fcfcfc;
 	font-family: 'Open sans';
 }
 
-.wrap{
-	width: 1400px;
-	max-width: 90%;
-	margin: 30px auto;
 
+table {     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 12px;    margin: 45px;     width: 480px; text-align: left;    border-collapse: collapse; }
+
+th {     font-size: 13px;     font-weight: normal;     padding: 8px;     background: #b9c9fe;
+    border-top: 4px solid #aabcfe;    border-bottom: 1px solid #fff; color: #039; }
+
+td {   font-size: 10px;    padding: 8px;     background: #e8edff;     border-bottom: 1px solid #fff;
+    color: #669;    border-top: 1px solid transparent; }
+
+/* tr:hover td { background: #d0dafd; color: #339; } */
+
+
+.marco {
+
+margin-left:10px;
+margin-right:10px;
+padding:3px;
+font-family:courier;
+color:blue;
+font-size:10px;
+text-align:center;
+border-width:5px;
+border-color: red;
+border-style: solid;
+border-width: thin;
+}
+
+.wrap{
+width:100%;
+margin-left:50px;
+margin-right:50px;
+margin-bottom:0px;
+margin-top:0px;
+padding:0px;
 }
 
 ul.tabs{
 	width: 100%;
-	
 	background: #363636;
 	list-style: none;
 	display: flex;
@@ -28,16 +58,16 @@ ul.tabs{
 
 ul.tabs li{
 	width: 18%;
-
 }
 
 ul.tabs li a{
 	color: #fff;
 	text-decoration: none;
-	font-size: 16px;
+	font-size: 12px;
 	text-align: center;
 	display: block;
-	padding: 20px 0px;
+/*	padding: 20px 0px; */
+	padding:0;
 }
 
 .active{
@@ -48,10 +78,19 @@ ul.tabs li a .tab-text{
 	margin-left: 8px;
 }
 
+
+.secciones0{
+	width: 100%;
+	background: #fff;
+	height: 500px;
+}
+
+
 .secciones{
 	width: 100%;
 	background: #fff;
-	height: 300px;
+	height: 400px;
+}
 
 .paciente{
 	width: 100%;
@@ -59,9 +98,19 @@ ul.tabs li a .tab-text{
 	height: 1px;
 }
 
-.secciones article{
-	padding: 30px;
+.secciones0 article{
+	padding: 0px;
 }
+
+
+.secciones article{
+	padding: 0px;
+}
+
+.secciones0 article p{
+	text-align: justify;
+}
+
 
 .secciones article p{
 	text-align: justify;
@@ -141,10 +190,10 @@ ul.tabs li a .tab-text{
 .select-css option {
   font-weight:normal;
 }
-
-
 .classOfElementToColor:hover {background-color:red; color:black}
 
 .select-css option[selected] {
     background-color: orange;
 }
+
+

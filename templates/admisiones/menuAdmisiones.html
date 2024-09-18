@@ -10,6 +10,7 @@
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom css -->
     <link rel="stylesheet" type="text/css"  href = {% static 'css/login.css' %} >
+ <link rel="stylesheet" type="text/css" href={% static 'css/panelAdmisiones.css' %} 
     <link rel="stylesheet" type="text/css"  href = {% static 'nav_sidebar.css' %} >
     <link rel="stylesheet" type="text/css"  href = {% static 'css/base.css' %} >
     <link rel="stylesheet" type="text/css"  href = {% static 'css/responsive.css' %} >
@@ -93,6 +94,8 @@
 <input type="hidden" id="permisosDetalle" name="permisosDetalle" value = "{{PermisosDetalle}}">
 <input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
 
+{% block menu  %}
+<div class="marco">
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -149,32 +152,23 @@
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                 </li>
+         <li>
+		        <form class="form-inline my-2 my-lg-0">
+         	   <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+	            <a class="nav-link" href="/retornarMen/{{Sede}}, {{Username}}, {{Documento}}, {{NombreSede}}, {{Profesional}}">Retornar</a>
+		        </form>
 
-                <h6 style="font-family: Calibri   ; font-size: 1rem"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sede: {{NombreSede}} <br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Colaborador : {{Profesional}}<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modulo: {{EscogeModulo}}
-                </h6>
+		    </li>
             </div>
         </div>
     </div>
-    <form class="form-inline my-2 my-lg-0">
-        <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
-        <a class="nav-link" href="/retornarMen/{{Sede}}, {{Username}}, {{Documento}}, {{NombreSede}}, {{Profesional}}">Retornar</a>
-    </form>
+   
 </nav>
+</div>
+{% endblock %}
+
+
+
 {% block head  %}
 <script>
 window.onload = function(){
@@ -194,9 +188,25 @@ window.onload = function(){
 
 {% endblock %}
 
+<div class="marco">
+    {% block usuarios %}
+
+            Sede: {{NombreSede}} Colaborador : {{Profesional}} Modulo: {{EscogeModulo}}
+
+    {% endblock %}
+</div>
+
+
+
 {% block content  %}
 
 {% endblock %}
+
+{% block mensajeria  %}
+
+{% endblock %}
+
+
 
 {% block footer  %}
 

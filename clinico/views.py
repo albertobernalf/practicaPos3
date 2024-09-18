@@ -12,7 +12,7 @@ from django.utils.timezone import now
 from django.db.models import Avg, Max, Min
 from .forms import historiaForm, historiaExamenesForm
 from datetime import datetime
-from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos, Interconsultas, EstadosInterconsulta, Incapacidades, SignosVitales, HistoriaSignosVitales, HistoriaRevisionSistemas
+from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos, Interconsultas, EstadosInterconsulta, Incapacidades, SignosVitales, HistoriaSignosVitales, HistoriaRevisionSistemas, HistoriaMedicamentos
 from sitios.models import Dependencias
 from planta.models import Planta
 from contratacion.models import Procedimientos
@@ -286,9 +286,12 @@ def crearHistoriaClinica(request):
             print("notaAclaratoria =", notaAclaratoria)
             fecNotaAclaratoria = request.POST["fecNotaAclaratoria"]
             print("fecNotaAclaratoria =", fecNotaAclaratoria)
+            if (fecNotaAclaratoria== ''):
+                fecNotaAclaratoria='0001-01-01 00:00:00'
 
-            fecNotaAclaratoria = request.POST["fecNotaAclaratoria"]
-            print("fecNotaAclaratoria =", fecNotaAclaratoria)
+
+            #fecNotaAclaratoria = request.POST["fecNotaAclaratoria"]
+            #print("fecNotaAclaratoria =", fecNotaAclaratoria)
             examenFisico = request.POST["examenFisico"]
             print("examenFisico =", examenFisico)
             noQx1 = request.POST["noQx1"]
@@ -404,7 +407,7 @@ def crearHistoriaClinica(request):
 
                 ## aqui tentativo insert
 
-                comando = 'INSERT INTO clinico_Historia ("tipoDoc_id" , documento_id , "consecAdmision", folio ,fecha , "tiposFolio_id" ,"causasExterna_id" , "dependenciasRealizado_id" , especialidades_id ,planta_id, motivo , subjetivo,objetivo, analisis ,plann, tratamiento ,                apache2, antibioticos, monitoreo, "movilidadLimitada", nauseas, "llenadoCapilar", neurologia, irritacion, pulsos, "retiroPuntos",             inmovilizacion, "notaAclaratoria", "fecNotaAclaratoria", "examenFisico", "noQx", observaciones, "riesgoHemodinamico", riesgos, trombocitopenia, hipotension, "indiceMortalidad", "ingestaAlcohol", "inmovilizacionObservaciones", justificacion, leucopenia, manejoQx, "fechaRegistro", "usuarioRegistro_id", "estadoReg" )  VALUES('  + "'" +  str(tipoDocId.id) + "','" + str(documentoId.id) + "','" + str(ingresoPaciente) + "','" + str(ultimofolio2) + "','" + str(fechaRegistro) + "','"  +  str(tiposFolio) + "','" + str(causasExterna) + "','" + str(dependenciasRealizado) + "','" + str(espMedico) + "','" + str(plantaId.id) + "','" + str(motivo) + "','" + str(subjetivo) + "','" + str(objetivo) + "','" + str(analisis) + "','" + str(plan) + "','" + str(tratamiento)  + "','" + str(apache2) + "','" + "','" + str(antibioticos) + "','" + "','" + str(monitoreo) + "','" + "','" + str(movilidadLimitada) + "','" + "','" + str(nauseas) + "','" + "','" + str(neurologia) + "','"  + "','" + str(irritacion) + "','" + "','" + str(pulsos) + "','" + "','" + str(inmovilizacion) + "','" + "','" + str(notaAclaratoria) + "','"  + "','" + str(fecNotaAclaratoria) + "','" + "','" + str(noQx1) + "','" + "','" + str(observaciones) + "','" + "','" + str(riesgoHemodinamico) + "','" + "','" + str(riesgos) + "','" + "','" + str(trombocitopenia) + "','" + "','" + str(hipotension) + "','" + "','" + str(indiceMortalidad) + "','" + "','" + str(ingestaAlcohol) + "','" + str(inmovilizacionObservaciones) + "','" + "','" + str(justificacion) + "','" + "','" + str(leucopenia) + "','" + "','" + str(manejoQx) + "','" + "','" + str(fechaRegistro) + "','" + str(usuarioRegistro) + "','" + str(estadoReg) + "');"
+                comando = 'INSERT INTO clinico_Historia ("tipoDoc_id" , documento_id , "consecAdmision", folio ,fecha , "tiposFolio_id" ,"causasExterna_id" , "dependenciasRealizado_id" , especialidades_id ,planta_id, motivo , subjetivo,objetivo, analisis ,plann, tratamiento ,                apache2, antibioticos, monitoreo, "movilidadLimitada", nauseas, "llenadoCapilar", neurologia, irritacion, pulsos, "retiroPuntos",             inmovilizacion, "notaAclaratoria", "fecNotaAclaratoria", "examenFisico", "noQx", observaciones, "riesgoHemodinamico", riesgos, trombocitopenia, hipotension, "indiceMortalidad", "ingestaAlcohol", "inmovilizacionObservaciones", justificacion, leucopenia, "manejoQx", "fechaRegistro", "usuarioRegistro_id", "estadoReg" )  VALUES('  + "'" +  str(tipoDocId.id) + "','" + str(documentoId.id) + "','" + str(ingresoPaciente) + "','" + str(ultimofolio2) + "','" + str(fechaRegistro) + "','"  +  str(tiposFolio) + "','" + str(causasExterna) + "','" + str(dependenciasRealizado) + "','" + str(espMedico) + "','" + str(plantaId.id) + "','" + str(motivo) + "','" + str(subjetivo) + "','" + str(objetivo) + "','" + str(analisis) + "','" + str(plan) + "','" + str(tratamiento)  + "','" + str(apache2) + "','" + str(antibioticos) + "','" + str(monitoreo) + "','"  + str(movilidadLimitada) + "','" + str(nauseas) + "','"  + str(llenadoCapilar) + "','" + str(neurologia) + "','"  + str(irritacion) + "','"  + str(pulsos) + "','" + str(retiroPuntos) + "','" + str(inmovilizacion) + "','" + str(notaAclaratoria) + "','"  + str(fecNotaAclaratoria) + "','" + str(examenFisico) +  "','" + str(noQx1) + "','" + str(observaciones) + "','" + str(riesgoHemodinamico) + "','" + str(riesgos) + "','" + str(trombocitopenia) + "','" + str(hipotension) + "','"  + str(indiceMortalidad) + "','" + str(ingestaAlcohol) + "','" + str(inmovilizacionObservaciones) + "','" + str(justificacion) + "','" + str(leucopenia) + "','" + str(manejoQx) + "','"  + str(fechaRegistro) + "','" + str(usuarioRegistro) + "','" + str(estadoReg) + "');"
 
                 ## fin tentativo insert
 
@@ -868,6 +871,51 @@ def crearHistoriaClinica(request):
 
 
                 # Fin Grabacion Revision Sistemas
+
+
+               # Grabacion Formulacion
+
+                formulacion = request.POST['formulacion']
+
+                print("voy a validar Medicamentos =", formulacion)
+
+                jsonFormulacion = json.loads(formulacion)
+
+                print("voy para el FOR")
+
+                print("voy a validar JSONMedicamentos =", jsonFormulacion)
+
+                for key in jsonFormulacion:
+
+                    medicamentos = key["medicamentos"]
+                    print("medicamentos=", medicamentos)
+
+                    dosis = key["dosis"]
+                    print("dosis=", dosis)
+                    uMedidaDosis = key["uMedidaDosis"]
+                    print("uMedidaDosis=", uMedidaDosis)
+                    frecuencia = key["frecuencia"]
+                    print("frecuencia=", frecuencia)
+                    vias = key["vias"]
+                    print("vias =", vias )
+                    viasAdministracion = key["viasAdministracion"]
+                    print("viasAdministracion =", viasAdministracion )
+                    cantidadMedicamento = key["cantidadMedicamento"]
+                    print("cantidadMedicamento=", cantidadMedicamento)
+                    diasTratamiento = key["diasTratamiento"]
+                    print("diasTratamiento=", diasTratamiento)
+
+
+                    if medicamentos != "":
+                        i = HistoriaMedicamentos(dosisCantidad=dosis, suministro_id= medicamentos,frecuencia_id=frecuencia,
+                                                   viaAdministracion_id = viasAdministracion,  cantidadOrdenada= cantidadMedicamento, diasTratamiento= diasTratamiento,
+                                          historia_id=historiaId,usuarioRegistro_id=usuarioRegistro  , estadoReg='A', fechaRegistro=fechaRegistro )
+                        i.save()
+
+
+                # Fin Grabacion Formulacion
+
+
 
 
 
@@ -1357,9 +1405,134 @@ def crearHistoriaClinica(request):
 
         # Fin combo RevisionSistemas
 
+
+        # Combo Medicamentos
+
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = 'SELECT e.id id, e.nombre nombre  FROM facturacion_Suministros e, facturacion_tipossuministro t  where e."tipoSuministro_id" = t.id AND t.nombre = ' + "'" + str('MEDICAMENTOS') + "'"
+
+        curt.execute(comando)
+        print(comando)
+
+        medicamentos = []
+        medicamentos.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            medicamentos.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(medicamentos)
+
+        context['Medicamentos'] = medicamentos
+
+        # Fin combo medicamentos
+
+
+       # Combo UMedidaDosis
+
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = 'SELECT e.id id, e.descripcion nombre  FROM clinico_unidadesdemedidadosis e'
+
+        curt.execute(comando)
+        print(comando)
+
+        uMedidaDosis= []
+        uMedidaDosis.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            uMedidaDosis.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(uMedidaDosis)
+
+        context['UMedidaDosis'] = uMedidaDosis
+
+        # Fin combo UMedidaDosis
+
+
+       # Combo formaFarma
+
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = 'SELECT e.id id, e.nombre nombre  FROM clinico_formasfarmaceuticas e' 
+
+        curt.execute(comando)
+        print(comando)
+
+        formaFarma= []
+        formaFarma.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            formaFarma.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(formaFarma)
+
+        context['FormaFarma'] = formaFarma
+
+        # Fin combo formaFarma
+
+
+       # Combo forfrecuencias Farmaceuticas
+
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = 'SELECT e.id id, e.descripcion nombre  FROM clinico_frecuenciasaplicacion  e'
+
+        curt.execute(comando)
+        print(comando)
+
+        frecuencia= []
+        frecuencia.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            frecuencia.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(frecuencia)
+
+        context['Frecuencia'] = frecuencia
+
+        # Fin combo frecuencia farmaceuticas
+
+        # Combo Vias Administracion
+
+        # iConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT c.id id,c.nombre nombre FROM clinico_viasAdministracion c"
+
+        curt.execute(comando)
+        print(comando)
+
+        viasAdministracion = []
+
+        for id, nombre in curt.fetchall():
+            viasAdministracion.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print(viasAdministracion)
+
+        context['ViasAdministracion'] = viasAdministracion
+
+        # Fin combo Vias Administracion
+
+
         print ("tiposFolio = " ,TiposFolio)
 
-        return render(request, 'clinico/navegacionClinicaPrueba.html', context);
+        return render(request, 'clinico/navegacionClinica.html', context);
 
 
 

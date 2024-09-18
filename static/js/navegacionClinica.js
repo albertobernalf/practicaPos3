@@ -27,6 +27,7 @@ $(document).ready(function() {
 	tableActionsDiagnosticos();
 	tableActionsInterconsultas();
 	tableActionsRevisionSistemas();
+	tableActionsFormulacion();
 
         /*------------------------------------------
         --------------------------------------------
@@ -298,6 +299,18 @@ $('#tablaRevisionSistemas tbody').on('click', 'tr', function () {
 } );
 
 
+$('#tablaFacturacions tbody').on('click', 'tr', function () {
+    confirm("Desea eliminar LA FILA: ");
+       var table10 = $('#tablaFacturacion').DataTable();
+      var valor3 = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
+
+      document.getElementById("tablaFacturacion").deleteRow(valor3);
+         table10.row.remove(valor3).draw(false);
+
+        table10.ajax.reload();
+} );
+
+
         /*------------------------------------------
         --------------------------------------------
         Create Post Code Radiologia
@@ -462,7 +475,6 @@ $('#tablaRevisionSistemas tbody').on('click', 'tr', function () {
         });
 
 
-
     /*------------------------------------------
         --------------------------------------------
         Create Post Code RevisionSistemas
@@ -483,6 +495,49 @@ $('#tablaRevisionSistemas tbody').on('click', 'tr', function () {
 	        table9.row.add([ revisionSistemas, textRevisionSistemas,  observa,  ""]).draw(false);
         });
 
+
+    /*------------------------------------------
+        --------------------------------------------
+        Create Post Code Formulacion
+        --------------------------------------------
+        --------------------------------------------*/
+        $('#BtnAdicionarFormulacion').click(function (e) {
+            e.preventDefault();
+
+   	   var table10 = $('#tablaFormulacion').DataTable();   // accede de nuevo a la DataTable.
+
+              var select3 = document.getElementById("medicamentos"); /*Obtener el SELECT */
+      	   var medicamentos= select3.options[select3.selectedIndex].value; /* Obtener el valor */
+      	   textMedicamentos = select3.options[select3.selectedIndex].innerText; //El texto de la opción seleccionada
+
+           var dosis =  document.getElementById("dosis").value;
+
+	   var select3 = document.getElementById("uMedidaDosis"); /*Obtener el SELECT */
+      	   var uMedidaDosis= select3.options[select3.selectedIndex].value; /* Obtener el valor */
+      	   textUMedidaDosis = select3.options[select3.selectedIndex].innerText; //El texto de la opción seleccionada
+
+	   var select3 = document.getElementById("uMedidaDosis"); /*Obtener el SELECT */
+      	   var uMedidaDosis= select3.options[select3.selectedIndex].value; /* Obtener el valor */
+      	   textUMedidaDosis = select3.options[select3.selectedIndex].innerText; //El texto de la opción seleccionada
+
+
+           var select3 = document.getElementById("formaFarma"); /*Obtener el SELECT */
+      	   var formaFarma = select3.options[select3.selectedIndex].value; /* Obtener el valor */
+      	   textFormaFarma = select3.options[select3.selectedIndex].innerText; //El texto de la opción seleccionada
+
+	   var select3 = document.getElementById("frecuencia"); /*Obtener el SELECT */
+      	   var frecuencia = select3.options[select3.selectedIndex].value; /* Obtener el valor */
+      	   textFrecuencia = select3.options[select3.selectedIndex].innerText; //El texto de la opción seleccionada
+	
+	   var select3 = document.getElementById("vias"); /*Obtener el SELECT */
+      	   var viasAdministracion = select3.options[select3.selectedIndex].value; /* Obtener el valor */
+      	   textViasAdministracion = select3.options[select3.selectedIndex].innerText; //El texto de la opción seleccionada
+	
+	   var cantidadMedicamento =  document.getElementById("cantidadMedicamento").value;
+	   var diasTratamiento =  document.getElementById("diasTratamiento").value;
+
+	    table10.row.add([ medicamentos, textMedicamentos, dosis,uMedidaDosis, textUMedidaDosis, formaFarma,  textFormaFarma, frecuencia, textFrecuencia,viasAdministracion, textViasAdministracion, cantidadMedicamento,  diasTratamiento    ,  ""]).draw(false);
+        });
 
 
 
@@ -551,6 +606,7 @@ function tableActionsLaboratorios() {
         { visible: true }, //col 1
         { visible: true }, //col 2
         { visible: true }, //col 3
+        { visible: true }, //col 4
         { visible: true }, //col 4
             ],
     });
@@ -842,6 +898,55 @@ function tableActionsRevisionSistemas() {
 // FIN REVISION SISTEMAS
 
 
+// MEDICAMENTOS
+
+function tableActionsFormulacion() {
+
+   var table10 = $('#tablaFormulacion').DataTable({
+                "language": {
+                  "lengthMenu": "Display _MENU_ registros",
+                   "search": "Filtrar registros:",
+                    },
+                processing: true,
+                serverSide: false,
+                scrollY: '130px',
+	            scrollX: true,
+	            scrollCollapse: true,
+                paging:false,
+                 columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        var btn = '';
+			  btn = btn + " <button class='btn btn-danger deleteRevisionSistemas' id='borraDiag'>" + '<i class="fa fa-trash"></i>' + "</button>";
+                        return btn;
+                    },
+                    "targets": 13
+               }
+            ],
+        lengthMenu: [5],
+    columns:[
+    //"dummy" configuration
+        { visible: true }, //col 1
+        { visible: true }, //col 2
+        { visible: true }, //col 3
+	  { visible: true }, //col 3
+	  { visible: true }, //col 3
+	  { visible: true }, //col 3
+	  { visible: true }, //col 3
+	  { visible: true }, //col 3
+	  { visible: true }, //col 3
+    { visible: true }, //col 3
+    { visible: true }, //col 3
+	{ visible: true }, //col 3
+    { visible: true }, //col 3
+
+            ],
+    });
+}
+
+
+// FIN MEDICAMENTOS
+
 formHistoriaClinica.addEventListener('submit', e=>{
             confirm("Confirma Guardar Folio !");
 
@@ -1129,6 +1234,39 @@ formHistoriaClinica.addEventListener('submit', e=>{
 
  	// Fin Revision Sistemas
 
+
+	// Formulacion
+
+    const table10 = $('#tablaFormulacion').DataTable();
+     var datos_tabla10 = table10.rows().data().toArray();
+
+        formulacion=[]
+
+
+	for(var i= 0; i < datos_tabla10.length; i++) {
+
+	    formulacion.push({
+	        "medicamentos"    : datos_tabla10[i][0] ,
+	        "dosis"    : datos_tabla10[i][2],
+	        "uMedidaDosis"    : datos_tabla10[i][3] ,
+	        "formaFarma"    : datos_tabla10[i][6] ,
+	        "frecuencia"    : datos_tabla10[i][7] ,
+	        "vias"    : datos_tabla10[i][8] ,
+	        "viasAdministracion"    : datos_tabla10[i][10] ,
+	        "cantidadMedicamento"    : datos_tabla10[i][11] ,
+	        "diasTratamiento"    : datos_tabla10[i][12] ,
+	      });
+	   };
+
+	    formulacion  = JSON.stringify(formulacion);
+        alert("envio formulacion =" + formulacion);
+
+ 	// Fin Formulacion
+
+
+
+
+
          var tipoDocPaciente    =  document.getElementById("tipoDocPaciente1").value
          var documentoPaciente  =  document.getElementById("documentoPaciente1").value;
          var folio      = "0";
@@ -1257,26 +1395,27 @@ formHistoriaClinica.addEventListener('submit', e=>{
                         'inmovilizacionObservaciones':inmovilizacionObservaciones,
                         'justificacion':justificacion,
                         'leucopenia':leucopenia,
-                        'manejoQx':manejoQx
-
-					   },
+                        'manejoQx':manejoQx,
+        			'formulacion':formulacion
+				   },
  	      		success: function (respuesta2) {
  	      		       // var data = JSON.parse(respuesta2);
  	      		        alert("Esto llega :  " + JSON.stringify(respuesta2));
 
- 	      		        mensaje1 = JSON.parse(respuesta2);
- 	      		        alert("Esto llega el Mensaje :  " + mensaje1['Mensaje']);
- 	      		        mensaje =  mensaje1['Mensaje'];
+ 	      		        var mensaje1 = JSON.stringify(respuesta2);
+ 	      		        alert("Esto llega el Mensaje :  " + mensaje1);
 
-				        if (mensaje == "OK")
+				        if (mensaje1== "OK")
 				            {
 
 				            $("#formHistoriaClinicaT").submit();
 				            }
 				        else
 				            {
-				            $("#mensajes").html(mensaje);
+
+				            $("#mensajeria").html(mensaje1);
 				            }
+
  	      		        //return true;
  	      		}, // cierra function sucess
  	      		error: function (request, status, error) {

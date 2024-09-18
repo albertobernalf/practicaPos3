@@ -621,9 +621,9 @@ $('#tablaDatos tbody td').click(function(){
       tipoDoc=$(this).parents("tr").find("td").eq(0).html();
       documento=$(this).parents("tr").find("td").eq(1).html();
       consec=$(this).parents("tr").find("td").eq(3).html();
-      var sede = document.getElementById("Sede").value;
+      var sede = document.getElementById("sede").value;
 
- //     alert("sede = " + sede);
+     alert("sede = " + sede);
   //    alert("tipoDoc =" + tipoDoc + "documento=" + documento + "ingreso= " + consec);
   //    alert("tdIndex = " + tdIndex);
 

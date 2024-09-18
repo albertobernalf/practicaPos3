@@ -89,3 +89,27 @@ select * from  clinico_examenes
 
         SELECT t.id TipoId, e.id id, e.nombre nombre , e."codigoCups" cups FROM clinico_tiposExamen t, clinico_examenes e 
 	WHERE t.id = e."TiposExamen_id" and t.nombre = 'PROCEDIMIENTOS NO QX'
+
+
+drop table medicamentos ;
+create table medicamentos (EXPEDIENTE	 varchar(20),PRODUCTO	varchar(250),TITULAR	 varchar(120),REGISTRO_SANITARIO varchar(150),	
+FECHA_EXPEDICIÓN	varchar(20),FECHA_VENCIMIENTO	varchar(20),ESTADO_REGISTRO	 varchar(50),	EXPEDIENTE_CUM	varchar(150),	CONSECUTIVO	varchar(150),	
+CANTIDAD_CUM	varchar(50),	DESCRIPCIÓN_COMERCIAL	varchar(500),	ESTADO_CUM	varchar(50),	FECHA_ACTIVO	 varchar(20),
+FECHA_INACTIVO	 varchar(20),MUESTRA_MÉDICA	 varchar(150),	UNIDAD_ATC	varchar(150),	DESCRIPCIÓN_ATC	 varchar(150),	VÍA_ADMINISTRACIÓN	varchar(150),	
+CONCENTRACIÓN	varchar(150),	PRINCIPIO_ACTIVO	varchar(150),	UNIDAD_MEDIDA	varchar(250),	CANTIDAD	varchar(50),	
+UNIDAD_REFERENCIA	varchar(150),	FORMA_FARMACÉUTICA	varchar(150),	NOMBRE_ROL	varchar(150),	TIPO_ROL	varchar(150),	
+MODALIDAD	varchar(150),	IUM varchar(150))
+
+
+COPY medicamentos  FROM '/mnt/sda3/PostgreSQL/9.4/backups/MedicamentosVigentes2022Copia2.csv' HEADER CSV DELIMITER ';';
+
+select * from medicamentos;
+select * from facturacion_suministros;
+
+insert into facturacion_suministros (nombre,"nombreGenerico",cums,"estadoReg", concepto_id,"tipoSuministro_id","unidadMedida_id",
+		"viaAdministracion_id","formasFarmaceutica_id", "principioActivo_id","descripcionComercial",
+		"fechaExpedicion","registroSanitario") 
+select substring(producto,1,30),substring(producto,1,30) ,'zzzz','A',6,1,1,48,1,1,substring(DESCRIPCIÓN_COMERCIAL,1,250),  '2024-09-17 16:00:00',REGISTRO_SANITARIO
+from medicamentos
+
+

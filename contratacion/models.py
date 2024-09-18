@@ -28,7 +28,6 @@ class Convenios (models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=80, blank=True,null= True, editable=True)
     empresa =  models.ForeignKey('facturacion.Empresas', blank=True,null= True, editable=True, on_delete=models.PROTECT)
-    tipoTarifa  =  models.ForeignKey('facturacion.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     vigenciaDesde = models.DateTimeField()
     vigenciaHasta = models.DateTimeField()
     porcTarifario = models.DecimalField( max_digits=5, decimal_places=2, blank=True,null= True, editable=True)
@@ -48,6 +47,19 @@ class Convenios (models.Model):
     facturacionCups  = models.CharField(max_length=1, blank=True,null= True, editable=True)
     cuentaContable= models.CharField(max_length=20, blank=True,null= True, editable=True)
     requisitos = models.CharField(max_length=2000, blank=True,null= True, editable=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', default=1, on_delete=models.PROTECT, null=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False )
+
+    def __str__(self):
+        return str(self.id)
+
+
+class ConveniosDetalle (models.Model):
+    id = models.AutoField(primary_key=True)
+    tarifa = models.ForeignKey('facturacion.Tarifas', blank=True,null= True, editable=True, on_delete=models.PROTECT)    
+    tarifaSuministros = models.ForeignKey('facturacion.TarifasSuministros', blank=True,null= True, editable=True, on_delete=models.PROTECT) 
+    usuarioRegistro = models.ForeignKey('planta.Planta', default=1, on_delete=models.PROTECT, null=True)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False )
 

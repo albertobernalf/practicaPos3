@@ -304,27 +304,27 @@ class tiposRadiologiaAdmin(admin.ModelAdmin):
 
 @admin.register(ViasAdministracion)
 class viasAdministracionAdmin(admin.ModelAdmin):
-    list_display = ("id", "nombre","codigoMipres","habilitadoMipres")
-    search_fields = ("id", "nombre","codigoMipres","habilitadoMipres")
+    list_display = ("id", "nombre")
+    search_fields = ("id", "nombre")
     # Filtrar
-    list_filter = ("id", "nombre","codigoMipres","habilitadoMipres")
+    list_filter = ("id", "nombre")
 
 
 @admin.register(UnidadesDeMedidaDosis)
 class UnidadesDeMedidaDosisAdmin(admin.ModelAdmin):
-    list_display = ("id", "descripcion","codigoMipres","habilitadoMipres","unidadaDeMedidaPrincipioA")
-    search_fields = ("id", "descripcion","codigoMipres","habilitadoMipres","unidadaDeMedidaPrincipioA")
+    list_display = ("id", "descripcion","unidadaDeMedidaPrincipioA")
+    search_fields = ("id", "descripcion","unidadaDeMedidaPrincipioA")
     # Filtrar
-    list_filter = ("id", "descripcion","codigoMipres","habilitadoMipres","unidadaDeMedidaPrincipioA")
+    list_filter = ("id", "descripcion","unidadaDeMedidaPrincipioA")
 
 
 
 @admin.register(FrecuenciasAplicacion)
 class frecuenciasAplicacionAdmin(admin.ModelAdmin):
-    list_display = ("id", "descripcion","codigoMipres","habilitadoMipres")
-    search_fields = ("id", "descripcion","codigoMipres","habilitadoMipres")
+    list_display = ("id", "descripcion")
+    search_fields = ("id", "descripcion")
     # Filtrar
-    list_filter = ("id", "descripcion","codigoMipres","habilitadoMipres")
+    list_filter = ("id", "descripcion")
 
 
 @admin.register(HistoriaMedicamentos)
@@ -360,7 +360,7 @@ class codigoAtcAdmin(admin.ModelAdmin):
 @admin.register(FormasFarmaceuticas)
 class formasFarmaceuticasAdmin(admin.ModelAdmin):
 
-        list_display = ("id", "nombre","codigoMipres")
-        search_fields = ("id", "nombre","codigoMipres")
+        list_display = ("id", "nombre")
+        search_fields = ("id", "nombre")
         # Filtrar
-        list_filter = ('nombre',"codigoMipres")
+        list_filter = ('nombre',)

@@ -48,35 +48,35 @@ class Cirugias(models.Model):
     fechaFinAnestesia = models.DateField()
     horaFinAnestesia = models.CharField(max_length=5, blank=True, null=True, editable=True)
     intervencion = models.CharField(max_length=100, blank=True, null=True, editable=True)
-    cups1 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups60')
+    cups1 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups60')
     finalidad1 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups2 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups61')
+    cups2 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups61')
     finalidad2 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups3 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups62')
+    cups3 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups62')
     finalidad3 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups4 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups63')
+    cups4 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups63')
     finalidad4 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups5 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups64')
+    cups5 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups64')
     finalidad5 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups6 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups65')
+    cups6 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups65')
     finalidad6 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups7 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups66')
+    cups7 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups66')
     finalidad7 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups8 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups67')
+    cups8 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups67')
     finalidad8 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups9 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups68')
+    cups9 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups68')
     finalidad9 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups10 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups69')
+    cups10 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups69')
     finalidad10 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups11 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups70')
+    cups11 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups70')
     finalidad11 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups12 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups71')
+    cups12 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups71')
     finalidad12 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups13 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups72')
+    cups13 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups72')
     finalidad13 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups14 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups73')
+    cups14 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups73')
     finalidad14 = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    cups15 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups74')
+    cups15 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT,    related_name='Cups74')
     finalidad15 = models.CharField(max_length=1, blank=True, null=True, editable=True)
     riesgos = models.CharField(max_length=3000, blank=True, null=True, editable=True)
     observaciones = models.CharField(max_length=5000, blank=True, null=True, editable=True)
@@ -186,16 +186,82 @@ class ProgramacionCirugias(models.Model):
     tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True, null=True, editable=True, on_delete=models.PROTECT)
     documento = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True,  on_delete=models.PROTECT, related_name='DocumentoHistoria123')
     consecAdmision = models.IntegerField(default=0)
-    cups1 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True,   on_delete=models.PROTECT, related_name='Cups80')
-    cups2 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True,  on_delete=models.PROTECT, related_name='Cups81')
-    cups3 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True,       on_delete=models.PROTECT, related_name='Cups82')
-    cups4 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True,   on_delete=models.PROTECT, related_name='Cups83')
-    cups5 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True,             on_delete=models.PROTECT, related_name='Cups84')
-    cups6 = models.ForeignKey('facturacion.Cups', blank=True, null=True, editable=True,  on_delete=models.PROTECT, related_name='Cups85')
+    cups1 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True,   on_delete=models.PROTECT, related_name='Cups80')
+    cups2 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True,  on_delete=models.PROTECT, related_name='Cups81')
+    cups3 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True,       on_delete=models.PROTECT, related_name='Cups82')
+    cups4 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True,   on_delete=models.PROTECT, related_name='Cups83')
+    cups5 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True,             on_delete=models.PROTECT, related_name='Cups84')
+    cups6 = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True,  on_delete=models.PROTECT, related_name='Cups85')
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True,    on_delete=models.PROTECT)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
+
+    def __str__(self):
+        return str(self.id)
+
+
+class OrganosCirugias(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class IntervencionCirugias(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class TiposHeridasOperatorias(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class FinalidadCirugia(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class PlanificacionCirugia(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+class ZonasCirugia(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class GravedadCirugia(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
         return str(self.id)

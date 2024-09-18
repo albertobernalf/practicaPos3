@@ -12,6 +12,7 @@
 
     <!-- Custom css -->
     <link rel="stylesheet" type="text/css" href={% static 'css/login.css' %} >
+    <link rel="stylesheet" type="text/css" href={% static 'css/navegacionClinica.css' %} >
     <link rel="stylesheet" type="text/css" href={% static 'nav_sidebar.css' %} >
     <link rel="stylesheet" type="text/css" href={% static 'css/base.css' %} >
     <link rel="stylesheet" type="text/css" href={% static 'css/responsive.css' %} >
@@ -82,8 +83,6 @@
 <input type="hidden" id="grupo" name="grupo" value = "{{Grupo}}">
 <input type="hidden" id="subGrupo" name="subGrupo" value = "{{SubGrupo}}">
 <!--  Estos si de la Aplixcacion bse -->
-
-
 <input type="hidden" id="sede" name="sede" value = "{{Sede}}">
 <input type="hidden" id="documento" name="documento" value = "{{Documento}}">
 <input type="hidden" id="nombreSede" name="nombreSede" value = "{{NombreSede}}">
@@ -93,94 +92,97 @@
 <input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">CLINICA</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+{% block menu  %}
 
+<div class="marco">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">CLINICA</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="#">Mision</a>
 
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="#">Mision</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Historia Clinica
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Hospitalizados</a>
+                            <a class="dropdown-item" href="/manejoLuz#">Urgencias</a>
+                            <a class="dropdown-item" href="/crearHistoriaClinica1#">Pruebas Tabs Historia clinica</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+              
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Toma de Examenes
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Presion Arterial</a>
+                            <a class="dropdown-item" href="/manejoLuz#">Températura</a>
+                            <a class="dropdown-item" href="#">Electrocardiograma</a>
+                            <a class="dropdown-item" href="#">Tension</a>
+                            <a class="dropdown-item" href="/ambienteMusical#">Saturacion</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Informes
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Reporte_1</a>
+                            <a class="dropdown-item" href="/manejoLuz#">Reporte_2</a>
+                            <a class="dropdown-item" href="#">Reporte_3</a>
+                            <a class="dropdown-item" href="#">Reporte_4</a>
+                            <a class="dropdown-item" href="/ambienteMusical#">Reporte_5</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li>
+		        <form class="form-inline my-2 my-lg-0">
+         	   <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+	            <a class="nav-link" href="/retornarMen/{{Sede}}, {{Username}}, {{Documento}}, {{NombreSede}}, {{Profesional}}">Retornar</a>
+		        </form>
 
-            <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Historia Clinica
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Hospitalizados</a>
-          <a class="dropdown-item" href="/manejoLuz#">Urgencias</a>
-          <a class="dropdown-item" href="/crearHistoriaClinica1#">Pruebas Tabs Historia clinica</a>
-          <a class="dropdown-item" href="#">Something else here</a>
+		    </li>
+
+                </div>
+            </div>
         </div>
-      </li>
+    </nav>
+</div>
 
-      <!--       <a class="nav-link" href="/accesoEspecialidadMedico/{{documento}}#">Historia Clinica</a> -->
+{% endblock %}
 
-              <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Toma de Examenes
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Presion Arterial</a>
-          <a class="dropdown-item" href="/manejoLuz#">Températura</a>
-          <a class="dropdown-item" href="#">Electrocardiograma</a>
-          <a class="dropdown-item" href="#">Tension</a>
-            <a class="dropdown-item" href="/ambienteMusical#">Saturacion</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-             <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Informes
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Reporte_1</a>
-          <a class="dropdown-item" href="/manejoLuz#">Reporte_2</a>
-          <a class="dropdown-item" href="#">Reporte_3</a>
-          <a class="dropdown-item" href="#">Reporte_4</a>
-            <a class="dropdown-item" href="/ambienteMusical#">Reporte_5</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-              <h6 style="font-family: Calibri   ; font-size: 1rem"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sede: {{NombreSede}} <br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Colaborador : {{Profesional}}<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modulo: {{EscogeModulo}}
-                </h6>
-         </div>
-    </div>
-  </div>
-    <form class="form-inline my-2 my-lg-0">
-        <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
-        <a class="nav-link" href="/retornarMen/{{Sede}}, {{Username}}, {{Documento}}, {{NombreSede}}, {{Profesional}}">Retornar</a>
-    </form>
-</nav>
+<div class="marco">
+    {% block usuarios %}
+
+            Sede: {{NombreSede}} Colaborador : {{Profesional}} Modulo: {{EscogeModulo}}
+
+    {% endblock %}
+</div>
+
 {% block head  %}
 {% endblock %}
 
 {% block content  %}
 
 
+{% endblock %}
+{% block mensajeria  %}
+{% endblock %}
+{% block footer  %}
 {% endblock %}
 
 <!--

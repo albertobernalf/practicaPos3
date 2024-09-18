@@ -1,28 +1,15 @@
-{% extends "clinico/menuMedicoPrueba.html" %}
+{% extends "clinico/menuMedico.html" %}
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href={% static 'css/panelClinico.css' %}>
+<!-- <link rel="stylesheet" type="text/css" href={% static 'css/panelClinico.css' %}> -->
+<link rel="stylesheet" type="text/css" href={% static 'css/navegacionClinica.css' %} >
+
 <link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
   <link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
 <script src={% static 'js/panelTabsClinico.js' %} defer>         </script>
 <script src="https://kit.fontawesome.com/5d0337a043.js" crossorigin="anonymous"></script>
 <script src={% static 'js/panelClinico.js' %} defer >         </script>
-
-
-<div class="wrap">
-    <ul class="tabs">
-        <li><a href="#Clinica"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
-            Ingresos Clinicos </a></li>
-    </ul>
-</div>
-
-
-{% endblock %}
-
-{% block content %}
-
-
 <style>
 tablaClinico td {
 
@@ -41,12 +28,26 @@ tablaClinico tr {
 
 }
 </style>
+{% endblock %}
 
+{% block content %}
 
-<div class="secciones">
+<div class="marco">
+<!-- <div class="wrap"> -->
+    <ul class="tabs">
+        <li><a href="#Clinica"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
+            Ingresos Clinicos </a></li>
+	 <li><a href="#ConsultaHistoriaClinica"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
+            Consulta Historia Clinica </a></li>
+    </ul>
+<!-- </div> -->
+</div>
+
+<div class="marco">
+<div class="secciones0">
     <article id="Clinica">
 	   <form  action="/crearHistoriaClinica/" method="get" id="FormEvolucionarHistoria">
-	<!-- 	<input  -->
+	
 		<input type="hidden" id="username" name="username" value = "{{Username}}">
 		<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
 		<input type="hidden" id="numreporte" name="numreporte" value = "{{numreporte}}">
@@ -70,7 +71,7 @@ tablaClinico tr {
         <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
 
 		 <table class="table " id="tablaClinicobottom"
-                           style="height: 30px, background-color:LightGray; border: 3px solid black; border-radius: 10px;width:97%;">
+                           style="height: 10px; background-color:LightGray; border: 1px solid black; border-radius: 10px;width:95%;">
                         <tr>
                             <td>
                                 <label for="espMedico" class="col-sm-3 control-label">Especialidad :</label>
@@ -110,7 +111,8 @@ tablaClinico tr {
                     <div class="row" >
                         <div class="col-md-12" >
                             <div class="alert alert-success success-msg" style="display:none"></div>
-          		  <table class="display nowrap table table table-bordered  tablaClinico table-hover table-sm dtr-inline">
+          		   <table class="display nowrap table table table-bordered  tablaClinico table-hover table-sm dtr-inline"> 
+			
 			
                                 <thead>
                                 <tr>
@@ -142,6 +144,18 @@ tablaClinico tr {
     </div>
   </article>
 </div>
+</div>
 
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+<span> Avisos ... </span> 
+<span id="mensajes">xxxx</span> 
+</div>
+{% endblock %}
+{% block footer%}
+<div class="marco">
+</div>
 {% endblock %}
 

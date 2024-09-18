@@ -36,9 +36,9 @@ def crearTriage(request):
         context = {}
 
         #sedesClinica = request.POST['sedesClinica']
-        sedesClinica = request.POST['Sede']
-        Sede = request.POST['Sede']
-        sede = request.POST['Sede']
+        sedesClinica = request.POST['sede']
+        Sede = request.POST['sede']
+        sede = request.POST['sede']
         context['Sede'] = Sede
         NombreSede = request.POST['nombreSede']
         nombreSede = request.POST['nombreSede']
@@ -50,12 +50,10 @@ def crearTriage(request):
         Profesional = request.POST["Profesional"]
         print(" Profesional = " , Profesional)
         context['Profesional'] = Profesional
-        Username_id = request.POST["Username_id"]
+        Username_id = request.POST["username_id"]
         print("Username_id = ", Username_id)
         context['Username_id'] = Username_id
 
-        print("Sedes Clinica = ", sedesClinica)
-        print ("Sede = ",Sede)
 
         username = request.POST["username"].strip()
         print(" Username = " , username)
@@ -65,9 +63,6 @@ def crearTriage(request):
         print(" Profesional = " , Profesional)
         context['Profesional'] = Profesional
 
-        Username_id = request.POST["Username_id"]
-        print("Username_id = ", Username_id)
-        context['Username_id'] = Username_id
 
         busServicioT = request.POST["busServicioX"]
         print(" busServicioT = ", busServicioT)
@@ -178,7 +173,7 @@ def crearTriage(request):
                          glucometria=glucometria,
                          saturacion=saturacion,
                          escalaDolor=escalaDolor,
-                         tipoIngreso=tipoIngreso,
+                         #tipoIngreso=tipoIngreso,
                          observaciones=observaciones,
                          clasificacionTriage_id=clasificacionTriage,
                          fechaRegistro=fechaRegistro,
@@ -539,7 +534,7 @@ def buscarTriage(request):
     miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
                                    password="pass123")
     curt = miConexiont.cursor()
-    comando = 'SELECT ser.id id ,ser.nombre nombre FROM sitios_serviciosSedes sed, clinico_servicios ser Where sed."sedesClinica_id" =' + "'" + str(
+    comando = 'SELECT sed.id id ,sed.nombre nombre FROM sitios_serviciosSedes sed, clinico_servicios ser Where sed."sedesClinica_id" =' + "'" + str(
         sede) + "'" + ' AND sed."servicios_id" = ser.id and ser.nombre=' + "'" + str('TRIAGE') + "'"
     curt.execute(comando)
     print(comando)
@@ -935,8 +930,8 @@ def buscarTriage(request):
 
 def buscarSubServiciosTriage(request):
     context = {}
-    Serv = request.GET["Serv"]
-    Sede = request.GET["Sede"]
+    Serv = request.GET["serv"]
+    Sede = request.GET["sede"]
     print ("Entre buscar  Subservicios del servicio  =",Serv)
     print ("Sede = ", Sede)
 
@@ -974,9 +969,9 @@ def buscarHabitaciones(request):
     context = {}
     Exc = request.GET["Exc"]
     print ("Excluir = ", Exc)
-    Serv = request.GET["Serv"]
-    SubServ = request.GET["SubServ"]
-    Sede = request.GET["Sede"]
+    Serv = request.GET["serv"]
+    SubServ = request.GET["subServ"]
+    Sede = request.GET["sede"]
     print ("Entre buscar  servicio =",Serv)
     print("Entre buscar Subservicio =", SubServ)
     print ("Sede = ", Sede)
@@ -1028,9 +1023,9 @@ def buscarHabitacionesTriage(request):
     context = {}
     Exc = request.GET["Exc"]
     print ("Excluir = ", Exc)
-    Serv = request.GET["Serv"]
-    SubServ = request.GET["SubServ"]
-    Sede = request.GET["Sede"]
+    Serv = request.GET["serv"]
+    SubServ = request.GET["subServ"]
+    Sede = request.GET["sede"]
     print ("Entre buscar  servicio =",Serv)
     print("Entre buscar Subservicio =", SubServ)
     print ("Sede = ", Sede)
@@ -2165,8 +2160,8 @@ def guardarAdmisionTriage(request):
 
         grabo55 = Triage.objects.filter( tipoDoc_id=idTipoDocFinal,documento_id=documento_llave.id,consecAdmision=0).update(consecAdmision=consecAdmision)
 
-        grabo55.save()
-        print("Actualizo ingreso en tabala TRIAGE id = ", grabo55.id)
+        #grabo55.save()
+        #print("Actualizo ingreso en tabala TRIAGE id = ", grabo55.id)
 
         # RUTINA ARMADO CONTEXT
 

@@ -179,17 +179,31 @@ class Examenes(models.Model):
     TiposExamen = models.ForeignKey('clinico.TiposExamen',  blank=True, null=True, editable=True, on_delete=models.PROTECT)
     codigoCups = models.CharField(max_length=20, null=False,  blank=True)
     nombre = models.CharField(max_length=300)
-    edadIni = models.IntegerField(null=False,  blank=True, default=0)
-    edadFin = models.IntegerField(null=False,  blank=True, default=120)
+    edadIni = models.IntegerField(blank=True, null=True, editable=True)
+    edadFin = models.IntegerField( blank=True, null=True, editable=True)
     solicitaEnfermeria = models.CharField(max_length=1, choices=TIPO_CHOICES,  null=False,  blank=True, )
-    citaControl = models.CharField(max_length=1, null=False, default=0)
-                # unidadMedida=models.ForeignKey('facturacionConceptos',  blank=True, null=True, editable=True, on_delete=models.PROTECT, null=False)
+    citaControl = models.CharField(max_length=1, blank=True, null=True, editable=True)
     concepto = models.ForeignKey('facturacion.Conceptos', blank=True, null=True, editable=True, on_delete=models.PROTECT)
-    codigoRips = models.CharField(max_length=6, null=False, default=0)
-    autorizar = models.CharField(max_length=1, null=False, default=0)
+    codigoRips = models.CharField(max_length=6,  blank=True, null=True, editable=True)
+    grupoQx =  models.ForeignKey('facturacion.GruposQx',  blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    cantidadUvr =  models.CharField(max_length=10,blank=True, null=True, editable=True)
+    honorarios = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    autorizar = models.CharField(max_length=1,  blank=True, null=True, editable=True)
     tipoRadiologia = models.ForeignKey('clinico.TiposRadiologia',  blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    cupsGrupo = models.CharField(max_length=15,  blank=True, null=True, editable=True)
+    cupsSubgrupo = models.CharField(max_length=15, blank=True, null=True, editable=True)
+    cupsCategoria = models.CharField(max_length=15, blank=True, null=True, editable=True)
+    resolucion1132 = models.CharField(max_length=15, blank=True, null=True, editable=True)
+    nivelAtencion  =  models.CharField(max_length=15, blank=True, null=True, editable=True)
+    centroCosto = models.CharField(max_length=15,  blank=True, null=True, editable=True)
+    finalidad = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    duracion =   models.CharField(max_length=15, blank=True, null=True, editable=True)
+    manejaInterfaz = models.CharField(max_length=1,  blank=True, null=True, editable=True)
+    distribucionTerceros = models.CharField(max_length=1,  blank=True, null=True, editable=True)
+    consentimientoInformado = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    cita1Vez = models.CharField(max_length=1, blank=True, null=True, editable=True)
+    cuentaContable = models.CharField(max_length=20, blank=True, null=True, editable=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
-
 
 
     class Meta:
@@ -629,7 +643,7 @@ class Grupos(models.Model):
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.nombred)
 
 class SubGrupos(models.Model):
     id = models.AutoField(primary_key=True)
@@ -639,7 +653,7 @@ class SubGrupos(models.Model):
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.nombre)
 
 class ViasAdministracion(models.Model):
     id = models.AutoField(primary_key=True)
@@ -650,68 +664,57 @@ class ViasAdministracion(models.Model):
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.nombre)
 
 class UnidadesDeMedida(models.Model):
     id = models.AutoField(primary_key=True)
-    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0 , blank=True, null=True, editable=True)
     nomenclatura = models.CharField(max_length=50, blank=True, null=True, editable=True)
     descripcion = models.CharField(max_length=100, blank=True, null=True, editable=True)
-    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
     nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
-    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.descripcion)
 
 class Presentacion(models.Model):
     id = models.AutoField(primary_key=True)
-    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0, blank=True, null=True, editable=True)
     nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
-    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.nombre)
 
 
 class FormasFarmaceuticas(models.Model):
     id = models.AutoField(primary_key=True)
-    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0 , blank=True, null=True, editable=True)
     nombre = models.CharField(max_length=100, blank=True, null=True, editable=True)
-    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.nombre)
 
 class UnidadesDeMedidaDosis(models.Model):
     id = models.AutoField(primary_key=True)
-    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0 , blank=True, null=True, editable=True)
     unidadaDeMedidaPrincipioA = models.CharField(max_length=50, blank=True, null=True, editable=True)
     descripcion = models.CharField(max_length=100, blank=True, null=True, editable=True)
-    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.descripcion)
 
 
 class FrecuenciasAplicacion(models.Model):
     id = models.AutoField(primary_key=True)
-    codigoMipres = models.DecimalField(max_digits=5, decimal_places=0 , blank=True, null=True, editable=True)
     descripcion = models.CharField(max_length=100, blank=True, null=True, editable=True)
-    habilitadoMipres = models.CharField(max_length=1, blank=True, null=True, editable=True)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.descripcion)
 
 class IndicacionesEspeciales(models.Model):
     id = models.AutoField(primary_key=True)
@@ -722,7 +725,7 @@ class IndicacionesEspeciales(models.Model):
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.descripcion)
 
 
 class TiposMedicamento(models.Model):
@@ -769,7 +772,7 @@ class TiposDispositivoMedico(models.Model):
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.descripcion)
 
 class TiposProductosNutricion(models.Model):
     id = models.AutoField(primary_key=True)
@@ -989,25 +992,27 @@ class HistoriaMedicamentos(models.Model):
     frecuencia = models.ForeignKey('clinico.FrecuenciasAplicacion', blank=True, null=True, editable=True,               on_delete=models.PROTECT)
     viaAdministracion = models.ForeignKey('clinico.ViasAdministracion', blank=True, null=True, editable=True,   on_delete=models.PROTECT)
     nota = models.CharField(max_length=5000, blank=True)
-    cantidadSolicitada = models.DecimalField(max_digits=20, decimal_places=0)
-    cantidadEntregada = models.DecimalField(max_digits=20, decimal_places=0)
-    cantidadDispensada = models.DecimalField(max_digits=20, decimal_places=0)
-    cantidadAplicada = models.DecimalField(max_digits=20, decimal_places=0)
-    cantidadDevuelta = models.DecimalField(max_digits=20, decimal_places=0)
-    cantidadfacturada = models.DecimalField(max_digits=20, decimal_places=0)
+    cantidadOrdenada = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, editable=True)
+    diasTratamiento =  models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, editable=True)
+    cantidadSolicitada = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, editable=True)
+    cantidadEntregada = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, editable=True)
+    cantidadDispensada = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, editable=True)
+    cantidadAplicada = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, editable=True)
+    cantidadDevuelta = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, editable=True)
+    cantidadfacturada = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, editable=True)
     nopos = models.CharField(max_length=1, blank=True, null=True, editable=True)
     estadoMedicamento = models.CharField(max_length=1, blank=True, null=True, editable=True)
     horarioDosis = models.CharField(max_length=200, blank=True, null=True, editable=True)
-    dosisUnica = models.DecimalField(max_digits=10, decimal_places=0)
+    dosisUnica = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, editable=True )
     dosisRescate = models.CharField(max_length=200, blank=True, null=True, editable=True)
     dosisProfilaxis = models.CharField(max_length=200, blank=True, null=True, editable=True)
     dosisAdelanto = models.CharField(max_length=200, blank=True, null=True, editable=True)
     urgente = models.CharField(max_length=1, blank=True, null=True, editable=True)
     dosificacion = models.CharField(max_length=2000, blank=True, null=True, editable=True)
     antibiotico = models.CharField(max_length=1, blank=True, null=True, editable=True)
-    fechaSuspension = models.DateTimeField()
-    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    fechaSuspension = models.DateTimeField( blank=True, null=True, editable=True)
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True,    on_delete=models.PROTECT)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):

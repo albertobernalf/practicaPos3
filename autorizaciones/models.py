@@ -45,7 +45,7 @@ class AutorizacionesCups(models.Model):
     hClinica = models.CharField(max_length=20,blank=True,null= True, editable=True,)
     consec    = models.IntegerField()
     autorizacionesId = models.ForeignKey('autorizaciones.Autorizaciones',blank=True,null= True, editable=True, on_delete=models.PROTECT,  related_name='Documento88')
-    codigoCups =  models.ForeignKey('facturacion.Cups',blank=True,null= True, editable=True, on_delete=models.PROTECT,  related_name='Documento888')
+    codigoCups =  models.ForeignKey('clinico.TiposExamen',blank=True,null= True, editable=True, on_delete=models.PROTECT,  related_name='Documento888')
     autorizado = models.CharField(max_length=1,blank=True,null= True, editable=True,)
     cantidadSolicitada = models.DecimalField(max_digits=6, decimal_places=2)
     cantidadAutorizada =  models.DecimalField(max_digits=6, decimal_places=2)

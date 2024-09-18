@@ -4,17 +4,29 @@ TIPS THE WORK
 
 En facturacion:
 
-0.1 Tarifas (id, nombre,  convenioId, conceptoId, tipo, codigoCups, codigoSuministro, valor, grupoQx, paquete, Honorarios)
-0.1.1 TiposTarifa(id, nombre ) EPS, ENTE TERRITORIAL Particular, Iss, soat, otros
-0.2 TiposTarifa(id,nombre)  EPS,SOAT, ISS, ENTE TERRITORIAL, IPS, ARL, PARTICULAR)
 0.11 FormasLiquidacion : (id, nombe,  Codigo,tipoCruento ,caracteristica, valorHonorario,tiposHonorarios,cuentaContable,centroCosto)
+
+
+0.12 Tabla Facturacion : (id, tipoDoc,documento, consecAdmision,factura, fechaFactura,codigoDian, convenio, totalCopagos, totalCuotaModeradora,totalProcedimientos, totalSuministros, totalFactura, valorApagar, valorAPagarLetras, anulado, fechaCorte,cufeDefinitico,cufeValor,codigoQr, rutaQr, totalNotasDebito, totalnotasCredito, rutaXml,estadoEnvioDyan, tipoFacturaDyan, desbloqueada, rutaPdf, verLiquidacion, envioCorreo, anticipos, usuarioAnula, detalleAnulacion, fechaAnulacion,  observaciones, usuarioRegistra ,fechaRegistro)
+0.13 tabla FacturacionDetalle : (id, tipoDoc,documento, consecAdmision, liquidacion, consecutivo, fecha, tarifa, codigoCups, cantidad, valorUnitario, valorTotal, registro, cirugia, tipoHonorario, grupoQx, grupoQxUvr, fechaCrea, usuarioCrea, fechaModifica, usuarioModifica,  observaciones, estadoRegistro,numeroglosa, cantidadGlosada, valorGlosado, cantidadAceptada , valorAceptado,, cantidadRechazada, valorRechazado)
+
+0.14 tabla Liquidacion : (id, tipoDoc,documento, consecAdmision, fecha, convenio, totalCopagos, totalCuotaModeradora,totalProcedimientos, totalSuministros, totalFactura, valorApagar, anulado, fechaCorte,cr,codigoQr, rutaQr, totalNotasDebito, totalnotasCredito,  tipoFacturaDyan, desbloqueada,  verLiquidacion,  anticipos, usuarioAnula, detalleAnulacion, fechaAnulacion,  observaciones, usuarioRegistra ,fechaRegistro)
+0.15 tabla LiquidacionDetalle : (id, tipoDoc,documento, consecAdmision, liquidacion, consecutivo, fecha, tarifa, codigoCups, cantidad, valorUnitario, valorTotal, registro, cirugia, tipoHonorario, grupoQx, grupoQxUvr, fechaCrea, usuarioCrea, fechaModifica, usuarioModifica,  observaciones, estadoRegistro  ,usuarioRegistra ,fechaRegistro)
+0.16 tabla Refacturacion : (id, tipoDoc,documento, consecAdmision, fecha,facturaInicial, facturaFinal ,estadoRegistro  ,usuarioRegistra ,fechaRegistro)
+
+0.17 tabla Remisiones(cartera)
+0.18 tabla Radicaciones(cartera)
+
+
+0.19 tabla Rips
+0.20 tabla RipsDetalle
+
 
 
 1. Poder grabar una Admision (una vez guarde el nuevo usuario se pueda seguir la modal desaparezca y pueda crear correctamente una admision al igual con actualizar probar)
 2. Probar todos los filtros de consultas en admisiones (por servicios, sedes, subservicios, habitaciones, nombres etc)
    se debe seguir con Furips, Triage, Ingreso a Triage (Probar trabajar con clases)
 3. No eta UPDATE /INSERT de ls campos manilla, acompanatete, responsable remitido ips 
-
 	                 empresa_id=empresaId,
                          ipsRemite_id = ipsRemite,
                          numManilla =numManilla,
@@ -23,25 +35,16 @@ En facturacion:
 4. Ojo recuerda los permisos punuales DSACTIVAR / INACTIVAR Botones
 5. Ojo como genera el consecutivo de ingreso, tiene que NOO observar la sede o sea va a tener un consecutivo permanente, no pueden haber mas d eun consecutivo, o repetido
    son independientes de la sede , son ascendentes
-6. Crear modulos de farmacia, inventarios y creo pare de contar no va mas ...
         
 -- No graba num_manilla, remitido
 -- ojo como carachas editas los existentes ???(ideas un link en html en la tabla y que llame una modal admisiones). Pero hay que ver que cambio es posible cambioar auqui ? Regimen?, num_manilla, remitido, ips_remite, empresa ???, responsable, acompañante, tipo de cotizante, muerte , defuncion, hclinica,fechaMuerte, causasMuerte,vias_deIngreso, viasdeegreso
         actadedefuncion, estadoSalida, especialidades, dx,  etc
     -- Pues datos como usuaruio no se hacen aqui, contactos, tampoco se hacen aquip,
--- Ojo cuando se hace le ingreso no parece no graba bien el Id del medico
 --Ojo que pasa con os estadorREg de todos los modelos ojop definir de una vez despues es inmanejable
--- OJO NO ESTA PASANDO EL MODELO A LA VISTA ACOMPAN, RESPO, IPS, MANULLA, ETC
--- cuando voya craer in creadmision por segunda vez pierde los cmbos de empresas, acompanamtes, repospoonsables, ips por  cua ?
-
---Hay que organizar todo eso papaberol antes d eseguir adelante si no PAILANDER, la tiene dura el dia LUNES PAPABEROL
--- TIENE QUE ESTANDARIZAR EL SOFTWARE O SI NOP PAILAS ANTES DE SEGUIR ORDEN SI NO PASA ESTA PRUEBA ADIOS SERVER
 
 -- OJOP:
 1. hilo de performance llenar tabla ingresos con 500000 registors o los mismo que tienen actualmente imhotep (para realizar consultas-filtros)
-2. crear los boceto de todos las paginas-programa con el boton retorn volviendo al menu anterioro, admiisone-autorizaciones etc
 3. reorganizar los context para cada caso ahorrar memoria -cpu vien organizadito el codigo
-4. cvarialene¿s am pasar a los html ,os mismo para todas las paginas
 
 FIN 15/julio
 
@@ -119,22 +122,8 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 subir tablas, buscar ultimas tablas mipres 2024
 -- Probar portar a una nueva instalacion
 -- Ojo un usuario no puede tener dis (2) Triages
--- OJOOO el ingreso de una Admision debe ser agil, veloz se debe arreglar el ingreso de acompanantes y de responsables de la cuenta . deben de quedar en las misma captura de la admision
-   no en mas opciones.- (PRoPUESTAS) y si se crean nuevas ventanas modales para acompanantes, responsbles y empresas ???. Sera muy verraco crear tablas para solucionar esto en las modales asi :
-   tabla de conveniosPacienteIngresos, tabla contactos (crea un contacto), tabla responsables. Yo creo que es mejor crear unas tablas dentro d ela modal que ingreses los datos y se van 
-   a guardar en las tablas de usuarios_contactos (responsabe y contacto) y para el convenio es mas verraco, nop simplemente en otro lugar se crea la empresa para el paciente(usuario) y
-   aqui en la tabla simplemente lo asocia parta pa la grabacion del convenioo de la empresa.-
-
-
--- ojo con los filtros de busqueda triage no estan funcionando para la segunda busqueda se pirede el combo subservicio. Sipi PAILAS INVESTIGAR porque es cuando yo coloco o reescribo 
-  el combo subservicio con javascript .-
-
--- En triage filtros cuando le da por segunda vez buscar se depelota (UMm no encontre nada de nada) 
-   OJOO EL MARTES 20 agosto  ESO TIENE QUE VER CREO CON LO ENCONTRADO LOD id REPETIDOS en una misma pagia. por ejemplo busServicio2
-
 -- cuandor creo una admision desde triage no me desaparece la ventana modal ??? /mymodal.hide() , ver si estop funcionap NO FUNCIONA DE PRONTO QUITAR WINDOW.RELOAD()/ 
   nota: definitivamente no la cierra ops por cua sera? investigar
-
 -- ops otra vuelta se pierden los combos de de servicio y subservicio y habita en la edicion de la modal triage pero cuando he dado vueltas por la creacion
    de usuarios antes. Pero si entramos en una a triage y luego edicion no hay problema, es por paso de variables entre aplicaciones 
    Ops Verificar ....
@@ -149,39 +138,51 @@ subir tablas, buscar ultimas tablas mipres 2024
    -- Habitaciones (Mantenimiento)
   -- Hay que revisar Ingresos={}, poruqe hay dos diferentes querys y no puede actualziar
      en muchos de ellos la dependenciaActual_id. OJOOO 
-   -- ver si se puede arreglar algo de basura pero con mucho cuidado papaberol
-   -- error al crear triage subservicio, pero cuando se navega por los foltros de busquedap
-   -- Ojo en triage valores NULOS y de numericos o texto arreglar "update", tal como esta en glucometria
    -- Colocar un control en guardar el cambio de servicio so no hay seleccionados datos en la ventana. para mantener robusta la Aplicacion..
 
 -- ojo no edita la Admision Ver mañana JUEVES
 
 -- Ojo mañana miercoles 05-sepr
 
-   colocar mensaje bonito cuando no se escibre causa externa o diagnostico ojop
+   colocar mensaje bonito cuando no se escibe causa externa o diagnostico ojop
    porque l¿el datatable de rx diferente de laborat, no ingresa filas en blanco y no bonito // UNIFICAR PRESENTACION
-   mañana si se pued  antecedentes  y Diagnosticos, import, export y datatables etc, todop
    busacar capturav ronum de la tabla laboratorios , creop en paneladmisiones ,    implementa delete no funciona en ambos lab-rayx
-   hay unos valores nulos que arreglar no recuerdo dondep, es en la tabla clinico_examenes:ejemplo solictaenfermeria
    el tiposFolio aun no funciona solo trae 1 , no he podido pailas 
    el causaexterna or diagnosticos ='' No funciona
    crear prioridad en clinico examenes y clinico_prioridad
+   tiposfolio (Pendiente que guarde y no se bloquee no se que pasa)
 
--- PROPUESTA actividades hoy
-
-   1. colocar campo ingreso a triage_triage cuando hay admision, el numero del ingreso
-   2. la edicion de la hoja de admision
-   3. Verificar la creacion de ADMISION DESDE TRIAGE , PRESENTO ERRORE COMO EN SERVICIOS, HABITACIONES LIBRES, etc, NO QUITO LA MODAL NO REFRESH
-   4. limpiar datos y comenzar pruebas de ceros
-
-
-     tiposfolio (Pendiente que guarde y no se bloquee no se que pasa)
-
-   Mañana:
+   Para el lunes 16-sept
 
    1. create facturacion_facturacion, facturacion_facturacionDetalle, involucrar glosas
    2.   bajar anexosa tecnicos de glosas. Crear carpetasde anexos tecnicos
    3. crear datatable medicamentos
-   4. crear historia-clinicos con form
+   4. crear historia-clinicos con form . Es el historial como un resumen de historia en pantalla de consulta
    5.que crajop pasa con las fechas-hora
+   6. algo pasda con el grid de revsion de sistemas/historia clinica
+   
+
+--  mañana jueves 19
+
+
+  probar inser de clinicos
+  cuando grabo se fuel por otra cosa y noreargo la pagina de ingresos clinicos ojop
+  ojo No hay una dependencia llave foranea de la historia con el ingreso
+  ojo al crear triage y crear modal usuario no carga la modal usuario
+  ojo no funciona mensajeria cuando actualiza un trige 
+  ojo no cierra la modal cuando acatualiza un triege
+  ojo erro busqueda en moculo admisiones por nombre de medico
+  ojo No me edita por nada la Admision para actualziar Mo encuentraAdmisonModal URL ???
+  OJO EN BUSTEQUDA POR NOMBRE DE PACIENTE no funciona EN ADMISIONES
+  ojo CUANSO CREE LA ADMISION ME DUPLICO LA CONSULTA verificar comando = al crear admisin
+  ojo ops hay un eror en la vieww de admisiones linea 4388 se pierde un id
+  ojo arreglar pantalla crear admision marco, margenes
+  ojo al crear triage algo pasa con lops campos nulos creo los integerfield m, noa acpeta algo pasa
+  ojo en historia clinica coge bien la fecha-hora de la historia , popruq en admisiones y panel nop ???
+  ojo en historia clinica no devuelve  a la pantalla principal cuando graba la hclinica
+  ojo obligar siempre a ingresar diagnosticos en HC
+  ojo no esta grabando la dosisUnidad_id en formulacion
+  ojo en admisiones cuando hay cambio de servicio y graba hay que hacer refresh del tablero de admisiones para que miestre el cambio o sino pailas , toca hacerlo manual
+  ojo ops en admisiones error al crear conveniop (se debe siempre tener seleccionado un convenio papabero)
+
 

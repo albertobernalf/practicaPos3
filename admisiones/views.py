@@ -285,6 +285,15 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
     print("nombreSede= ", nombreSede)
     print("profesional= ", profesional)
 
+    ## username_id
+    usernameLlave = Planta.objects.get(documento=username.strip())
+    username_id= usernameLlave.id
+
+
+    ## Fin username_id
+
+
+
     # Combo PermisosGrales
 
     miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
@@ -319,6 +328,7 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
     context['PermisosGrales'] = permisosGrales
     context['NombreSede'] = nombreSede
     context['EscogeModulo'] = escogeModulo
+    context['Username_id'] = username_id
 
 
 
@@ -1190,8 +1200,9 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         print ("especialidadesMedicos =", especialidadesMedicos)
 
 
+
         ## FIN CONTEXTO
-        return render(request, "clinico/panelClinicoPrueba.html", context)
+        return render(request, "clinico/panelClinico.html", context)
 
     if (escogeModulo == 'TRIAGE'):
         print ("WENTRE PERMSISO TRIAGE")
@@ -2952,7 +2963,7 @@ def crearAdmisionDef(request):
         context['BusServicio2'] = busServicio2
 
         tipoDoc = request.POST['tipoDoc22']
-        documento = request.POST['busDocumentoSel22']
+        documento = request.POST['busDocumentoSel22'].strip()
         print("tipoDoc = ", tipoDoc)
         print("documento = ", documento)
 
@@ -3220,8 +3231,10 @@ def crearAdmisionDef(request):
         miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
                                        password="pass123")
         curx = miConexionx.cursor()
-        detalle = 'SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(
-            Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null'
+        #detalle = 'SELECT  tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(
+        #    Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null'
+        detalle = 'SELECT i.id id, tp.nombre tipoDoc,  u.documento documento, u.nombre  nombre , i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(Sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and ser.nombre != ' + "'" + str('TRIAGE') + "'" + ' AND dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id"'
+
         print(detalle)
 
         curx.execute(detalle)

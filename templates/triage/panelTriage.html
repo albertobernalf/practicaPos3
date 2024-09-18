@@ -18,7 +18,8 @@ th ,tr{
 
 </style>
 
-<div class="wrap">
+<div class="marco">
+<!-- <div class="wrap">  -->
     <ul class="tabs">
         <li><a href="#Triage"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
             Ingresos Triage </a></li>
@@ -35,6 +36,7 @@ th ,tr{
 {% block content %}
 
 <input type="hidden" id="username" name="username" value="{{Username}}">
+<input type="hidden" id="username_id" name="username_id"   value="{{Username_id}}">
 <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
 <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
 <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
@@ -47,9 +49,9 @@ th ,tr{
 <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
 <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
 
-
+<div class="marco">
 <div class="secciones">
-    <article id="Triage"><span id="mensajeria" name="mensajeria">Aqui mensajeria</span>
+    <article id="Triage">
 
         <center><h4> Triage </h4></center>
 
@@ -94,8 +96,8 @@ th ,tr{
                                         <select class="form-select  h-10 w-100 form-control form-control-sm"
                                                 aria-label=""
                                                 id="busSubServicio" name="busSubServicio">
-                                            {% for subServicio in SubServicio %}
-                                            <option value="{{subServicio.id}}"> {{subServicio.nombre}}</option>
+                                            {% for subServicios in SubServicios %}
+                                            <option value="{{subServicios.id}}"> {{subServicios.nombre}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -165,9 +167,9 @@ th ,tr{
 
         <div class="row">
 
-            <div class="col-lg-12" style="background-color:LightGray;">
+            <div class="col-10" >
                 <div class="card-block">
-                    <div style="height: 300px; overflow: auto">
+                    <div style="height: 400px; width:1400px; overflow: auto">
                         <table class="table table-hover" id="tablaDatosTriage"
                                style="height: 300px , background-color:LightGray; border: 2px solid black; border-radius: 10px; width:99%;">
                             <thead>
@@ -214,7 +216,7 @@ th ,tr{
                     </div>
                 </div>
             </div>
-            <span id="mensajes" name="mensajes">{{Mensajes}}</span>
+
 
         </div>
 
@@ -664,8 +666,8 @@ th ,tr{
                                     </div>
                                     <div class="modal-body">
 
-                                        <input type="hidden" id="Sede" name="Sede" value="{{Sede}}">
-                                        <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
+                                        <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                                        <input type="hidden" id="servicio" name="servicio" value="{{Servicio}}">
                                         <input type="hidden" id="documento" name="documento" value="{{Documento}}">
                                         <input type="hidden" id="username" name="username" value="{{Username}}">
                                         <input type="hidden" id="username_id" name="username_id"
@@ -674,19 +676,6 @@ th ,tr{
                                                value="{{Profesional}}">
                                         <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
                                         <input type="hidden" id="escogeModulo" name="escogeModulo"
-                                               value="{{EscogeModulo}}">
-                                        <input type="hidden" id="bakbusServicio2" name="bakbusServicio2" value="">
-                                        <input type="hidden" id="bakbusSubServicio2" name="bakbusSubServicio2" value="">
-                                        <input type="hidden" id="bakdependenciasIngreso" name="bakdependenciasIngreso"
-                                               value="">
-                                        <input type="hidden" id="baktipoDoc" name="baktipoDoc" value="">
-                                        <input type="hidden" id="bakbusDocumentoSel" name="bakbusDocumentoSel" value="">
-                                        <input type="hidden" id="bakfechaIngreso" name="bakfechaIngreso" value="">
-                                        <input type="hidden" id="bakdxIngreso" name="bakdxIngreso" value="">
-                                        <input type="hidden" id="bakespecialidadesMedicosIngreso"
-                                               name="bakespecialidadesMedicosIngreso" value="">
-                                        <input type="hidden" id="bakmedicoIngreso" name="bakmedicoIngreso" value="">
-                                        <input type="hidden" id="bakescogeModulo" name="bakescogeModulo"
                                                value="{{EscogeModulo}}">
 
                                         <div class="form-row">
@@ -901,7 +890,7 @@ th ,tr{
 
             <!-- Creacion Triage   -->
 
-            <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
+            <table class="table  " style="height: 50px; background-color:LightGray;  width:90%;">
                 <tr>
                     <td>
                     </td>
@@ -909,29 +898,18 @@ th ,tr{
                     </td>
                     <td>
                         <table class="table"
-                               style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+                               style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:60%;">
                             <form class="form-inline" action="/crearTriage/" method="POST" id="grabacionAdmision">
 
-                                <input type="hidden" id="Sede" name="Sede" value="{{Sede}}">
+                                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
                                 <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
                                 <input type="hidden" id="documento" name="documento" value="{{Documento}}">
-                                <input type="hidden" id="username" name="username" value="{{Username}}">
-                                <input type="hidden" id="Username_id" name="Username_id" value="{{Username_id}}">
+                                <input type="text" id="username" name="username" value="{{Username}}">
+                                <input type="text" id="username_id" name="username_id" value="{{Username_id}}">
                                 <input type="hidden" id="Profesional" name="Profesional" value="{{Profesional}}">
                                 <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
                                 <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
-                                <input type="hidden" id="bakbusServicio2" name="bakbusServicio2" value="">
-                                <input type="hidden" id="bakbusSubServicio2" name="bakbusSubServicio2" value="">
-                                <input type="hidden" id="bakdependenciasIngreso" name="bakdependenciasIngreso" value="">
-                                <input type="hidden" id="baktipoDoc" name="baktipoDoc" value="">
-                                <input type="hidden" id="bakbusDocumentoSel" name="bakbusDocumentoSel" value="">
-                                <input type="hidden" id="bakfechaIngreso" name="bakfechaIngreso" value="">
-                                <input type="hidden" id="bakdxIngreso" name="bakdxIngreso" value="">
-                                <input type="hidden" id="bakespecialidadesMedicosIngreso"
-                                       name="bakespecialidadesMedicosIngreso" value="">
-                                <input type="hidden" id="bakmedicoIngreso" name="bakmedicoIngreso" value="">
-                                <input type="hidden" id="bakescogeModulo" name="bakescogeModulo"
-                                       value="{{EscogeModulo}}">
+                            
 
 
                                 {% if crearTriageForm.errors %}
@@ -1025,69 +1003,69 @@ th ,tr{
                                         <div class="col">
                                             <label class="col-sm-1 control-label"
                                                    for="taSist">TensionArterialSistolica:</label>
-                                            <input type="text" class="form-control" id="taSist" name="taSist" required>
+                                            <input type="text" class="form-control" id="taSist" name="taSist" >
 
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="taDiast">TensionArterialDiastolica:</label>
                                             <input type="text" class="form-control" id="taDiast" name="taDiast"
-                                                   required>
+                                                   >
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label"
                                                    for="taMedia">TensionArterialMedia:</label>
                                             <input type="text" class="form-control" id="taMedia" name="taMedia"
-                                                   required>
+                                                   >
                                         </div>
 
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="glasgow">Glasgow:</label>
                                             <input type="text" class="form-control" id="glasgow" name="glasgow"
-                                                   required>
+                                                   >
                                         </div>
 
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="peso">Peso:</label>
-                                            <input type="text" class="form-control" id="peso" name="peso" required>
+                                            <input type="text" class="form-control" id="peso" name="peso" >
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label"
                                                    for="tempreratura">Temperatura:</label>
                                             <input type="text" class="form-control" id="temperatura" name="temperatura"
-                                                   required>
+                                                   >
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="estatura">Estatura:</label>
                                             <input type="text" class="form-control" id="estatura" name="estatura"
-                                                   required>
+                                                   >
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="glucometria">Glucometria:</label>
                                             <input type="text" class="form-control" id="glucometria" name="glucometria"
-                                                   required>
+                                                   >
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="saturacion">Saturacion:</label>
                                             <input type="text" class="form-control" id="saturacion" name="saturacion"
-                                                   required>
+                                                   >
                                         </div>
 
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="escalaDolor">EscalaDolor:</label>
                                             <input type="text" class="form-control" id="escalaDolor" name="escalaDolor"
-                                                   required>
+                                                   >
                                         </div>
 
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="tipoIngreso">TipoIngreso:</label>
                                             <input type="text" class="form-control" id="tipoIngreso" name="tipoIngreso"
-                                                   required>
+                                                   >
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label"
                                                    for="observaciones">Observaciones:</label>
                                             <input type="text" class="form-control" id="observaciones"
-                                                   name="observaciones" required>
+                                                   name="observaciones" >
                                         </div>
                                     </div>
 
@@ -1143,9 +1121,19 @@ th ,tr{
 </article>
 
 </div>
+</div>
 
 
 {% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+<span> Avisos ... </span>
+     <span id="mensajes" name="mensajes">xxxx </span>
+
+</div>
+{% endblock %}
+
 
 {% block footer %}
 
