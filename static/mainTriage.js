@@ -729,7 +729,7 @@ $(document).on('change', '#busSubServicio2', function(event) {
 
         var sede =  document.getElementById("sede").value;
 
-         alert("Sede = " + Sede);
+         alert("Sede = " + sede);
 //        alert("Entre para llamar a buscar SubServiciosTriage : " + subServ);
   //      alert("Entre para llamar a buscar Sede : " + sede);
 
@@ -852,19 +852,20 @@ function guardaTriageModal()
   	var estatura = document.getElementById("estatura").value;
   	var temperatura = document.getElementById("temperatura").value;
   	var glucometria = document.getElementById("glucometria").value;
+  	var saturacion = document.getElementById("saturacion").value;
   	var escalaDolor = document.getElementById("escalaDolor").value;
   	var tipoIngreso = document.getElementById("tipoIngreso").value;
   	var observaciones = document.getElementById("observaciones").value;
   	var clasificacionTriage = document.getElementById("clasificacionTriage").value;
 
-  	var sede = document.getElementById("Sede").value;
+  	var sede = document.getElementById("sede").value;
 
     var username = document.getElementById("username").value;
     var Profesional = document.getElementById("Profesional").value;
 
     var nombreSede = document.getElementById("nombreSede").value;
 
-    var Username_id = document.getElementById("Username_id").value;
+    var Username_id = document.getElementById("username_id").value;
     var escogeModulo = document.getElementById("escogeModulo").value;
 
 	$.ajax({
@@ -888,6 +889,7 @@ function guardaTriageModal()
 	             'temperatura':temperatura ,
 	             'estatura':estatura,
 	             'glucometria':glucometria,
+	             'saturacion':saturacion,
 	             'escalaDolor':escalaDolor,
 	             'tipoIngreso':tipoIngreso,
 	             'observaciones':observaciones,
@@ -906,10 +908,10 @@ function guardaTriageModal()
                 // $('#modalActualizaTriage').modal('hide');
                 $('#modalActualizaTriage').modal({show:false});
 
-		alert("esta es la clasificacion triage = " + repuesta['clasificacionTriage'] );
+		alert("esta es la clasificacion triage = " + respuesta['clasificacionTriage'] );
 
 
-		$('#clasificacionTriage').val(repuesta['clasificacionTriage']);		
+		$('#clasificacionTriage').val(respuesta['clasificacionTriage']);		
 
 		        window.location.reload();
 		        $('#mensajeria').val("Triage Actualizado ...");

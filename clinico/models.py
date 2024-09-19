@@ -230,7 +230,7 @@ class TiposInterconsulta(models.Model):
                     return self.nombre
 
 
-class Interconsultas(models.Model):
+class HistorialInterconsultas(models.Model):
 
                 id  = models.AutoField(primary_key=True)
                 historia =  models.ForeignKey('clinico.Historia',  blank=True, null=True, editable=True, on_delete=models.PROTECT,   related_name='DocumentoHistoriaDiag11')
@@ -247,6 +247,8 @@ class Interconsultas(models.Model):
 
                 def __str__(self):
                     return self.descripcionConsulta
+
+
 
 
 class TiposEvolucion(models.Model):
@@ -275,7 +277,7 @@ class Historia(models.Model):
     fecha = models.DateTimeField()
     tiposFolio = models.ForeignKey('clinico.TiposFolio', blank=True, null=True, editable=True, on_delete=models.PROTECT)
     causasExterna = models.ForeignKey('clinico.causasExterna', blank=True, null=True, editable=True,             on_delete=models.PROTECT)
-    dependenciasRealizado = models.ForeignKey('sitios.Dependencias', blank=True, null=True, editable=True,            on_delete=models.PROTECT)
+    dependenciasRealizado = models.ForeignKey('sitios.DependenciasTipo', blank=True, null=True, editable=True,            on_delete=models.PROTECT)
     especialidades = models.ForeignKey('clinico.Especialidades', blank=True, null=True, editable=True,             on_delete=models.PROTECT)
     planta = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT)
     motivo = models.CharField(max_length=250,  blank=True, null=True,)
@@ -441,7 +443,7 @@ class EstadosSalida(models.Model):
         return self.nombre
 
 
-class Incapacidades(models.Model):
+class HistorialIncapacidades(models.Model):
     id = models.AutoField(primary_key=True)
     historia = models.ForeignKey('clinico.Historia', on_delete=models.PROTECT, blank=True, null=True,  editable=True,  related_name='DocumentoHistoriaDiag10')
 

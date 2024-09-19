@@ -2,8 +2,8 @@ from django import forms
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Historia, Especialidades, Medicos
 from usuarios.models import TiposDocumento, Usuarios
-from clinico.models import TiposExamen, Examenes, HistoriaExamenes, TiposFolio, CausasExterna, TiposIncapacidad, Incapacidades, Diagnosticos, HistorialDiagnosticosCabezote, SignosVitales, HistoriaSignosVitales , Historia
-from sitios.models import Dependencias
+from clinico.models import TiposExamen, Examenes, HistoriaExamenes, TiposFolio, CausasExterna, TiposIncapacidad, HistorialIncapacidades, Diagnosticos, HistorialDiagnosticosCabezote, SignosVitales, HistoriaSignosVitales , Historia
+from sitios.models import Dependencias, DependenciasTipo
 from planta.models import Planta
 import django.core.validators
 import django.core.exceptions
@@ -15,7 +15,7 @@ from datetime import datetime
 class IncapacidadesForm(forms.ModelForm):
 
     class Meta:
-        model = Incapacidades
+        model = HistorialIncapacidades
         fields = '__all__'
 
         historia = forms.IntegerField(disabled=True, initial=0)
@@ -116,7 +116,7 @@ class historiaForm(forms.ModelForm):
 
         tiposFolio = forms.ModelChoiceField(queryset=TiposFolio.objects.all())
         causasExterna = forms.ModelChoiceField(queryset=CausasExterna.objects.all())
-        dependenciasRealizado = forms.ModelChoiceField(queryset=Dependencias.objects.all())
+        dependenciasRealizado = forms.ModelChoiceField(queryset=DependenciasTipo.objects.all())
         especialidades = forms.ModelChoiceField(queryset=Especialidades.objects.all())
         planta = forms.ModelChoiceField(queryset=Planta.objects.all())
         apache2 = forms.IntegerField(label='Apache', disabled=True, initial=0)

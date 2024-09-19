@@ -642,6 +642,7 @@ $('#tablaDatos tbody td').click(function(){
 		success: function (Usuarios) {
 
 			 alert("entre DATOS MODAL de Triage y el  nombre es = " + Usuarios.tipoDoc + " " +  Usuarios.documento);
+
 		            $('#tipoDoc').val(Usuarios.tipoDoc_id);
     			    $('#busDocumentoSel').val(Usuarios.documento);
     			    $('#dependenciasIngreso').val(Usuarios.dependenciasIngreso);
@@ -654,6 +655,7 @@ $('#tablaDatos tbody td').click(function(){
     			    $('#tiposCotizante').val(Usuarios.cotizante);
     			    $('#remitido').val(Usuarios.remitido);
     			    $('#numManilla').val(Usuarios.numManilla);
+
                             $('#modalActualizaAdmision').modal({show:true});
 
                     },

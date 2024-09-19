@@ -22,6 +22,8 @@ from planta.models import Planta
 from triage.models import Triage
 from django.db.models.functions import Cast, Coalesce
 
+import datetime 
+
 
 # Create your views here.
 
@@ -129,8 +131,10 @@ def crearTriage(request):
         print("clasificacionTriage= ", clasificacionTriage)
 
 
-        #fechaRegistro = request.POST['fechaIngreso']
-        fechaRegistro = dt.datetime.now()
+        now = datetime.datetime.now()
+        dnow = now.strftime("%Y-%m-%d %H:%M:%S")
+        print("NOW  = ", dnow)
+        fechaRegistro = dnow
         print("fechaRegistro  = ", fechaRegistro )
 
         usuarioRegistro = Username_id
@@ -1242,7 +1246,11 @@ def grabaUsuariosTriage(request):
 
     miConexion11.close()
 
-    fechaRegistro = dt.datetime.now()
+    now = datetime.datetime.now()
+    dnow = now.strftime("%Y-%m-%d %H:%M:%S")
+    print("NOW  = ", dnow)
+
+    fechaRegistro = dnow
 
 
     if Usuarios == []:

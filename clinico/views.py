@@ -12,7 +12,7 @@ from django.utils.timezone import now
 from django.db.models import Avg, Max, Min
 from .forms import historiaForm, historiaExamenesForm
 from datetime import datetime
-from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos, Interconsultas, EstadosInterconsulta, Incapacidades, SignosVitales, HistoriaSignosVitales, HistoriaRevisionSistemas, HistoriaMedicamentos
+from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos, HistorialInterconsultas, EstadosInterconsulta, HistorialIncapacidades,  HistoriaSignosVitales, HistoriaRevisionSistemas, HistoriaMedicamentos
 from sitios.models import Dependencias
 from planta.models import Planta
 from contratacion.models import Procedimientos
@@ -376,6 +376,8 @@ def crearHistoriaClinica(request):
 
             diagnosticos = request.POST["diagnosticos"]
 
+            print("diagnosticos = ", diagnosticos)
+
             if (causasExterna == ''  or diagnosticos == ''):
 
                 print("Entre GRAVES campos vacios")
@@ -385,9 +387,6 @@ def crearHistoriaClinica(request):
                 data2 = data2.replace("\'", "\"")
                 data = json.loads(str(data2))
 
-
-                #return HttpResponse('Favor suministrar causa Externa y/O Dependencia Realiado folio')
-                #return HttpResponse(data)
                 return JsonResponse(data)
 
             else:
@@ -427,37 +426,12 @@ def crearHistoriaClinica(request):
                 historiaId = (historiaIdU['maximo']) + 0
                 print("1 record inserted, ID:", historiaId)
 
-
                 miConexiont.close()
 
                 #print("El id del la hsitoria INSERTADA es ", historiaId)
 
                 # Fingrabacion Historia Clinica
 
-
-                #nueva_historia = Historia(
-                #    tipoDoc= TiposDocumento.objects.get(id = tipoDoc)   ,
-                #    documento=Usuarios.objects.get(documento = documento)  ,
-                #    consecAdmision=1,
-                #    folio=ultimofolio2,
-                #    fecha=fechaRegistro,
-                #    tiposFolio=TiposFolio.objects.get(id = jsontiposFolio ['tiposFolio'])   ,
-                #    causasExterna=CausasExterna.objects.get(id = causasExterna),
-                #    dependenciasRealizado=Dependencias.objects.get(id = dependenciasRealizado)   ,
-                #    especialidades=Especialidades.objects.get(id = jsonEspecial['id'])   ,
-                #    planta=Planta.objects.get(id = jsonPlanta ['planta'])   ,
-                #    motivo=motivo,
-                #    subjetivo=subjetivo,
-                #    objetivo=objetivo,
-                #    analisis=analisis,
-                #    plan=plan,
-                #    fechaRegistro=fechaRegistro,
-                #    usuarioRegistro=Usuarios.objects.get(id = jsonUsuarioRegistro ['usuarioRegistro'])   ,
-                #    estadoReg=estadoReg)
-
-                #nueva_historia.save()
-
-                #historiaId = nueva_historia.id
                 print("Historia No : ", historiaId)
                 jsonHistoria = {'id': historiaId}
 
@@ -770,7 +744,7 @@ def crearHistoriaClinica(request):
 
                     if medicoConsultadoId != "":
 
-                        f = Interconsultas(descripcionConsulta=descripcionConsulta, diagnosticos_id=diagnosticoId,
+                        f = HistorialInterconsultas(descripcionConsulta=descripcionConsulta, diagnosticos_id=diagnosticoId,
                                                   especialidadConsultada_id=especialidadConsultadaId,medicoConsultado_id=medicoConsultadoId,
                                            especialidadConsulta_id=espMedico, medicoConsulta_id=medicoId.id,
                                                   historia_id=historiaId, tipoInterconsulta_id=tiposInterconsultaId,estadosInterconsulta_id=estado.id)
@@ -804,7 +778,7 @@ def crearHistoriaClinica(request):
                     descripcion=key7["descripcion"]
 
                     if tiposIncapacidad != "":
-                        g = Incapacidades(tiposIncapacidad_id=tiposIncapacidad, diagnosticosIncapacidad_id=diagnosticosIncapacidad,
+                        g = HistorialIncapacidades(tiposIncapacidad_id=tiposIncapacidad, diagnosticosIncapacidad_id=diagnosticosIncapacidad,
                                           descripcion=descripcion,desdeFecha=desdeFecha,  hastaFecha=hastaFecha, numDias=numDias,  historia_id=historiaId,estadoReg='A')
                         g.save()
 
@@ -907,8 +881,8 @@ def crearHistoriaClinica(request):
 
 
                     if medicamentos != "":
-                        i = HistoriaMedicamentos(dosisCantidad=dosis, suministro_id= medicamentos,frecuencia_id=frecuencia,
-                                                   viaAdministracion_id = viasAdministracion,  cantidadOrdenada= cantidadMedicamento, diasTratamiento= diasTratamiento,
+                        i = HistoriaMedicamentos(dosisCantidad=dosis, suministro_id= medicamentos,frecuencia_id=frecuencia,dosisUnidad_id=uMedidaDosis,  
+                                                   viaAdministracion_id = vias,  cantidadOrdenada= cantidadMedicamento, diasTratamiento= diasTratamiento,
                                           historia_id=historiaId,usuarioRegistro_id=usuarioRegistro  , estadoReg='A', fechaRegistro=fechaRegistro )
                         i.save()
 
@@ -1188,7 +1162,7 @@ def crearHistoriaClinica(request):
         curt = miConexiont.cursor()
         # 3 = Consultorios Verificar
 
-        comando = 'SELECT d.id id, d.nombre nombre FROM sitios_dependencias d WHERE d."sedesClinica_id" = ' + "'" + str( Sede) + "'" +  ' And d."dependenciasTipo_id" = ' + "'" + str('1') + "'"
+        comando = 'SELECT d.id id, d.nombre nombre FROM sitios_dependenciasTipo d '
 
         curt.execute(comando)
         print(comando)

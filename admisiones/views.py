@@ -11,10 +11,11 @@ from django.shortcuts import get_object_or_404
 from django.db.models.functions import Cast, Coalesce
 import pyodbc
 import psycopg2
+from datetime import datetime
 
 import pytz
 import tzlocal
-import datetime as dt
+# import datetime as dt
 
 
 from admisiones.models import Ingresos
@@ -22,6 +23,7 @@ from sitios.models import  HistorialDependencias, Dependencias, ServiciosSedes, 
 from usuarios.models import Usuarios, TiposDocumento
 from planta.models import Planta
 from facturacion.models import ConveniosPacienteIngresos
+import datetime
 
 # Create your views here.
 
@@ -2969,7 +2971,7 @@ def crearAdmisionDef(request):
 
         # Consigo el Id del Paciente Documento
 
-        DocumentoId = Usuarios.objects.get(documento=documento)
+        DocumentoId = Usuarios.objects.get(documento=documento.strip())
         idPacienteFinal = DocumentoId.id
 
         print("idPacienteFinal", idPacienteFinal)
@@ -2981,12 +2983,12 @@ def crearAdmisionDef(request):
         consecAdmision = (consec['maximo'] + 1)
         print("ultimo ingreso = ", consecAdmision)
 
-        #fechaIngreso = request.POST['fechaIngreso']
-        fechaIngreso = dt.datetime.now()
-        print("fechaIngreso = ", fechaIngreso)
+        now = datetime.datetime.now()
+        dnow = now.strftime("%Y-%m-%d %H:%M:%S")
+        print("NOW  = ", dnow)
 
-        #fechaIngreso = datetime.strptime(fechaIngreso, "%Y-%m-%dT%H:%M")
-        #print("fechaIngreso3 = ", fechaIngreso)
+        fechaIngreso = dnow
+        print("fechaIngreso = ", fechaIngreso)
 
         #fechaSalida = "0001-01-01 00:00:00"
 
@@ -3240,7 +3242,7 @@ def crearAdmisionDef(request):
         curx.execute(detalle)
 
         for tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual in curx.fetchall():
-            ingresos.append({'tipoDoc': tipoDoc, 'Documento': documento, 'Nombre': nombre, 'Consec': consec,
+            ingresos.append({'id':id, 'tipoDoc': tipoDoc, 'Documento': documento, 'Nombre': nombre, 'Consec': consec,
                              'FechaIngreso': fechaIngreso, 'FechaSalida': fechaSalida,
                              'servicioNombreIng': servicioNombreIng, 'camaNombreIng': camaNombreIng,
                              'DxActual': dxActual})
@@ -3959,7 +3961,7 @@ def guardarUsuariosModal(request):
 
     miConexion11.close()
 
-    fechaRegistro = dt.datetime.now()
+    fechaRegistro = datetime.now()
 
 
     if Usuarios == []:
@@ -4179,7 +4181,7 @@ def guardaCambioServicio(request):
     servicioFin = request.POST["servicioCambio"]
     subServicioFin = request.POST["subServicioCambio"]
     dependenciaFin = request.POST["dependenciaCambio"]
-    fechaOcupacion = dt.datetime.now()
+    fechaOcupacion = datetime.now()
     fechaRegistro= fechaOcupacion
 
 
@@ -4367,7 +4369,7 @@ def guardaCambioServicio(request):
 	
 
 def serialize_datetime(obj): 
-    if isinstance(obj, datetime.datetime): 
+    if isinstance(obj, datetime.datetime):
         return obj.isoformat() 
     raise TypeError("Type not serializable") 
 
@@ -4428,7 +4430,7 @@ def GuardaConvenioAdmision(request):
     print ("ingresoId = ", ingresoId)
     print("sede = ", sede)
 
-    fechaRegistro = dt.datetime.now()
+    fechaRegistro = datetime.now()
 
     registroId = Ingresos.objects.get(id=ingresoId)
     print  ("registroId documento =" , registroId.documento_id)

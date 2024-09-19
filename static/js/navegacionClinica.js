@@ -1251,7 +1251,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	        "uMedidaDosis"    : datos_tabla10[i][3] ,
 	        "formaFarma"    : datos_tabla10[i][6] ,
 	        "frecuencia"    : datos_tabla10[i][7] ,
-	        "vias"    : datos_tabla10[i][8] ,
+	        "vias"    : datos_tabla10[i][9] ,
 	        "viasAdministracion"    : datos_tabla10[i][10] ,
 	        "cantidadMedicamento"    : datos_tabla10[i][11] ,
 	        "diasTratamiento"    : datos_tabla10[i][12] ,
@@ -1399,15 +1399,20 @@ formHistoriaClinica.addEventListener('submit', e=>{
         			'formulacion':formulacion
 				   },
  	      		success: function (respuesta2) {
- 	      		       // var data = JSON.parse(respuesta2);
- 	      		        alert("Esto llega :  " + JSON.stringify(respuesta2));
+ 	      		       var data = JSON.parse(respuesta2);
+ 	      		       alert("data=" + data);
+ 	      		       alert("data2=" + data['Mensaje']);
+
+ 	      		       alert("Esto llega1 :  " + respuesta2);
+ 	      		       alert("Esto llega1 :  " + respuesta2['Mensaje']);
+ 	      		        alert("Esto llega2 con strngy :  " + JSON.stringify(respuesta2));
 
  	      		        var mensaje1 = JSON.stringify(respuesta2);
  	      		        alert("Esto llega el Mensaje :  " + mensaje1);
 
-				        if (mensaje1== "OK")
+				        if ( data['Mensaje'] == 'OK')
 				            {
-
+                            alert("Entre por respuesta positiva a refrecar pagina");
 				            $("#formHistoriaClinicaT").submit();
 				            }
 				        else
