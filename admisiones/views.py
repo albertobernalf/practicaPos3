@@ -1002,36 +1002,13 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
                                    password="pass123")
     curt = miConexiont.cursor()
 
-    comando = "SELECT c.id id,c.nombre nombre FROM usuarios_usuarioscontacto c"
+    comando = 'SELECT c.id id,c.nombre nombre FROM usuarios_usuarioscontacto c, basicas_tiposcontacto t where  c."tiposContacto_id" = t.id and t.nombre like (' + "'" + str('%ACOMPA%') + "')"
 
     curt.execute(comando)
     print(comando)
 
     acompanantes = []
-
-    for id, nombre in curt.fetchall():
-        acompanantes.append({'id': id, 'nombre': nombre})
-
-    miConexiont.close()
-    print(acompanantes)
-
-    context['Acompanantes'] = acompanantes
-
-    # Fin combo acompanantes
-
-    # Combo Acompanantes
-
-    # iConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
-    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
-                                   password="pass123")
-    curt = miConexiont.cursor()
-
-    comando = "SELECT c.id id,c.nombre nombre FROM usuarios_usuarioscontacto c"
-
-    curt.execute(comando)
-    print(comando)
-
-    acompanantes = []
+    acompanantes.append({'id': '', 'nombre': ''})
 
     for id, nombre in curt.fetchall():
         acompanantes.append({'id': id, 'nombre': nombre})
@@ -1050,12 +1027,13 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
                                    password="pass123")
     curt = miConexiont.cursor()
 
-    comando = "SELECT c.id id,c.nombre nombre FROM usuarios_usuarioscontacto c"
+    comando = 'SELECT c.id id,c.nombre nombre FROM usuarios_usuarioscontacto c, basicas_tiposcontacto t where  c."tiposContacto_id" = t.id and t.nombre like (' + "'" + str('%RESPONSA%') + "')"
 
     curt.execute(comando)
     print(comando)
 
     responsables = []
+    responsables.append({'id': '', 'nombre': ''})
 
     for id, nombre in curt.fetchall():
         responsables.append({'id': id, 'nombre': nombre})
@@ -1102,6 +1080,56 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         context['Convenios'] = convenios
 
         # Fin combo Convenios
+
+        # Combo TiposPagos
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM cartera_tipospagos p"
+
+        curt.execute(comando)
+        print(comando)
+
+        tiposPagos = []
+
+        for id, nombre in curt.fetchall():
+            tiposPagos.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("tiposPagos", tiposPagos)
+
+        context['TiposPagos'] = tiposPagos
+
+        # Fin combo tiposPagos
+
+
+        # Combo FormasPagos
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM cartera_formaspagos p"
+
+        curt.execute(comando)
+        print(comando)
+
+        formasPagos = []
+
+        for id, nombre in curt.fetchall():
+            formasPagos.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("formasPagos", formasPagos)
+
+        context['FormasPagos'] = formasPagos
+
+        # Fin combo tiposPagos
+
 
 
         ## Aqui contexto para solo admisiones
@@ -4042,21 +4070,21 @@ def cambioServicio(request):
     miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",password="pass123")
     curt = miConexiont.cursor()
 
-    comando = 'SELECT i."tipoDoc_id" tipoDocId, tp.nombre tipoDoc,  i.documento_id documentoId, u.documento documento, u.nombre  paciente , i.consec consec , i."fechaIngreso" ingreso , i."fechaSalida" salida, ser.nombre servicioNombreIng, dep.nombre dependenciasIngreso ,med1.nombre medicoIngreso, esp1.nombre espMedico,diag1.nombre diagMedico,vias.nombre viasIngreso, cexterna.nombre causasExterna,reg.nombre regimenes ,cot.nombre cotizante,i.remitido remitido,ips.nombre ips ,i."numManilla" numManilla, diag1.nombre dxIngreso FROM admisiones_ingresos i inner join usuarios_usuarios u on (u."tipoDoc_id" = i."tipoDoc_id" and u.id = i."documento_id" ) inner join sitios_dependencias dep on (dep."sedesClinica_id" = i."sedesClinica_id" and dep."tipoDoc_id" =  i."tipoDoc_id" and dep.documento_id =i."documento_id"  and dep.consec = i.consec) inner join usuarios_tiposDocumento tp on (tp.id = u."tipoDoc_id") inner join sitios_dependenciastipo deptip on (deptip.id = dep."dependenciasTipo_id") inner join sitios_serviciosSedes sd on (sd."sedesClinica_id" = i."sedesClinica_id") inner join clinico_servicios ser  on (ser.id = sd.servicios_id  and ser.id = i."serviciosIng_id" ) left join clinico_especialidades esp1 on (esp1.id = i."especialidadesMedicosIngreso_id" ) left join clinico_diagnosticos diag1 on (diag1.id = i."dxIngreso_id") left join clinico_medicos med1 on (med1.id =i."medicoIngreso_id"  ) inner join clinico_viasIngreso vias on (vias.id = i."ViasIngreso_id") left join clinico_causasExterna cexterna on (cexterna.id = i."causasExterna_id") inner join clinico_regimenes reg on (reg.id = i.regimen_id) inner join clinico_tiposcotizante cot on (cot.id = i."tiposCotizante_id") left  join clinico_ips ips on (ips.id =i."ipsRemite_id") WHERE i.id = ' + "'" + str(ingreso) + "'"
+    comando = 'SELECT i."tipoDoc_id" tipoDocId, tp.nombre tipoDoc,  i.documento_id documentoId, u.documento documento, u.nombre  paciente , i.consec consec , i."fechaIngreso" ingreso , i."fechaSalida" salida, ser.nombre servicioNombreIng, dep.nombre dependenciasIngreso ,med1.nombre medicoIngreso, esp1.nombre espMedico,diag1.nombre diagMedico,vias.nombre viasIngreso, cexterna.nombre causasExterna,reg.nombre regimenes ,cot.nombre cotizante,i.remitido remitido,ips.nombre ips ,i."numManilla" numManilla, diag1.nombre dxIngreso, i."contactoResponsable_id" responsable, i."contactoAcompañante_id"  acompanante FROM admisiones_ingresos i inner join usuarios_usuarios u on (u."tipoDoc_id" = i."tipoDoc_id" and u.id = i."documento_id" ) inner join sitios_dependencias dep on (dep."sedesClinica_id" = i."sedesClinica_id" and dep."tipoDoc_id" =  i."tipoDoc_id" and dep.documento_id =i."documento_id"  and dep.consec = i.consec) inner join usuarios_tiposDocumento tp on (tp.id = u."tipoDoc_id") inner join sitios_dependenciastipo deptip on (deptip.id = dep."dependenciasTipo_id") inner join sitios_serviciosSedes sd on (sd."sedesClinica_id" = i."sedesClinica_id") inner join clinico_servicios ser  on (ser.id = sd.servicios_id  and ser.id = i."serviciosIng_id" ) left join clinico_especialidades esp1 on (esp1.id = i."especialidadesMedicosIngreso_id" ) left join clinico_diagnosticos diag1 on (diag1.id = i."dxIngreso_id") left join clinico_medicos med1 on (med1.id =i."medicoIngreso_id"  ) inner join clinico_viasIngreso vias on (vias.id = i."ViasIngreso_id") left join clinico_causasExterna cexterna on (cexterna.id = i."causasExterna_id") inner join clinico_regimenes reg on (reg.id = i.regimen_id) inner join clinico_tiposcotizante cot on (cot.id = i."tiposCotizante_id") left  join clinico_ips ips on (ips.id =i."ipsRemite_id") WHERE i.id = ' + "'" + str(ingreso) + "'"
 
     print(comando)
     curt.execute(comando)
 
     usuarios = {}
 
-    for tipoDocId, tipoDoc, documentoId, documento, paciente, consec, ingreso, salida, servicioNombreIng, dependenciasIngreso, medicoIngreso, espMedico, diagMedico, viasIngreso, causasExterna, regimenes, cotizante, remitido, ips, numManilla, dxIngreso in curt.fetchall():
+    for tipoDocId, tipoDoc, documentoId, documento, paciente, consec, ingreso, salida, servicioNombreIng, dependenciasIngreso, medicoIngreso, espMedico, diagMedico, viasIngreso, causasExterna, regimenes, cotizante, remitido, ips, numManilla, dxIngreso, responsable, acompanante in curt.fetchall():
         usuarios = {'tipoDocId':tipoDocId, 'tipoDoc': tipoDoc, 'documentoId':documentoId, 'documento': documento, 'paciente': paciente, 'consec':consec, 'ingreso': ingreso,
                     'salida': salida, 'servicioNombreIng': servicioNombreIng,
                     'dependenciasIngreso': dependenciasIngreso,
                     'medicoIngreso': medicoIngreso, 'espMedico': espMedico, 'diagMedico': diagMedico,
                     'viasIngreso': viasIngreso, 'causasExterna': causasExterna,
                     'regimenes': regimenes, 'cotizante': cotizante, 'remitido': remitido,
-                    'ips': ips, 'numManilla': numManilla, 'dxIngreso': dxIngreso}
+                    'ips': ips, 'numManilla': numManilla, 'dxIngreso': dxIngreso, 'responsable':responsable, 'acompanante':acompanante}
 
     miConexiont.close()
     print(usuarios)
@@ -4373,6 +4401,14 @@ def serialize_datetime(obj):
         return obj.isoformat() 
     raise TypeError("Type not serializable") 
 
+
+def serialize_datetime1(obj):
+    if isinstance(obj, datetime.datetime):
+        return obj.isoformat()
+    raise TypeError("Type not serializable")
+
+
+
 # Create your views here.
 def load_dataConvenioAdmisiones(request, data):
     print ("Entre  load_dataConvenioAdmisiones")
@@ -4419,6 +4455,49 @@ def load_dataConvenioAdmisiones(request, data):
     return HttpResponse(serialized1, content_type='application/json')
 
 
+def load_dataAbonosAdmisiones(request, data):
+    print("Entre  load_dataAbonosAdmisiones")
+
+    context = {}
+    d = json.loads(data)
+
+    ingresoId = d['ingresoId']
+    sede = d['sede']
+
+    print("sede:", sede)
+    print("ingresoId:", ingresoId)
+
+    # print("data = ", request.GET('data'))
+
+    abonos  = []
+
+    # miConexionx = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curx = miConexionx.cursor()
+
+    detalle = 'SELECT pag.id id , i."tipoDoc_id" tipoDoc , i.documento_id documentoId ,u.documento documento,u.nombre nombre,i.consec consec , tipdoc.nombre nombreDocumento , pag.fecha fecha, pag."tipoPago_id" tipoPago , pag."formaPago_id" formaPago, pag.valor valor, pag.descripcion descripcion FROM admisiones_ingresos i, cartera_pagos pag ,usuarios_usuarios u ,usuarios_tiposdocumento tipdoc, cartera_tiposPagos tip, cartera_formasPagos forma WHERE i.id = ' + "'" + str(ingresoId) + "'" + ' and i.documento_id = u.id and i."tipoDoc_id" = pag."tipoDoc_id" and i.documento_id  = pag.documento_id and  i.consec = pag.consec AND tipdoc.id = i."tipoDoc_id" and pag."tipoPago_id" = tip.id and pag."formaPago_id" = forma.id'
+    print(detalle)
+
+    curx.execute(detalle)
+
+    for id, tipoDoc, documentoId, documento, nombre, consec, nombreDocumento , fecha, tipoPago, formaPago, valor, descripcion  in curx.fetchall():
+        abonos.append(
+            {"model": "cartera_pagos.cartera_pagos", "pk": id, "fields":
+                {'id': id, 'tipoDoc': tipoDoc, 'documentoId': documentoId, 'nombre':nombre,'consec':consec,  'nombreDocumento': nombreDocumento,
+                 'fecha': fecha, 'tipoPago': tipoPago, 'formaPago': formaPago, 'valor':valor, 'descripcion':descripcion}})
+
+    miConexionx.close()
+    print(abonos)
+    context['Abonos '] = abonos
+
+    serialized2 = json.dumps(abonos, default=serialize_datetime1)
+
+    print("Envio = ", serialized2)
+
+    return HttpResponse(serialized2, content_type='application/json')
+
+
 
 def GuardaConvenioAdmision(request):
 
@@ -4449,6 +4528,41 @@ def GuardaConvenioAdmision(request):
     return JsonResponse({'success': True, 'message': 'Convenio Actualizado satisfactoriamente!'})
 
 
+
+def GuardaAbonosAdmision(request):
+
+    print ("Entre GuardaAbonosAdmision" )
+
+    ingresoId = request.POST["ingresoId22"]
+    sede = request.POST["sede22"]
+    tipoPago = request.POST["tipoPago"]
+    formaPago = request.POST["formaPago"]
+    valor = request.POST['valorAbono']
+    descripcion = request.POST['descripcionAbono']
+    print ("ingresoId = ", ingresoId)
+    print("sede = ", sede)
+
+    fechaRegistro = datetime.datetime.now()
+
+    registroId = Ingresos.objects.get(id=ingresoId)
+    print  ("registroId documento =" , registroId.documento_id)
+
+    ## falta usuarioRegistro_id
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
+    comando = 'insert into cartera_Pagos ("fecha", "tipoDoc_id" , documento_id, consec,  "tipoPago_id" , "formaPago_id", valor, descripcion ,"fechaRegistro","estadoReg") values ('  + "'" + str(fechaRegistro) + "'," +  "'" + str(registroId.tipoDoc_id) + "'" + ' , ' + "'" + str(registroId.documento_id) + "'" + ', ' + "'" + str(registroId.consec) + "'" + '  , ' + "'" + str(tipoPago) + "'" + '  , ' + "'" + str(formaPago) + "'" + ', ' + "'" + str(valor) + "',"   + "'" + str(descripcion) + "','"   + str(fechaRegistro) + "'," + "'" +  str("A") + "');"
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
+    miConexion3.close()
+
+    #return HttpResponse("Convenio Adicionado", content_type='application/json')
+
+    return JsonResponse({'success': True, 'message': 'Abono Actualizado satisfactoriamente!'})
+
+
+
+
 def PostDeleteConveniosAdmision(request):
 
     print ("Entre PostDeleteConveniosAdmision" )
@@ -4464,3 +4578,63 @@ def PostDeleteConveniosAdmision(request):
     return JsonResponse({'success': True, 'message': 'Convenio borrado!'})
 
 
+def PostDeleteAbonosAdmision(request):
+
+    print ("Entre PostDeleteAbonosAdmision" )
+
+    id = request.POST["id"]
+    print ("el id es = ", id)
+
+
+    post = Pagos.objects.get(id=id)
+    post.delete()
+    #return HttpResponseRedirect(reverse('index'))
+    return JsonResponse({'success': True, 'message': 'Abono Cancelado!'})
+
+
+
+def GuardarResponsableAdmision(request):
+
+    print ("Entre GuardaConvenioAdmision" )
+
+    ingresoId = request.POST["ingresoId"]
+    responsable = request.POST["responsable"]
+    print ("ingresoId = ", ingresoId)
+    print("responsable  = ", responsable )
+
+    registroId = Ingresos.objects.get(id=ingresoId)
+    print  ("registroId documento =" , registroId.documento_id)
+
+    ## falta usuarioRegistro_id
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
+    comando = 'UPDATE admisiones_ingresos set "contactoResponsable_id" = ' + "'" + str(responsable) + "' WHERE id = " + "'" + str(ingresoId) +"'"
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
+    miConexion3.close()
+
+    return JsonResponse({'success': True, 'message': 'Responsable Actualizado satisfactoriamente!'})
+
+def GuardarAcompananteAdmision(request):
+
+    print ("Entre GuardaAcompananteAdmision" )
+
+    ingresoId = request.POST["ingresoId"]
+    acompanante = request.POST["acompanante"]
+    print ("ingresoId = ", ingresoId)
+    print("acompanante  = ", acompanante )
+
+    registroId = Ingresos.objects.get(id=ingresoId)
+    print  ("registroId documento =" , registroId.documento_id)
+
+    ## falta usuarioRegistro_id
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
+    comando = 'UPDATE admisiones_ingresos set "contactoAcompañante_id" = ' + "'" + str(acompanante) + "' WHERE id = " + "'" + str(ingresoId) +"'"
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
+    miConexion3.close()
+
+    return JsonResponse({'success': True, 'message': 'Responsable Actualizado satisfactoriamente!'})

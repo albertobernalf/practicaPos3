@@ -32,7 +32,7 @@ class usuariosAdmin(admin.ModelAdmin):
 @admin.register(UsuariosContacto)
 class usuariosContactoAdmin(admin.ModelAdmin):
 
-    list_display = ("id","tipoDoc","documento","nombre","direccion","telefono","correo", "tipoDocPaciente","documentoPaciente", "consecPaciente")
-    search_fields =  ("id","tipoDoc","documento","nombre","direccion","telefono","correo", "tipoDocPaciente","documentoPaciente", "consecPaciente")
+    list_display = ("id","tipoDoc","documento","nombre","direccion","telefono","correo")
+    search_fields =  ("id","tipoDoc","documento","nombre","direccion","telefono","correo")
     # Filtrar
-    list_filter =  ("id","tipoDoc","documento","nombre","direccion","telefono","correo", "tipoDocPaciente","documentoPaciente", "consecPaciente")
+    list_filter =  ("id","tipoDoc","documento","nombre","direccion","telefono","correo")

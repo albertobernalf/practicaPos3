@@ -57,6 +57,7 @@ tablaConveniosAdmisiones tr {
     <article id="Ingresos">
         <!-- Inicioo Table -->
         <center><h4>Ingresos Pacientes</h4></center>
+           <input type="text" id="ingresoIdGlobal" name="ingresoIdGlobal" value = ""></input>
 
             <div class="row justify-content-center">
 
@@ -1065,6 +1066,9 @@ tablaConveniosAdmisiones tr {
 
 
     </article>
+        <!-- ojooooooooooo aqui campo de ingreso global -->
+
+
 
 
     <article id="Convenios">
@@ -1072,11 +1076,6 @@ tablaConveniosAdmisiones tr {
 
 <script type="text/javascript">
     var $ = jQuery;
-
-// aquip  estaba el documentt.ready
-
-// $(document).ready(function() {
-
 function cargarTablaConmveniosPaciente()
        {
 
@@ -1094,7 +1093,7 @@ function cargarTablaConmveniosPaciente()
 }
  </script>
 
-        <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
+        <table class="table  " style="height: 50px; background-color:LightGray;  width:90%;">
             <tr>
                 <td>
                 </td>
@@ -1220,27 +1219,157 @@ function cargarTablaConmveniosPaciente()
 
     <article id="Abonos">
         <center><h3>Abonos</h3></center>
-            <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <table class="table" style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
-                            <form class="form-inline" action="/crearAbonosDef/" method="POST" id="FormaAbonos">
+<script type="text/javascript">
+    var $ = jQuery;
+function cargarTablaAbonosPaciente()
+       {
 
 
+  	var data =  {}   ;
+        var sede = document.getElementById("sede").value;
+        data['sede'] = sede;
+        var ingresoId= document.getElementById("ingresoId4").value;
+        data['ingresoId'] = ingresoId;
+        data = JSON.stringify(data);
+	table = $("#tablaAbonosAdmisiones").dataTable().fnDestroy();
+        initTableAbonos(data);
 
-                            </form>
-                        </table>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-            </table>
+
+}
+ </script>
+
+        <table class="table  " style="height: 50px; background-color:LightGray;  width:90%;">
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+             <!-- DESDE AQUIP DATATABLE  -->
+
+                    <table class="table"
+                           style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+                        <form class="form-inline" action="/crearAbonosPacienteDef/" method="POST"
+                              id="FormaAbonosPaciente">
+			   	            <input type="hidden" id="sede4" name="sede4" value = "{{Sede}}">
+		                            <input type="hidden" id="ingresoId4" name="ingresoId4" value = "">
+			   
+                    
+                            <!-- INICIO TABLE DE  EL DATATABLE  -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row">
+                     				   <div class="col-sm-9">
+	        					<input type="button" id="btn-rango" name="btn-rango" value = "Generar consulta ¡" onClick="cargarTablaAbonosPaciente()" >
+                                                <div class="alert alert-success success-msg" style="display:none"></div>
+
+                      				  </div>
+                 			       <div class="col-sm-3 text-end">
+                       				      <span class="text-secondary">Crear Abono</span>
+                       			     <a class="btn btn-success" href="javascript:void(0)" id="createNewPostAbonos"> <i class="fa fa-plus"></i></a>
+                      				  </div>
+                    </div>
+					 </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+
+                                                        <table id=tablaAbonosAdmisiones class="display nowrap table table table-bordered  tablaAbonosAdmisiones table-hover table-sm dtr-inline">
+
+                                                            <thead>
+                                                            <tr>
+                                                                <th style="width:25;">Tipo Pago</th>
+                                                                <th style="width:25;">Forma Pago</th>
+                                                                <th style="width:25%;">Valor</th>
+                                                                <th style="width:12%;">Descripcion</th>
+                                                                <th style="width:3%;">Borrar</th>
+                                                                <!--  <th data-visible="true"></th>  -->
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody style="vertical-align:bottom">
+                                                            <tr style="height:10%">
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIN TABLE DE  EL DATATABLE  -->
+                        </form>
+                    </table>
+
+             <!-- HASTA AQUI DATATABLE -->
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+<!-- Espacio Modales  -->
+
+<div class="modal fade" id="crearAbonosModel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelHeading"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger error-msg" style="display:none">
+                    <ul class="mb-0"></ul>
+                </div>
+                <form id="postFormCrearAbonos" name="postFormCrearAbonos" class="form-horizontal"  novalidate>
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" id="post_id">
+                    <input type="hidden" id="sede22" name="sede22" value = "{{Sede}}">
+                     <input type="hidden" id="ingresoId22" name="ingresoId22" value ="">
+
+			<div class="col">
+				<label for="tipoPago" class="col-sm-2 control-label">Tipo Pago:</label>
+                            <select class="form-select  h-100 w-200" aria-label="" id="tipoPago"
+                                    name="tipoPago">
+                                {% for tiposPagos in TiposPagos %}
+                                <option value="{{tiposPagos.id}}"> {{tiposPagos.nombre}}</option>
+                                {% endfor %}
+                            </select>
+   			</div>
+			<div class="col">
+				<label for="formaPago" class="col-sm-2 control-label">Forma Pago:</label>
+                            <select class="form-select  h-100 w-200" aria-label="" id="formaPago"
+                                    name="formaPago">
+                                {% for formasPagos in FormasPagos %}
+                                <option value="{{formasPagos.id}}"> {{formasPagos.nombre}}</option>
+                                {% endfor %}
+                            </select>
+   			</div>
+			<div class="col">
+				Valor:
+			       <input type="text" id="valorAbono" name="valorAbono" value = "0"></input>
+   			</div>
+			<div class="col">
+				Descripcion:
+			       <input type="text" id="descripcionAbono" name="descripcionAbono" value = "0"> </input>
+   			</div>
+
+
+                    <div class="col-sm-offset-2 col-sm-10 mt-2">
+                        <button type="submit" class="btn btn-primary" id="saveBtnCrearAbonos" value="create">Guardar
+                        </button>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fin Modales -->
 
 
     </article>
@@ -1466,22 +1595,80 @@ function cargarTablaConmveniosPaciente()
 
 
     </article>
+
     <article id="Responsables">
         <center><h3>Responsables Cuenta</h3></center>
-            <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
+
+            <table class="table  " style="height: 50px; background-color:LightGray;  width:90%;">
                 <tr>
                     <td>
                     </td>
                     <td>
                     </td>
                     <td>
-                        <table class="table" style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
-                            <form class="form-inline" action="/crearResponsablesDef/" method="POST" id="FormaResponsables">
+                       
+<!-- DESDE AQUIP -->
+             <!-- DESDE AQUIP DATATABLE  -->
+
+                    <table class="table"
+                           style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:90%;">
+                        <form class="form-inline" action="/crearResponsableDef/" method="POST"
+                              id="FormaResponsable">
+	   	            <input type="hidden" id="sede5" name="sede5" value = "{{Sede}}">
+                            <input type="hidden" id="ingresoId5" name="ingresoId5" value = "">
+			   
+                    
+                            <!-- INICIO TABLE DE  EL DATATABLE  -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row">
+					
+                     			
+					 <div class="col">
+                                            <label for="responsablesC" class="col-sm-6 control-label">Responsable Cuenta:</label>
+
+                                            <select class="form-select  h-40 w-10" id="responsablesC" name="responsablesC">
+                                                {% for responsables in Responsables %}
+                                                <option value="{{responsables.id}}"> {{responsables.nombre}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+
+                                        </div>
+                 			        <div class="col">
+                       				      <span class="text-secondary">Crear Responsable</span>
+                       			     <a class="btn btn-success" href="javascript:void(0)" id="createNewResponsable"> <i class="fa fa-plus"></i></a>
+                      				  </div>
+
+						 <div class="col">
+							<input type="button" id="guardaResponsable1" name="guardaResponsable1" class="btn btn-primary" value="Guardar">
+						  </div>
+
+							
+			                    </div>
+					 </div>
+                                            <div class="card-body">
+                                                <div class="row">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIN TABLE DE  EL DATATABLE  -->
+                        </form>
+                    </table>
+
+
+             <!-- HASTA AQUI DATATABLE -->
 
 
 
-                            </form>
-                        </table>
+<!-- HASTA AQUIP -->
+
+
                     </td>
                     <td>
                     </td>
@@ -1494,20 +1681,72 @@ function cargarTablaConmveniosPaciente()
 
     <article id="Acompañantes">
         <center><h3>Acompañantes Paciente</h3></center>
-            <table class="table  " style="height: 50px; background-color:LightGray;  width:100%;">
+            <table class="table  " style="height: 50px; background-color:LightGray;  width:90%;">
                 <tr>
                     <td>
                     </td>
                     <td>
                     </td>
                     <td>
-                        <table class="table" style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
-                            <form class="form-inline" action="/crearAcompañantesDef/" method="POST" id="FormaAcompañantes">
+<!-- DESDE AQUIP -->
+             <!-- DESDE AQUIP DATATABLE  -->
+
+                    <table class="table"
+                           style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:90%;">
+                        <form class="form-inline" action="/crearAcompananteDef/" method="POST"
+                              id="FormaAcompanante">
+	   	            <input type="hidden" id="sede6" name="sede6" value = "{{Sede}}">
+                            <input type="hidden" id="ingresoId6" name="ingresoId6" value = "">
+	   
+                    
+                            <!-- INICIO TABLE DE  EL DATATABLE  -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row">
+					                    			
+					 <div class="col">
+                                            <label for="acompananteC" class="col-sm-6 control-label">Acompañante Paciente:</label>
+
+                                            <select class="form-select  h-40 w-10" id="acompananteC" name="acompananteC">
+                                                {% for acompanantes in Acompanantes %}
+                                                <option value="{{acompanantes.id}}"> {{acompanantes.nombre}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+
+                                        </div>
+                 			        <div class="col">
+                       				      <span class="text-secondary">Crear Responsable</span>
+                       			     <a class="btn btn-success" href="javascript:void(0)" id="createNewResponsable"> <i class="fa fa-plus"></i></a>
+                      				  </div>
+
+						 <div class="col">
+							<input type="button" id="guardaAcompanante1" name="guardaAcompanante1" class="btn btn-primary" value="Guardar" >
+						  </div>
+
+							
+			                    </div>
+					 </div>
+                                            <div class="card-body">
+                                                <div class="row">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIN TABLE DE  EL DATATABLE  -->
+                        </form>
+                    </table>
+
+
+             <!-- HASTA AQUI DATATABLE -->
 
 
 
-                            </form>
-                        </table>
+<!-- HASTA AQUIP -->
                     </td>
                     <td>
                     </td>
@@ -1515,7 +1754,6 @@ function cargarTablaConmveniosPaciente()
                     </td>
                 </tr>
             </table>
-
     </article>
 
 </div>

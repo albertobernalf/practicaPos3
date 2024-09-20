@@ -48,10 +48,8 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
    -- Colocar un control en guardar el cambio de servicio so no hay seleccionados datos en la ventana. para mantener robusta la Aplicacion..
 
    colocar mensaje bonito cuando no se escibe causa externa o diagnostico ojop
-   porque l¿el datatable de rx diferente de laborat, no ingresa filas en blanco y no bonito // UNIFICAR PRESENTACION
    busacar capturav ronum de la tabla laboratorios , creop en paneladmisiones ,    implementa delete no funciona en ambos lab-rayx
    el tiposFolio aun no funciona solo trae 1 , no he podido pailas 
-   el causaexterna or diagnosticos ='' No funciona
    crear prioridad en clinico examenes y clinico_prioridad
    tiposfolio (Pendiente que guarde y no se bloquee no se que pasa)
 
@@ -59,7 +57,6 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 
    1. create facturacion_facturacion, facturacion_facturacionDetalle, involucrar glosas
    2.   bajar anexosa tecnicos de glosas. Crear carpetasde anexos tecnicos
-   3. crear datatable medicamentos
    4. crear historia-clinicos con form . Es el historial como un resumen de historia en pantalla de consulta
    5.que crajop pasa con las fechas-hora
    6. algo pasda con el grid de revsion de sistemas/historia clinica
@@ -113,13 +110,29 @@ modalidadGrupoServicioTecSal": "09",
   ojo ops en admisiones error al crear conveniop (se debe siempre tener seleccionado un convenio papabero)
    ojo obligar siempre a ingresar diagnosticos en HC .. Nop  validar
 15 ojo cuando se ingresa diagnostico se desplaza hacia abajo se pierde presentacion
-   ojo SIGNOS VITALES POBNER CALENDARIO FECHA
    OJO ARREGLA PANTALA PROC Noqx 2 renglones
-   ojo pestaña antecedentes. revsistemas imiden acceso footer pagina
-   ojo calcular numero dias en incapacidad
-20 ojo la fecha-hora de signos vitales pailas
-   ojo verificar los medico consulta e interconsultado , creop esta m,al
+   ojo pestaña antecedentes. revsistemas impiden acceso footer pagina
+   ojo calcular numero dias en incapacidad y solo readonly el campo numDIas
+   ojo la fecha-hora de signos vitales pailas  .. Nop fecha en signos vitales no deb ir es la fecha del folio
+20 ojo verificar los medico consulta e interconsultado , creop esta mal
+21 ojo Problemas error al guardar null en acompanantes y responsables
+22 El mensaje no sale de responsable actualizao por cua ?.
+23. Ojo hay un erro al cargar la paginma admisione. es en cambioServico.change se activa pero no hay sede , por cua? no hay sede?
+24. Toca arregalr el tema de los ingresoIDxx, sedexx de acompanantes, responsable y abonos. ORGANIZAR bien
 
+    PARA EL DIA MARTES 24 DE Septiembre
+
+25. Ojo tengo un problema con cambio de servicio maria paula VERIFICAR PALAS
+26. El problema madre es el siguiente Debe haber un campo global ingresoId <inputTex> no boton radio
+    que nguarde el id del ingreso . De alli se copia para los demas campos ingresoid <inputtext> de las respectivas modales
+    copn ello no se pierde el numero del ingreso.
+    Ademas: qU PASA CON EL CAMPO documento inputtext de paneladmisiones, ES EL DEL PACIENTE VERDAD? vALIDAR
+    ADEMAS QUE PASA CON CAMBIO DE SERVICO en algnoscasos miral el tipodoc,dpocumento y funciona e otros no, pero que caracho esta pasando siesto no deberia lerr tipodoc,documento
+    de dependeciasActual que se devuelve en el response de cambioservicio
+    Apenas arregle todo esto si crearFURIPs. Se debe crear enarticle copiao de crearadmisiones a bloc de notas , se maquilla con datos FURIPS, se envian combos alarticle y opcion guardar
+    Hay un problema cuando seleccion mi documento se queda estacionado en otro id se queda con elvalor del seleccinado previamente por CUA ??
+    error cuando trae abonos Type not serializable
+    PRIMERO QUE TODO ENCONTART PORCUA CAMBIO SERVICIO NO FUNCIONAP
 
   
 -----------------------------------------------------------------------------------------------------------------------

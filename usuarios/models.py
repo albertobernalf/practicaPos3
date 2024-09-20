@@ -86,9 +86,9 @@ class UsuariosContacto(models.Model):
     direccion = models.CharField(max_length=50)
     telefono  = models.CharField(max_length=20)
     correo = models.EmailField()
-    tipoDocPaciente= models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT)
-    documentoPaciente = models.ForeignKey('usuarios.Usuarios', blank=True,null= True, editable=True, on_delete=models.PROTECT)
-    consecPaciente    = models.IntegerField()
+    #tipoDocPaciente= models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    #documentoPaciente = models.ForeignKey('usuarios.Usuarios', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    #consecPaciente    = models.IntegerField()
     tiposFamilia= models.ForeignKey('basicas.TiposFamilia', blank=True,null= True, editable=True, on_delete=models.PROTECT)
 
     tiposContacto = models.ForeignKey('basicas.TiposContacto', blank=True,null= True, editable=True, on_delete=models.PROTECT)

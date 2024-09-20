@@ -141,8 +141,11 @@ urlpatterns = [
     path('load_dataConvenioAdmisiones/<str:data>', viewsAdmisiones.load_dataConvenioAdmisiones, name='loaddataAdmisiones'),
     path('guardaConvenioAdmision/', viewsAdmisiones.GuardaConvenioAdmision, name='guardaConvenioAdmision'),
     path('postDeleteConveniosAdmision/', viewsAdmisiones.PostDeleteConveniosAdmision, name='postDeleteConveniosAdmision'),
-
-
+    path('guardarResponsableAdmision/', viewsAdmisiones.GuardarResponsableAdmision, name='guardarResponsableAdmision'),
+    path('guardarAcompananteAdmision/', viewsAdmisiones.GuardarAcompananteAdmision, name='guardarAcompananteAdmision'),
+    path('load_dataAbonosAdmisiones/<str:data>', viewsAdmisiones.load_dataAbonosAdmisiones,   name='loaddataAbonosAdmisiones'),
+    path('guardaAbonosAdmision/', viewsAdmisiones.GuardaAbonosAdmision, name='guardaAbonosAdmision'),
+    path('postDeleteAbonosAdmision/', viewsAdmisiones.PostDeleteAbonosAdmision, name='postDeleteAbonosAdmision'),
 
     # Triage
 
