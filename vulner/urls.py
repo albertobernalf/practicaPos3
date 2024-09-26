@@ -146,6 +146,7 @@ urlpatterns = [
     path('load_dataAbonosAdmisiones/<str:data>', viewsAdmisiones.load_dataAbonosAdmisiones,   name='loaddataAbonosAdmisiones'),
     path('guardaAbonosAdmision/', viewsAdmisiones.GuardaAbonosAdmision, name='guardaAbonosAdmision'),
     path('postDeleteAbonosAdmision/', viewsAdmisiones.PostDeleteAbonosAdmision, name='postDeleteAbonosAdmision'),
+    path('guardaFurips/', viewsAdmisiones.GuardaFurips, name='guardaFurips'),
 
     # Triage
 

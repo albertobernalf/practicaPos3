@@ -121,20 +121,14 @@ modalidadGrupoServicioTecSal": "09",
 24. Toca arregalr el tema de los ingresoIDxx, sedexx de acompanantes, responsable y abonos. ORGANIZAR bien
 
     PARA EL DIA MARTES 24 DE Septiembre
-
-25. Ojo tengo un problema con cambio de servicio maria paula VERIFICAR PALAS
-26. El problema madre es el siguiente Debe haber un campo global ingresoId <inputTex> no boton radio
-    que nguarde el id del ingreso . De alli se copia para los demas campos ingresoid <inputtext> de las respectivas modales
-    copn ello no se pierde el numero del ingreso.
-    Ademas: qU PASA CON EL CAMPO documento inputtext de paneladmisiones, ES EL DEL PACIENTE VERDAD? vALIDAR
-    ADEMAS QUE PASA CON CAMBIO DE SERVICO en algnoscasos miral el tipodoc,dpocumento y funciona e otros no, pero que caracho esta pasando siesto no deberia lerr tipodoc,documento
-    de dependeciasActual que se devuelve en el response de cambioservicio
+    No me martca o me selecciona el primer registor d ela tabla en admiisones NOSE POR CUA
     Apenas arregle todo esto si crearFURIPs. Se debe crear enarticle copiao de crearadmisiones a bloc de notas , se maquilla con datos FURIPS, se envian combos alarticle y opcion guardar
-    Hay un problema cuando seleccion mi documento se queda estacionado en otro id se queda con elvalor del seleccinado previamente por CUA ??
-    error cuando trae abonos Type not serializable
-    PRIMERO QUE TODO ENCONTART PORCUA CAMBIO SERVICIO NO FUNCIONAP
+   ojo. No actualizo el consecutivo al  maria paula en dependencias. ops supongo ops esta raro que cambio de servicoi o que paso ??, ops la tabla admisiones no
+            tiene un sdo ingreso ops que paso ase activo el consecutovo cuando nop ops.
+   ojo. Ver como acomodar os datos del paciuente en acompanantes y responsable de adisoones
+   ojo recuerde el boton crear responsables acompañante no ta creado hay que desarrollarlo
+   ojo probar conm conductor = request.POST.get("conductor")
 
-  
 -----------------------------------------------------------------------------------------------------------------------
 --  APOYO TERAPEUTICO - FACTURACION
 -----------------------------------------------------------------------------------------------------------------------

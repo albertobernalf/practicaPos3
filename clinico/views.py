@@ -915,7 +915,6 @@ def crearHistoriaClinica(request):
         context['title'] = 'Mi gran Template'
         context['historiaForm'] = historiaForm
         context['IncapacidadesForm'] = IncapacidadesForm
-        #context['HistorialDiagnosticosCabezoteForm'] = HistorialDiagnosticosCabezoteForm
         context['HistoriaSignosVitalesForm']  = HistoriaSignosVitalesForm
 
         Sede = request.GET["sede"]

@@ -72,82 +72,139 @@ class Ingresos(models.Model):
 
 
 
-
 class Furips(models.Model):
     A = 'A'
     I = 'I'
     TIPO_CHOICES = (
-        (A, 'ACTIVO'),
-        (I, 'INACTIVO'),
+        ('A', 'ACTIVO'),
+        ('I', 'INACTIVO'),
     )
     S = 'S'
     N = 'N'
     TIPO_CHOICES1 = (
-        (S, 'S'),
-        (N, 'N'),
+        ('S', 'Si'),
+        ('N', 'No'),
     )
+    Asegurado = 'A'
+    No_Asegurado = 'N'
+    Vehiculo_Fantasma = 'V'
+    Poliza_Falsa = 'P'
+    Vehiculo_en_fuga = 'F'
+    TIPO_CONDICION = (
+        (Asegurado, 'Asegurado'),
+        (No_Asegurado, 'No Asegurado'),
+        (Vehiculo_Fantasma, 'Vehiculo Fantasma'),
+        (Poliza_Falsa, 'Poliza Falsa'),
+        (Vehiculo_en_fuga, 'Vehiculo en fuga'),
+    )
+    P = 'Servicio Particular'
+    U = 'Servicio Publico'
+    O = 'Servicio Oficial'
+    D = 'Servicio Diplomatico'
+    T = 'De transporte Masivo'
+    E =	'Escolar'
+    TIPO_CHOICES3 = (
+        (P, 'Servicio Particular'),
+        (U, 'Servicio Publico'),
+        (O, 'Servicio Oficial'),
+        (D, 'Servicio Diplomatico'),
+        (T, 'De transporte Masivo'),
+	    (E, 'Escolar'),
+    )
+    R =  'Remision'
+    O = 'Orden de Servicio'
+    TIPO_CHOICES4 = (
+        (R, 'Remision'),
+        (O, 'Orden de Servicio'),
+    )
+
     id = models.AutoField(primary_key=True)
     sedesClinica = models.ForeignKey('sitios.SedesClinica', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name = 'SedesClinica3')
-    tipoDoc        = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT)
-    documento      = models.ForeignKey('usuarios.Usuarios',blank=True,null= True, editable=True, on_delete=models.PROTECT,  related_name='Documento4')
-    consec         = models.IntegerField()
-    numeroFactura = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    documento = models.ForeignKey('usuarios.Usuarios',blank=True,null= True, editable=True, on_delete=models.PROTECT,  related_name='Documentofur')
+    consec    = models.IntegerField(default=0)
     fechaRadicado =  models.DateTimeField( editable=True, null=True, blank=True)
-    direccionVictima = models.CharField(max_length=80,  blank=True, null=True, editable=True,)
-    telVictima = models.CharField(max_length=10,  blank=True, null=True, editable=True,)
+    numeroRadicacion = models.CharField(max_length=30,  blank=True, null=True, editable=True,)
+    numeroRadicadoAnterior = models.CharField(max_length=30,  blank=True, null=True, editable=True,)
+    numeroFactura = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    primerNombreVictima = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    segundoNombreVictima = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    primerApellidoVictima = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    segundoApellidoVictima = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    tipoDocVictima        = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='tipoDoc14')
+    documentoVictima      = models.ForeignKey('usuarios.Usuarios',blank=True,null= True, editable=True, on_delete=models.PROTECT,  related_name='Documento14')
+    consecVictima         = models.IntegerField()
+    condicionAccidentado = models.CharField(max_length=1, default='A', editable=False ,choices = TIPO_CONDICION)
     evento = models.ForeignKey('basicas.Eventos', blank=True,null= True, editable=True, on_delete=models.PROTECT)
-    eventoDescripcion = models.CharField(max_length=500,  blank=True, null=True, editable=True,)
     direccionEvento = models.CharField(max_length=80,  blank=True, null=True, editable=True,)
-    fechaEvento = models.DateTimeField( editable=True,  blank=True, null=True)
-    municipioEvento = models.ForeignKey('sitios.Municipios', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='muni2')
-    localidadEvento = models.ForeignKey('sitios.Localidades', blank=True,null= True, editable=True, on_delete=models.PROTECT)
-    estadoAsegurado = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
-    tipoVehiculo = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
-    placaAsegurado = models.CharField(max_length=10, blank=True, null=True, editable=True,)
-    marcaAsegurado = models.CharField(max_length=15,  blank=True, null=True, editable=True,)
+    departamentoEvento = models.ForeignKey('sitios.Departamentos', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='dept10')
+    municipioEvento = models.ForeignKey('sitios.Municipios', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='muni10')
+    localidadEvento = models.ForeignKey('sitios.Localidades', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='local09')
+    zonaEvento =  models.CharField(max_length=1, default='A', editable=False )
+    fechaEvento = models.DateTimeField( default=now,editable=True,  blank=True, null=True)
+    eventoDescripcion = models.CharField(max_length=500,  blank=True, null=True, editable=True,)
+    estado = models.CharField(max_length=20,  blank=True, null=True, editable=True, choices = TIPO_CHOICES1)
+    marcaVehiculo = models.CharField(max_length=50,  blank=True, null=True, editable=True,)
+    placaVehiculo = models.CharField(max_length=20, blank=True, null=True, editable=True,)
+    tipoServicioVehiculo = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    tipoVehiculo = models.CharField(max_length=20,  blank=True, null=True, editable=True, choices = TIPO_CHOICES3)
     codigoaseguradora = models.CharField(max_length=20, blank=True, null=True, editable=True,)
-    poliza= models.CharField(max_length=20,  blank=True, null=True, editable=True,)
-    fechaIniPoliza = models.DateTimeField( editable=True, null=True, blank=True)
-    fechaFinPoliza = models.DateTimeField( editable=True, null=True, blank=True)
-    tipoDocPlaca2 = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='tipoDoc14')
-    documentoPlaca2 =  models.CharField(max_length=20,  blank=True, null=True, editable=True,)
-    placa2  = models.CharField(max_length=10, blank=True, null=True, editable=True,)
-    tipoDocPlaca3 = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='tipoDoc24')
-    documentoPlaca3 =  models.CharField(max_length=20,  blank=True, null=True, editable=True,)
-    placa3 = models.CharField(max_length=10, default='', editable=True)
-    tipoDocPropietario = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='tipoDoc4')
-    documentoPropietario = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
-    nombresPropietario = models.CharField(max_length=30,  blank=True, null=True, editable=True,)
-    apellidosPropietario = models.CharField(max_length=30,  blank=True, null=True, editable=True,)
-    direccionProietario = models.CharField(max_length=80,  blank=True, null=True, editable=True,)
-    telefonoPropietario = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
-    municipioPropietario = models.ForeignKey('sitios.Municipios', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='muni1')
-    tipoDocConductor = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT  ,  related_name='tipoDoc6')
-    documentoConductor = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
-    nombresConductor = models.CharField(max_length=30,  blank=True, null=True, editable=True,)
-    apellidosConductor = models.CharField(max_length=30,  blank=True, null=True, editable=True,)
-    direccionConductor = models.CharField(max_length=80,  blank=True, null=True, editable=True,)
-    telefonoConductor = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
-    municipioconductor = models.ForeignKey('sitios.Municipios', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    numeroPoliza= models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    fechaIniPoliza = models.DateTimeField(default=now,  editable=True, null=True, blank=True)
+    fechaFinPoliza = models.DateTimeField(default=now, editable=True, null=True, blank=True)
+    intervencionAutoridad = models.CharField(max_length=1,  blank=True, null=True, editable=True,)
+    cobroExcedentePoliza = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    primerNombrePropietario = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    segundoNombrePropietario = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    primerApellidoPropietario = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    segundoApellidoPropietario = models.CharField(max_length=20,  blank=True, null=True, editable=True)
+    tipoDocPropietario        = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT ,   related_name='tipoDoc17')
+    documentoPropietario      = models.CharField(max_length=20,  blank=True, null=True, editable=True)
+    departamentoPropietario = models.ForeignKey('sitios.Departamentos', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='dept11')
+    municipioPropietario = models.ForeignKey('sitios.Municipios', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='muni11')
+    localidadPropietario = models.ForeignKey('sitios.Localidades', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='local10')
+    direccionPropietario = models.CharField(max_length=80,  blank=True, null=True, editable=True,)
+    primerNombreInvolucrado = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    segundoNombreInvolucrado = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    primerApellidoInvolucrado = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    segundoApellidoInvolucrado = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    tipoDocInvolucrado        = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT ,   related_name='tipoDoc15')
+    documentoInvolucrado     = models.CharField(max_length=20,  blank=True, null=True, editable=True )
+    departamentoInvolucrado = models.ForeignKey('sitios.Departamentos', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='dept12')
+    municipioInvolucrado = models.ForeignKey('sitios.Municipios', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='muni12')
+    localidadInvolucrado = models.ForeignKey('sitios.Localidades', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    direccionInvolucrado = models.CharField(max_length=80,  blank=True, null=True, editable=True,)
+    tipoReferencia =  models.CharField(max_length=20,  blank=True, null=True, editable=True, choices = TIPO_CHOICES4)
+    fechaRemision = models.DateTimeField( default=now, editable=True, null=True, blank=True)
+    prestadorRemite = models.ForeignKey('clinico.Ips', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='ips7' )
+    codigoInscripcion = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    profesionalRemite = models.ForeignKey('planta.Planta', default=1, on_delete=models.PROTECT, null=True ,  related_name='planta112')
+    fechaAceptacion = models.DateTimeField( editable=True, null=True, blank=True)
+    prestadorRecibe = models.ForeignKey('clinico.Ips', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='ips86' )
+    codigoInscripcionRecibe = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    profesionalRecibe = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    numeroPlacaTranporto = models.CharField(max_length=20, blank=True, null=True, editable=True,)
+    trasportoVictimaDesde = models.CharField(max_length=80, blank=True, null=True, editable=True,)
+    trasportoVictimaHasta = models.CharField(max_length=80, blank=True, null=True, editable=True,)
+    tipoTransporteTransporto = models.CharField(max_length=80, blank=True, null=True, editable=True,)
+    lugarRecogeVictima =models.CharField(max_length=80, blank=True, null=True, editable=True,)
+    certificacionIngreso =  models.DateTimeField( editable=True, null=True, blank=True)
+    certificacionEgreso =  models.DateTimeField( editable=True, null=True, blank=True)
     dxPrincIngreso     = models.ForeignKey('clinico.Diagnosticos', blank=True,null= True, editable=True, on_delete=models.PROTECT  ,  related_name='dx1' )
     dxRel1Ingreso   = models.ForeignKey('clinico.Diagnosticos', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='dx2' )
     dxRel2Ingreso   = models.ForeignKey('clinico.Diagnosticos', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='dx3' )
     dxPrincEgreso   = models.ForeignKey('clinico.Diagnosticos', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='dx4' )
     dxRel1Egreso    = models.ForeignKey('clinico.Diagnosticos', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='dx5' )
     dxRel2Egreso    = models.ForeignKey('clinico.Diagnosticos', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='dx6' )
-    tipoDocProfesional   = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT  ,  related_name='tipoDoc5')
-    documentoProfesional =  models.ForeignKey('planta.planta', blank=True,null= True, editable=True, on_delete=models.PROTECT)
-    completo         =  models.CharField(max_length=1, default='A', editable=False ,choices = TIPO_CHOICES1)
-    tipoAutomotor   = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
-    accidenteMultiple =   models.CharField(max_length=1,  blank=True, null=True, editable=True,choices = TIPO_CHOICES1)
-    ingresoUci =  models.CharField(max_length=1, default='A', editable=False ,choices = TIPO_CHOICES1)
-    velocidadAutomotor = models.CharField(max_length=50,  blank=True, null=True, editable=True,)
-    dispositivoSeguridad = models.CharField(max_length=50,  blank=True, null=True, editable=True,)
-    tipoColision = models.CharField(max_length=20,  blank=True, null=True, editable=True,)
-    radicadoSiras =  models.CharField(max_length=20,  blank=True, null=True, editable=True,)
+    tipoDocProfesionalAtendio   = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT  ,  related_name='tipoDoc16')
+    documentoProfesionalAtendio =  models.ForeignKey('planta.planta', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    amparoReclamaFacturadoQx =  models.DecimalField(max_digits=7, decimal_places=2, default=0.0)
+    amparoReclamaAFosygaQx =  models.DecimalField(max_digits=7, decimal_places=2, default=0.0)
+    amparoReclamaFacturadoGastos =  models.DecimalField(max_digits=7, decimal_places=2, default=0.0)
+    amparoReclamaAFosygaGastos =  models.DecimalField(max_digits=7, decimal_places=2, default=0.0)
     fechaRegistro  = models.DateTimeField(editable=True, null=True, blank=True)
-    usuarioCrea = models.ForeignKey('planta.Planta', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='planta1')
+    usuarioCrea = models.ForeignKey('planta.Planta', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='planta111')
     estadoReg = models.CharField(max_length=1, default='A', editable=False ,choices = TIPO_CHOICES)
 
     def __str__(self):
-        return self.nombre
+        return self.numeroRadicacion

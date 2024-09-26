@@ -344,19 +344,19 @@ class HistoriaExamenes(models.Model):
     observaciones = models.CharField(max_length=200, editable=True,blank=True, null=True)
     fechaToma = models.DateTimeField(blank=True, null=True)
     usuarioToma = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True,  on_delete=models.PROTECT, related_name='usuarioToma1')
-    preliminar1 = models.CharField(max_length=300, editable=True,blank=True, null=True)
+    #preliminar1 = models.CharField(max_length=300, editable=True,blank=True, null=True)
     interpretacion1 = models.CharField(max_length=500, editable=True ,blank=True, null=True)
     medicoInterpretacion1 = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='medInterpreta1')
-    fechaPreliminar1 = models.DateTimeField(blank=True, null=True)
-    preliminar2 = models.CharField(max_length=300, editable=True,blank=True, null=True)
+    fechaInterpretacion1 = models.DateTimeField(blank=True, null=True)
+    #preliminar2 = models.CharField(max_length=300, editable=True,blank=True, null=True)
     interpretacion2 = models.CharField(max_length=500, editable=True,blank=True, null=True)
     medicoInterpretacion2 = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='medInterpreta2')
-    fechaPreliminar2 = models.DateTimeField(blank=True, null=True)
-    preliminar3 = models.CharField(max_length=300, editable=True,blank=True, null=True)
+    fechaInterpretacion2 = models.DateTimeField(blank=True, null=True)
+    #preliminar3 = models.CharField(max_length=300, editable=True,blank=True, null=True)
     interpretacion3 = models.CharField(max_length=500, editable=True,blank=True, null=True)
     medicoInterpretacion3 = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True,  on_delete=models.PROTECT, related_name='medInterpreta3')
-    fechaPreliminar3 = models.DateTimeField(blank=True, null=True)
-    resultado = models.CharField(max_length=5000, editable=True,blank=True, null=True)
+    fechaInterpretacion3 = models.DateTimeField(blank=True, null=True)
+    #resultado = models.CharField(max_length=5000, editable=True,blank=True, null=True)
     medicoReporte = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True,  on_delete=models.PROTECT, related_name='medReporte')
     fechaReporte = models.DateTimeField(blank=True, null=True)
     opinion = models.CharField(max_length=1000, editable=True,blank=True, null=True)
@@ -375,26 +375,18 @@ class HistoriaExamenes(models.Model):
 
 
 class HistoriaResultados(models.Model):
+
                     id = models.AutoField(primary_key=True)
-
-                    tipoDoc = models.ForeignKey('usuarios.TiposDocumento',  blank=True, null=True, editable=True, on_delete=models.PROTECT)
-                    documento = models.ForeignKey('usuarios.Usuarios',  blank=True, null=True, editable=True, on_delete=models.PROTECT,  related_name='DocumentoHistoriaResul')
-                    consecAdmision = models.IntegerField(default=0)
+                    historia = models.ForeignKey('clinico.Historia', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+                    historiaExamenes = models.ForeignKey('clinico.HistoriaExamenes', blank=True, null=True, editable=True, on_delete=models.PROTECT)
                     dependenciasRealizado = models.ForeignKey('sitios.Dependencias', blank=True, null=True, editable=True, on_delete=models.PROTECT)
-                    folio = models.IntegerField()
-                    fecha = models.DateTimeField()
-
-
-                    consecResultados = models.IntegerField(default=0)
-                    tiposExamen = models.ForeignKey('clinico.TiposExamen', default=1, on_delete=models.PROTECT,
-                                                    null=False)
-                    examen = models.ForeignKey('clinico.Examenes', blank=True, null=True, editable=True, on_delete=models.PROTECT)
-                    cantidad = models.IntegerField()
-                    resultado = models.CharField(max_length=500, default='')
-                    interpretacion = models.CharField(max_length=500, default='')
+                    fechaServicio = models.DateTimeField(default=now, blank=True, null=True, editable=True)
+                    fechaResultado = models.DateTimeField(default=now, blank=True, null=True, editable=True)
+                    examenesRasgos = models.ForeignKey('clinico.ExamenesRasgos', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+                    valor =  models.CharField(max_length=20,  blank=True, null=True, editable=True)
+                    observaciones =  models.CharField(max_length=255,  blank=True, null=True, editable=True)
+                    consecResultado = models.IntegerField(default=0, blank=True, null=True, editable=True)
                     estadoExamenes =  models.ForeignKey('clinico.EstadoExamenes', blank=True, null=True, editable=True, on_delete=models.PROTECT)
-                    rutaArchivo =  models.CharField(max_length=100, default='')
-                    rutaVideo =  models.CharField(max_length=100, default='')
                     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
                     def __str__(self):
@@ -1038,3 +1030,16 @@ class CodigosAtc(models.Model):
     def __str__(self):
         return str(self.id)
 
+
+class ExamenesRasgos(models.Model):
+    id = models.AutoField(primary_key=True)
+    tiposExamen = models.ForeignKey('clinico.TiposExamen', default=1, on_delete=models.PROTECT, null=False)
+    codigoCups = models.CharField(max_length=20, null=False, blank=True)
+    nombre = models.CharField(max_length=80, null=False)
+    unidad = models.CharField(max_length=20, null=False)
+    minimo = models.CharField(max_length=20, null=False)
+    maximo = models.CharField(max_length=20, null=False)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return self.nombre

@@ -12,13 +12,15 @@ from django.db.models.functions import Cast, Coalesce
 import pyodbc
 import psycopg2
 from datetime import datetime
+from decimal import Decimal
 
 import pytz
 import tzlocal
 # import datetime as dt
 
 
-from admisiones.models import Ingresos
+from admisiones.models import Ingresos, Furips
+from admisiones.forms import furipsForm
 from sitios.models import  HistorialDependencias, Dependencias, ServiciosSedes, SubServiciosSedes
 from usuarios.models import Usuarios, TiposDocumento
 from planta.models import Planta
@@ -1161,8 +1163,9 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         context['EspecialidadesMedicos'] = especialidadesMedicos
 
     # Fin combo EspecialidadesMedicos
+    ## Para los froms FURIPS
 
-
+        context['FuripsForm'] = furipsForm
 
         ## FIN CONTEXTO solo Admisiones
         return render(request, "admisiones/panelAdmisiones.html", context)
@@ -1228,8 +1231,6 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         context['EspecialidadesMedicos'] = especialidadesMedicos
 
         print ("especialidadesMedicos =", especialidadesMedicos)
-
-
 
         ## FIN CONTEXTO
         return render(request, "clinico/panelClinico.html", context)
@@ -3970,7 +3971,6 @@ def guardarUsuariosModal(request):
 
     print("centrosc_id = ", centrosc_id)
 
-
     print(documento)
     print(tipoDoc_id)
 
@@ -4027,6 +4027,7 @@ def encuentraAdmisionModal(request, tipoDoc, documento, consec, sede):
         print("consecutivoAdmision = ", consec)
         print("Sede = ", sede)
         print("consec = ", consec)
+
         tipoDoc1 = TiposDocumento.objects.get(nombre=tipoDoc)
         print("tipodoc1 = ", tipoDoc1.id)
         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
@@ -4067,6 +4068,18 @@ def cambioServicio(request):
     ingreso = request.POST['valor']
     print("ingreso = ", ingreso)
 
+
+
+    datos  = Ingresos.objects.get(id=ingreso)
+
+
+    datosTip = TiposDocumento.objects.get(nombre=datos.tipoDoc)
+
+    datosDoc = Usuarios.objects.get(nombre=datos.documento)
+    print("datos Tipo doc = ", datosTip.id)
+    print("datos  documento = ", datosDoc.id)
+
+
     miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",password="pass123")
     curt = miConexiont.cursor()
 
@@ -4092,6 +4105,8 @@ def cambioServicio(request):
     cambioServicio = {}
     cambioServicio['Usuarios'] = usuarios
 
+
+
     dependenciasActual = {}
 
     # Ahora llevamos la dependencia Actual
@@ -4099,7 +4114,7 @@ def cambioServicio(request):
     miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                   password="pass123")
     curt = miConexiont.cursor()
 
-    comando = 'select dep.id id , dep.numero numero , dep.nombre depNombre, sd.nombre servicio, sub.nombre subServicio,   dep."tipoDoc_id" tipoDocId, dep.documento_id documentoId, dep."fechaRegistro" fechaRegistro, dep.disponibilidad dispo,dep.consec consec ,dep."fechaOcupacion" ocupacion from sitios_dependencias dep, sitios_serviciosSedes sd, sitios_subServiciosSedes sub where dep."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' and dep."tipoDoc_id"=' + "'" + str(tipoDocId) + "'" + ' and dep.documento_id=' + "'" + str(documentoId) + "'" + ' and dep.consec = ' + str(consec) + '  and dep.disponibilidad = ' + "'" + str('O') + "'" + ' and sub."serviciosSedes_id" = sd.id and sd.id=dep."serviciosSedes_id" and sub.id= dep."subServiciosSedes_id"'
+    comando = 'select dep.id id , dep.numero numero , dep.nombre depNombre, sd.nombre servicio, sub.nombre subServicio,   dep."tipoDoc_id" tipoDocId, dep.documento_id documentoId, dep."fechaRegistro" fechaRegistro, dep.disponibilidad dispo,dep.consec consec ,dep."fechaOcupacion" ocupacion from sitios_dependencias dep, sitios_serviciosSedes sd, sitios_subServiciosSedes sub where dep."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' and dep."tipoDoc_id"=' + "'" + str(datosTip.id) + "'" + ' and dep.documento_id=' + "'" + str(datosDoc.id) + "'" + ' and dep.consec = ' + str(consec) + '  and dep.disponibilidad = ' + "'" + str('O') + "'" + ' and sub."serviciosSedes_id" = sd.id and sd.id=dep."serviciosSedes_id" and sub.id= dep."subServiciosSedes_id"'
 
     print(comando)
     curt.execute(comando)
@@ -4183,6 +4198,13 @@ def cambioServicio(request):
     print(habitaciones)
 
     cambioServicio['Habitaciones'] = habitaciones
+
+    # Aqui FURIPS Leer el id y enviar un Frurips form por aqui a ver que pasa
+
+
+
+
+    # FIN FURIPS
 
     # Fin combo Habitaciones
 
@@ -4407,6 +4429,11 @@ def serialize_datetime1(obj):
         return obj.isoformat()
     raise TypeError("Type not serializable")
 
+def decimal_serializer(obj):
+    if isinstance(obj, Decimal):
+        return str(obj)
+    raise TypeError("Type not serializable")
+
 
 
 # Create your views here.
@@ -4445,8 +4472,7 @@ def load_dataConvenioAdmisiones(request, data):
 
     miConexionx.close()
     print(conveniosPacienteIngresos )
-    context['ConveniosPacienteIngresos '] = conveniosPacienteIngresos 
-
+    context['ConveniosPacienteIngresos '] = conveniosPacienteIngresos
 
     serialized1 = json.dumps(conveniosPacienteIngresos , default=serialize_datetime)
 
@@ -4476,7 +4502,7 @@ def load_dataAbonosAdmisiones(request, data):
                                    password="pass123")
     curx = miConexionx.cursor()
 
-    detalle = 'SELECT pag.id id , i."tipoDoc_id" tipoDoc , i.documento_id documentoId ,u.documento documento,u.nombre nombre,i.consec consec , tipdoc.nombre nombreDocumento , pag.fecha fecha, pag."tipoPago_id" tipoPago , pag."formaPago_id" formaPago, pag.valor valor, pag.descripcion descripcion FROM admisiones_ingresos i, cartera_pagos pag ,usuarios_usuarios u ,usuarios_tiposdocumento tipdoc, cartera_tiposPagos tip, cartera_formasPagos forma WHERE i.id = ' + "'" + str(ingresoId) + "'" + ' and i.documento_id = u.id and i."tipoDoc_id" = pag."tipoDoc_id" and i.documento_id  = pag.documento_id and  i.consec = pag.consec AND tipdoc.id = i."tipoDoc_id" and pag."tipoPago_id" = tip.id and pag."formaPago_id" = forma.id'
+    detalle = 'SELECT pag.id id , i."tipoDoc_id" tipoDoc , i.documento_id documentoId ,u.documento documento,u.nombre nombre,i.consec consec , tipdoc.nombre nombreDocumento , cast(date(pag.fecha) as text)  fecha, pag."tipoPago_id" tipoPago , pag."formaPago_id" formaPago, pag.valor valor, pag.descripcion descripcion FROM admisiones_ingresos i, cartera_pagos pag ,usuarios_usuarios u ,usuarios_tiposdocumento tipdoc, cartera_tiposPagos tip, cartera_formasPagos forma WHERE i.id = ' + "'" + str(ingresoId) + "'" + ' and i.documento_id = u.id and i."tipoDoc_id" = pag."tipoDoc_id" and i.documento_id  = pag.documento_id and  i.consec = pag.consec AND tipdoc.id = i."tipoDoc_id" and pag."tipoPago_id" = tip.id and pag."formaPago_id" = forma.id'
     print(detalle)
 
     curx.execute(detalle)
@@ -4491,7 +4517,8 @@ def load_dataAbonosAdmisiones(request, data):
     print(abonos)
     context['Abonos '] = abonos
 
-    serialized2 = json.dumps(abonos, default=serialize_datetime1)
+    serialized2 = json.dumps(abonos,  default=decimal_serializer)
+
 
     print("Envio = ", serialized2)
 
@@ -4509,7 +4536,7 @@ def GuardaConvenioAdmision(request):
     print ("ingresoId = ", ingresoId)
     print("sede = ", sede)
 
-    fechaRegistro = datetime.now()
+    fechaRegistro = datetime.datetime.now()
 
     registroId = Ingresos.objects.get(id=ingresoId)
     print  ("registroId documento =" , registroId.documento_id)
@@ -4559,6 +4586,7 @@ def GuardaAbonosAdmision(request):
     #return HttpResponse("Convenio Adicionado", content_type='application/json')
 
     return JsonResponse({'success': True, 'message': 'Abono Actualizado satisfactoriamente!'})
+
 
 
 
@@ -4638,3 +4666,45 @@ def GuardarAcompananteAdmision(request):
     miConexion3.close()
 
     return JsonResponse({'success': True, 'message': 'Responsable Actualizado satisfactoriamente!'})
+
+
+def GuardaFurips(request):
+
+    print ("Entre GuardaFurps" )
+
+    ingresoId = request.POST["valor"]
+    sede = request.POST["sede"]
+    print ("ingresoId = ", ingresoId)
+    print("sede = ", sede)
+    fechaRegistro = datetime.datetime.now()
+    registroId = Ingresos.objects.get(id=ingresoId)
+    print  ("registroId documento =" , registroId.documento_id)
+
+    print("ASI VIENE PURO  = ", request.POST["form"])
+
+    forma = furipsForm(request.POST["form"])
+    forma1 = json.loads(forma)
+    print ("forma1", forma1)
+    #print("forma = ", forma)
+    print("forma1 numeroFactura = ", forma.numeroFactura)
+
+    if forma.is_valid():
+        print ("Entre forma valida")
+        nuevo_furips = Furips(tipoDoc_id=registroId.tipoDoc_id,
+                            documento_id=registroId.documento_id,
+                            consec=registroId.consec,
+                              numeroRadicacion=999,
+                              consecVictim=0)
+    nuevo_furips.save()
+
+    ## falta usuarioRegistro_id
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
+    #comando = 'insert into cartera_Pagos ("fecha", "tipoDoc_id" , documento_id, consec,  "tipoPago_id" , "formaPago_id", valor, descripcion ,"fechaRegistro","estadoReg") values ('  + "'" + str(fechaRegistro) + "'," +  "'" + str(registroId.tipoDoc_id) + "'" + ' , ' + "'" + str(registroId.documento_id) + "'" + ', ' + "'" + str(registroId.consec) + "'" + '  , ' + "'" + str(tipoPago) + "'" + '  , ' + "'" + str(formaPago) + "'" + ', ' + "'" + str(valor) + "',"   + "'" + str(descripcion) + "','"   + str(fechaRegistro) + "'," + "'" +  str("A") + "');"
+    #print(comando)
+    #cur3.execute(comando)
+    #miConexion3.commit()
+    miConexion3.close()
+
+    return JsonResponse({'success': True, 'message': 'Furips Actualizado satisfactoriamente!'})
+
