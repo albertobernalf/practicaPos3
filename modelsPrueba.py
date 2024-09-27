@@ -1,26 +1,14 @@
-
-En facturacion:
-
-0.11 FormasLiquidacion : (id, nombe,  Codigo,tipoCruento ,caracteristica, valorHonorario,tiposHonorarios,cuentaContable,centroCosto)
-0.12 Tabla Facturacion : (id, tipoDoc,documento, consecAdmision,factura, fechaFactura,codigoDian, convenio, totalCopagos, totalCuotaModeradora,totalProcedimientos, totalSuministros, totalFactura, valorApagar, valorAPagarLetras, anulado, fechaCorte,cufeDefinitico,cufeValor,codigoQr, rutaQr, totalNotasDebito, totalnotasCredito, rutaXml,estadoEnvioDyan, tipoFacturaDyan, desbloqueada, rutaPdf, verLiquidacion, envioCorreo, anticipos, usuarioAnula, detalleAnulacion, fechaAnulacion,  observaciones, usuarioRegistra ,fechaRegistro)
-0.13 tabla FacturacionDetalle : (id, tipoDoc,documento, consecAdmision, liquidacion, consecutivo, fecha, tarifa, codigoCups, cantidad, valorUnitario, valorTotal, registro, cirugia, tipoHonorario, grupoQx, grupoQxUvr, fechaCrea, usuarioCrea, fechaModifica, usuarioModifica,  observaciones, estadoRegistro,numeroglosa, cantidadGlosada, valorGlosado, cantidadAceptada , valorAceptado,, cantidadRechazada, valorRechazado)
-0.14 tabla Liquidacion : (id, tipoDoc,documento, consecAdmision, fecha, convenio, totalCopagos, totalCuotaModeradora,totalProcedimientos, totalSuministros, totalFactura, valorApagar, anulado, fechaCorte,cr,codigoQr, rutaQr, totalNotasDebito, totalnotasCredito,  tipoFacturaDyan, desbloqueada,  verLiquidacion,  anticipos, usuarioAnula, detalleAnulacion, fechaAnulacion,  observaciones, usuarioRegistra ,fechaRegistro)
-0.15 tabla LiquidacionDetalle : (id, tipoDoc,documento, consecAdmision, liquidacion, consecutivo, fecha, tarifa, codigoCups, cantidad, valorUnitario, valorTotal, registro, cirugia, tipoHonorario, grupoQx, grupoQxUvr, fechaCrea, usuarioCrea, fechaModifica, usuarioModifica,  observaciones, estadoRegistro  ,usuarioRegistra ,fechaRegistro)
-0.16 tabla Refacturacion : (id, tipoDoc,documento, consecAdmision, fecha,facturaInicial, facturaFinal ,estadoRegistro  ,usuarioRegistra ,fechaRegistro)
-0.17 tabla Remisiones(cartera)
-0.18 tabla Radicaciones(cartera)
-0.19 tabla Rips
-0.20 tabla RipsDetalle
+ojo --> Todo esto son horas y horas de camello. Work, Trabajop
 
 1. Poder grabar una Admision (una vez guarde el nuevo usuario se pueda seguir la modal desaparezca y pueda crear correctamente una admision al igual con actualizar probar)
    se debe seguir con Furips, Triage, Ingreso a Triage (Probar trabajar con clases)
 2. No eta UPDATE /INSERT de ls campos manilla, acompanatete, responsable remitido ips 
 	                 empresa_id=empresaId,
                          ipsRemite_id = ipsRemite,
-                         numManilla =numManilla,
+                         numManilla = numManilla,
                          contactoAcompanante_id = contactoAcompanante,
                          contactoResponsable_id = contactoResponsable,
-3. Ojo recuerda los permisos punuales DSACTIVAR / INACTIVAR Botones
+3. Ojo recuerda los permisos punuales DESACTIVAR / INACTIVAR Botones
 4. Ojo como genera el consecutivo de ingreso, tiene que NOO observar la sede o sea va a tener un consecutivo permanente, no pueden haber mas d eun consecutivo, o repetido
    son independientes de la sede , son ascendentes
 -- ojo como carachas editas los existentes ???(ideas un link en html en la tabla y que llame una modal admisiones). Pero hay que ver que cambio es posible cambioar auqui ? Regimen?, num_manilla, remitido, ips_remite, empresa ???, responsable, acompañante, tipo de cotizante, muerte , defuncion, hclinica,fechaMuerte, causasMuerte,vias_deIngreso, viasdeegreso
@@ -35,7 +23,7 @@ En facturacion:
 Tablas = tblhcl_ingresos ( es la parte clinica del accidente)
 Tablas= tbl_furips ( Es como la parte legal de datos)
 Podria ser FuripsClinico, FuripsLegal
--- Acabo de detectar algo recontra DURO, los quetys SQL, mundo aparte su complejidad es aparte de la armadura general del programa,.. No debe retrazar el desarrollo
+-- Acabo de detectar algo recontra DURO, los querys SQL, mundo aparte su complejidad es aparte de la armadura general del programa,.. No debe retrazar el desarrollo
    se deja hasta bun buen termino y se sigue con la armadura(desarrollo-software)
 
 Terminar Clinico, buscar alog de farmacia, inventarios, compras
@@ -61,36 +49,6 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
    5.que crajop pasa con las fechas-hora
    6. algo pasda con el grid de revsion de sistemas/historia clinica
    
-RIPS:
-numero de contrato
-numero de poliza
-modalidad de contratacion y pago
-cobertura o plan de beneficios
-
--- Para consultas :
-
-modalidadGrupoServicioTecSal": "09",
-"grupoServicios": "01",
-"codServicio": 1,
-"finalidadTecnologiaSalud": "11",
-
-- para procedimientos
-
-"viaIngresoServicioSalud": "01",
-"modalidadGrupoServicioTecSal": "01",
-"grupoServicios": "04",
-"codServicio": 123,
-"finalidadTecnologiaSalud": "44",
-
--- UrgenciAS CON OBSERVAQCION
-   No tiene
--- HOSPITALIZACION
-"viaIngresoServicioSalud": "02",
--- RECIEN NACIDO 
-   NO TIENE
--- MEDICAMNETOS
-   MIPRES
-
 
 -----------------------------------------------------------------------------------------------------------------------
 --  TRIAGE, ADMISIONES - HISTORIA CLINICA
@@ -120,15 +78,27 @@ modalidadGrupoServicioTecSal": "09",
 23. Ojo hay un erro al cargar la paginma admisione. es en cambioServico.change se activa pero no hay sede , por cua? no hay sede?
 24. Toca arregalr el tema de los ingresoIDxx, sedexx de acompanantes, responsable y abonos. ORGANIZAR bien
 
-    PARA EL DIA MARTES 24 DE Septiembre
+    PARA EL DIA LUNES 30 DE Septiembre
+
     No me martca o me selecciona el primer registor d ela tabla en admiisones NOSE POR CUA
     Apenas arregle todo esto si crearFURIPs. Se debe crear enarticle copiao de crearadmisiones a bloc de notas , se maquilla con datos FURIPS, se envian combos alarticle y opcion guardar
    ojo. No actualizo el consecutivo al  maria paula en dependencias. ops supongo ops esta raro que cambio de servicoi o que paso ??, ops la tabla admisiones no
             tiene un sdo ingreso ops que paso ase activo el consecutovo cuando nop ops.
    ojo. Ver como acomodar os datos del paciuente en acompanantes y responsable de adisoones
    ojo recuerde el boton crear responsables acompañante no ta creado hay que desarrollarlo
-   ojo probar conm conductor = request.POST.get("conductor")
+   ojoOjoOjo --> probar conm conductor = request.POST.get("conductor")
+   ojo creo solo falta agregar campos en la tabla de admisiones y depronto clinico evalies depenecias para la Ubicacion y la clasificacion de servicios de sispro
+   para servicios en admisiones y de pronto clinico evaluar antes de seguir
 
+   TAREAS HOY O MEJOR DIAS LUNES
+
+   1. crear campo en admisiones.ingresos de ubicaciones/ y srips.servicios
+   2. verificar las tablas de clinico para asociarlas a rips.models
+   3. se debe subir la tabla cumm de rips a facturacion_suministros
+   4. Es necesario atar los itmes de examens de la HClinica a la facturacion los del sistema. Los demas son ajustes o manuales No se ligan
+   5. Falta e historia Medicamentos relacionar las unidades, formafarmaceutic etc
+
+ 
 -----------------------------------------------------------------------------------------------------------------------
 --  APOYO TERAPEUTICO - FACTURACION
 -----------------------------------------------------------------------------------------------------------------------

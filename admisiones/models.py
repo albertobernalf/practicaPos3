@@ -53,12 +53,21 @@ class Ingresos(models.Model):
     # supongo  tabla - ContratosPaciente(id, tipoDoc, documento, contrato, vigencia_desde, vigencia_hasta)
     # ContratosPacienteAdmisiones(id, tipoDoc, documento, contrato, consec)
     ViasEgreso = models.ForeignKey('clinico.ViasEgreso', blank=True, null=True, editable=True, on_delete=models.PROTECT)
-
     muerte =  models.CharField(max_length=1,default='N')
     fechaMuerte = models.DateTimeField(editable=True, null=True, blank=True)
     ActaDefuncion =  models.CharField(max_length=30,default='')
     medicoDefuncion = models.ForeignKey('clinico.Medicos', blank=True,null= True, editable=True, on_delete=models.PROTECT)
-
+    ripsRecienNacido = models.CharField(max_length=1, default='N', editable=False)
+    ripsEdadGestacional = models.CharField(max_length=10,default='')
+    ripsNumConsultasCPrenatal = models.CharField(max_length=10,default='')
+    ripsPesoRecienNacido = models.CharField(max_length=10,default='')
+    ripsDestinoUsuarioEgresoRecienNacido =  models.CharField(max_length=10,default='')
+    ripsViaIngresoServicioSalud = models.ForeignKey('rips.RipsViasIngresoSalud', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    ripsmodalidadGrupoServicioTecSal = models.ForeignKey('rips.RipsModalidadAtencion', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    ripsGrupoServicios =  models.ForeignKey('rips.RipsGrupoServicios', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    ripsCodServicio =  models.ForeignKey('rips.RipsServicios', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    ripsCausaMotivoAtencion =  models.ForeignKey('rips.RipsCausaExterna', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    ripsCondicionDestinoUsuarioEgreso  = models.ForeignKey('rips.RipsDestinoEgreso', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     usuarioRegistro = models.ForeignKey('planta.Planta', default=1, on_delete=models.PROTECT, null=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
@@ -68,7 +77,7 @@ class Ingresos(models.Model):
 
 
     def __integer__(self):
-        return self.nombre
+        return self.documento
 
 
 

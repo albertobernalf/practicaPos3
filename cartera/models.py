@@ -76,3 +76,33 @@ class Remisiones(models.Model):
 
     def __integer__(self):
         return self.nombre
+
+class TiposNotas (models.Model):
+
+   id = models.AutoField(primary_key=True)
+   codigo = models.CharField(max_length=2, blank=True,null= True, editable=True)
+   nombre =   models.CharField(max_length=80, blank=True,null= True, editable=True)
+
+   def __str__(self):
+        return self.nombre
+
+
+
+class Glosas(models.Model):
+    id = models.AutoField(primary_key=True)
+    convenio = models.ForeignKey('contratacion.Convenios',blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    fechaGlosa = models.DateTimeField(editable=True, null=True, blank=True)
+    numeroGlosa = models.CharField(max_length=20, blank=True,null= True, editable=True)
+    detalladaParcial = models.CharField(max_length=1, blank=True,null= True, editable=True)
+    detalladaTotal = models.CharField(max_length=1, blank=True,null= True, editable=True)
+    totalGlosa =  models.DecimalField( max_digits=15, decimal_places=2)
+    totalSoportado =  models.DecimalField( max_digits=15, decimal_places=2)
+    totalAceptado =  models.DecimalField( max_digits=15, decimal_places=2)
+    observacones = models.CharField(max_length=120, blank=True,null= True, editable=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', default=1, on_delete=models.PROTECT, null=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+
+    def __integer__(self):
+        return self.nombre

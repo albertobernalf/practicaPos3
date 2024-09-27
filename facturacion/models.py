@@ -94,13 +94,13 @@ class Suministros (models.Model):
     concepto = models.ForeignKey('facturacion.Conceptos', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     grupo =  models.ForeignKey('clinico.Grupos', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     subGrupo = models.ForeignKey('clinico.Grupos', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Subgrupo01i01')
-    unidadMedida =  models.ForeignKey('clinico.UnidadesDeMedidaDosis', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    unidadMedida =  models.ForeignKey('rips.RipsUmm', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     principioActivo =  models.ForeignKey('clinico.PrincipiosActivos', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     concentracion = models.ForeignKey('clinico.MedicamentosDci', blank=True,null= True, editable=True, on_delete=models.PROTECT)
-    formasFarmaceutica = models.ForeignKey('clinico.FormasFarmaceuticas', blank=True,null= True, editable=True, on_delete=models.PROTECT )
+    formasFarmaceutica = models.ForeignKey('rips.RipsFormaFarmaceutica', blank=True,null= True, editable=True, on_delete=models.PROTECT )
     viaAdministracion = models.ForeignKey('clinico.ViasAdministracion', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     codigoAtc  =  models.ForeignKey('clinico.Atc', blank=True,null= True, editable=True, on_delete=models.PROTECT)
-    cums = models.CharField(max_length=30, blank=True,null= True, editable=True)
+    cums = models.ForeignKey('rips.RipsCums', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     registroSanitario = models.CharField(max_length=50, blank=True,null= True, editable=True)
     fechaExpedicion = models.DateTimeField(editable=True, null=True, blank=True)
     fechaVencimiento =  models.DateTimeField(editable=True, null=True, blank=True)
@@ -304,7 +304,7 @@ class LiquidacionHonorarios(models.Model):
 
 class LiquidacionHonorariosIss(models.Model):
     id = models.AutoField(primary_key=True)
-    tipoTarifa =  models.ForeignKey('facturacion.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    tipoTarifa =  models.ForeignKey('facturacion.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT) 
     codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     codigoHomologado = models.CharField(max_length=10, blank=True,null= True , editable=True )
     tipoHonorario =  models.ForeignKey('facturacion.TiposHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT)
@@ -389,3 +389,207 @@ class LiquidacionCirugias(models.Model):
 
     def __str__(self):
         return str(self.codigoHomologado)
+
+class FormasLiquidacion(models.Model):
+    id = models.AutoField(primary_key=True)
+    #nombre =
+    #Codigo =
+    #tipoCruento =
+    #caracteristica =
+    #valorHonorario =
+    #tiposHonorarios =
+    #cuentaContable =
+    #centroCosto=
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False )
+
+
+    def __str__(self):
+        return str(self.id)
+
+
+class Facturacion(models.Model):
+    id  = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TiposDoc101')
+    documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    consecAdmision = models.IntegerField(editable=True, null=True, blank=True)
+    factura = models.CharField(max_length=20, blank=True,null= True, editable=True,)
+    fechaFactura =  models.DateTimeField(editable=True, null=True, blank=True)
+    codigoDian =  models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    convenio =   models.ForeignKey('contratacion.Convenios', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Conv08')
+    totalCopagos =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalCuotaModeradora = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalAbonos = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalProcedimientos =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalSuministros = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalFactura = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valorApagar =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valorAPagarLetras =  models.CharField(max_length=120, blank=True,null= True, editable=True,)
+    anulado =  models.CharField(max_length=1, blank=True,null= True, editable=True,)
+    fechaCorte =   models.DateTimeField(editable=True, null=True, blank=True)
+    cufeDefinitivo =  models.CharField(max_length=100, blank=True,null= True, editable=True,)
+    cufeValor =   models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    codigoQr = models.CharField(max_length=100, blank=True,null= True, editable=True,)
+    rutaQr =  models.CharField(max_length=100, blank=True,null= True, editable=True,)
+    rutaXml = models.CharField(max_length=100, blank=True,null= True, editable=True,)
+    rutaAd =  models.CharField(max_length=1000, blank=True,null= True, editable=True,)
+    rutaXmlFirmado =  models.CharField(max_length=1000, blank=True,null= True, editable=True,)
+    mensajeDian =  models.CharField(max_length=1000, blank=True,null= True, editable=True,)
+    rutaXmlRta =  models.CharField(max_length=1000, blank=True,null= True, editable=True,)
+    nombreArchivo =  models.CharField(max_length=1000, blank=True,null= True, editable=True,)
+    estado =   models.CharField(max_length=100, blank=True,null= True, editable=True,)
+    fechaEnvioDian =  models.DateTimeField(editable=True, null=True, blank=True)
+    reprocesarDian =models.CharField(max_length=1, blank=True,null= True, editable=True,)
+    estadoEnvioDyan =models.CharField(max_length=1, blank=True,null= True, editable=True,)
+    tipoFacturaDyan = models.CharField(max_length=1, blank=True,null= True, editable=True,)
+    rutaPdf = models.CharField(max_length=100, blank=True,null= True, editable=True,)
+    envioCorreo = models.CharField(max_length=1, blank=True,null= True, editable=True,)
+    desbloqueada =  models.CharField(max_length=1, blank=True,null= True, editable=True,)
+    verLiquidacion = models.CharField(max_length=1, blank=True,null= True, editable=True,)
+    anticipos = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    numeroglosa = models.CharField(max_length=20, blank=True,null= True, editable=True,)
+    motivoGlosa = models.ForeignKey('cartera.MotivosGlosas', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Glosa01')
+    totalCantidadGlosada = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalValorGlosado = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalCantidadAceptada =models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalValorAceptado =models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalCantidadSoportado =models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalValorSoportado =models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalNotasCredito =models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalNotasDebito = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    usuarioAnula = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT , related_name='Plantas100')
+    detalleAnulacion = models.CharField(max_length=20, blank=True,null= True, editable=True,)
+    fechaAnulacion =  models.DateTimeField(editable=True, null=True, blank=True)
+    observaciones = models.CharField(max_length=100, blank=True,null= True, editable=True,)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Plantas101')
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False )
+
+
+    def __str__(self):
+        return str(self.documento)
+
+class FacturacionDetalle(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TablaTiposDoc101')
+    documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    consecAdmision = models.IntegerField(editable=True, null=True, blank=True)
+    facturacion = models.ForeignKey('facturacion.facturacion', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Fact01')
+    consecutivoFactura =  models.IntegerField(editable=True, null=True, blank=True)
+    fecha = models.DateTimeField(editable=True, null=True, blank=True)
+    #tarifa =
+    codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TablaCups121')
+    cums = models.ForeignKey('rips.RipsCums', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Cums101')
+    cantidad =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valorUnitario =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valorTotal =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    cirugia = models.CharField(max_length=1, blank=True,null= True, editable=True,)
+    #tipoHonorario =
+    #grupoQx = 
+    #grupoQxUvr =
+    fechaCrea = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioCrea = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Planta105') 
+    fechaModifica = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioModifica = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Planta106') 
+    observaciones = models.CharField(max_length=200, blank=True,null= True, editable=True,)
+    numeroglosa = models.CharField(max_length=20, blank=True,null= True, editable=True,)
+    motivoGlosa = models.ForeignKey('cartera.MotivosGlosas', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Motiv03')
+    cantidadGlosada = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valorGlosado =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    cantidadAceptada = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valorAceptado = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    cantidadSoportado = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valorSoportado = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    fechaNotaCredito = models.DateTimeField(editable=True, null=True, blank=True)
+    numeroNotaCredito = models.CharField(max_length=20, blank=True,null= True, editable=True,)
+    valorNotaCredito = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    observacionNotaCredito = models.CharField(max_length=200, blank=True,null= True, editable=True,)
+    fechaOtraNotaCredito = models.DateTimeField(editable=True, null=True, blank=True)
+    numeroOtraNotaCredito = models.CharField(max_length=20, blank=True,null= True, editable=True,)
+    valorOtraNotaCredito = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    observacionOtraNotaCredito = models.CharField(max_length=200, blank=True,null= True, editable=True,)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT , related_name='Planta107') 
+    estadoRegistro = models.CharField(max_length=1, blank=True,null= True, editable=True,)
+
+
+    def __str__(self):
+        return str(self.codigoHomologado)
+
+class Liquidacion(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TiposDoc120')
+    documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    consecAdmision = models.IntegerField(editable=True, null=True, blank=True)
+    fecha = models.DateTimeField(editable=True, null=True, blank=True)
+    convenio = models.ForeignKey('contratacion.Convenios', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Convenio102')
+    totalCopagos = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalCuotaModeradora = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalProcedimientos = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalSuministros = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    totalLiquidacion = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valorApagar = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    anulado = models.CharField(max_length=1, blank=True,null= True, editable=True,)
+    fechaCorte = models.DateTimeField(editable=True, null=True, blank=True)
+    anticipos = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    usuarioAnula =  models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Planta108') 
+    detalleAnulacion =  models.CharField(max_length=120, blank=True,null= True, editable=True,)
+    fechaAnulacion = models.DateTimeField(editable=True, null=True, blank=True)
+    observaciones  = models.CharField(max_length=120, blank=True,null= True, editable=True,)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Planta109') 
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoRegistro = models.CharField(max_length=1, blank=True,null= True, editable=True,)
+
+
+    def __str__(self):
+        return str(self.id)
+
+
+class LiquidacionDetalle(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TiposDoc125')
+    documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    consecAdmision = models.IntegerField(editable=True, null=True, blank=True)
+    consecutivo = models.IntegerField(editable=True, null=True, blank=True)
+    fecha = models.DateTimeField(editable=True, null=True, blank=True)
+    #tarifa
+    codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TablaCups101')
+    cums = models.ForeignKey('rips.RipsCums', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TablaCums101')
+    cantidad =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valorUnitario =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valorTotal = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    cirugia = models.CharField(max_length=1, blank=True,null= True, editable=True,)
+    #tipoHonorario =
+    #grupoQx =
+    #grupoQxUvr =
+    fechaCrea = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioCrea = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Planta120') 
+    fechaModifica = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioModifica = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Planat121') 
+    observaciones =  models.CharField(max_length=120, blank=True,null= True, editable=True,)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Planta122') 
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoRegistro = models.CharField(max_length=1, blank=True,null= True, editable=True,)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class Refacturacion(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TiposDoc145')
+    documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    consecAdmision = models.IntegerField(editable=True, null=True, blank=True)
+    fecha = models.DateTimeField(editable=True, null=True, blank=True)
+    facturaInicial = models.CharField(max_length=20, blank=True,null= True, editable=True,)
+    facturaFinal  = models.CharField(max_length=20, blank=True,null= True, editable=True,)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Planta123') 
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoRegistro = models.CharField(max_length=1, blank=True,null= True, editable=True,)
+
+
+    def __str__(self):
+        return str(self.id)
+
+
