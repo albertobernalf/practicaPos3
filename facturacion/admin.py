@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from facturacion.models import Suministros, TiposEmpresa ,Empresas,  Conceptos, ConveniosPaciente, ConveniosPacienteIngresos, SalariosLegales, RegimenesTipoPago, TiposSuministro, TiposTarifa, Tarifas, ConceptosAfacturar, GruposQx, TiposHonorarios, LiquidacionHonorarios, TiposSalas, LiquidacionDerechos, SalariosMinimosLegales, Uvr
+from facturacion.models import Suministros, TiposEmpresa ,Empresas,  Conceptos, ConveniosPaciente, ConveniosPacienteIngresos, SalariosLegales, RegimenesTipoPago, TiposSuministro,  ConceptosAfacturar,   SalariosMinimosLegales
 
 
 @admin.register(Empresas)
@@ -72,20 +72,6 @@ class suministroAdmin(admin.ModelAdmin):
 
 
 
-@admin.register(TiposTarifa)
-class tiposTarifaAdmin(admin.ModelAdmin):
-   list_display = ("id", "nombre")
-   search_fields = ("id", "nombre")
-   # Filtrar
-   list_filter = ("id", "nombre")
-
-@admin.register(Tarifas)
-class TarifasAdmin(admin.ModelAdmin):
-   list_display = ("id", "nombre","tipoTarifa","concepto","codigoCups","valor")
-   search_fields = ("id", "nombre","tipoTarifa","concepto","codigoCups","valor")
-   # Filtrar
-   list_filter = ("id", "nombre","tipoTarifa","concepto","codigoCups","valor")
-
 
 @admin.register(TiposEmpresa)
 class tiposEmpresaAdmin(admin.ModelAdmin):
@@ -103,46 +89,7 @@ class conceptosAfacturarAdmin(admin.ModelAdmin):
    # Filtrar
    list_filter = ("id", "nombre")
 
-@admin.register(GruposQx)
-class gruposQxAdmin(admin.ModelAdmin):
 
-   list_display = ("id", "nombre")
-   search_fields = ("id", "nombre")
-   # Filtrar
-   list_filter = ("id", "nombre")
-
-@admin.register(TiposHonorarios)
-class tiposHonorariosAdmin(admin.ModelAdmin):
-
-   list_display = ("id", "nombre")
-   search_fields = ("id", "nombre")
-   # Filtrar
-   list_filter = ("id", "nombre")
-
-@admin.register(LiquidacionHonorarios)
-class liquidacionHonorariosAdmin(admin.ModelAdmin):
-
-   list_display = ("id", "tipoTarifa","codigoHomologado","tipoHonorario","grupoQx","salMinLeg")
-   search_fields = ("id", "tipoTarifa","codigoHomologado","tipoHonorario","grupoQx","salMinLeg")
-   # Filtrar
-   list_filter = ("id", "tipoTarifa","codigoHomologado","tipoHonorario","grupoQx","salMinLeg")
-
-@admin.register(TiposSalas)
-class tiposSalasAdmin(admin.ModelAdmin):
-
-   list_display = ("id", "nombre")
-   search_fields = ("id", "nombre")
-   # Filtrar
-   list_filter = ("id", "nombre")
-
-
-@admin.register(LiquidacionDerechos)
-class liquidacionDerechosAdmin(admin.ModelAdmin):
-
-   list_display = ("id", "tipoTarifa","codigoHomologado","tipoSala","grupoQx","salMinLeg")
-   search_fields = ("id", "tipoTarifa","codigoHomologado","tipoSala","grupoQx","salMinLeg")
-   # Filtrar
-   list_filter = ("id", "tipoTarifa","codigoHomologado","tipoSala","grupoQx","salMinLeg")
 
 
 @admin.register(SalariosMinimosLegales)
@@ -153,11 +100,5 @@ class salariosMinimosLegalesAdmin(admin.ModelAdmin):
    # Filtrar
    list_filter = ("id", "nombre", "año","valor","valorSubsidio")
 
-@admin.register(Uvr)
-class uvrsAdmin(admin.ModelAdmin):
 
-   list_display = ("id", "tipoTarifa", "año", "valor")
-   search_fields = ("id", "tipoTarifa", "año", "valor")
-   # Filtrar
-   list_filter = ("id", "tipoTarifa", "año", "valor")
 

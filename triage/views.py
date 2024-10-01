@@ -182,7 +182,7 @@ def crearTriage(request):
                          clasificacionTriage_id=clasificacionTriage,
                          fechaRegistro=fechaRegistro,
                          usuarioCrea_id=usernameId.id,
-			 consecAdmision=0,
+            			 consecAdmision=0,
                          #estadoReg=estadoReg,
 
         )
@@ -1164,7 +1164,7 @@ def UsuariosModalTriage(request):
 
         for nombre, documento, genero, fechaNacio, departamentos, ciudades, direccion, telefono, contacto, centrosC, tipoDoc, tiposUsuario, municipio, localidad, estadoCivil, ocupacion, correo  in curt.fetchall():
             Usuarios = {'nombre': nombre, 'documento': documento, 'genero': genero, 'fechaNacio': fechaNacio , 'departamentos' : departamentos, 'ciudades': ciudades,  'direccion':  direccion, 'telefono' :telefono, 'contacto': contacto, 'centrosC':centrosC, 'tipoDoc':tipoDoc,'tiposUsuario':tiposUsuario,
-                        'municipio':municipio, 'localidad':localidad, 'estadoCivil':estadoCivil, 'ocupacion':ocupacion,'correo':correo}
+                        'municipios':municipio, 'localidades':localidad, 'estadoCivil':estadoCivil, 'ocupaciones':ocupacion,'correo':correo}
 
         miConexiont.close()
         print(Usuarios)
@@ -1223,8 +1223,8 @@ def grabaUsuariosTriage(request):
     print("centrosC = ", centrosC)
 
 
-    if centrosC== '':
-        centrosC="."
+    #if centrosC== '':
+    #    centrosC="."
 
 
 
@@ -1260,7 +1260,7 @@ def grabaUsuariosTriage(request):
          miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
          cur3 = miConexion3.cursor()
          #comando = 'insert into usuarios_usuarios (nombre, documento, genero, "fechaNacio",  departamentos_id, ciudades_id, direccion, telefono, contacto, "centrosC_id", "tipoDoc_id", "tiposUsuario_id", municipio_id, localidad_id, "estadoCivil_id", ocupacion_id, correo ,"fechaRegistro", "estadoReg") values (' + "'" + str(nombre) + "'" + ' , ' + "'" + str(documento) + "'" + ', ' + "'" + str(genero) + "'" + '  , ' + "'" + str(fechaNacio) + "'" +  ', '  + "'" + str(departamentos) + "'" +  '  , ' + "'" +  str(ciudades) + "'" + '  , ' + "'" +  str(direccion) + "'" + ', ' + "'" + str(telefono) + "'" + ', ' + "'" + str(contacto) + "'" + ', ' + "'" + str(centrosC) + "'" +  ', ' + "'" + str(tipoDoc) + "'" + ', ' + "'" + str(tiposUsuario) + "' , " + "'" + str(municipios) + "'" +   ', ' + "'" + str(localidades) + "'" + ", " + "'" + str(estadoCivil) + "'" + ", " + "'" + str(ocupaciones) + "'" + ", " + "'" + str(correo) + "', " +  "'"  + str(fechaRegistro) + "'"  +  ", 'A'"  +      ')'
-         comando = 'insert into usuarios_usuarios (nombre, documento, genero, "fechaNacio",  departamentos_id, ciudades_id, direccion, telefono, contacto, "centrosC_id", "tipoDoc_id", "tiposUsuario_id", "fechaRegistro", "estadoReg") values (' + "'" + str(nombre) + "'" + ' , ' + "'" + str(documento) + "'" + ', ' + "'" + str(genero) + "'" + '  , ' + "'" + str(fechaNacio) + "'" + ', ' + "'" + str(departamentos) + "'" + '  , ' + "'" + str(ciudades) + "'" + '  , ' + "'" + str(direccion) + "'" + ', ' + "'" + str(telefono) + "'" + ', ' + "'" + str(contacto) + "'" + ', ' + "'" + str(centrosC) + "'" + ', ' + "'" + str(tipoDoc) + "'" + ', ' + "'" + str(tiposUsuario) + "' , '" + str(fechaRegistro) + "'" + ", 'A'" + ')'
+         comando = 'insert into usuarios_usuarios (nombre, documento, genero, "fechaNacio",  departamentos_id, ciudades_id, direccion, telefono, contacto, "centrosC_id", "tipoDoc_id", "tiposUsuario_id", "estadoCivil_id","localidad_id", "municipio_id", "ocupacion_id",  "fechaRegistro", "estadoReg") values (' + "'" + str(nombre) + "'" + ' , ' + "'" + str(documento) + "'" + ', ' + "'" + str(genero) + "'" + '  , ' + "'" + str(fechaNacio) + "'" + ', ' + "'" + str(departamentos) + "'" + '  , ' + "'" + str(ciudades) + "'" + '  , ' + "'" + str(direccion) + "'" + ', ' + "'" + str(telefono) + "'" + ', ' + "'" + str(contacto) + "'" + ', ' + "'" + str(centrosC) + "'" + ', ' + "'" + str(tipoDoc) + "'" + ', ' + "'" + str(tiposUsuario) + "' , '" + str(estadoCivil) + "' , '" + str(localidades) + "' , '"+ str(municipios) + "' , '"+ str(ocupaciones) +  "' , '"+  str(fechaRegistro) + "'" + ", 'A'" + ')'
 
          print(comando)
          cur3.execute(comando)
@@ -1272,7 +1272,7 @@ def grabaUsuariosTriage(request):
         #miConexion3 =  MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
         miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
         cur3 = miConexion3.cursor()
-        comando = 'update usuarios_usuarios set nombre = ' "'" + str(nombre) +  "'" +  ', direccion  = ' + "'" +  str(direccion) + "'" + ', genero = ' + "'" + str(genero) + "'"  + ', "fechaNacio" = ' + "'" +str(fechaNacio) + "'" +  ', telefono= ' + "'" + str(telefono) + "'" +  ', contacto= ' + "'" +  str(contacto) + "'" +  ', "centrosC_id"= ' + "'" + str(centrosC) + "'"  + ', "tiposUsuario_id" = ' + "'" + str(tiposUsuario) + "' , "   + ' municipio_id = ' + str(municipios) +   ', localidad_id = ' +  str(localidades) +  ', "estadoCivil_id"= ' +  str(estadoCivil) +  ', ocupacion_id = ' +  str(ocupaciones) +  ', correo = ' + "'" + str(correo) + "'"  + ' WHERE "tipoDoc_id" = ' + str(tipoDoc) + ' AND documento = ' + "'" + str(documento) + "'"
+        comando = 'update usuarios_usuarios set nombre = ' "'" + str(nombre) +  "'" +  ', direccion  = ' + "'" +  str(direccion) + "'" + ', genero = ' + "'" + str(genero) + "'"  + ', "fechaNacio" = ' + "'" +str(fechaNacio) + "'" +  ', telefono= ' + "'" + str(telefono) + "'" +  ', contacto= ' + "'" +  str(contacto) + "'" +  ', "centrosC_id"= ' + "'" + str(centrosC) + "'"  + ', "tiposUsuario_id" = ' + "'" + str(tiposUsuario) + "' , "   + ' municipio_id = ' + str(municipios) +   ', localidad_id = ' +  str(localidades) +  ', "estadoCivil_id"= ' +  str(estadoCivil) +  ', ocupacion_id = ' +  str(ocupaciones) +  ', correo = ' + "'" + str(correo) + "'" + ' WHERE "tipoDoc_id" = ' + str(tipoDoc) + ' AND documento = ' + "'" + str(documento) + "'"
 
         print(comando)
         cur3.execute(comando)
@@ -2072,6 +2072,20 @@ def guardarAdmisionTriage(request):
         #print("contactoAcompanante = ",contactoAcompanante)
         #print("contactoResponsable = ", contactoResponsable)
 
+        # DATOS DE RIPS
+        ripsServiciosIng = request.POST["ripsServiciosIng"]
+        print("ripsServiciosIng = ", ripsServiciosIng)
+        ripsmodalidadGrupoServicioTecSal = request.POST["ripsmodalidadGrupoServicioTecSal"]
+        ripsViaIngresoServicioSalud = request.POST["ripsViaIngresoServicioSalud"]
+        ripsGrupoServicios = request.POST["ripsGrupoServicios"]
+        ripsCausaMotivoAtencion = request.POST["ripsCausaMotivoAtencion"]
+        ripsRecienNacido = request.POST["ripsRecienNacido"]
+        ripsPesoRecienNacido = request.POST["ripsPesoRecienNacido"]
+        ripsNumConsultasCPrenatal = request.POST["ripsNumConsultasCPrenatal"]
+        ripsEdadGestacional = request.POST["ripsEdadGestacional"]
+        ripsDestinoUsuarioEgresoRecienNacido = request.POST["ripsDestinoUsuarioEgresoRecienNacido"]
+        ripsCondicionDestinoUsuarioEgreso = request.POST["ripsCondicionDestinoUsuarioEgreso"]
+        ripsCondicionDestinoUsuarioEgreso = request.POST["ripsCondicionDestinoUsuarioEgreso"]
 
         grabo = Ingresos(
                          sedesClinica_id=Sede,
@@ -2109,6 +2123,18 @@ def guardarAdmisionTriage(request):
                          remitido=remitido,
                          #salidaClinica=salidaClinica,
                          #salidaDefinitiva=salidaDefinitiva,
+                         ripsServiciosIng_id=ripsServiciosIng,
+                         ripsServiciosActual_id=ripsServiciosIng,
+                         ripsmodalidadGrupoServicioTecSal_id=ripsmodalidadGrupoServicioTecSal,
+                         ripsViaIngresoServicioSalud_id=ripsViaIngresoServicioSalud,
+                         ripsGrupoServicios_id=ripsGrupoServicios,
+                         ripsCondicionDestinoUsuarioEgreso_id=ripsCondicionDestinoUsuarioEgreso,
+                         ripsCausaMotivoAtencion_id=ripsCausaMotivoAtencion,
+                         ripsRecienNacido=ripsRecienNacido,
+                         ripsPesoRecienNacido=ripsPesoRecienNacido,
+                         ripsNumConsultasCPrenatal=ripsNumConsultasCPrenatal,
+                         ripsEdadGestacional=ripsEdadGestacional,
+                         ripsDestinoUsuarioEgresoRecienNacido=ripsDestinoUsuarioEgresoRecienNacido,
                          fechaRegistro=fechaRegistro,
                          usuarioRegistro_id=usernameId.id,
                          estadoReg=estadoReg,

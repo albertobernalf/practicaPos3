@@ -262,8 +262,9 @@ tablaConveniosAdmisiones tr {
                                 <td>{{ingresos.camaNombreIng}}</td>
                                 <td>{{ingresos.DxActual}}</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary eBtn1" role="button" data-toggle="modal" id="banda1"
-                                       onclick="findOneAdmision( {{ingresos.tipoDoc}} , {{ingresos.Documento}} ,{{ingresos.Nombre}} ,{{Sede}})"></a>
+                                    <a href="#" class="btn btn-primary eBtn1" role="button" data-toggle="modal" id="banda1">
+                                    <!--   onclick="findOneAdmision( {{ingresos.tipoDoc}} , {{ingresos.Documento}} ,{{ingresos.Nombre}} ,{{Sede}})" -->
+                                    </a>
                                 </td>
 				                <td><input id="ingresoId" name="ingresoId" type="radio" value="{{ingresos.id}}" /></td>
                             </tr>
@@ -320,9 +321,7 @@ tablaConveniosAdmisiones tr {
 
                                         <div class="col">
                                             <label for="busServicio2" class="col-sm-6 col-form-label col-form-label-sm">Servicio:</label>
-                                            <select class="form-select  h-100 w-200 form-control form-control-sm"
-                                                    aria-label="" id="busServicio2" name="busServicio2"
-                                                    disabled="disabled">
+                                            <select class="form-select  h-100 w-200 form-control form-control-sm"  aria-label="" id="busServicio2" name="busServicio2"                                         disabled="disabled">
                                                 {% for servicios in Servicios %}
                                                 <option value="{{servicios.id}}"> {{servicios.nombre}}</option>
                                                 {% endfor %}
@@ -341,12 +340,8 @@ tablaConveniosAdmisiones tr {
                                         </div>
 
                                         <div class="col">
-                                            <label for="dependenciasIngreso"
-                                                   class="col-sm-6 control-label">Dependenc:</label>
-                                            <select class="form-select  h-100 w-200 orm-control form-control-sm"
-                                                    aria-label="" id="dependenciasIngreso"
-                                                    name="dependenciasIngreso"
-                                                    disabled="disabled">
+                                            <label for="dependenciasIngreso"  class="col-sm-6 control-label">Dependenc:</label>
+                                            <select class="form-select  h-100 w-200 orm-control form-control-sm"  aria-label="" id="dependenciasIngreso"  name="dependenciasIngreso"  disabled="disabled">
                                                 {% for dependencias in Dependencias %}
                                                 <option value="{{dependencias.id}}"> {{dependencias.nombre}}
                                                 </option>
@@ -358,8 +353,7 @@ tablaConveniosAdmisiones tr {
                                     <div class="form-row">
                                         <div class="col">
                                             <label for="tipoDoc" class="col-sm-6 control-label">TipoDoc:</label>
-                                            <select class="form-select  h-40 w-200" aria-label="" id="tipoDoc"
-                                                    name="tipoDoc" disabled="disabled">
+                                            <select class="form-select  h-40 w-200" aria-label="" id="tipoDoc"  name="tipoDoc" disabled="disabled">
                                                 {% for tiposDocumento in TiposDocumento %}
                                                 <option value="{{tiposDocumento.id}}">
                                                     {{tiposDocumento.nombre}}
@@ -368,15 +362,12 @@ tablaConveniosAdmisiones tr {
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <label class="col-sm-6 control-label"
-                                                   for="busDocumentoSel">Documento:</label>
-                                            <input type="text" class="form-control" id="busDocumentoSel"
-                                                   name="busDocumentoSel" disabled="disabled">
+                                            <label class="col-sm-6 control-label"  for="busDocumentoSel">Documento:</label>
+                                            <input type="text" class="form-control" id="busDocumentoSel"  name="busDocumentoSel" disabled="disabled">
                                         </div>
                                         <div class="col">
                                             <label for="dxIngreso" class="col-sm-6 control-label">Diagnosticos:</label>
-                                            <select class="form-select  h-40 w-100" aria-label="" id="dxIngreso"
-                                                    name="dxIngreso" required>
+                                            <select class="form-select  h-40 w-100" aria-label="" id="dxIngreso" name="dxIngreso" required>
                                                 {% for diagnosticos in Diagnosticos %}
                                                 <option value="{{diagnosticos.id}}"> {{diagnosticos.nombre}}
                                                 </option>
@@ -389,11 +380,8 @@ tablaConveniosAdmisiones tr {
                                     <div class="form-row">
 
                                         <div class="col">
-                                            <label for="busEspecialidad"
-                                                   class="col-sm-6 control-label">Especialidad: </label>
-                                            <select class="form-select  h-40 w-10" aria-label=""
-                                                    id="busEspecialidad" name="busEspecialidad"
-                                                    required>
+                                            <label for="busEspecialidad"  class="col-sm-6 control-label">Especialidad: </label>
+                                            <select class="form-select  h-40 w-10" aria-label=""  id="busEspecialidad" name="busEspecialidad"  required>
                                                 {% for especialidades in Especialidades %}
                                                 <option value="{{especialidades.id}}">
                                                     {{especialidades.nombre}}
@@ -404,20 +392,16 @@ tablaConveniosAdmisiones tr {
 
                                         <div class="col">
 
-                                            <label for="medicoIngreso" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medico:
-                                                &nbsp;&nbsp;&nbsp;</label>
-                                            <select class="form-select  h-40 w-100" aria-label=""
-                                                    id="medicoIngreso" name="medicoIngreso" required>
+                                            <label for="medicoIngreso" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medico: nbsp;&nbsp;&nbsp;</label>
+                                            <select class="form-select  h-40 w-100" aria-label=""  id="medicoIngreso" name="medicoIngreso" required>
                                                 {% for medicos in Medicos %}
                                                 <option value="{{medicos.id}}"> {{medicos.nombre}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <label for="viasIngreso"
-                                                   class="col-sm-6 control-label">ViasDeIngreso:</label>
-                                            <select class="form-select  h-40 w-150" aria-label=""
-                                                    id="viasIngreso" name="viasIngreso" required>
+                                            <label for="viasIngreso"  class="col-sm-6 control-label">ViasDeIngreso:</label>
+                                            <select class="form-select  h-40 w-150" aria-label=""   id="viasIngreso" name="viasIngreso" required>
                                                 {% for viasIngreso in ViasIngreso %}
                                                 <option value="{{viasIngreso.id}}"> {{viasIngreso.nombre}}
                                                 </option>
@@ -428,10 +412,8 @@ tablaConveniosAdmisiones tr {
 
                                     <div class="form-row">
                                         <div class="col">
-                                            <label for="causasExterna"
-                                                   class="col-sm-6 control-label">CausaExterna:</label>
-                                            <select class="form-select  h-40 w-150" aria-label=""
-                                                    id="causasExterna" name="causasExterna"
+                                            <label for="causasExterna"  class="col-sm-6 control-label">CausaExterna:</label>
+                                            <select class="form-select  h-40 w-150" aria-label=""   id="causasExterna" name="causasExterna"
                                                     required>
                                                 {% for causasExterna in CausasExterna %}
                                                 <option value="{{causasExterna.id}}"> {{causasExterna.nombre}}
@@ -440,20 +422,16 @@ tablaConveniosAdmisiones tr {
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <label for="regimenes" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Regimen:
-                                                &nbsp;&nbsp;&nbsp;</label>
-                                            <select class="form-select  h-40 w-100" aria-label="" id="regimenes"
-                                                    name="regimenes" required>
+                                            <label for="regimenes" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Regimen:   &nbsp;&nbsp;&nbsp;</label>
+                                            <select class="form-select  h-40 w-100" aria-label="" id="regimenes"  name="regimenes" required>
                                                 {% for regimenes in Regimenes %}
                                                 <option value="{{regimenes.id}}"> {{regimenes.nombre}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <label for="tiposCotizante" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tipos
-                                                Cotizante: &nbsp;&nbsp;&nbsp;</label>
-                                            <select class="form-select  h-40 w-100" aria-label=""
-                                                    id="tiposCotizante" name="tiposCotizante" required>
+                                            <label for="tiposCotizante" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tipos Cotizante: &nbsp;&nbsp;&nbsp;</label>
+                                            <select class="form-select  h-40 w-100" aria-label=""  id="tiposCotizante" name="tiposCotizante" required>
                                                 {% for tiposCotizante in TiposCotizante %}
                                                 <option value="{{tiposCotizante.id}}">
                                                     {{tiposCotizante.nombre}}
@@ -465,20 +443,16 @@ tablaConveniosAdmisiones tr {
 
                                     <div class="form-group row">
                                         <div class="col">
-                                            <label for="empresas" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Empresa:
-                                                &nbsp;&nbsp;&nbsp;</label>
-                                            <select class="form-select  h-40 w-100" aria-label="" id="empresas"
-                                                    name="empresas" required>
+                                            <label for="empresas" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Empresa:  &nbsp;&nbsp;&nbsp;</label>
+                                            <select class="form-select  h-40 w-100" aria-label="" id="empresas"  name="empresas" required>
                                                 {% for empresas in Empresas %}
                                                 <option value="{{empresas.id}}"> {{empresas.nombre}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <label for="acompanantes" class="col-sm-6 control-label">&nbsp;TiposAcompañante:
-                                                &nbsp;&nbsp;&nbsp;</label>
-                                            <select class="form-select  h-40 w-100" aria-label=""
-                                                    id="acompanantes" name="acompanantes" required>
+                                            <label for="acompanantes" class="col-sm-6 control-label">&nbsp;TiposAcompañante:    &nbsp;&nbsp;&nbsp;</label>
+                                            <select class="form-select  h-40 w-100" aria-label=""  id="acompanantes" name="acompanantes" required>
                                                 {% for acompanantes in Acompanantes %}
                                                 <option value="{{acompanantes.id}}"> {{acompanantes.nombre}}
                                                 </option>
@@ -486,10 +460,8 @@ tablaConveniosAdmisiones tr {
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <label for="responsables" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                Responsable: &nbsp;&nbsp;&nbsp;</label>
-                                            <select class="form-select  h-40 w-100" aria-label=""
-                                                    id="responsables" name="responsables" required>
+                                            <label for="responsables" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Responsable: &nbsp;&nbsp;&nbsp;</label>
+                                            <select class="form-select  h-40 w-100" aria-label=""     id="responsables" name="responsables" required>
                                                 {% for responsables in Responsables %}
                                                 <option value="{{responsables.id}}"> {{responsables.nombre}}
                                                 </option>
@@ -501,16 +473,12 @@ tablaConveniosAdmisiones tr {
                                     <div class="form-group row">
 
                                         <div class="col">
-                                            <label for="remitido" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;remitido:
-                                                &nbsp;&nbsp;&nbsp;</label>
-                                            <input type="text" class="form-control" id="remitido" name="remitido"
-                                                   value="">
+                                            <label for="remitido" class="col-sm-6 control-label">&nbsp;&nbsp;&nbsp;remitido:   &nbsp;&nbsp;&nbsp;</label>
+                                            <input type="text" class="form-control" id="remitido" name="remitido"      value="">
                                         </div>
                                         <div class="col">
-                                            <label for="ips" class="col-sm-4 col-form-label col-form-label-sm">IPS:
-                                                &nbsp;&nbsp;&nbsp;</label>
-                                            <select class="form-select  h-40 w-100" aria-label="" id="ips" name="ips"
-                                                    required>
+                                            <label for="ips" class="col-sm-4 col-form-label col-form-label-sm">IPS:&nbsp;&nbsp;&nbsp;</label>
+                                            <select class="form-select  h-40 w-100" aria-label="" id="ips" name="ips"   required>
                                                 {% for ips in Ips %}
                                                 <option value="{{ips.id}}"> {{ips.nombre}}</option>
                                                 {% endfor %}
@@ -518,18 +486,14 @@ tablaConveniosAdmisiones tr {
                                         </div>
                                         <div class="col">
                                             <label for="numManilla" class="col-sm-4 col-form-label col-form-label-sm">NumeroManilla:&nbsp;&nbsp;</label>
-                                            <input type="text" class="form-control form-control-sm" id="numManilla"
-                                                   name="numManilla" value="">
+                                            <input type="text" class="form-control form-control-sm" id="numManilla"  name="numManilla" value="">
                                         </div>
-
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                                onclick="CierraModal()">Close
-                                        </button>
-                                        <input type="button" class="btn btn-primary" value="save"
-                                               onclick="guardaAdmisionModal()">
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"   onclick="CierraModal()">Close
+                                    </button>
+                                    <input type="button" class="btn btn-primary" value="save"   onclick="guardaAdmisionModal()">
                                 </div>
                             </div>
                         </div>
@@ -542,8 +506,6 @@ tablaConveniosAdmisiones tr {
     </div>  -->
 
             <!--  Fin Modal de Edicion Admisiones -->
-
-
     </article>
     <!-- FIN INGRESO PACIENTES -->
 
@@ -568,28 +530,29 @@ tablaConveniosAdmisiones tr {
 
                                 <input type="hidden" id="Sede" name="Sede" value="{{Sede}}">
                                 <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
-                                <input type="hidden" id="documento" name="documento" value = "{{Documento}}">
+                                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
                                 <input type="hidden" id="username" name="username" value="{{Username}}">
                                 <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
                                 <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
                                 <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
-                                <input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
+                                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
 
                                 <!-- VARIABLESD DE COPIA PARA RESTAURAR DATOS -->
 
-                             
+
                                 {% if crearAdmisionForm.errors %}
                                 <p style="color:Red;"> Revizar estos camos</p>
 
                                 {% endif %}
 
+                                <div class="row row-cols-8 mt-3">
 
-                                <div class="form-row">
-                                    <div class="form-group col-sm-2">
+                                    <div class="col">
                                         <label for="busServicio22"
                                                class="col-sm-1 col-form-label col-form-label-sm">Servicio:</label>
                                         <div class="col-sm-8">
-                                            <select class="form-select  h-100 w-100 form-control form-control-sm" aria-label="" id="busServicio22"
+                                            <select class="form-select  h-100 w-100 form-control form-control-sm"
+                                                    aria-label="" id="busServicio22"
                                                     name="busServicio22" required>
                                                 {% for servicios in Servicios %}
                                                 <option value="{{servicios.id}}"> {{servicios.nombre}}</option>
@@ -597,8 +560,7 @@ tablaConveniosAdmisiones tr {
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group col-sm-2">
-
+                                    <div class="col">
                                         <label for="busSubServicio22" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SubServicios:</label>
                                         <div class="col-sm-4">
                                             <select class="form-select  h-100 w-200" aria-label="" id="busSubServicio22"
@@ -609,159 +571,157 @@ tablaConveniosAdmisiones tr {
                                                 {% endfor %}
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="form-group col-sm-2">
 
-                                        <label for="dependenciasIngreso22" class="col-sm-1 control-label">Dependencias:</label>
+                                    </div>
+                                    <div class="col">
+
+                                        <label for="dependenciasIngreso22"
+                                               class="col-sm-1 control-label">Dependencias:</label>
 
                                         <div class="col-sm-8">
-                                        <select class="form-select  h-100 w-200 orm-control form-control-sm" aria-label=""  id="dependenciasIngreso22" name="dependenciasIngreso22"
-                                                required>
-                                            {% for dependencias in Dependencias %}
-                                            <option value="{{dependencias.id}}"> {{dependencias.nombre}}</option>
-                                            {% endfor %}
-                                        </select>
+                                            <select class="form-select  h-100 w-200 orm-control form-control-sm"
+                                                    aria-label="" id="dependenciasIngreso22"
+                                                    name="dependenciasIngreso22"
+                                                    required>
+                                                {% for dependencias in Dependencias %}
+                                                <option value="{{dependencias.id}}"> {{dependencias.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group col-sm-2">
+                                    </div>
+                                    <div class="col">
 
                                         <label for="tipoDoc22" class="col-sm-1 control-label">TipoDoc:</label>
                                         <div class="col-sm-8">
-                                        <select class="form-select  h-40 w-100" aria-label="" id="tipoDoc22" name="tipoDoc22" required>
-                                            {% for tiposDocumento in TiposDocumento %}
-                                            <option value="{{tiposDocumento.id}}"> {{tiposDocumento.nombre}}</option>
-                                            {% endfor %}
-                                        </select>
+                                            <select class="form-select  h-40 w-100" aria-label="" id="tipoDoc22"
+                                                    name="tipoDoc22" required>
+                                                {% for tiposDocumento in TiposDocumento %}
+                                                <option value="{{tiposDocumento.id}}"> {{tiposDocumento.nombre}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
 
                                         </div>
-                                    </div>
-                                    <div class="form-group col-sm-1">
 
-                                        <label class="col-sm-1 control-label"   for="busDocumentoSel22">Documento:</label>
+                                    </div>
+                                    <div class="col">
+
+                                        <label class="col-sm-1 control-label" for="busDocumentoSel22">Documento:</label>
                                         <input type="text" class="form-control" id="busDocumentoSel22"
                                                name="busDocumentoSel22" required>
+
+                                    </div>
+                                    <div class="col">
+
+                                        <label for="dxIngreso" class="col-sm-1 control-label">Diagnosticos:</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-select  h-40 w-100" aria-label="" id="dxIngreso"
+                                                    name="dxIngreso" required>
+                                                {% for diagnosticos in Diagnosticos %}
+                                                <option value="{{diagnosticos.id}}"> {{diagnosticos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="col">
+                                        <label for="busEspecialidad" class="col-sm-1 control-label">Especialidad:
+                                        </label>
+
+                                        <div class="col-sm-1">
+                                            <select class="form-select  h-40 w-10" aria-label="" id="busEspecialidad"
+                                                    name="busEspecialidad"
+                                                    required>
+                                                {% for especialidades in Especialidades %}
+                                                <option value="{{especialidades.id}}"> {{especialidades.nombre}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="col">
+
+                                        <label for="medicoIngreso" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medico:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-select  h-40 w-100" aria-label="" id="medicoIngreso"
+                                                    name="medicoIngreso" required>
+                                                {% for medicos in Medicos %}
+                                                <option value="{{medicos.id}}"> {{medicos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="col">
+
+                                        <label for="viasIngreso" class="col-sm-1 control-label">ViasDeIngreso:</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-select  h-40 w-150" aria-label="" id="viasIngreso"
+                                                    name="viasIngreso" required>
+                                                {% for viasIngreso in ViasIngreso %}
+                                                <option value="{{viasIngreso.id}}"> {{viasIngreso.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
 
                                     </div>
 
                                 </div>
 
-
-                                <div class="form-row">
-                                       <div class="form-group col-sm-2">
-
-                                        <label for="dxIngreso" class="col-sm-1 control-label">Diagnosticos:</label>
-                                        <div class="col-sm-8">
-                                        <select class="form-select  h-40 w-100" aria-label="" id="dxIngreso" name="dxIngreso" required>
-                                            {% for diagnosticos in Diagnosticos %}
-                                            <option value="{{diagnosticos.id}}"> {{diagnosticos.nombre}}</option>
-                                            {% endfor %}
-                                        </select>
-                                        </div>
-
-                                    </div>
-
-                                                                        <div class="form-group col-sm-2 ">
-
-                                        <label for="busEspecialidad" class="col-sm-1 control-label">Especialidad:
-                                        </label>
-
-                                        <div class="col-sm-1">
-                                        <select class="form-select  h-40 w-10" aria-label="" id="busEspecialidad" name="busEspecialidad"
-                                                required>
-                                            {% for especialidades in Especialidades %}
-                                            <option value="{{especialidades.id}}"> {{especialidades.nombre}}</option>
-                                            {% endfor %}
-                                        </select>
-                                            </div>
-                                    </div>
-
-                                    <div class="form-group col-sm-2 ">
-
-                                        <label for="medicoIngreso" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medico:
-                                            &nbsp;&nbsp;&nbsp;</label>
-                                        <div class="col-sm-4">
-                                        <select class="form-select  h-40 w-100" aria-label="" id="medicoIngreso" name="medicoIngreso" required>
-                                            {% for medicos in Medicos %}
-                                            <option value="{{medicos.id}}"> {{medicos.nombre}}</option>
-                                            {% endfor %}
-                                        </select>
-                                            </div>
-                                    </div>
-
-
-                                    <div class="form-group col-sm-2 ">
-
-                                        <label for="viasIngreso" class="col-sm-1 control-label">ViasDeIngreso:</label>
-                                        <div class="col-sm-4">
-                                        <select class="form-select  h-40 w-150" aria-label="" id="viasIngreso" name="viasIngreso" required>
-                                            {% for viasIngreso in ViasIngreso %}
-                                            <option value="{{viasIngreso.id}}"> {{viasIngreso.nombre}}</option>
-                                            {% endfor %}
-                                        </select>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group col-sm-2 ">
+                                <div class="row row-cols-8 mt-3">
+                                    <div class="col">
 
                                         <label for="causasExterna" class="col-sm-1 control-label">CausaExterna:
                                         </label>
 
                                         <div class="col-sm-4">
-                                        <select class="form-select  h-40 w-150" aria-label="" id="causasExterna" name="causasExterna"
-                                                required>
-                                            {% for causasExterna in CausasExterna %}
-                                            <option value="{{causasExterna.id}}"> {{causasExterna.nombre}}</option>
-                                            {% endfor %}
-                                        </select>
-                                            </div>
+                                            <select class="form-select  h-40 w-150" aria-label="" id="causasExterna"
+                                                    name="causasExterna"
+                                                    required>
+                                                {% for causasExterna in CausasExterna %}
+                                                <option value="{{causasExterna.id}}"> {{causasExterna.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
                                     </div>
-
-
-
-                                </div>
-
-
-
-                                <div class="form-row">
-
-
-                                    <div class="form-group col-sm-2 ">
-
+                                    <div class="col">
                                         <label for="regimenes" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Regimen:
                                             &nbsp;&nbsp;&nbsp;</label>
                                         <div class="col-sm-2">
-                                        <select class="form-select  h-40 w-120" aria-label=""  id="regimenes" name="regimenes" required>
-                                            {% for regimenes in Regimenes %}
-                                            <option value="{{regimenes.id}}"> {{regimenes.nombre}}</option>
-                                            {% endfor %}
-                                        </select>
-                                            </div>
+                                            <select class="form-select  h-40 w-120" aria-label="" id="regimenes"
+                                                    name="regimenes" required>
+                                                {% for regimenes in Regimenes %}
+                                                <option value="{{regimenes.id}}"> {{regimenes.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
                                     </div>
-
-                                    <div class="form-group col-sm-2 ">
-
+                                    <div class="col">
                                         <label for="tiposCotizante" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;TiposCotizante:
                                             &nbsp;&nbsp;&nbsp;</label>
                                         <div class="col-sm-4">
-                                        <select class="form-select  h-40 w-200" aria-label="" id="tiposCotizante" name="tiposCotizante" required>
-                                            {% for tiposCotizante in TiposCotizante %}
-                                            <option value="{{tiposCotizante.id}}"> {{tiposCotizante.nombre}}</option>
-                                            {% endfor %}
-                                        </select>
-                                            </div>
+                                            <select class="form-select  h-40 w-200" aria-label="" id="tiposCotizante"
+                                                    name="tiposCotizante" required>
+                                                {% for tiposCotizante in TiposCotizante %}
+                                                <option value="{{tiposCotizante.id}}"> {{tiposCotizante.nombre}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
                                     </div>
+                                    <div class="col">
+                                        <label for="remitido" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;remitido:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <input type="text" class="form-control" id="remitido" name="remitido" value="">
 
-                                 
-                                     <div class="form-group col-sm-1">
-                                         <label for="remitido" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;remitido:                                         &nbsp;&nbsp;&nbsp;</label>
-                                         <input type="text" class="form-control" id="remitido" name="remitido" value="">
-                                     </div>
-
-
-
-				  <div class="form-group col-sm-2 ">
+                                    </div>
+                                    <div class="col">
                                         <label for="ips" class="col-sm-1 col-form-label col-form-label-sm">IPS:
                                             &nbsp;&nbsp;&nbsp;</label>
                                         <div class="col-sm-1">
@@ -772,30 +732,173 @@ tablaConveniosAdmisiones tr {
                                                 {% endfor %}
                                             </select>
                                         </div>
+
                                     </div>
 
-				  <div class="form-group col-sm-2 ">
+                                    <div class="col">
                                         <label for="numManilla" class="col-sm-2 col-form-label col-form-label-sm">NumeroManilla:&nbsp;&nbsp;</label>
-                                        <div class="col-sm-4">
-                                        <input type="text" class="form-control form-control-sm" id="numManilla"   name="numManilla" value="">
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control form-control-sm" id="numManilla"
+                                                   name="numManilla" value="">
+                                        </div>
+
+                                    </div> I N F O R M A C I O N  RIPS:
+                                    <div class="col">
+
+                                                                <label for="ripsDestinoUsuarioEgresoRecienNacido" class="col-sm-1 col-form-label col-form-label-sm">IPS:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-1">
+                                            <select class="form-select  h-40 w-20" aria-label="" id="ripsDestinoUsuarioEgresoRecienNacido" name="ripsDestinoUsuarioEgresoRecienNacido"
+                                                    required>
+                                                {% for ripsDestinoUsuarioEgresoRecienNacido in RipsDestinoUsuarioEgresoRecienNacido %}
+                                                <option value="{{ripsDestinoUsuarioEgresoRecienNacido.id}}"> {{ripsDestinoUsuarioEgresoRecienNacido.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                      </div>
+
+                                    </div>
+
+
+                                    <div class="col">
+                                         <label for="ripsEdadGestacional" class="col-sm-2 col-form-label col-form-label-sm">RN Edad Gestacional:&nbsp;&nbsp;</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control form-control-sm" id="ripsEdadGestacional"
+                                                   name="ripsEdadGestacional" value="">
                                         </div>
                                     </div>
 
-				  <div class="form-group col-sm-2 ">
-                                            <span id="mensaje1" name="mensaje1"> </span>
-                                            <input type="submit" id="guardarAdmision" name="guardarAdmision"    value="GUARDAR"></input>
+                                </div>
+
+                                <div class="row row-cols-8 mt-3">
+                                    <div class="col">
+                                          <label for="ripsNumConsultasCPrenatal" class="col-sm-2 col-form-label col-form-label-sm">NumeroConsultaPrenatal:&nbsp;&nbsp;</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control form-control-sm" id="ripsNumConsultasCPrenatal"
+                                                   name="ripsNumConsultasCPrenatal" value="">
+                                        </div>
                                     </div>
 
-                                     <input type="hidden" id="Sede" name="Sede" value="{{Sede}}">
-                                <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
-                                <input type="hidden" id="Perfil" name="Perfil" value="{{Perfil}}">
-                                <input type="hidden" id="username" name="username" value="{{Username}}">
-                                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
-                                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
-                                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
-                                <input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
+                                        <div class="col">
+                                                <label for="ripsPesoRecienNacido" class="col-sm-2 col-form-label col-form-label-sm">RN peso:&nbsp;&nbsp;</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control form-control-sm" id="ripsPesoRecienNacido"
+                                                   name="ripsPesoRecienNacido" value="">
+                                        </div>
+                                    </div>
 
-                                </div>				
+                                        <div class="col">
+                                             <label for="ripsRecienNacido" class="col-sm-2 col-form-label col-form-label-sm">Recien Nacido:&nbsp;&nbsp;</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control form-control-sm" id="ripsRecienNacido"
+                                                   name="ripsRecienNacido" value="">
+                                        </div>
+                                    </div>
+
+                                        <div class="col">
+                                            <label for="ripsCausaMotivoAtencion" class="col-sm-1 col-form-label col-form-label-sm">CausaAtencion:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-1">
+                                            <select class="form-select  h-40 w-20" aria-label="" id="ripsCausaMotivoAtencion" name="ripsCausaMotivoAtencion"
+                                                    required>
+                                                {% for ripsCausaMotivoAtencion in RipsCausaMotivoAtencion %}
+                                                <option value="{{ripsCausaMotivoAtencion.id}}"> {{ripsCausaMotivoAtencion.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                        <div class="col">
+                                              <label for="ripsCondicionDestinoUsuarioEgreso" class="col-sm-1 col-form-label col-form-label-sm">UsuarioDestinoegreso:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-1">
+                                            <select class="form-select  h-40 w-20" aria-label="" id="ripsCondicionDestinoUsuarioEgreso" name="ripsCondicionDestinoUsuarioEgreso"
+                                                    required>
+                                                {% for ripsCondicionDestinoUsuarioEgreso in RipsCondicionDestinoUsuarioEgreso %}
+                                                <option value="{{ripsCondicionDestinoUsuarioEgreso.id}}"> {{ripsCondicionDestinoUsuarioEgreso.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                        <div class="col">
+                                               <label for="ripsGrupoServicios" class="col-sm-1 col-form-label col-form-label-sm">GrupoDeServicios:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-1">
+                                            <select class="form-select  h-40 w-20" aria-label="" id="ripsGrupoServicios" name="ripsGrupoServicios"
+                                                    required>
+                                                {% for ripsGrupoServicios in RipsGrupoServicios %}
+                                                <option value="{{ripsGrupoServicios.id}}"> {{ripsGrupoServicios.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                        <div class="col">
+                                                       <label for="ripsViaIngresoServicioSalud" class="col-sm-1 col-form-label col-form-label-sm">ViaIngreso:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-1">
+                                            <select class="form-select  h-40 w-20" aria-label="" id="ripsViaIngresoServicioSalud" name="ripsViaIngresoServicioSalud"
+                                                    required>
+                                                {% for ripsViaIngresoServicioSalud in RipsViaIngresoServicioSalud %}
+                                                <option value="{{ripsViaIngresoServicioSalud.id}}"> {{ripsViaIngresoServicioSalud.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                        <div class="col">
+                                                       <label for="ripsmodalidadGrupoServicioTecSal" class="col-sm-1 col-form-label col-form-label-sm">ModalidadGrupoServ:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-1">
+                                            <select class="form-select  h-40 w-20" aria-label="" id="ripsmodalidadGrupoServicioTecSal" name="ripsmodalidadGrupoServicioTecSal"
+                                                    required>
+                                                {% for ripsmodalidadGrupoServicioTecSal in RipsmodalidadGrupoServicioTecSal %}
+                                                <option value="{{ripsmodalidadGrupoServicioTecSal.id}}"> {{ripsmodalidadGrupoServicioTecSal.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="row row-cols-8 mt-3">
+                                    <div class="col">
+                                                         <label for="ripsServiciosIng" class="col-sm-1 col-form-label col-form-label-sm">ServicioIngreso:
+                                            &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-sm-1">
+                                            <select class="form-select  h-40 w-20" aria-label="" id="ripsServiciosIng" name="ripsServiciosIng"
+                                                    required>
+                                                {% for ripsServiciosIng in RipsServiciosIng %}
+                                                <option value="{{ripsServiciosIng.id}}"> {{ripsServiciosIng.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                        <div class="col">
+                                            <input type="submit" id="guardarAdmision" name="guardarAdmision"
+                                               value="GUARDAR"></input>
+
+                                        <input type="hidden" id="Sede" name="Sede" value="{{Sede}}">
+                                        <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
+                                        <input type="hidden" id="Perfil" name="Perfil" value="{{Perfil}}">
+                                        <input type="hidden" id="username" name="username" value="{{Username}}">
+                                        <input type="hidden" id="username_id" name="username_id"
+                                               value="{{Username_id}}">
+                                        <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                                        <input type="hidden" id="profesional" name="profesional"
+                                               value="{{Profesional}}">
+                                        <input type="hidden" id="escogeModulo" name="escogeModulo"
+                                               value="{{EscogeModulo}}">
+                                    </div>
+
+                                        <div class="col">
+                                    </div>
+
+                                </div>
 
 
                             </form>
@@ -839,31 +942,34 @@ tablaConveniosAdmisiones tr {
                                     <div class="modal-body">
 
 
- 					<div class="form-row">
- 					  <div class="col">
-                                            <label for="tipoDoc1" class="col-sm-6 control-label">Tipo Doc:</label>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <label for="tipoDoc1" class="col-sm-6 control-label">Tipo Doc:</label>
 
 
-                                            <select class="form-select  h-40 w-10" aria-label="" id="tipoDoc1" name="tipoDoc1" disabled>
-                                                {% for tiposDocumento in TiposDocumento %}
-                                                <option value="{{tiposDocumento.id}}"> {{tiposDocumento.nombre}}
-                                                </option>
-                                                {% endfor %}
-                                            </select>
+                                                <select class="form-select  h-40 w-10" aria-label="" id="tipoDoc1"
+                                                        name="tipoDoc1" disabled>
+                                                    {% for tiposDocumento in TiposDocumento %}
+                                                    <option value="{{tiposDocumento.id}}"> {{tiposDocumento.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
 
-                                          </div>
+                                            </div>
                                         </div>
 
 
                                         <div class="col">
                                             <label for="documento1" class="col-sm-6 control-label">Documento:</label>
-                                            <input type="text" class="form-control form-control-sm" id="documento1" name="documento1" value="" readonly>
+                                            <input type="text" class="form-control form-control-sm" id="documento1"
+                                                   name="documento1" value="" readonly>
                                         </div>
 
                                         <div class="col">
                                             <label for="nombre1" class="col-sm-6 control-label"> Paciente :</label>
 
-                                            <input type="text" class="form-control form-control-sm" id="nombre1" name="nombre1"
+                                            <input type="text" class="form-control form-control-sm" id="nombre1"
+                                                   name="nombre1"
                                                    value="">
                                         </div>
 
@@ -879,15 +985,18 @@ tablaConveniosAdmisiones tr {
 
                                         <div class="col">
                                             <label for="fechaNacio" class="col-sm-6 control-label">Fec.Nacio:</label>
-                                            <input type="datetime-local" class="form-control form-control-sm" id="fechaNacio" name="fechaNacio" value="">
+                                            <input type="datetime-local" class="form-control form-control-sm"
+                                                   id="fechaNacio" name="fechaNacio" value="">
                                         </div>
 
 
-                                         <div class="col">
-                                            <label for="departamentos" class="col-sm-6 control-label">Departamento:</label>
+                                        <div class="col">
+                                            <label for="departamentos"
+                                                   class="col-sm-6 control-label">Departamento:</label>
 
 
-                                            <select class="form-select  h-40 w-10" id="departamentos" name="departamentos">
+                                            <select class="form-select  h-40 w-10" id="departamentos"
+                                                    name="departamentos">
                                                 {% for departamentos in Departamentos %}
                                                 <option value="{{departamentos.id}}"> {{departamentos.nombre}}
                                                 </option>
@@ -924,8 +1033,7 @@ tablaConveniosAdmisiones tr {
                                         </div>
 
 
-
-                                         <div class="col">
+                                        <div class="col">
                                             <label for="ciudades" class="col-sm-6 control-label">Ciudad:</label>
 
 
@@ -937,10 +1045,10 @@ tablaConveniosAdmisiones tr {
                                             </select>
 
                                         </div>
-                                     </div>
- 					<div class="form-row">
+                                    </div>
+                                    <div class="form-row">
 
-                                         <div class="col">
+                                        <div class="col">
                                             <label for="direccion" class="col-sm-10 control-label">Dir:</label>
                                             <input type="text" class="form-control" id="direccion" name="direcc:"
                                                    value="">
@@ -958,7 +1066,8 @@ tablaConveniosAdmisiones tr {
                                         </div>
 
                                         <div class="col">
-                                            <label for="estadoCivil" class="col-sm-10 control-label">Estado Civil:</label>
+                                            <label for="estadoCivil" class="col-sm-10 control-label">Estado
+                                                Civil:</label>
 
 
                                             <select class="form-select  h-40 w-10" id="estadoCivil" name="estadoCivil">
@@ -982,9 +1091,9 @@ tablaConveniosAdmisiones tr {
                                             </select>
 
                                         </div>
-                                   </div>
-				
-           			  <div class="form-row">
+                                    </div>
+
+                                    <div class="form-row">
                                         <div class="col">
                                             <label for="correo" class="col-sm-6 control-label">Correo:</label>
                                             <input type="text" class="form-control" id="correo" name="correo" value="">
@@ -1004,9 +1113,11 @@ tablaConveniosAdmisiones tr {
 
 
                                         <div class="col">
-                                            <label for="tiposUsuario" class="col-sm-6 control-label">Tipos Usuario:</label>
+                                            <label for="tiposUsuario" class="col-sm-6 control-label">Tipos
+                                                Usuario:</label>
 
-                                            <select class="form-select  h-40 w-10" id="tiposUsuario" name="tiposUsuario">
+                                            <select class="form-select  h-40 w-10" id="tiposUsuario"
+                                                    name="tiposUsuario">
                                                 {% for tiposUsuario in TiposUsuario %}
                                                 <option value="{{tiposUsuario.id}}"> {{tiposUsuario.nombre}}</option>
                                                 {% endfor %}
@@ -1028,11 +1139,11 @@ tablaConveniosAdmisiones tr {
                     </form>
                 </div>
 
-              </div>
             </div>
+        </div>
 
 
-            <!-- fin modal  Usuarios-->
+        <!-- fin modal  Usuarios-->
 
 <!-- FIN Espacio para Modales -->
 

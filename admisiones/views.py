@@ -1133,6 +1133,183 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         # Fin combo tiposPagos
 
 
+        # Combo ripsServiciosIng
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_RipsServicios  p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsServiciosIng = []
+        ripsServiciosIng.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            ripsServiciosIng.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsServiciosIng", ripsServiciosIng)
+
+        context['RipsServiciosIng'] = ripsServiciosIng
+
+        # Fin combo ripsServiciosIng
+
+        # Combo ripsmodalidadGrupoServicioTecSal
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_RipsModalidadAtencion   p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsmodalidadGrupoServicioTecSal = []
+        ripsmodalidadGrupoServicioTecSal.append({'id': '', 'nombre': ''})
+
+
+        for id, nombre in curt.fetchall():
+            ripsmodalidadGrupoServicioTecSal.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsmodalidadGrupoServicioTecSal", ripsmodalidadGrupoServicioTecSal)
+
+        context['RipsmodalidadGrupoServicioTecSal'] = ripsmodalidadGrupoServicioTecSal
+
+        # Fin combo ripsmodalidadGrupoServicioTecSal
+
+        # Combo ripsViaIngresoServicioSalud
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_ripsviasingresosalud  p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsViaIngresoServicioSalud = []
+        ripsViaIngresoServicioSalud.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            ripsViaIngresoServicioSalud.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsViaIngresoServicioSalud", ripsViaIngresoServicioSalud)
+
+        context['RipsViaIngresoServicioSalud'] = ripsViaIngresoServicioSalud
+
+        # Fin combo ripsViaIngresoServicioSalud
+
+        # Combo ripsGrupoServicios
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_ripsGrupoServicios  p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsGrupoServicios = []
+        ripsGrupoServicios.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            ripsGrupoServicios.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsGrupoServicios", ripsGrupoServicios)
+
+        context['RipsGrupoServicios'] = ripsGrupoServicios
+
+        # Fin combo ripsGrupoServicios
+
+        # Combo ripsCondicionDestinoUsuarioEgreso
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_ripsdestinoegreso  p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsCondicionDestinoUsuarioEgreso = []
+        ripsCondicionDestinoUsuarioEgreso.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            ripsCondicionDestinoUsuarioEgreso.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsCondicionDestinoUsuarioEgreso", ripsCondicionDestinoUsuarioEgreso)
+
+        context['RipsCondicionDestinoUsuarioEgreso'] = ripsCondicionDestinoUsuarioEgreso
+
+        # Fin combo ripsCondicionDestinoUsuarioEgreso
+
+        # Combo ripsCausaMotivoAtencion
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_ripscausaexterna  p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsCausaMotivoAtencion = []
+        ripsCausaMotivoAtencion.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            ripsCausaMotivoAtencion.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsCausaMotivoAtencion", ripsCausaMotivoAtencion)
+
+        context['RipsCausaMotivoAtencion'] = ripsCausaMotivoAtencion
+
+        # Fin combo ripsCausaMotivoAtencion
+
+        # Combo ripsDestinoUsuarioEgresoRecienNacido
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_ripsdestinoegreso  p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsDestinoUsuarioEgresoRecienNacido = []
+        ripsDestinoUsuarioEgresoRecienNacido.append({'id': '', 'nombre': ''})
+
+        for id, nombre in curt.fetchall():
+            ripsDestinoUsuarioEgresoRecienNacido.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsDestinoUsuarioEgresoRecienNacido", ripsDestinoUsuarioEgresoRecienNacido)
+
+        context['RipsDestinoUsuarioEgresoRecienNacido'] = ripsDestinoUsuarioEgresoRecienNacido
+
+        # Fin combo ripsDestinoUsuarioEgresoRecienNacido
+
+
 
         ## Aqui contexto para solo admisiones
 
@@ -1307,6 +1484,177 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         context['TiposTriage'] = tiposTriage
 
         # Fin combo TiposTriage
+
+
+
+        # Combo ripsServiciosIng
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_RipsServicios  p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsServiciosIng = []
+
+        for id, nombre in curt.fetchall():
+            ripsServiciosIng.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsServiciosIng", ripsServiciosIng)
+
+        context['RipsServiciosIng'] = ripsServiciosIng
+
+        # Fin combo ripsServiciosIng
+
+        # Combo ripsmodalidadGrupoServicioTecSal
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_RipsModalidadAtencion   p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsmodalidadGrupoServicioTecSal = []
+
+        for id, nombre in curt.fetchall():
+            ripsmodalidadGrupoServicioTecSal.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsmodalidadGrupoServicioTecSal", ripsmodalidadGrupoServicioTecSal)
+
+        context['RipsmodalidadGrupoServicioTecSal'] = ripsmodalidadGrupoServicioTecSal
+
+        # Fin combo ripsmodalidadGrupoServicioTecSal
+
+        # Combo ripsViaIngresoServicioSalud
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_ripsviasingresosalud  p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsViaIngresoServicioSalud = []
+
+        for id, nombre in curt.fetchall():
+            ripsViaIngresoServicioSalud.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsViaIngresoServicioSalud", ripsViaIngresoServicioSalud)
+
+        context['RipsViaIngresoServicioSalud'] = ripsViaIngresoServicioSalud
+
+        # Fin combo ripsViaIngresoServicioSalud
+
+        # Combo ripsGrupoServicios
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_ripsGrupoServicios  p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsGrupoServicios = []
+
+        for id, nombre in curt.fetchall():
+            ripsGrupoServicios.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsGrupoServicios", ripsGrupoServicios)
+
+        context['RipsGrupoServicios'] = ripsGrupoServicios
+
+        # Fin combo ripsGrupoServicios
+
+        # Combo ripsCondicionDestinoUsuarioEgreso
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_ripsdestinoegreso  p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsCondicionDestinoUsuarioEgreso = []
+
+        for id, nombre in curt.fetchall():
+            ripsCondicionDestinoUsuarioEgreso.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsCondicionDestinoUsuarioEgreso", ripsCondicionDestinoUsuarioEgreso)
+
+        context['RipsCondicionDestinoUsuarioEgreso'] = ripsCondicionDestinoUsuarioEgreso
+
+        # Fin combo ripsCondicionDestinoUsuarioEgreso
+
+        # Combo ripsCausaMotivoAtencion
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_ripscausaexterna  p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsCausaMotivoAtencion = []
+
+        for id, nombre in curt.fetchall():
+            ripsCausaMotivoAtencion.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsCausaMotivoAtencion", ripsCausaMotivoAtencion)
+
+        context['RipsCausaMotivoAtencion'] = ripsCausaMotivoAtencion
+
+        # Fin combo ripsCausaMotivoAtencion
+
+        # Combo ripsDestinoUsuarioEgresoRecienNacido
+
+        # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+        curt = miConexiont.cursor()
+
+        comando = "SELECT p.id id, p.nombre  nombre FROM rips_ripsdestinoegreso  p"
+
+        curt.execute(comando)
+        print(comando)
+
+        ripsDestinoUsuarioEgresoRecienNacido = []
+
+        for id, nombre in curt.fetchall():
+            ripsDestinoUsuarioEgresoRecienNacido.append({'id': id, 'nombre': nombre})
+
+        miConexiont.close()
+        print("ripsDestinoUsuarioEgresoRecienNacido", ripsDestinoUsuarioEgresoRecienNacido)
+
+        context['RipsDestinoUsuarioEgresoRecienNacido'] = ripsDestinoUsuarioEgresoRecienNacido
+
+        # Fin combo ripsDestinoUsuarioEgresoRecienNacido
+
 
 
         triage1 = []
@@ -3084,6 +3432,20 @@ def crearAdmisionDef(request):
         print("ipsRemite = ", ipsRemite)
         print("remitido = ", remitido)
 
+        # DATOS DE RIPS
+        ripsServiciosIng = request.POST['ripsServiciosIng']
+        ripsmodalidadGrupoServicioTecSal = request.POST['ripsmodalidadGrupoServicioTecSal']
+        ripsViaIngresoServicioSalud = request.POST['ripsViaIngresoServicioSalud']
+        ripsGrupoServicios = request.POST['ripsGrupoServicios']
+        ripsCondicionDestinoUsuarioEgreso = request.POST['ripsCondicionDestinoUsuarioEgreso']
+        ripsCausaMotivoAtencion = request.POST['ripsCausaMotivoAtencion']
+        ripsRecienNacido = request.POST["ripsRecienNacido"]
+        ripsPesoRecienNacido = request.POST["ripsPesoRecienNacido"]
+        ripsNumConsultasCPrenatal = request.POST["ripsNumConsultasCPrenatal"]
+        ripsEdadGestacional = request.POST["ripsEdadGestacional"]
+        ripsDestinoUsuarioEgresoRecienNacido = request.POST['ripsDestinoUsuarioEgresoRecienNacido']
+
+
 
         grabo = Ingresos(
                          sedesClinica_id=Sede,
@@ -3121,6 +3483,18 @@ def crearAdmisionDef(request):
                          remitido=remitido,
                          #salidaClinica=salidaClinica,
                          #salidaDefinitiva=salidaDefinitiva,
+                         ripsServiciosIng_id = ripsServiciosIng,
+                         ripsServiciosActual_id=ripsServiciosIng,
+                         ripsmodalidadGrupoServicioTecSal_id = ripsmodalidadGrupoServicioTecSal,
+                         ripsViaIngresoServicioSalud_id = ripsViaIngresoServicioSalud,
+                         ripsGrupoServicios_id = ripsGrupoServicios,
+                         ripsCondicionDestinoUsuarioEgreso_id = ripsCondicionDestinoUsuarioEgreso,
+                         ripsCausaMotivoAtencion_id = ripsCausaMotivoAtencion,
+                         ripsRecienNacido = ripsRecienNacido,
+                         ripsPesoRecienNacido = ripsPesoRecienNacido,
+                         ripsNumConsultasCPrenatal = ripsNumConsultasCPrenatal,
+                         ripsEdadGestacional = ripsEdadGestacional,
+                         ripsDestinoUsuarioEgresoRecienNacido =ripsDestinoUsuarioEgresoRecienNacido,
                          fechaRegistro=fechaRegistro,
                          usuarioRegistro_id=usernameId.id,
                          estadoReg=estadoReg,
@@ -3270,7 +3644,7 @@ def crearAdmisionDef(request):
 
         curx.execute(detalle)
 
-        for tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual in curx.fetchall():
+        for id, tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual in curx.fetchall():
             ingresos.append({'id':id, 'tipoDoc': tipoDoc, 'Documento': documento, 'Nombre': nombre, 'Consec': consec,
                              'FechaIngreso': fechaIngreso, 'FechaSalida': fechaSalida,
                              'servicioNombreIng': servicioNombreIng, 'camaNombreIng': camaNombreIng,
@@ -3989,7 +4363,7 @@ def guardarUsuariosModal(request):
 
     miConexion11.close()
 
-    fechaRegistro = datetime.now()
+    fechaRegistro = datetime.datetime.now()
 
 
     if Usuarios == []:
@@ -4019,7 +4393,13 @@ def guardarUsuariosModal(request):
         miConexion3.close()
         return HttpResponse("Usuario Actualizado ! ")
 
-def encuentraAdmisionModal(request, tipoDoc, documento, consec, sede):
+def encuentraAdmisionModal(request) : #, tipoDoc, documento, consec, sede):
+
+        tipoDoc = request.POST["tipoDoc"]
+        documento = request.POST["documento"]
+        sede = request.POST["sede"]
+        consec = request.POST["consec"]
+
 
         print("Entre a buscar una Admision Modal")
         print("documento = ", documento)
@@ -4680,7 +5060,8 @@ def GuardaFurips(request):
     registroId = Ingresos.objects.get(id=ingresoId)
     print  ("registroId documento =" , registroId.documento_id)
 
-    print("ASI VIENE PURO  = ", request.POST["form"])
+    numeroRadicacion = request.POST.get("numeroRadicacion")
+    print ("numeroRadicacion = ", numeroRadicacion)
 
     forma = furipsForm(request.POST["form"])
     forma1 = json.loads(forma)

@@ -1,3 +1,14 @@
+-----------------------------------------------------------------------------------------------------------------------
+--  TRIAGE
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+--  ADMISIONES
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+--  HISTORIA CLINICA
+-----------------------------------------------------------------------------------------------------------------------
+
+
 ojo --> Todo esto son horas y horas de camello. Work, Trabajop
 
 1. Poder grabar una Admision (una vez guarde el nuevo usuario se pueda seguir la modal desaparezca y pueda crear correctamente una admision al igual con actualizar probar)
@@ -18,7 +29,6 @@ ojo --> Todo esto son horas y horas de camello. Work, Trabajop
 7. ojo tengo quemado un centroc_id en 1 creo para que guarde la modal usuario (NO SE PORQUE)/ tambien en main, ausuario1 fecIngreso esta quemado 2024-01-01
 8.  Creo crear programa autorizaciones con panelAutorizaciones y demas depronot un menuAutorizaciones para comenzar a diferenciar y yap todo
    con el estandard de programacion
-
 
 Tablas = tblhcl_ingresos ( es la parte clinica del accidente)
 Tablas= tbl_furips ( Es como la parte legal de datos)
@@ -57,11 +67,9 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 1  probar inser de clinicos
   cuando grabo se fuel por otra cosa y noreargo la pagina de ingresos clinicos ojop
   ojo No hay una dependencia llave foranea de la historia con el ingreso
-  ojo al crear triage y crear modal usuario no carga la modal usuario
 5 ojo no funciona mensajeria cuando actualiza un trige 
   ojo no cierra la modal cuando acatualiza un triege
   ojo No me edita por nada la Admision para actualziar Mo encuentraAdmisonModal URL ???
-  ojo ops hay un eror en la vieww de admisiones linea 4388 se pierde un id
 10ojo como manejamos las habitacione triage, desocupamos ???
   ojo en historia clinica coge bien la fecha-hora de la historia , popruq en admisiones y panel nop ??? Nop. Validar
   ojo en admisiones cuando hay cambio de servicio y graba hay que hacer refresh del tablero de admisiones para que miestre el cambio o sino pailas , toca hacerlo manual  .. Umm verificar creo esta bien
@@ -78,27 +86,62 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 23. Ojo hay un erro al cargar la paginma admisione. es en cambioServico.change se activa pero no hay sede , por cua? no hay sede?
 24. Toca arregalr el tema de los ingresoIDxx, sedexx de acompanantes, responsable y abonos. ORGANIZAR bien
 
-    PARA EL DIA LUNES 30 DE Septiembre
+    PARA EL DIA LUNES 30 DE Septiembre . PILAS SEGUIR CON FURIPS Y TODO LO QUE FALTA DE INGRESOS/TRIAGE/HC
 
-    No me martca o me selecciona el primer registor d ela tabla en admiisones NOSE POR CUA
+    No me marca o me selecciona el primer registro de la tabla en admiisones NOSE POR CUA
     Apenas arregle todo esto si crearFURIPs. Se debe crear enarticle copiao de crearadmisiones a bloc de notas , se maquilla con datos FURIPS, se envian combos alarticle y opcion guardar
    ojo. No actualizo el consecutivo al  maria paula en dependencias. ops supongo ops esta raro que cambio de servicoi o que paso ??, ops la tabla admisiones no
             tiene un sdo ingreso ops que paso ase activo el consecutovo cuando nop ops.
-   ojo. Ver como acomodar os datos del paciuente en acompanantes y responsable de adisoones
    ojo recuerde el boton crear responsables acompañante no ta creado hay que desarrollarlo
-   ojoOjoOjo --> probar conm conductor = request.POST.get("conductor")
-   ojo creo solo falta agregar campos en la tabla de admisiones y depronto clinico evalies depenecias para la Ubicacion y la clasificacion de servicios de sispro
    para servicios en admisiones y de pronto clinico evaluar antes de seguir
 
    TAREAS HOY O MEJOR DIAS LUNES
 
-   1. crear campo en admisiones.ingresos de ubicaciones/ y srips.servicios
    2. verificar las tablas de clinico para asociarlas a rips.models
    3. se debe subir la tabla cumm de rips a facturacion_suministros
    4. Es necesario atar los itmes de examens de la HClinica a la facturacion los del sistema. Los demas son ajustes o manuales No se ligan
    5. Falta e historia Medicamentos relacionar las unidades, formafarmaceutic etc
 
- 
+   6. OJO PPILAS QUE UD. ESTA TRABAJANDO FURIPS (ya paso el parrentesis de rips , facturacion y glosas) . Hay que terminar primero admisiones-triage-histora clinica , luego si seguir
+   7. Reorganizar la captura de la admision con los nuevos campos de rips ripsServiciosActual etc
+   1. Comenzar a crear tablas cums, cups solidas las dfinitivas
+   8. No me desaparecio la ventana  Modal .crear admison desde triage, el query de regreso Nop funciono mostraba en triage aun la persona
+   9. Esta pendiente aun no abre la modal encuentraModal, para editar admision 
+      Pendiente colocar el default d ela fecha de naciemient en usuarios.-
+   10.
+     
+
 -----------------------------------------------------------------------------------------------------------------------
---  APOYO TERAPEUTICO - FACTURACION
+--  APOYO TERAPEUTICO 
 -----------------------------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------------------
+--  MODELO TARIFARIO 
+-----------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+--  FACTURACION 
+-----------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+--  GLOSAS
+-----------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+--  RIPS 
+-----------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+--  REMISIONES 
+-----------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+--  RADICACIONES
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+

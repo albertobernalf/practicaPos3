@@ -124,7 +124,7 @@ function AUsuarioTriage()
 
                 $('#mensaje1').html('<span> respuesta</span>');
                 $('#usuariosModalTriage').modal('hide');
-		        window.location.reload();
+		       // window.location.reload();
 
                     },
 	   		    error: function (request, status, error) {
@@ -138,17 +138,12 @@ $(document).on('change', '#busDocumentoSelTriage', function(event) {
 
         alert("Entre cambio Modal usuarios Triage");
 
-	var envios = new FormData();
-
+	
 	 var select = document.getElementById("tipoDocTriage"); /*Obtener el SELECT */
     var tipoDoc = select.options[select.selectedIndex].value; /* Obtener el valor */
 
    documento = document.getElementById("busDocumentoSelTriage").value;
    alert( "Este es el documento : " + tipoDoc +  " " + documento);
-
-    alert("Envio a la MOdal Tipo Doc = " + tipoDoc);
-    alert("Envio a la MOdal documento = " + documento);
-
 
 	$.ajax({
 		type: 'POST',
@@ -158,9 +153,20 @@ $(document).on('change', '#busDocumentoSelTriage', function(event) {
 
 			 alert("REGRESE DATOS MODAL2 = " + Usuarios.tipoDoc + " " +  Usuarios.documento);
 
+				if (Usuarios.tipoDoc == null ) 
+					{
+                                       
+					$('#tipoDocTriageModal').val(tipoDoc);
+					$('#documentoTriageModal').val(documento);
+					}
+				else
+					{
+					$('#tipoDocTriageModal').val(Usuarios.tipoDoc);
+					$('#documentoTriageModal').val(Usuarios.documento);
+					}
 
-				$('#tipoDocTriageModal').val(Usuarios.tipoDoc);
-				$('#documentoTriageModal').val(Usuarios.documento);
+				// $('#tipoDocTriageModal').val(Usuarios.tipoDoc);
+				// $('#documentoTriageModal').val(Usuarios.documento);
 				$('#nombre').val(Usuarios.nombre);
 				$('#genero').val(Usuarios.genero);
 				$('#departamentos').val(Usuarios.departamentos);
@@ -177,7 +183,10 @@ $(document).on('change', '#busDocumentoSelTriage', function(event) {
 				$('#centrosC').val(Usuarios.centrosC);
 				$('#tiposUsuario').val(Usuarios.tiposUsuario);
 
+				$('#usuariosModalTriage').modal('show');
 				 $('#usuariosModalTriage').modal({show:true});
+				 alert("Ya abri la ventana Modial");
+
 
 
                     },
@@ -245,6 +254,7 @@ $('#tablaDatosTriage tbody td').click(function(){
 		
 
 				 $('#modalActualizaTriage').modal({show:true});
+			$('#clasificacionTriage').val(response_data['Triage'].clasificacionTriage);
                     },
    		    error: function (request, status, error) {
 	   	    	}
@@ -957,6 +967,20 @@ function guardarAdmisionTriage()
     var Username_id = document.getElementById("username_id").value;
     var escogeModulo = document.getElementById("escogeModulo").value;
 
+     var ripsServiciosIng = document.getElementById("ripsServiciosIng").value;
+     alert(" Envio ripsServiciosIng = " + ripsServiciosIng);
+    var ripsPesoRecienNacido = document.getElementById("ripsPesoRecienNacido").value;
+     var ripsmodalidadGrupoServicioTecSal = document.getElementById("ripsmodalidadGrupoServicioTecSal").value;
+    var ripsViaIngresoServicioSalud = document.getElementById("ripsViaIngresoServicioSalud").value;
+    var ripsGrupoServicios = document.getElementById("ripsGrupoServicios").value;
+    var ripsCondicionDestinoUsuarioEgreso = document.getElementById("ripsCondicionDestinoUsuarioEgreso").value;
+    var ripsCausaMotivoAtencion = document.getElementById("ripsCausaMotivoAtencion").value;
+    var ripsRecienNacido = document.getElementById("ripsRecienNacido").value;
+    var ripsNumConsultasCPrenatal = document.getElementById("ripsNumConsultasCPrenatal").value;
+    var ripsEdadGestacional = document.getElementById("ripsEdadGestacional").value;
+    var ripsDestinoUsuarioEgresoRecienNacido = document.getElementById("ripsDestinoUsuarioEgresoRecienNacido").value;
+
+
 	$.ajax({
 		type: 'POST',
 	    url: '/guardarAdmisionTriage/',
@@ -976,6 +1000,17 @@ function guardarAdmisionTriage()
 		        'remitido':remitido,
 		        'ips':ips,
 		        'numManilla':numManilla,
+		        'ripsServiciosIng' : ripsServiciosIng ,
+		        'ripsmodalidadGrupoServicioTecSal' : ripsmodalidadGrupoServicioTecSal ,
+		        'ripsViaIngresoServicioSalud' : ripsViaIngresoServicioSalud ,
+		        'ripsGrupoServicios' : ripsGrupoServicios ,
+		        'ripsCondicionDestinoUsuarioEgreso' : ripsCondicionDestinoUsuarioEgreso,
+		        'ripsCausaMotivoAtencion' : ripsCausaMotivoAtencion,
+		        'ripsRecienNacido' : ripsRecienNacido ,
+		        'ripsNumConsultasCPrenatal' : ripsNumConsultasCPrenatal,
+		        'ripsEdadGestacional' :  ripsEdadGestacional,
+		         'ripsDestinoUsuarioEgresoRecienNacido' : ripsDestinoUsuarioEgresoRecienNacido,
+		          'ripsPesoRecienNacido' : ripsPesoRecienNacido ,
 		        'Sede':sede,
 	             'username':username,
 	             'Profesional':Profesional,
@@ -987,10 +1022,10 @@ function guardarAdmisionTriage()
 		        alert ("respuesta =" + respuesta);
          		alert ("REGRESE DE GUARDAR Admision triage ");
 
-                        $('#mensaje1').html('<span> respuesta</span>');
-              //          $('#crearAdmTriage').modal('hide');
-     		    $('#crearAdmTriage').modal({show:false});
-		      //   window.location.reload();
+                        $('#mensajes').html('<span> respuesta</span>');
+			//   $('#crearAdmTriage').modal().hide();
+		     $('#crearAdmTriage').modal({show:false});
+		         window.location.reload();
 
 		        $('#mensajeria').val("Admision creada ...");
 

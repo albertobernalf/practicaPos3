@@ -249,16 +249,16 @@ tabla RipsMedicamentos: (id, codPrestador c(12), numAutorizacion c(30), idMIPRES
 "fechaDispensAdmon": "2021-08-18 08:10",
 "codDiagnosticoPrincipal": "K469",
 "codDiagnosticoRelacionado": null,
-"tipoMedicamento": "01",        -- historia_rips
-"codTecnologiaSalud": "1A1014721001104",    -- catalogoRispoCuns
+"tipoMedicamento": "01",        -- historia_rips  rips_ripstipomedicamento
+"codTecnologiaSalud": "1A1014721001104",    -- catalogoRispoCuns rips_ripscums
 "nomTecnologiaSalud": null,      -- Denominación Común Internacional (DCI)
-"concentracionMedicamento": 0,   -
-"unidadMedida": 0,                 -- umm en rips
-"formaFarmaceutica": "123456",       -- ffm en rips
-"unidadMinDispensa": 1,       -- upr en rips
+"concentracionMedicamento": 0,   - 
+"unidadMedida": 0,                 -- umm en rips  rips_ripsumm;
+"formaFarmaceutica": "123456",       -- ffm en rips  rips_ripsformafarmaceutica
+"unidadMinDispensa": 1,       -- upr en rips rips_ripsunidadupr
 "cantidadMedicamento": 10,
 "diasTratamiento": 365,
-"tipoDocumentoIdentificacion": "CC",  -- rips
+"tipoDocumentoIdentificacion": "CC",  -- rips  rips_ripstiposdocumento   (homologa en el query de extraccion RIPS)
 "numDocumentoIdentificacion": "10234561292",
 "vrUnitMedicamento": 1,
 "vrServicio": 1,

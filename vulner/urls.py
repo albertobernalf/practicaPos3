@@ -134,8 +134,6 @@ urlpatterns = [
     path('findOneUsuario/', viewsAdmisiones.UsuariosModal),
     path('guardarUsuariosModal/', viewsAdmisiones.guardarUsuariosModal),
     path('crearResponsables/', viewsAdmisiones.crearResponsables),
-    path('encuentraAdmisionModal/<str:tipoDoc>,<str:documento>,<str:consec>,<str:sede>/', viewsAdmisiones.encuentraAdmisionModal, name='encuentraAdmisionModal'),
-    path('encuentraAdmisionModal/<str:tipoDoc>,<str:documento>,<str:consec>,<str:sede>/', viewsAdmisiones.encuentraAdmisionModal),
     path('cambioServicio/', viewsAdmisiones.cambioServicio),
     path('guardaCambioServicio/', viewsAdmisiones.guardaCambioServicio),
     path('load_dataConvenioAdmisiones/<str:data>', viewsAdmisiones.load_dataConvenioAdmisiones, name='loaddataAdmisiones'),
@@ -147,6 +145,8 @@ urlpatterns = [
     path('guardaAbonosAdmision/', viewsAdmisiones.GuardaAbonosAdmision, name='guardaAbonosAdmision'),
     path('postDeleteAbonosAdmision/', viewsAdmisiones.PostDeleteAbonosAdmision, name='postDeleteAbonosAdmision'),
     path('guardaFurips/', viewsAdmisiones.GuardaFurips, name='guardaFurips'),
+    #path('encuentraAdmisionModal/<str:tipoDoc> , <str:documento> , <str:consec> , <str:sede>/', viewsAdmisiones.encuentraAdmisionModal, name='encuentraAdmisionModal'),
+    path('encuentraAdmisionModal/', viewsAdmisiones.encuentraAdmisionModal),
 
     # Triage
 

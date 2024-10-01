@@ -57,8 +57,8 @@ class Convenios (models.Model):
 
 class ConveniosDetalle (models.Model):
     id = models.AutoField(primary_key=True)
-    tarifa = models.ForeignKey('facturacion.Tarifas', blank=True,null= True, editable=True, on_delete=models.PROTECT)    
-    tarifaSuministros = models.ForeignKey('facturacion.TarifasSuministros', blank=True,null= True, editable=True, on_delete=models.PROTECT) 
+    tarifa = models.ForeignKey('tarifas.Tarifas', blank=True,null= True, editable=True, on_delete=models.PROTECT)    
+    tarifaSuministros = models.ForeignKey('tarifas.TarifasSuministros', blank=True,null= True, editable=True, on_delete=models.PROTECT) 
     usuarioRegistro = models.ForeignKey('planta.Planta', default=1, on_delete=models.PROTECT, null=True)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False )

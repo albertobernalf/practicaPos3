@@ -492,7 +492,8 @@ $(document).on('change', '#ingresoId', function(event) {
 function CierraModal()
 {
         alert("A cerrar");
-       	 $('#usuariosModal').modal(hide);
+            $('#usuariosModal').modal('hide');
+      // 	 $('#usuariosModal').modal(hide);
            alert("Cerrado");
 }
 
@@ -544,14 +545,12 @@ function AUsuario()
 		success: function (respuesta) {
 
 			$('#usuariosModal').modal().hide();
-            //  document.getElementById("fechaIngreso").value = '2024-01-01';
-     
+ 
+                $('#mensajes').html('<span> respuesta</span>');
+	                $('#usuariosModal').modal().hide();
 
-
-                $('#mensaje1').html('<span> respuesta</span>');
-                $('#usuariosModal').modal().hide();
 			   
-			     window.location.reload();
+
 
                     },
 	   		    error: function (request, status, error) {
@@ -828,15 +827,13 @@ function findOneUsuarioTriage()
 
 $(document).on('change', '#busDocumentoSel22', function(event) {
 
-	var envios = new FormData();
-
      var select = document.getElementById("tipoDoc22"); /*Obtener el SELECT */
        var tipoDoc = select.options[select.selectedIndex].value; /* Obtener el valor */
 
 
 	var documento = document.getElementById("busDocumentoSel22").value;
 
-    alert("Envio a la MOdal Tipo Doc = " + tipoDoc);
+    alert("Envio TIPOdOC = " + tipoDoc);
     alert("Envio a la MOdal documento = " + documento);
 
 
@@ -848,15 +845,26 @@ $(document).on('change', '#busDocumentoSel22', function(event) {
 
 			 alert("entre DATOS MODAL y el nombre es = " + Usuarios.tipoDoc_id + " " +  Usuarios.documento);
 
-                             $('#tipoDoc1').val(Usuarios.tipoDoc_id);
+               if ( Usuarios.tipoDoc_id == null)
+				{
+				alert("ENTRE DOCUMENTO EN BLANCO");
+
+				$('#tipoDoc1').val(tipoDoc);
+				$('#documento1').val(documento);
+				}
+			     else
+ 				{
+ 				alert("ENTRE DOCUMENTO CON VALOR ");
+                                $('#tipoDoc1').val(Usuarios.tipoDoc_id);
 				$('#documento1').val(Usuarios.documento);
+				}
+
 				$('#nombre1').val(Usuarios.nombre);
 				$('#genero').val(Usuarios.genero);
 				$('#departamentos').val(Usuarios.departamento);
 				$('#municipios').val(Usuarios.municipio);
 				$('#localidades').val(Usuarios.localidad);
 				$('#ciudades').val(Usuarios.ciudad);
-
 				$('#direccion').val(Usuarios.direccion);
 				$('#telefono').val(Usuarios.telefono);
 				$('#contacto').val(Usuarios.contacto);
@@ -865,9 +873,9 @@ $(document).on('change', '#busDocumentoSel22', function(event) {
 				$('#correo').val(Usuarios.correo);
 				$('#centrosc').val(Usuarios.centrosc_id);
 				$('#tiposUsuario').val(Usuarios.tiposUsuario_id);
-
-				 $('#usuariosModal').modal({show:true});
-
+			
+					$('#usuariosModal').modal('show');
+				 //  $('#usuariosModal').modal({show:true});
 
 
 
@@ -971,15 +979,20 @@ $('#tablaDatos tbody td').click(function(){
 
       $.ajax({
 		type: 'POST',
-      	        url: '/encuentraAdmisionModal/',
-		data: {'tipoDoc':tipoDoc,'documento':documento,'consec':consec,'sede':sede},
+      	url: '/encuentraAdmisionModal/',
+      	data: {'tipoDoc':tipoDoc,
+      	       'documento':documento,
+      	       'consec':consec,
+      	       'sede':sede},
 		success: function (Usuarios) {
 
 			 alert("entre DATOS MODAL de Triage y el  nombre es = " + Usuarios.tipoDoc + " " +  Usuarios.documento);
 
-		            $('#tipoDoc').val(Usuarios.tipoDoc_id);
+		            $('#tipoDoc').val(Usuarios.tipoDoc);
     			    $('#busDocumentoSel').val(Usuarios.documento);
     			    $('#dependenciasIngreso').val(Usuarios.dependenciasIngreso);
+
+
     			    $('#busEspecialidad').val(Usuarios.espMedico);
     			    $('#dxIngreso').val(Usuarios.dxIngreso);
     			    $('#medicoIngreso').val(Usuarios.medicoIngreso);
@@ -989,8 +1002,11 @@ $('#tablaDatos tbody td').click(function(){
     			    $('#tiposCotizante').val(Usuarios.cotizante);
     			    $('#remitido').val(Usuarios.remitido);
     			    $('#numManilla').val(Usuarios.numManilla);
+                       alert("antes de abrir ventanaoy");
 
-                            $('#modalActualizaAdmision').modal({show:true});
+                            //$('#modalActualizaAdmision').modal({show:true});
+                            $('#modalActualizaAdmision').modal().show();
+                            alert("ya abri  ventanaoy");
 
                     },
 	   		    error: function (request, status, error) {
@@ -1952,14 +1968,24 @@ $(document).on('click', '#furips', function(event) {
   var sede = document.getElementById("sede").value; 
   var valor = document.getElementById("ingresoIdF").value;
 
-	alert("Este es mi ingreso para Furips" + valor);
-		alert("Este es mi Form" + JSON.stringify($('#furipsForma').serialize()));
+	var formData = new FormData();
+        formData.append('sede', $('#sede').val())
+        formData.append('ingresoIdF', $('#ingresoIdF').val())
+        formData.append('numeroRadicacion', $('#numeroRadicacion').val())
+        formData.append('numeroFactura', $('#numeroFactura').val())
+        formData.append('primerApellidoVictima', $('#primerApellidoVictima').val())
+        alert("Este es mi formData" + JSON.stringify(formData));
+        formData = JSON.stringify(formData);
 
+	// alert("Este es mi ingreso para Furips" + valor);
+	//	alert("Este es mi Form" + JSON.stringify($('#furipsForma').serialize()));
 
+     
 	$.ajax({
 		type: 'POST',
     	url: '/guardaFurips/',
-		data: {'valor' : valor, 'sede': sede, 'form': JSON.stringify($('#furipsForma').serialize()),},
+		
+		data: formData,  // DEJARRLO COMO ESTABA ANTES SIN FORMDATA DE PRONTO TRAEER COPIA DE GITHUB
 		dataType : 'json',
 		success: function (furips) {
 

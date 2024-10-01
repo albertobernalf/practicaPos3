@@ -225,194 +225,6 @@ th ,tr{
 
         <!-- Espacio Modales del article-->
 
-        <!-- Creacion Modal usuario  para Triage-->
-
-        <div class="container">
-            <div class="card">
-                <div class="myForm">
-                    <form id="ModalCaptura" method="POST" onsubmit="CierraModal()">
-                        <div class="modal fade" id="usuariosModalTriage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Actualiza Usuario</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-row">
-                                            <div class="col">
-                                                <label for="tipoDocTriageModal"
-                                                       class="col-sm-10 col-form-label col-form-label-sm">TipoDoc:</label>
-                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
-                                                        aria-label="" id="tipoDocTriageModal" name="tipoDocTriageModal">
-                                                    {% for tiposDoc in TiposDoc %}
-                                                    <option value="{{tiposDoc.id}}"> {{tiposDoc.nombre}}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <label for="documentoTriageModal"
-                                                       class="col-form-label">Documento:</label>
-                                                <input type="text" class="form-control" id="documentoTriageModal"
-                                                       name="documentoTriageModal">
-                                            </div>
-                                            <div class="col">
-                                                <label for="nombre" class="col-form-label"> Paciente :</label>
-                                                <input type="text" class="form-control" id="nombre" name="nombre"
-                                                       value="">
-                                            </div>
-
-                                            <div class="col">
-                                                <label for="genero" class="col-form-label">Genero:</label>
-                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
-                                                        id="genero" name="genero">
-                                                    <option value="M"> Masculino</option>
-                                                    <option value="F"> Femenino</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="col">
-                                                <label for="fechaNacio" class="col-form-label">Fecha Nacio:</label>
-                                                <input type="datetime-local" class="form-control" id="fechaNacio"
-                                                       name="fechaNacio">
-                                            </div>
-
-                                            <div class="col">
-                                                <label for="departamentos" class="col-form-label">Departamento:</label>
-                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
-                                                        id="departamentos" name="departamentos">
-                                                    {% for departamentos in Departamentos %}
-                                                    <option value="{{departamentos.id}}"> {{departamentos.nombre}}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-
-
-                                            <div class="col">
-                                                <label for="municipios" class="col-form-label">Municipio:</label>
-
-
-                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
-                                                        id="municipios" name="municipios">
-                                                    {% for municipios in Municipios %}
-                                                    <option value="{{municipios.id}}"> {{municipios.nombre}}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-
-                                            <div class="col">
-                                                <label for="localidades" class="col-form-label">Localidad:</label>
-                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
-                                                        id="localidades" name="localidades">
-                                                    {% for localidades in Localidades %}
-                                                    <option value="{{localidades.id}}"> {{localidades.nombre}}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <label for="ciudades" class="col-form-label">Ciudad:</label>
-                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
-                                                        id="ciudades" name="ciudades">
-                                                    {% for ciudades in Ciudades %}
-                                                    <option value="{{ciudades.id}}"> {{ciudades.nombre}}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-
-                                            <div class="col">
-                                                <label for="direccion" class="col-form-label">Direccion:</label>
-                                                <input type="text" class="form-control" id="direccion" name="direccion"
-                                                       value="">
-
-                                            </div>
-
-                                            <div class="col">
-                                                <label for="telefono" class="col-form-label">Telefono:</label>
-                                                <input type="text" class="form-control" id="telefono" name="telefono"
-                                                       value="">
-                                            </div>
-                                            <div class="col">
-                                                <label for="contacto" class="col-form-label">Contacto:</label>
-                                                <input type="text" class="form-control" id="contacto" name="contacto"
-                                                       value="">
-                                            </div>
-
-                                            <div class="col">
-                                                <label for="estadoCivil" class="col-form-label">Estado Civil:</label>
-                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
-                                                        id="estadoCivil" name="estadoCivil">
-                                                    {% for estadoCivil in EstadoCivil %}
-                                                    <option value="{{estadoCivil.id}}"> {{estadoCivil.nombre}}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <label for="ocupaciones" class="col-form-label">Ocupacion:</label>
-                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
-                                                        id="ocupaciones" name="ocupaciones">
-                                                    {% for ocupaciones in Ocupaciones %}
-                                                    <option value="{{ocupaciones.id}}"> {{ocupaciones.nombre}}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <label for="correo" class="col-form-label">Correo:</label>
-                                                <input type="text" class="form-control" id="correo" name="correo"
-                                                       value="">
-                                            </div>
-                                            <div class="col">
-                                                <label for="centrosC" class="col-form-label">Centros:</label>
-                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
-                                                        id="centrosC" name="centrosC">
-                                                    {% for centros in Centros %}
-                                                    <option value="{{centros.id}}"> {{centros.nombre}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-
-                                            <div class="col">
-                                                <label for="tiposUsuario" class="col-form-label">Tipos Usuario:</label>
-
-                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
-                                                        id="tiposUsuario" name="tiposUsuario">
-                                                    {% for tiposUsuario in TiposUsuario %}
-                                                    <option value="{{tiposUsuario.id}}"> {{tiposUsuario.nombre}}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                                onclick="CierraModalUsuarioTriage()">Close
-                                        </button>
-                                        <input type="button" class="btn btn-primary" value="save"
-                                               onclick="AUsuarioTriage()">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div> <!-- Cierra container -->
-
-            <!-- Fin Creacion Modal usuario  -->
-
 
 
 
@@ -654,7 +466,8 @@ th ,tr{
             <div class="card">
                 <div class="myForm">
                     <form id="AdmisionTriage" method="POST" onsubmit="guardarAdmisionTriage()">
-                        <div class="modal fade" id="crearAdmTriage" tabindex="-1" role="dialog"  aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                        <div class="modal fade" id="crearAdmTriage" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel1" aria-hidden="true">
                             <div class="modal-dialog  modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -680,10 +493,11 @@ th ,tr{
 
                                         <div class="form-row">
                                             <div class="col">
-                                                <label for="busServicio2" class="col-sm-10 col-form-label col-form-label-sm">Servicio:</label>
+                                                <label for="busServicio2"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">Servicio:</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-select  h-10 w-100 form-control form-control-sm"
-                                                            aria-label="" id="busServicio2" name="busServicio2"                                                            >
+                                                            aria-label="" id="busServicio2" name="busServicio2">
                                                         {% for servicios in Servicios2 %}
                                                         <option value="{{servicios.id}}"> {{servicios.nombre}}</option>
                                                         {% endfor %}
@@ -691,35 +505,40 @@ th ,tr{
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <label for="busSubServicio2" class="col-sm-10 col-form-label col-form-label-sm">SubServicios:</label>
+                                                <label for="busSubServicio2"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">SubServicios:</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-select  h-100 w-200 form-control form-control-sm"
                                                             aria-label=""
-                                                            id="busSubServicio2" name="busSubServicio2" >
+                                                            id="busSubServicio2" name="busSubServicio2">
                                                         {% for subservicios in SubServicios %}
-                                                        <option value="{{subservicios.id}}"> {{subservicios.nombre}}</option>
+                                                        <option value="{{subservicios.id}}"> {{subservicios.nombre}}
+                                                        </option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <label for="dependenciasIngreso" class="col-sm-10 col-form-label col-form-label-sm">Dependencia:</label>
+                                                <label for="dependenciasIngreso"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">Dependencia:</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-select  h-100 w-200 form-control form-control-sm"
                                                             aria-label=""
                                                             id="dependenciasIngreso" name="dependenciasIngreso"
-                                                            >
+                                                    >
                                                         {% for habitaciones in Habitaciones %}
-                                                        <option value="{{habitaciones.id}}"> {{habitaciones.nombre}}</option>
+                                                        <option value="{{habitaciones.id}}"> {{habitaciones.nombre}}
+                                                        </option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <label for="tiposDoc2" class="col-sm-10 col-form-label col-form-label-sm">TipoDoc:</label>
+                                                <label for="tiposDoc2"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">TipoDoc:</label>
                                                 <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="tiposDoc2"
-                                                       name="tiposDoc2" readOnly>
+                                                    <input type="text" class="form-control" id="tiposDoc2"
+                                                           name="tiposDoc2" readOnly>
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -732,12 +551,14 @@ th ,tr{
                                         </div>
                                         <div class="form-row">
                                             <div class="col">
-                                                <label for="dxIngreso"    class="col-sm-10 col-form-label col-form-label-sm">Diagnostico:</label>
+                                                <label for="dxIngreso"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">Diagnostico:</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-select  h-100 w-200 form-control form-control-sm"
-                                                            aria-label="" id="dxIngreso" name="dxIngreso" >
+                                                            aria-label="" id="dxIngreso" name="dxIngreso">
                                                         {% for diagnosticos in Diagnosticos %}
-                                                        <option value="{{diagnosticos.id}}"> {{diagnosticos.nombre}}</option>
+                                                        <option value="{{diagnosticos.id}}"> {{diagnosticos.nombre}}
+                                                        </option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -748,9 +569,11 @@ th ,tr{
                                                 <div class="col-sm-8">
                                                     <select class="form-select  h-40 w-10 form-control form-control-sm"
                                                             aria-label="" id="busEspecialidad" name="busEspecialidad"
-                                                            >
+                                                    >
                                                         {% for especialidades in Especialidades %}
-                                                        <option value="{{especialidades.id}}"> {{especialidades.nombre}}</option>
+                                                        <option value="{{especialidades.id}}">
+                                                            {{especialidades.nombre}}
+                                                        </option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -761,7 +584,7 @@ th ,tr{
                                                 <div class="col-sm-8">
                                                     <select class="form-select  h-40 w-100 form-control form-control-sm"
                                                             aria-label="" id="medicoIngreso" name="medicoIngreso"
-                                                            >
+                                                    >
                                                         {% for medicos in Medicos %}
                                                         <option value="{{medicos.id}}"> {{medicos.nombre}}</option>
                                                         {% endfor %}
@@ -773,9 +596,10 @@ th ,tr{
                                                        class="col-sm-10 col-form-label col-form-label-sm">ViasDeIng:</label>
                                                 <div class="col-sm-4">
                                                     <select class="form-select  h-40 w-150 form-control form-control-sm"
-                                                            aria-label="" id="viasIngreso" name="viasIngreso" >
+                                                            aria-label="" id="viasIngreso" name="viasIngreso">
                                                         {% for viasIngreso in ViasIngreso %}
-                                                        <option value="{{viasIngreso.id}}"> {{viasIngreso.nombre}}</option>
+                                                        <option value="{{viasIngreso.id}}"> {{viasIngreso.nombre}}
+                                                        </option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -786,23 +610,23 @@ th ,tr{
                                                 <div class="col-sm-4">
                                                     <select class="form-select  h-40 w-150 form-control form-control-sm"
                                                             aria-label="" id="causasExterna" name="causasExterna"
-                                                            >
+                                                    >
                                                         {% for causasExterna in CausasExterna %}
-                                                        <option value="{{causasExterna.id}}"> {{causasExterna.nombre}}</option>
+                                                        <option value="{{causasExterna.id}}"> {{causasExterna.nombre}}
+                                                        </option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <div class="form-row">
+                                            <div class="row row-cols-8 mt-3">
 
                                                 <div class="col">
                                                     <label for="regimenes"
                                                            class="col-sm-10 col-form-label col-form-label-sm">Regimen:</label>
                                                     <div class="col-sm-4">
                                                         <select class="form-select  h-40 w-100 form-control form-control-sm"
-                                                                aria-label="" id="regimenes" name="regimenes"
-                                                                >
+                                                                aria-label="" id="regimenes" name="regimenes">
                                                             {% for regimenes in Regimenes %}
                                                             <option value="{{regimenes.id}}"> {{regimenes.nombre}}
                                                             </option>
@@ -816,32 +640,32 @@ th ,tr{
                                                     <div class="col-sm-4">
                                                         <select class="form-select  h-40 w-100 form-control form-control-sm"
                                                                 aria-label="" id="tiposCotizante"
-                                                                name="tiposCotizante" >
+                                                                name="tiposCotizante">
                                                             {% for tiposCotizante in TiposCotizante %}
-                                                            <option value="{{tiposCotizante.id}}"> {{tiposCotizante.nombre}}
+                                                            <option value="{{tiposCotizante.id}}">
+                                                                {{tiposCotizante.nombre}}
                                                             </option>
                                                             {% endfor %}
                                                         </select>
                                                     </div>
                                                 </div>
 
-						<!-- Aquip el espacio para las tablas           -->
+                                                <!-- Aquip el espacio para las tablas           -->
 
-						<!-- FIN Aquip el espacio para las tablas           -->
+                                                <!-- FIN Aquip el espacio para las tablas           -->
 
 
                                                 <div class="col">
                                                     <label class="col-sm-8 control-label"
                                                            for="remitido">Remitido:</label>
                                                     <input type="text" class="form-control" id="remitido"
-                                                           name="remitido" >
+                                                           name="remitido">
                                                 </div>
                                                 <div class="col">
                                                     <label for="ips"
                                                            class="col-sm-10 col-form-label col-form-label-sm">Ips:</label>
                                                     <div class="col-sm-4">
-                                                        <select class="form-select  h-40 w-100 form-control form-control-sm"
-                                                                aria-label="" id="ips" name="ips" >
+                                                        <select class="form-select  h-40 w-100 form-control form-control-sm"  aria-label="" id="ips" name="ips">
                                                             {% for ips in Ips %}
                                                             <option value="{{ips.id}}"> {{ips.nombre}}
                                                             </option>
@@ -853,21 +677,179 @@ th ,tr{
                                                     <label class="col-sm-8 control-label"
                                                            for="numManilla">Manilla:</label>
                                                     <input type="text" class="form-control" id="numManilla"
-                                                           name="numManilla" >
+                                                           name="numManilla">
+                                                </div>
+
+                                                I N F O R M A C I O N RIPS:
+
+                                                <div class="col">
+
+                                                    <label for="ripsDestinoUsuarioEgresoRecienNacido"
+                                                           class="col-sm-7 col-form-label col-form-label-sm">DestinoRecienNacido:
+                                                        &nbsp;&nbsp;&nbsp;</label>
+
+                                                    <select id="ripsDestinoUsuarioEgresoRecienNacido"  name="ripsDestinoUsuarioEgresoRecienNacido" required>
+                                                        {% for ripsDestinoUsuarioEgresoRecienNacido in   RipsDestinoUsuarioEgresoRecienNacido %}
+                                                        <option value="{{ripsDestinoUsuarioEgresoRecienNacido.id}}">
+                                                            {{ripsDestinoUsuarioEgresoRecienNacido.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+
+                                                </div>
+
+
+                                                <div class="col">
+                                                    <label for="ripsEdadGestacional"
+                                                           class="col-sm-5 col-form-label col-form-label-sm">RN Edad
+                                                        Gestacional:&nbsp;&nbsp;</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                               id="ripsEdadGestacional"
+                                                               name="ripsEdadGestacional" value="">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row row-cols-8 mt-3">
+                                                <div class="col">
+                                                    <label for="ripsNumConsultasCPrenatal"
+                                                           class="col-sm-7 col-form-label col-form-label-sm">NumeroConsultaPrenatal:&nbsp;&nbsp;</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                               id="ripsNumConsultasCPrenatal"
+                                                               name="ripsNumConsultasCPrenatal" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsPesoRecienNacido"
+                                                           class="col-sm-6 col-form-label col-form-label-sm">RN peso:&nbsp;&nbsp;</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                               id="ripsPesoRecienNacido"
+                                                               name="ripsPesoRecienNacido" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsRecienNacido"   class="col-sm-6 col-form-label col-form-label-sm">Recien
+                                                        Nacido:&nbsp;&nbsp;</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                               id="ripsRecienNacido"
+                                                               name="ripsRecienNacido" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsCausaMotivoAtencion"
+                                                           class="col-sm-6 col-form-label col-form-label-sm">CausaAtencion:
+                                                        &nbsp;&nbsp;&nbsp;</label>
+
+                                                    <select class="form-select  h-40 w-20" aria-label=""  id="ripsCausaMotivoAtencion" name="ripsCausaMotivoAtencion"                                                     required>
+                                                        {% for ripsCausaMotivoAtencion in RipsCausaMotivoAtencion %}
+                                                        <option value="{{ripsCausaMotivoAtencion.id}}">
+                                                            {{ripsCausaMotivoAtencion.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsCondicionDestinoUsuarioEgreso"
+                                                           class="col-sm-4 col-form-label col-form-label-sm">UsuarioDestinoegreso:
+                                                        &nbsp;&nbsp;&nbsp;</label>
+
+                                                    <select id="ripsCondicionDestinoUsuarioEgreso"  name="ripsCondicionDestinoUsuarioEgreso" required>
+                                                        {% for ripsCondicionDestinoUsuarioEgreso in  RipsCondicionDestinoUsuarioEgreso %}
+                                                        <option value="{{ripsCondicionDestinoUsuarioEgreso.id}}">
+                                                            {{ripsCondicionDestinoUsuarioEgreso.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsGrupoServicios"
+                                                           class="col-sm-4 col-form-label col-form-label-sm">GrupoDeServicios:
+                                                        &nbsp;&nbsp;&nbsp;</label>
+
+                                                    <select id="ripsGrupoServicios" name="ripsGrupoServicios" required>
+                                                        {% for ripsGrupoServicios in RipsGrupoServicios %}
+                                                        <option value="{{ripsGrupoServicios.id}}">
+                                                            {{ripsGrupoServicios.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsViaIngresoServicioSalud"
+                                                           class="col-sm-4 col-form-label col-form-label-sm">ViaIngreso:
+                                                        &nbsp;&nbsp;&nbsp;</label>
+
+                                                    <select id="ripsViaIngresoServicioSalud"  name="ripsViaIngresoServicioSalud"    required>
+                                                        {% for ripsViaIngresoServicioSalud in RipsViaIngresoServicioSalud %}
+                                                        <option value="{{ripsViaIngresoServicioSalud.id}}">
+                                                            {{ripsViaIngresoServicioSalud.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsmodalidadGrupoServicioTecSal"
+                                                           class="col-sm-4 col-form-label col-form-label-sm">ModalidadGrupoServ:
+                                                        &nbsp;&nbsp;&nbsp;</label>
+
+                                                    <select id="ripsmodalidadGrupoServicioTecSal"  name="ripsmodalidadGrupoServicioTecSal" required>
+                                                        {% for ripsmodalidadGrupoServicioTecSal in  RipsmodalidadGrupoServicioTecSal %}
+                                                        <option value="{{ripsmodalidadGrupoServicioTecSal.id}}">
+                                                            {{ripsmodalidadGrupoServicioTecSal.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="row row-cols-8 mt-3">
+                                                <div class="col">
+                                                    <label for="ripsServiciosIng"
+                                                           class="col-sm-4 col-form-label col-form-label-sm">ServicioIngreso:bsp;&nbsp;&nbsp;</label>
+                                                    <select id="ripsServiciosIng" name="ripsServiciosIng"> required>
+                                                        {% for ripsServiciosIng in RipsServiciosIng %}
+                                                        <option value="{{ripsServiciosIng.id}}">
+                                                            {{ripsServiciosIng.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                                onclick="CierraModalAdmisionTriage()">Close
-                                        </button>
-                                        <input type="button" class="btn btn-primary" value="save"
-                                               onclick="guardarAdmisionTriage()">
-                                    </div>
+
+                                <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            onclick="CierraModalAdmisionTriage()">Close
+                                    </button>
+                                    <input type="button" class="btn btn-primary" value="save"
+                                           onclick="guardarAdmisionTriage()">
                                 </div>
                             </div>
+                                </div>
                         </div>
                     </form>
                 </div>
@@ -875,7 +857,7 @@ th ,tr{
         </div>
 
 
-            <!-- FIN MODAL CrearAdmisiontriage                              -->
+        <!-- FIN MODAL CrearAdmisiontriage                              -->
 
 
 
@@ -1003,25 +985,22 @@ th ,tr{
                                         <div class="col">
                                             <label class="col-sm-1 control-label"
                                                    for="taSist">TensionArterialSistolica:</label>
-                                            <input type="text" class="form-control" id="taSist" name="taSist" >
+                                            <input type="text" class="form-control" id="taSist" name="taSist">
 
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="taDiast">TensionArterialDiastolica:</label>
-                                            <input type="text" class="form-control" id="taDiast" name="taDiast"
-                                                   >
+                                            <input type="text" class="form-control" id="taDiast" name="taDiast">
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label"
                                                    for="taMedia">TensionArterialMedia:</label>
-                                            <input type="text" class="form-control" id="taMedia" name="taMedia"
-                                                   >
+                                            <input type="text" class="form-control" id="taMedia" name="taMedia">
                                         </div>
 
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="glasgow">Glasgow:</label>
-                                            <input type="text" class="form-control" id="glasgow" name="glasgow"
-                                                   >
+                                            <input type="text" class="form-control" id="glasgow" name="glasgow" >
                                         </div>
 
                                         <div class="col">
@@ -1031,13 +1010,11 @@ th ,tr{
                                         <div class="col">
                                             <label class="col-sm-1 control-label"
                                                    for="tempreratura">Temperatura:</label>
-                                            <input type="text" class="form-control" id="temperatura" name="temperatura"
-                                                   >
+                                            <input type="text" class="form-control" id="temperatura" name="temperatura">
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="estatura">Estatura:</label>
-                                            <input type="text" class="form-control" id="estatura" name="estatura"
-                                                   >
+                                            <input type="text" class="form-control" id="estatura" name="estatura">
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="glucometria">Glucometria:</label>
@@ -1046,26 +1023,22 @@ th ,tr{
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="saturacion">Saturacion:</label>
-                                            <input type="text" class="form-control" id="saturacion" name="saturacion"
-                                                   >
+                                            <input type="text" class="form-control" id="saturacion" name="saturacion">
                                         </div>
 
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="escalaDolor">EscalaDolor:</label>
-                                            <input type="text" class="form-control" id="escalaDolor" name="escalaDolor"
-                                                   >
+                                            <input type="text" class="form-control" id="escalaDolor" name="escalaDolor" >
                                         </div>
 
                                         <div class="col">
                                             <label class="col-sm-1 control-label" for="tipoIngreso">TipoIngreso:</label>
-                                            <input type="text" class="form-control" id="tipoIngreso" name="tipoIngreso"
-                                                   >
+                                            <input type="text" class="form-control" id="tipoIngreso" name="tipoIngreso" >
                                         </div>
                                         <div class="col">
                                             <label class="col-sm-1 control-label"
                                                    for="observaciones">Observaciones:</label>
-                                            <input type="text" class="form-control" id="observaciones"
-                                                   name="observaciones" >
+                                            <input type="text" class="form-control" id="observaciones"  name="observaciones" >
                                         </div>
                                     </div>
 
@@ -1083,7 +1056,7 @@ th ,tr{
                                         <div class="col">
                                             <center>
 
-                                                <input type="submit" id="guardarTrige" name="guardarTriage"
+                                                <input type="submit" id="guardarTriage" name="guardarTriage"
                                                        value="GUARDAR"></input>
                                             </center>
                                         </div>
@@ -1116,6 +1089,174 @@ th ,tr{
 
 
 <!-- FIN Espacio para Modales  -->
+
+        <!-- Creacion Modal usuario  para Triage-->
+
+        <div class="container">
+            <div class="card">
+                <div class="myForm">
+                    <form id="ModalCaptura" method="POST" onsubmit="CierraModal()">
+                        <div class="modal fade" id="usuariosModalTriage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Actualiza Usuario</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row row-cols-8 mt-3">
+                                            <div class="col">
+                                                <label for="tipoDocTriageModal"  class="col-sm-10 col-form-label col-form-label-sm">TipoDoc:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" aria-label="" id="tipoDocTriageModal" name="tipoDocTriageModal">
+                                                    {% for tiposDoc in TiposDoc %}
+                                                    <option value="{{tiposDoc.id}}"> {{tiposDoc.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label for="documentoTriageModal"  class="col-form-label">Documento:</label>
+                                                <input type="text" class="form-control" id="documentoTriageModal"  name="documentoTriageModal">
+                                            </div>
+                                            <div class="col">
+                                                <label for="nombre" class="col-form-label"> Paciente :</label>
+                                                <input type="text" class="form-control" id="nombre" name="nombre"  value="">
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="genero" class="col-form-label">Genero:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm"  id="genero" name="genero">
+                                                    <option value="M"> Masculino</option>
+                                                    <option value="F"> Femenino</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="fechaNacio" class="col-form-label">Fecha Nacio:</label>
+                                                <input type="datetime-local" class="form-control" id="fechaNacio"
+                                                       name="fechaNacio">
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="departamentos" class="col-form-label">Departamento:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" id="departamentos" name="departamentos">
+                                                    {% for departamentos in Departamentos %}
+                                                    <option value="{{departamentos.id}}"> {{departamentos.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+
+                                            <div class="col">
+                                                <label for="municipios" class="col-form-label">Municipio:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" id="municipios" name="municipios">
+                                                    {% for municipios in Municipios %}
+                                                    <option value="{{municipios.id}}"> {{municipios.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row row-cols-8 mt-3">
+
+                                            <div class="col">
+                                                <label for="localidades" class="col-form-label">Localidad:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" id="localidades" name="localidades">
+                                                    {% for localidades in Localidades %}
+                                                    <option value="{{localidades.id}}"> {{localidades.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label for="ciudades" class="col-form-label">Ciudad:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm"  id="ciudades" name="ciudades">
+                                                    {% for ciudades in Ciudades %}
+                                                    <option value="{{ciudades.id}}"> {{ciudades.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="direccion" class="col-form-label">Direccion:</label>
+                                                <input type="text" class="form-control" id="direccion" name="direccion" value="">
+
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="telefono" class="col-form-label">Telefono:</label>
+                                                <input type="text" class="form-control" id="telefono" name="telefono" value="">
+                                            </div>
+                                            <div class="col">
+                                                <label for="contacto" class="col-form-label">Contacto:</label>
+                                                <input type="text" class="form-control" id="contacto" name="contacto" value="">
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="estadoCivil" class="col-form-label">Estado Civil:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm"  id="estadoCivil" name="estadoCivil">
+                                                    {% for estadoCivil in EstadoCivil %}
+                                                    <option value="{{estadoCivil.id}}"> {{estadoCivil.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label for="ocupaciones" class="col-form-label">Ocupacion:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm"  id="ocupaciones" name="ocupaciones">
+                                                    {% for ocupaciones in Ocupaciones %}
+                                                    <option value="{{ocupaciones.id}}"> {{ocupaciones.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label for="correo" class="col-form-label">Correo:</label>
+                                                <input type="text" class="form-control" id="correo" name="correo" value="">
+                                            </div>
+                                        </div>
+                                        <div class="row row-cols-8 mt-3">
+
+                                            <div class="col">
+                                                <label for="centrosC" class="col-form-label">Centros:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" id="centrosC" name="centrosC">
+                                                    {% for centros in Centros %}
+                                                    <option value="{{centros.id}}"> {{centros.nombre}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="tiposUsuario" class="col-form-label">Tipos Usuario:</label>
+
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" id="tiposUsuario" name="tiposUsuario">
+                                                    {% for tiposUsuario in TiposUsuario %}
+                                                    <option value="{{tiposUsuario.id}}"> {{tiposUsuario.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div> <!-- Cierra col -->
+                                        </div> <!-- Cierra row -->
+                                    </div> <!-- Cierra body -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"  onclick="CierraModalUsuarioTriage()">Close
+                                        </button>
+                                        <input type="button" class="btn btn-primary" value="save"  onclick="AUsuarioTriage()">
+                                    </div> <!-- Cierra footer-->
+                                </div> <!-- Cierra content -->
+                            </div> <!-- Cierra modal dialog -->
+                        </div> <!-- Cierra modal -->
+                    </form> <!-- Cierra cla forma-->
+                </div> <!-- Cierra muform -->
+            </div> <!-- Cierra el Card-->
+        </div> <!-- Cierra container -->
+
+            <!-- Fin Creacion Modal usuario  -->
 
 
 </article>

@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'triage',
     'cartera',
     'rips',
+    'tarifas',
 
 ]
 
