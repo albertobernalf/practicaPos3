@@ -97,18 +97,16 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 
    TAREAS HOY O MEJOR DIAS LUNES
 
-   2. verificar las tablas de clinico para asociarlas a rips.models
    3. se debe subir la tabla cumm de rips a facturacion_suministros
    4. Es necesario atar los itmes de examens de la HClinica a la facturacion los del sistema. Los demas son ajustes o manuales No se ligan
-   5. Falta e historia Medicamentos relacionar las unidades, formafarmaceutic etc
-
-   6. OJO PPILAS QUE UD. ESTA TRABAJANDO FURIPS (ya paso el parrentesis de rips , facturacion y glosas) . Hay que terminar primero admisiones-triage-histora clinica , luego si seguir
-   7. Reorganizar la captura de la admision con los nuevos campos de rips ripsServiciosActual etc
-   1. Comenzar a crear tablas cums, cups solidas las dfinitivas
+   5. OJO PPILAS QUE UD. ESTA TRABAJANDO FURIPS (ya paso el parrentesis de rips , facturacion y glosas) . Hay que terminar primero admisiones-triage-histora clinica , luego si seguir
+   6. Reorganizar la captura de la admision con los nuevos campos de rips ripsServiciosActual etc
+   7. Comenzar a crear tablas cums, cups solidas las dfinitivas
    8. No me desaparecio la ventana  Modal .crear admison desde triage, el query de regreso Nop funciono mostraba en triage aun la persona
    9. Esta pendiente aun no abre la modal encuentraModal, para editar admision 
       Pendiente colocar el default d ela fecha de naciemient en usuarios.-
-   10.
+   10. En apoyo terapeutico, el seccion no esta fijo sino varia de acuerdo al height de la trabla
+   11. el alto de la tabla pilas debe ser fijo para que funcione el scroll   
      
 
 -----------------------------------------------------------------------------------------------------------------------

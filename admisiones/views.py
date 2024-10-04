@@ -1691,6 +1691,31 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         ## FIN CONTEXTO
         return render(request, "autorizaciones/panelAutorizaciones.html", context)
 
+    if (escogeModulo == 'FACTURACION'):
+        print("WENTRE PERMSISO FACTURACION")
+        ## Aqui contexto para solo Triage
+
+        ## FIN CONTEXTO
+        return render(request, "facturacion/panelFacturacion.html", context)
+
+
+    if (escogeModulo == 'APOYO TERAPEUTICO'):
+        print("WENTRE PERMSISO APOYO TERAPEUTICO")
+        ## Aqui contexto para solo Triage
+
+        ## FIN CONTEXTO
+        return render(request, "apoyoTerapeutico/panelApoyoTerapeutico.html", context)
+
+
+    if (escogeModulo == 'TARIFAS'):
+        print("WENTRE PERMSISO TARIFAS")
+        ## Aqui contexto para solo Triage
+
+        ## FIN CONTEXTO
+        return render(request, "tarifas/Paneltarifas.html", context)
+
+
+
     return render(request, "panelVacio.html", context)
 
 

@@ -916,9 +916,12 @@ function guardaTriageModal()
 
                 $('#mensaje1').html('<span> respuesta</span>');
                 // $('#modalActualizaTriage').modal('hide');
+                alert("esta es la clasificacion triage = " + respuesta['clasificacionTriage'] );
+                $('#clasificacionTriage').val(respuesta['clasificacionTriage']);
+
                 $('#modalActualizaTriage').modal({show:false});
 
-		alert("esta es la clasificacion triage = " + respuesta['clasificacionTriage'] );
+
 
 
 		$('#clasificacionTriage').val(respuesta['clasificacionTriage']);		

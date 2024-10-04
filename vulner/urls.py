@@ -31,6 +31,7 @@ from usuarios import views as viewsUsuarios
 from django.conf  import settings
 from django.conf.urls.static import  static
 from clinico import views as viewsClinico
+from terapeutico import views as viewsApoyoTerapeutico
 #from mecanicosPacientes import views as viewsmecanicosPacientes
 
 
@@ -162,6 +163,10 @@ urlpatterns = [
     path('admisionTriageModal/', viewsTriage.admisionTriageModal),
     path('guardarAdmisionTriage/', viewsTriage.guardarAdmisionTriage),
 
+    # Apoyo Terapeutico
+
+    path('load_dataApoyoTerapeutico/<str:data>', viewsApoyoTerapeutico.load_dataApoyoTerapeutico, name='loaddataApoyoTerapeutico'),
+     path('postConsultaApoyoTerapeutico/', viewsApoyoTerapeutico.PostConsultaApoyoTerapeutico , name='Post_editApoyoTerapeutico'),
 
 # Facturacion
 

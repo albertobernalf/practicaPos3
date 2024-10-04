@@ -378,7 +378,7 @@ class HistoriaExamenes(models.Model):
 class HistoriaResultados(models.Model):
 
                     id = models.AutoField(primary_key=True)
-                    historia = models.ForeignKey('clinico.Historia', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+                    #historia = models.ForeignKey('clinico.Historia', blank=True, null=True, editable=True, on_delete=models.PROTECT)
                     historiaExamenes = models.ForeignKey('clinico.HistoriaExamenes', blank=True, null=True, editable=True, on_delete=models.PROTECT)
                     dependenciasRealizado = models.ForeignKey('sitios.Dependencias', blank=True, null=True, editable=True, on_delete=models.PROTECT)
                     fechaServicio = models.DateTimeField(default=now, blank=True, null=True, editable=True)

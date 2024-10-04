@@ -46,18 +46,14 @@ $(document).ready(function () {
           data = JSON.stringify(data);
 
 
-
-
-
-
     initTableConvenios(data);
 
 
     initTableAbonos(data);
 
-
+/*
     tableActions();
-
+*/
 
 
     	/*------------------------------------------
@@ -325,7 +321,7 @@ function clickEvent() {
 	 document.getElementById("ingresoIdF").value = valor;
 
 
-	   table = $("#tablaConveniosAdmisiones").dataTable().fnDestroy();
+	    table = $("#tablaConveniosAdmisiones").dataTable().fnDestroy();
 
 	   	  var data =  {}   ;
           var sede = document.getElementById("sede1").value;
@@ -336,10 +332,10 @@ function clickEvent() {
 
            initTableConvenios(data);
 
-	   tableA = $("#tablaAbonosAdmisiones").dataTable().fnDestroy();
+	    tableA = $("#tablaAbonosAdmisiones").dataTable().fnDestroy();
            initTableAbonos(data);
 
-           alert(" YA ACTIVE CONVEION Y PAGOS");
+//           alert(" YA ACTIVE CONVEION Y PAGOS");
 
 	$.ajax({
 		type: 'POST',
@@ -348,7 +344,7 @@ function clickEvent() {
 		dataType : 'json',
 		success: function (cambioServicio) {
 
-                  alert("llegue MODAL cambio Servicio = " + cambioServicio['Usuarios'].tipoDocId);
+               //   alert("llegue MODAL cambio Servicio = " + cambioServicio['Usuarios'].tipoDocId);
 
 		 $('#tipoDocx').val(cambioServicio['Usuarios'].tipoDoc);
 		 $('#documentox').val(cambioServicio['Usuarios'].documento);
@@ -382,7 +378,7 @@ function clickEvent() {
 	   	    	}
 	}); 
 
-	alert("Regreso de click Event");
+//	alert("Regreso de click Event");
 
 
 } 
@@ -392,7 +388,7 @@ $(document).on('change', '#ingresoId', function(event) {
 
     var valor = $('input[name="ingresoId"]:checked').val();
 
-	alert("Entre cambio de fila NUEVO VALOR DE FILA = " + valor);
+//	alert("Entre cambio de fila NUEVO VALOR DE FILA = " + valor);
 
   
            document.getElementById("mensajes").innerText="";
@@ -534,7 +530,7 @@ function AUsuario()
 	var tiposUsuario = document.getElementById("tiposUsuario").value;
 	var centrosC_id = document.getElementById("centrosc").value;
 
-	alert("centroC_id = " +  centrosC_id);
+//	alert("centroC_id = " +  centrosC_id);
 
 
 	$.ajax({
@@ -645,7 +641,7 @@ $(document).on('change', '#subServicioCambio', function(event) {
 
 $(document).on('change', '#busDocumentoSel', function(event) {
 
-        alert("Entre cambio Modal usuarios");
+  //      alert("Entre cambio Modal usuarios");
 
 	var envios = new FormData();
 
@@ -668,7 +664,7 @@ $(document).on('change', '#busDocumentoSel', function(event) {
 		data: {'tipoDoc':tipoDoc,'documento':documento},
 		success: function (Usuarios) {
 
-			 alert("entre DATOS MODAL y el nombre es = " + Usuarios.tipoDoc_id + " " +  Usuarios.documento);
+	//		 alert("entre DATOS MODAL y el nombre es = " + Usuarios.tipoDoc_id + " " +  Usuarios.documento);
 
                 $('#tipoDoc1').val(Usuarios.tipoDoc_id);
 		$('#tipoDoc').val(Usuarios.tipoDoc_id);
@@ -710,7 +706,7 @@ $(document).on('change', '#busDocumentoSel', function(event) {
 
 $(document).on('change', '#busDocumentoSelTriage', function(event) {
 
-        alert("Entre cambio Modal usuarios Triage");
+    //    alert("Entre cambio Modal usuarios Triage");
 
 	var envios = new FormData();
 
@@ -1786,6 +1782,7 @@ function guardaCambioServicio()
 	   	    	}
 	});
 };
+
 
 
 const article = document.querySelector('article');
