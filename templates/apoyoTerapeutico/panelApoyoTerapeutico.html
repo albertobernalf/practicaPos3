@@ -92,7 +92,7 @@ Mayor a  1 dia
                     <div class="card">
                         <div class="card-header">
                         </div>
-                        <div class="card-body" >
+                        <div class="card-body">
                             <div class="row" style="height=250px;">
                                 <div class="col-md-12">
                                     <div class="alert alert-success success-msg" style="display:none"></div>
@@ -136,175 +136,209 @@ Mayor a  1 dia
         <article id="RespuestasApoyoTerapeutico">
             <center>
                 <h3>Ingreso de Resultados</h3></center>
-  <table class="table" style="height: 50px; background-color:LightGray;  width:90%;">
+            <table class="table" style="height: 80px; background-color:LightGray;  width:90%;">
                 <tr>
                     <td>
                     </td>
                     <td>
                     </td>
                     <td>
-                        <table class="table" style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:90%;">
-                    <form class="form-inline" action="/crearApoyoTerapeutico/" method="POST" id="ApoyoTerapeuticoForma">
-                                <input type="text" id="ingresoIdA" name="ingresoIdA" value="">
-				<input type="text" id="examId" name="examId" value="">
+                        <!--           <table class="table" style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:90%;">  -->
+                         <!--   <div style="height: 1px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:90%;">  -->
+                            <form class="form-inline" action="/crearApoyoTerapeutico/" method="POST"
+                                  id="ApoyoTerapeuticoForma">
 
-                         <div class="row row-cols-8">
+                                <input type="hidden" id="examId" name="examId" value="">
 
-                                        <div class="col-1">
-						 <label for="tipoExamenId" class="col-sm-6 control-label"> TipoExamenId :</label>
-       	                                 <input type="text" class="form-control form-control-sm" id="tipoExamenId"  name="tipoExamenId"  value="" readonly>
-                                        
-                                        </div>                                   
-                                  
-        	                        <div class="col-1">
-						 <label for="tipoExamen" class="col-sm-6 control-label"> TipoExamen :</label>
-	      	                                 <input type="text" class="form-control form-control-sm" id="tipoExamen"  name="tipoExamen"  value="" readonly>                                          
-                                        </div>
-                                           
-                                        <div class="col-1">
-					 <label for="CupsId" class="col-sm-6 control-label"> CupsId :</label>
-	      	                                 <input type="text" class="form-control form-control-sm" id="CupsId"  name="CupsId"  value="" readonly>                                          
-                                         </div>
-        
-                                        <div class="col-6">
-              					 <label for="nombreExamen" class="col-sm-6 control-label"> Examen :</label>
-	      	                                 <input type="text" class="form-control form-control-sm" id="nombreExamen"  name="nombreExamen"  value="" readonly>                                          
+                                <div class="row row-cols-7">
 
-                                        </div>
-                                        <div class="col-1">
-         					 <label for="cantidad" class="col-sm-6 control-label"> Cantidad :</label>
- 	      	                                 <input type="text" class="form-control form-control-sm" id="cantidad"  name="cantidad"  value="" readonly>                                          
-                                        
-                                        </div>
-					 <div class="col-1">
-						 <label for="estado" class="col-sm-6 control-label"> Estado :</label>
- 	      	                                 <input type="text" class="form-control form-control-sm" id="estado"  name="estado"  value="" readonly>                                          
-                                          
-                                        </div>
-                                        <div class="col-1">
-						 <label for="folio" class="col-sm-6 control-label"> Folio :</label>
- 	      	                                 <input type="text" class="form-control form-control-sm" id="folio"  name="folio"  value="" readonly>       
-                                            
-                                        </div>
-					  <div class="col-3">
-         					 <label for="observaciones" class="col-sm-6 control-label"> Observaciones :</label>
- 	      	                                 <input type="text" class="form-control form-control-sm" id="observaciones"  name="observaciones"  value="" readonly>                                          
-                                        
-                                        </div>
-                                       
-                           </div>
-                            <div class="row">
-                            </div>
+                                    <div class="col-1">
+                                        <label for="tipoExamenId" class="col-sm-3 control-label"> TipoExamenId:</label>
+                                        <input type="text" class="form-control form-control-sm" id="tipoExamenId"
+                                               name="tipoExamenId" value="" readonly>
 
-                         <div class="row row-cols-8">
-                                       <div class="col-1">
-						<label for="interpretacion1" class="col-sm-6 control-label"> Interpretacion1 :</label>
- 	      	                                 <input type="text" class="form-control form-control-sm" id="interpretacion1"  name="interpretacion1"  value="" >    
-                                           
-                                        </div>
-					  <div class="col-1">
-  						 <label for="medicoInterpretacion1"  class="col-sm-6 control-label">MedicoInterpreta:</label>
+                                    </div>
 
-                                            <select class="form-select  h-40 w-10" id="medicoInterpretacion1" name="medicoInterpretacion1">
-                                                {% for medicoInterpretacion1 in MedicoInterpretacion1 %}
-                                                <option value="{{medicoInterpretacion1.id}}"> {{medicoInterpretacion1.nombre}}
-                                                </option>
-                                                {% endfor %}
-                                            </select>
-                                           
-                                        </div>
+                                    <div class="col-1">
+                                        <label for="tipoExamen" class="col-sm-3 control-label"> TipoExamen:</label>
+                                        <input type="text" class="form-control form-control-sm" id="tipoExamen"
+                                               name="tipoExamen" value="" readonly>
+                                    </div>
 
-                                        <div class="col-1">
-                                           <label for="interpretacion2" class="col-sm-6 control-label"> Interpretacion2 :</label>
- 	      	                                 <input type="text" class="form-control form-control-sm" id="interpretacion2"  name="interpretacion2"  value="" >    
-                                           
-                                        </div>
-                                                                              
-                                        <div class="col-1">
-					   <label for="medicoInterpretacion2"  class="col-sm-6 control-label">MedicoInterpreta:</label>
+                                    <div class="col-1">
+                                        <label for="CupsId" class="col-sm-1 control-label"> CupsId :</label>
+                                        <input type="text" class="form-control form-control-sm" id="CupsId"
+                                               name="CupsId" value="" readonly>
+                                    </div>
 
-                                            <select class="form-select  h-40 w-10" id="medicoInterpretacion2" name="medicoInterpretacion2">
-                                                {% for medicoInterpretacion2 in MedicoInterpretacion2 %}
-                                                <option value="{{medicoInterpretacion2.id}}"> {{medicoInterpretacion2.nombre}}
-                                                </option>
-                                                {% endfor %}
-                                            </select>
-                                           
-                                        </div>
-                                        <div class="col-1">
-						<label for="medicoReporte"  class="col-sm-6 control-label">MedicoReporte:</label>
+                                    <div class="col-6">
+                                        <label for="nombreExamen" class="col-sm-6 control-label"> Examen:</label>
+                                        <input type="text" class="form-control form-control-sm" id="nombreExamen"
+                                               name="nombreExamen" value="" readonly>
 
-                                            <select class="form-select  h-40 w-10" id="medicoReporte" name="medicoReporte">
-                                                {% for medicoReporte in MedicoReporte %}
-                                                <option value="{{medicoReporte.id}}"> {{medicoReporte.nombre}}
-                                                </option>
-                                                {% endfor %}
-                                            </select>
-                                            
-                                        </div>
-                                        <div class="col-1">
-                                           <label for="rutaImagen" class="col-sm-6 control-label"> RutaImagen :</label>
- 	      	                                 <input type="text" class="form-control form-control-sm" id="rutaImagen"  name="rutaImagen"  value="" >    
-                                        </div>
-                                        <div class="col-1">
-                                           <label for="rutaVideo" class="col-sm-6 control-label"> RutaVideo :</label>
- 	      	                                 <input type="text" class="form-control form-control-sm" id="rutaVideo"  name="rutaVideo"  value="" >    
-                                        </div>
-                                        <div class="col-1">
-                                            
-                                        </div>
-                                       <div class="col-1">
-                                          
-                                        </div>
-					<div class="col-1">
-                                           
-                                        </div>
-                           </div>
+                                    </div>
 
+				          <div class="col-1">
+                                        <label for="dependenciasRealizado" class="col-sm-6 control-label">RealizadoEnDependencia:</label>
 
-             <!-- DESDE AQUIP DATATABLE  -->
+                                        <select class="form-select  h-40 w-10" id="dependenciasRealizado"
+                                                name="dependenciasRealizado">
+                                            {% for dependenciasRealizado in DependenciasRealizado %}
+                                            <option value="{{dependenciasRealizado.id}}">
+                                                {{dependenciasRealizado.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
 
-                       
-                            <!-- INICIO TABLE DE  EL DATATABLE  -->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row">
-                     				   <div class="col-sm-3">
-	        					<input type="button" id="btn-rango" name="btn-rango" value = "Guardar ¡" onClick="guardarRasgos()" >
+                                    </div>
+				
+                                    <div class="col-1">
+                                        <label for="cantidad" class="col-sm-1 control-label"> Cantidad:</label>
+                                        <input type="text" class="form-control form-control-sm" id="cantidad"
+                                               name="cantidad" value="" readonly>
 
-                                           </div>
-                                                <div class="alert alert-success success-msg" style="display:none"></div>
+                                    </div>
+                                    <div class="col-1">
+                                        <label for="estado" class="col-sm-1 control-label"> Estado:</label>
+                                        <input type="text" class="form-control form-control-sm" id="estado"
+                                               name="estado" value="" readonly>
 
-                                           <div class="col-sm-6">
-                                               <label for="rasgosClinicos"  class="col-sm-6 control-label">RazgoClinico:</label>
+                                    </div>
+                                    <div class="col-1">
+                                        <label for="folio" class="col-sm-1 control-label"> Folio:</label>
+                                        <input type="text" class="form-control form-control-sm" id="folio" name="folio"
+                                               value="" readonly>
 
-                                            <select class="form-select  h-40 w-10" id="rasgsoClinicos" name="rasgosClinicos">
-                                                {% for rasgosClinicos in RasgosClinicos %}
-                                                <option value="{{rasgosClinicos.id}}"> {{rasgosClinicos.nombre}}
-                                                </option>
-                                                {% endfor %}
-                                            </select>
-                                           </div>
+                                    </div>
 
- 					<div class="col-sm-1">
-                                               <input type="text" id="valor" name="valor" value = "" >
-                                           </div>
+                                </div>
+
+                                <div class="row row-cols-7">
+                                    <div class="col-3">
+                                        <label for="observaciones" class="col-sm-6 control-label"> Observaciones
+                                            :</label>
+                                        <input type="text" class="form-control form-control-sm" id="observaciones"
+                                               name="observaciones" value="" readonly>
+
+                                    </div>
+
+                                    <div class="col-1">
+                                        <label for="interpretacion1" class="col-sm-6 control-label"> Interpretacion1
+                                            :</label>
+                                        <input type="text" class="form-control form-control-sm" id="interpretacion1"
+                                               name="interpretacion1" value="">
+
+                                    </div>
+                                    <div class="col-1">
+                                        <label for="medicoInterpretacion1" class="col-sm-6 control-label">MedicoInterpreta:</label>
+
+                                        <select class="form-select  h-40 w-10" id="medicoInterpretacion1"
+                                                name="medicoInterpretacion1">
+                                            {% for medicoInterpretacion1 in MedicoInterpretacion1 %}
+                                            <option value="{{medicoInterpretacion1.id}}">
+                                                {{medicoInterpretacion1.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col-1">
+                                        <label for="interpretacion2" class="col-sm-6 control-label"> Interpretacion2:</label>
+                                        <input type="text" class="form-control form-control-sm" id="interpretacion2"
+                                               name="interpretacion2" value="">
+
+                                    </div>
+
+                                    <div class="col-1">
+                                        <label for="medicoInterpretacion2" class="col-sm-6 control-label">MedicoInterpreta:</label>
+
+                                        <select class="form-select  h-40 w-10" id="medicoInterpretacion2"
+                                                name="medicoInterpretacion2">
+                                            {% for medicoInterpretacion2 in MedicoInterpretacion2 %}
+                                            <option value="{{medicoInterpretacion2.id}}">
+                                                {{medicoInterpretacion2.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                    <div class="col-1">
+                                        <label for="medicoReporte" class="col-sm-6 control-label">MedicoReporte:</label>
+
+                                        <select class="form-select  h-40 w-10" id="medicoReporte" name="medicoReporte">
+                                            {% for medicoReporte in MedicoReporte %}
+                                            <option value="{{medicoReporte.id}}"> {{medicoReporte.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                    <div class="col-1">
+                                        <label for="rutaImagen" class="col-sm-6 control-label"> RutaImagen :</label>
+                                        <input type="text" class="form-control form-control-sm" id="rutaImagen"
+                                               name="rutaImagen" value="">
+                                    </div>
+                                    <div class="col-1">
+                                        <label for="rutaVideo" class="col-sm-6 control-label"> RutaVideo :</label>
+                                        <input type="text" class="form-control form-control-sm" id="rutaVideo"
+                                               name="rutaVideo" value="">
+                                    </div>
+
+                                </div>
 
 
+                                <!-- DESDE AQUIP DATATABLE  -->
 
-                 			       <div class="col-sm-3 text-end">
-                       				      <span class="text-secondary">Crear Convenio</span>
-                       			     <a class="btn btn-success" href="javascript:void(0)" id="createNewPost"> <i class="fa fa-plus"></i></a>
-                      				  </div>
-                    </div>
-					 </div>
-                                            <div class="card-body">
+
+                                <!-- INICIO TABLE DE  EL DATATABLE  -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card">
+                                            <div class="card-header" style="height:30px;width=90px">
+                                                <div class="row">
+                                                    <div class="col-sm-2">
+                                                        <input type="button" id="btn-rango" name="btn-rango"
+                                                               value="Guardar ¡" onClick="guardarResultado()">
+                                                        <div class="alert alert-success success-msg"
+                                                             style="display:none"></div>
+                                                    </div>
+
+
+                                                    <div class="col-sm-6">
+                                                        RazgoClinico:
+
+                                                        <select class="form-select  h-10 w-10" id="rasgosClinicos"
+                                                                name="rasgosClinicos">
+                                                            {% for rasgosClinicos in RasgosClinicos %}
+                                                            <option value="{{rasgosClinicos.id}}">
+                                                                {{rasgosClinicos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-sm-1">
+                                                        <input type="text" id="valor" name="valor" value="">
+                                                    </div>
+
+						   <div class="col-sm-1">
+                                                        <input type="text" id="observaciones" name="observaciones" value="">
+                                                    </div>
+
+                                                    <div class="col-sm-3 text-end">
+                                                        <span class="text-secondary">Crear Resultado</span>
+                                                        <a class="btn btn-success" href="javascript:void(0)"
+                                                           id="createNewResultadoRasgo"> <i class="fa fa-plus"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body" style="height:30px;">
                                                 <div class="row">
                                                     <div class="col-sm-12">
 
-                                                        <table id=tablaRasgos class="display nowrap table table table-bordered  tablaRasgos table-hover table-sm dtr-inline">
+                                                        <table id=tablaRasgos
+                                                               class="display nowrap table table table-bordered  tablaRasgos table-hover table-sm dtr-inline">
 
                                                             <thead>
                                                             <tr>
@@ -313,15 +347,14 @@ Mayor a  1 dia
                                                                 <th style="width:25;">Nombre Rasgo</th>
                                                                 <th style="width:25%;">Unidad</th>
                                                                 <th style="width:12%;">Minimo</th>
-
                                                                 <th style="width:30%;">Maximo</th>
                                                                 <th style="width:30%;">Valor</th>
                                                                 <th style="width:3%;">Borrar</th>
-                                          
+
                                                             </tr>
                                                             </thead>
                                                             <tbody style="vertical-align:bottom">
-                                                            <tr style="height:10%">
+                                                            <tr style="height:5%">
                                                             </tr>
                                                             </tbody>
                                                         </table>
@@ -333,33 +366,31 @@ Mayor a  1 dia
                                 </div>
                                 <!-- FIN TABLE DE  EL DATATABLE  -->
                         </form>
-                    </table>
-
-
-             <!-- HASTA AQUI DATATABLE -->
-
-
-                        </table>
-
-
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-                </form>
-
+                 <!-- </div> -->
             </table>
 
 
+            <!-- HASTA AQUI DATATABLE -->
 
 
+    </form>
+    <!--     </table> -->
 
 
-        </article>
+    </td>
+    <td>
+    </td>
+    <td>
+    </td>
+    </tr>
+    </form>
 
-	 <article id="ConsultaResultados">
+    </table>
+
+
+    </article>
+
+    <article id="ConsultaResultados">
             <center>
                 <h3>Consulta de Resultados</h3></center>
         </article>

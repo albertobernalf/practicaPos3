@@ -166,7 +166,11 @@ urlpatterns = [
     # Apoyo Terapeutico
 
     path('load_dataApoyoTerapeutico/<str:data>', viewsApoyoTerapeutico.load_dataApoyoTerapeutico, name='loaddataApoyoTerapeutico'),
-     path('postConsultaApoyoTerapeutico/', viewsApoyoTerapeutico.PostConsultaApoyoTerapeutico , name='Post_editApoyoTerapeutico'),
+    path('load_dataRasgos/<str:data>', viewsApoyoTerapeutico.load_dataRasgos, name='loadDataRasgos'),
+    path('postConsultaApoyoTerapeutico/', viewsApoyoTerapeutico.PostConsultaApoyoTerapeutico , name='Post_editApoyoTerapeutico'),
+    path('guardarResultadoRasgo/<str:data>', viewsApoyoTerapeutico.GuardarResultadoRasgo, name='guardarResultadoRasgo'),
+    path('postDeleteExamenesRasgos/', viewsApoyoTerapeutico.PostDeleteExamenesRasgos, name='PostDeleteExamenesRasgos'),
+    path('guardarResultado/', viewsApoyoTerapeutico.GuardarResultado, name='GuardarResultado'),
 
 # Facturacion
 

@@ -385,10 +385,10 @@ class examenesRasgosAdmin(admin.ModelAdmin):
 
 @admin.register(HistoriaResultados)
 class historiaResultadosAdmin(admin.ModelAdmin):
-    list_display = ("id", "historiaExamenes","dependenciasRealizado","fechaServicio","fechaResultado","examenesRasgos","valor")
-    search_fields = ("id","historiaExamenes","dependenciasRealizado","fechaServicio","fechaResultado","examenesRasgos","valor")
+    list_display = ("id", "historiaExamenes","fechaServicio","fechaResultado","examenesRasgos","valor")
+    search_fields = ("id","historiaExamenes","fechaServicio","fechaResultado","examenesRasgos","valor")
     # Filtrar
-    list_filter = ("id", "historiaExamenes","dependenciasRealizado","fechaServicio","fechaResultado","examenesRasgos","valor")
+    list_filter = ("id", "historiaExamenes","fechaServicio","fechaResultado","examenesRasgos","valor")
 
 
 
