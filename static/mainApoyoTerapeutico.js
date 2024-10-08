@@ -95,11 +95,12 @@ $('.editPostar').on('click',function(event)
                       alert("dataResultado4="  + data[0]['ResultadoApoyoTerapeutico'][0]);
                        alert("dataResultado5="  + data[0]['ResultadoApoyoTerapeutico'][0].tipoExamenId);
                          alert("RasgosClinicos="  + data[1]['RasgosClinicos']);  // esye es el combo
+                             alert("data[2] ="  + data[2]);  // esye es el combo
 
-                            alert("MedicoInterpretacion1="  + data[1]['MedicoInterpretacion1']);  // esye es el combo
-                               alert("MedicoInterpretacion2="  + data[1]['MedicoInterpretacion2']);  // esye es el combo
-                                  alert("MedicoReporte="  + data[1]['MedicoReporte']);  // esye es el combo
-                    alert("MedicoReporte="  + data[1]['MedicoReporte'][1]['nombre']);
+                            alert("data[2].MedicoInterpretacion1="  + data[2]['MedicoInterpretacion1'][1]['nombre']);  // esye es el combo
+                               alert("MedicoInterpretacion2="  + data[3]['MedicoInterpretacion2'][1]['nombre']);  // esye es el combo
+                                  alert("MedicoReporte="  + data[4]['MedicoReporte'][1]['nombre']);  // esye es el combo
+                    //alert("MedicoReporte="  + data['MedicoReporte'].nombre');
 
                         alert("dataResultado6="  + data[1]['RasgosClinicos'][1]);
                         alert("dataResultado7="  + data[1]['RasgosClinicos'][1]['id']);
@@ -124,6 +125,27 @@ $('.editPostar').on('click',function(event)
 	                $('#medicoReporte').val(data[0]['ResultadoApoyoTerapeutico'][0].medicoReporte);
 	                $('#rutaImagen').val(data[0]['ResultadoApoyoTerapeutico'][0].rutaImagen);
 	                $('#rutaVideo').val(data[0]['ResultadoApoyoTerapeutico'][0].rutaVideo);
+
+	               //  $('#rasgosClinicos').val(data[1]['RasgosClinicos']);
+	                 $('#medicoInterpretacion1').val(data[2]['MedicoInterpretacion1']);
+	                 $('#medicoInterpretacion2').val(data[3]['MedicoInterpretacion2']);
+	                 $('#medicoReporte').val(data[4]['MedicoReporte']);
+
+           	  		   var options = '<option value="=================="></option>';
+	  		          var dato = JSON.parse(data[1]['RasgosClinicos']);
+	  		            alert("dato = " + dato);
+
+
+                     const $id2 = document.querySelector("#rasgosClinicos");
+ 	      		     $("#rasgosClinicos").empty();
+
+	                 $.each(data[1]['RasgosClinicos'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id2.appendChild(option);
+ 	      		      });
 
 
 

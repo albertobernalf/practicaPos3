@@ -249,14 +249,14 @@ def PostConsultaApoyoTerapeutico(request):
     curt.execute(comando)
     print(comando)
 
-    medicoInterpretacion1 = []
-    medicoInterpretacion1.append({'id': '', 'nombre': ''})
+    medicoInt1 = []
+    medicoInt1.append({'id': '', 'nombre': ''})
 
     for id, nombre in curt.fetchall():
-           medicoInterpretacion1.append({'id': id, 'nombre': nombre})
+           medicoInt1.append({'id': id, 'nombre': nombre})
 
     miConexiont.close()
-    print(medicoInterpretacion1)
+    print("medicoInt1 = OBSERVERLA ", medicoInt1)
 
     #context['MedicoInterpretacion1'] = medicoInterpretacion1
 
@@ -275,14 +275,14 @@ def PostConsultaApoyoTerapeutico(request):
     curt.execute(comando)
     print(comando)
 
-    medicoInterpretacion2 = []
-    medicoInterpretacion2.append({'id': '', 'nombre': ''})
+    medicoInt2 = []
+    medicoInt2.append({'id': '', 'nombre': ''})
 
     for id, nombre in curt.fetchall():
-           medicoInterpretacion2.append({'id': id, 'nombre': nombre})
+           medicoInt2.append({'id': id, 'nombre': nombre})
 
     miConexiont.close()
-    print(medicoInterpretacion2)
+    print(medicoInt2)
 
     #context['MedicoInterpretacion2'] = medicoInterpretacion2
 
@@ -300,14 +300,14 @@ def PostConsultaApoyoTerapeutico(request):
     curt.execute(comando)
     print(comando)
 
-    medicoReporte = []
-    medicoReporte.append({'id': '', 'nombre': ''})
+    medicoRep = []
+    medicoRep.append({'id': '', 'nombre': ''})
 
     for id, nombre in curt.fetchall():
-           medicoReporte.append({'id': id, 'nombre': nombre})
+           medicoRep.append({'id': id, 'nombre': nombre})
 
     miConexiont.close()
-    print(medicoReporte)
+    print(medicoRep)
 
     #context['MedicoReporte'] = medicoReporte
 
@@ -363,11 +363,18 @@ def PostConsultaApoyoTerapeutico(request):
         # Cierro Conexion
 
         envio = []
-        envio.append({'ResultadoApoyoTerapeutico':resultadoApoyoTerapeutico})
+
+        envio.append({'ResultadoApoyoTerapeutico': resultadoApoyoTerapeutico})
+
         envio.append({'RasgosClinicos':rasgosClinicos})
-        envio.append({'MedicoInterpretacion1':medicoInterpretacion1})
-        envio.append({'MedicoInterpretacion2':medicoInterpretacion1})
-        envio.append({'MedicoReporte':medicoReporte})
+
+        envio.append({'MedicoInterpretacion1':medicoInt1})
+
+        envio.append({'MedicoInterpretacion2':medicoInt2})
+
+        envio.append({'MedicoReporte':medicoRep})
+
+
 
         print ("ENVIO FINAL =", envio)
 

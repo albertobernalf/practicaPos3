@@ -46,3 +46,5 @@ detalle = 'select exam.id examId,  exam."tiposExamen_id" tipoExamenId, tip.nombr
 
 
 select * from usuarios_usuarios;
+SELECT med.id id, med.nombre nombre FROM clinico_medicos med order by med.nombre
+SELECT med.id id, med.nombre nombre FROM clinico_medicos med order by med.nombre
