@@ -73,7 +73,7 @@ $('.editPostar').on('click',function(event)
          var nombreExamen = document.getElementById("nombreExamen").value;
          var cantidad = document.getElementById("cantidad").value;
 	 var observaciones = document.getElementById("observaciones").value;
-         var estado = document.getElementById("estado").value;
+         var estadoExamen = document.getElementById("estadoExamen").value;
          var folio = document.getElementById("tipoExamenId").value;
          var interpretacion1 = document.getElementById("interpretacion1").value;
          var medicoInterpretacion1 = document.getElementById("medicoInterpretacion1").value;
@@ -111,7 +111,7 @@ $('.editPostar').on('click',function(event)
 			   nombreExamen:nombreExamen,
 			   cantidad:cantidad,
                            observaciones:observaciones,
-			   estado:estado,
+			   estadoExamen:estadoExamen,
 			   folio:folio,
 			   interpretacion1:interpretacion1,
 			   medicoInterpretacion1:medicoInterpretacion1,
@@ -126,8 +126,6 @@ $('.editPostar').on('click',function(event)
 	  		success: function (data) {
                         alert("Regrese");
 
-
-
                       alert("dataResultado3="  + data[0]['ResultadoApoyoTerapeutico']); // este es el Registro
                        alert("dataResultado5="  + data[0]['ResultadoApoyoTerapeutico'][0].tipoExamenId);
                          alert("RasgosClinicos="  + data[1]['RasgosClinicos']);  // esye es el combo
@@ -135,8 +133,9 @@ $('.editPostar').on('click',function(event)
                             alert("data[2].MedicoInterpretacion1="  + data[2]['MedicoInterpretacion1'][1]['nombre']);  // esye es el combo
                                alert("MedicoInterpretacion2="  + data[3]['MedicoInterpretacion2'][1]['nombre']);  // esye es el combo
                                   alert("MedicoReporte="  + data[4]['MedicoReporte'][1]['nombre']);  // esye es el combo
-                    //alert("MedicoReporte="  + data['MedicoReporte'].nombre');
-
+			alert("dependenciasRealizado1 = " + data[0]['ResultadoApoyoTerapeutico'][0]);
+			alert("dependenciasRealizado2 = " + data[0]['ResultadoApoyoTerapeutico'][0].dependencias);
+			
 
 	  		  // var dato = JSON.parse(respuesta);
 			 $('#pk').val(data.pk);
@@ -146,7 +145,7 @@ $('.editPostar').on('click',function(event)
 	                $('#nombreExamen').val(data[0]['ResultadoApoyoTerapeutico'][0].nombreExamen);
 	                $('#cantidad').val(data[0]['ResultadoApoyoTerapeutico'][0].cantidad);
 	                $('#observaciones').val(data[0]['ResultadoApoyoTerapeutico'][0].observaciones);
-	                $('#estado').val(data[0]['ResultadoApoyoTerapeutico'][0].estado);
+	                $('#estadoExamen').val(data[0]['ResultadoApoyoTerapeutico'][0].estado);
 	                $('#folio').val(data[0]['ResultadoApoyoTerapeutico'][0].folio);
 	                $('#interpretacion1').val(data[0]['ResultadoApoyoTerapeutico'][0].interpretacion1);
 	                $('#medicoInterpretacion1').val(data[0]['ResultadoApoyoTerapeutico'][0].medicoInterpretacion1);
@@ -155,17 +154,14 @@ $('.editPostar').on('click',function(event)
 	                $('#medicoReporte').val(data[0]['ResultadoApoyoTerapeutico'][0].medicoReporte);
 	                $('#rutaImagen').val(data[0]['ResultadoApoyoTerapeutico'][0].rutaImagen);
 	                $('#rutaVideo').val(data[0]['ResultadoApoyoTerapeutico'][0].rutaVideo);
+			
 
-	               //  $('#medicoInterpretacion1').val(data[2]['MedicoInterpretacion1']);
-	               //  $('#medicoInterpretacion2').val(data[3]['MedicoInterpretacion2']);
-	               //  $('#medicoReporte').val(data[4]['MedicoReporte']);
 			 $('#ingresoIdA').val(data[4]['MedicoReporte']);
 			 $('#examId').val(data[0]['ResultadoApoyoTerapeutico'][0].examId);
 			
 
            	  		   var options = '<option value="=================="></option>';
-	  		        //  var dato = JSON.parse(data[1]['RasgosClinicos']);
-	  		         //   alert("dato = " + dato);
+
 
                      const $id2 = document.querySelector("#rasgosClinicos");
  	      		     $("#rasgosClinicos").empty();
@@ -229,6 +225,25 @@ $('.editPostar').on('click',function(event)
                                     $id6.appendChild(option);
  	      		      });
 
+	         const $id7 = document.querySelector("#estadoExamen");
+ 	      		     $("#estadoExamen").empty();
+
+	                 $.each(data[6]['EstadosExamenes'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id7.appendChild(option);
+ 	      		      });
+
+
+			
+	                 $('#medicoInterpretacion1').val(data[0]['ResultadoApoyoTerapeutico'][0].medicoInterpretacion1);
+	                 $('#medicoInterpretacion2').val(data[0]['ResultadoApoyoTerapeutico'][0].medicoInterpretacion2);
+	                 $('#medicoReporte').val(data[0]['ResultadoApoyoTerapeutico'][0].medicoReporte);
+			  $('#dependenciasRealizado').val(data[0]['ResultadoApoyoTerapeutico'][0].dependencias);
+ 			 $('#estadoExamen').val(data[0]['ResultadoApoyoTerapeutico'][0].estado);
+
 
 
 
@@ -256,18 +271,18 @@ $('.editPostar').on('click',function(event)
  	alert("Entre a crear un rasgo");
  
 	  var valor = document.getElementById("valor").value;
-	  var observaciones = document.getElementById("observaciones").value;
-	  var rasgo = document.getElementById("rasgo").value;
+	  var observa = document.getElementById("observa").value;
+	  var rasgo = document.getElementById("rasgosClinicos").value;
 	  var selectRasgo = document.getElementById("rasgo"); 
 	  var examId = document.getElementById("examId").value;
 
 	 $.ajax({
 	           url: '/guardarResultadoRasgo/',
 	            data : {
-			examId:examId,
-  			rasgo:rasgo,
-			valor:valor,
-                        observaciones:observaciones
+			'examId':examId,
+  			'rasgo':rasgo,
+			'valor':valor,
+                        'observa':observa
 			},
 	           type: 'POST',
 	           dataType : 'json',
@@ -275,7 +290,7 @@ $('.editPostar').on('click',function(event)
                         alert("Regrese");
                         alert("respuesta="  + data);
 
-	                $('#mensajes').val('! Registro Actualizado !');
+	                  $("#mensajes").html(" ! Registro Creado !");
 
 
                     },
@@ -299,8 +314,8 @@ $('.editPostar').on('click',function(event)
 	          tableR= $("#tablaRasgos").dataTable().fnDestroy();
 		alert("username_id ASI VA " + username_id );
 	           initTableRasgos(data);
-         
-  
+	           $("#mensajes").html(" ! Registro Guardado !");
+  		
         });
 
 
@@ -340,14 +355,12 @@ $('.editPostar').on('click',function(event)
 	  		success: function (data) {
 	  		    alert("vengo de borrar");
 
-
-
-		        	  $('.success-msg').css('display','block');
-                        $('.success-msg').text(data.message);
-			                     tableR= $("#tablaRasgos").dataTable().fnDestroy();
-	alert("username_id ASI VA " + username_id );
-
-           initTableRasgos(data);
+	                     tableR= $("#tablaRasgos").dataTable().fnDestroy();
+	
+        		   initTableRasgos(data);
+	
+		  $("#mensajes").html(" ! Registro Borrado !");
+			
 
                     },
 	   		    error: function (request, status, error) {
@@ -517,7 +530,7 @@ function guardarResultado() {
          var rutaVideo = document.getElementById("rutaVideo").value;
 	 var dependenciasRealizado = document.getElementById("dependenciasRealizado").value;
 	 var username_id = document.getElementById("username_id").value;	
-
+	 var estadoExamen = document.getElementById("estadoExamen").value;
 
 
 	 $.ajax({
@@ -533,7 +546,8 @@ function guardarResultado() {
                         rutaImagen:rutaImagen,
 			rutaVideo:rutaVideo,
 			dependenciasRealizado:dependenciasRealizado,
-                        usuarioToma: username_id 
+                        usuarioToma: username_id ,
+			estadoExamen:estadoExamen
 			},
 	           type: 'POST',
 	           dataType : 'json',
@@ -541,8 +555,8 @@ function guardarResultado() {
                         alert("Regrese");
                         alert("respuesta="  + data);
 
-	                $('#mensajes').val('! Registro Actualizado !');
-
+	               // $('#mensajes').val('! Registro Actualizado !');
+			  $("#mensajes").html(" ! Registro Actualizado !");
 
                     },
 	   		    error: function (request, status, error) {

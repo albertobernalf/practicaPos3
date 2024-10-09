@@ -241,13 +241,38 @@ def PostConsultaApoyoTerapeutico(request):
     print ("llave = " ,llave)
     print ("primero=" ,llave[0])
 
+    # Combo estadosExamenes
+
+    # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = 'SELECT e.id id, e.nombre nombre FROM clinico_estadoexamenes e order by e.id'
+
+    curt.execute(comando)
+    print(comando)
+
+    estadosExamenes = []
+    estadosExamenes.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+        estadosExamenes.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(estadosExamenes)
+
+      # Fin combo estadosExamenes
+
+
+
     # Combo RazgosExamenes
 
     miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
                                       password="pass123")
     curt = miConexiont.cursor()
 
-    comando = "SELECT t.id id, t.nombre  nombre FROM clinico_examenesrasgos t"
+    comando = 'SELECT t.id id, t.nombre  nombre FROM clinico_examenesrasgos t, clinico_historiaexamenes exa where exa.id= ' + "'" + str(llave[0].strip()) + "'" + ' and exa."tiposExamen_id" = t."tiposExamen_id"  and exa."codigoCups" = t."codigoCups"'
 
     curt.execute(comando)
     print(comando)
@@ -339,7 +364,7 @@ def PostConsultaApoyoTerapeutico(request):
 
     #context['MedicoReporte'] = medicoReporte
 
-    # Fin combo medicoInterpretacion2
+    # Fin combo medicoReporte
 
     # Combo DependenciasRealizado
 
@@ -374,7 +399,7 @@ def PostConsultaApoyoTerapeutico(request):
         nombreExamen =  request.POST["nombreExamen"]
         cantidad =  request.POST["cantidad"]
         observaciones =  request.POST["observaciones"]
-        estado =  request.POST["estado"]
+        estadoExamen =  request.POST["estadoExamen"]
         folio =  request.POST["folio"]
         interpretacion1 =  request.POST["interpretacion1"]
         medicoInterpretacion1 =  request.POST["medicoInterpretacion1"]
@@ -392,7 +417,7 @@ def PostConsultaApoyoTerapeutico(request):
 
     
         #comando = 'SELECT i.id id, i."tipoDoc_id" tipoDocId,td.nombre nombreTipoDoc, i.documento_id documentoId, u.documento documento , i.consec consec FROM admisiones_ingresos i, usuarios_usuarios u, usuarios_tiposDocumento td where i.id=' + "'" +  str(llave[0].strip()) + "'" + ' and i."tipoDoc_id" =td.id and i.documento_id=u.id'
-        comando = 'select exam.id examId,  exam."tiposExamen_id" tipoExamenId, tip.nombre tipoExamen, exam."codigoCups" CupsId , examenes.nombre nombreExamen,exam.cantidad cantidad, exam.observaciones observaciones, exam."estadoExamenes_id" estado,historia.folio folio,exam.interpretacion1 interpretacion1,exam.interpretacion2 interpretacion2, exam."medicoInterpretacion1_id" medicoInterpretacion1,exam."medicoInterpretacion2_id" medicoInterpretacion2,exam."medicoReporte_id" medicoReporte, exam."rutaImagen" rutaImagen, exam."rutaVideo" rutaVideo from clinico_historiaexamenes exam, clinico_historia historia, clinico_tiposexamen tip, clinico_examenes examenes where historia.id= exam.historia_id and exam.id = '  + "'" +  str(llave[0].strip()) + "'" + ' and  tip.id=exam."tiposExamen_id" and exam."tiposExamen_id" = examenes."TiposExamen_id"  And exam."codigoCups" = examenes."codigoCups"'
+        comando = 'select exam.id examId,  exam."tiposExamen_id" tipoExamenId, tip.nombre tipoExamen, exam."codigoCups" CupsId , examenes.nombre nombreExamen,exam.cantidad cantidad, exam.observaciones observaciones, exam."estadoExamenes_id" estado,historia.folio folio,exam.interpretacion1 interpretacion1,exam.interpretacion2 interpretacion2, exam."medicoInterpretacion1_id" medicoInterpretacion1,exam."medicoInterpretacion2_id" medicoInterpretacion2,exam."medicoReporte_id" medicoReporte, exam."rutaImagen" rutaImagen, exam."rutaVideo" rutaVideo , est.nombre estadoNombre, exam."dependenciasRealizado_id" dependencias  from clinico_historiaexamenes exam, clinico_historia historia, clinico_tiposexamen tip, clinico_examenes examenes , clinico_estadoexamenes est where historia.id= exam.historia_id and exam.id = '  + "'" +  str(llave[0].strip()) + "'" + ' and  tip.id=exam."tiposExamen_id" and exam."tiposExamen_id" = examenes."TiposExamen_id"  And exam."codigoCups" = examenes."codigoCups" and est.id = exam."estadoExamenes_id"'
 
 
         print(comando)
@@ -401,13 +426,13 @@ def PostConsultaApoyoTerapeutico(request):
 
         resultadoApoyoTerapeutico = []
 
-        for examId,  tipoExamenId, tipoExamen,  CupsId ,  nombreExamen, cantidad, observaciones,  estado, folio,interpretacion1, interpretacion2,  medicoInterpretacion1,medicoInterpretacion2, medicoReporte,  rutaImagen, rutaVideo in cur.fetchall():
+        for examId,  tipoExamenId, tipoExamen,  CupsId ,  nombreExamen, cantidad, observaciones,  estado, folio,interpretacion1, interpretacion2,  medicoInterpretacion1,medicoInterpretacion2, medicoReporte,  rutaImagen, rutaVideo, estadoNombre, dependencias in cur.fetchall():
             resultadoApoyoTerapeutico.append( {"examId": examId,
                      "tipoExamenId": tipoExamenId,
                      "tipoExamen": tipoExamen,
                      "CupsId": CupsId, "nombreExamen": nombreExamen,
                      "cantidad": cantidad, "observaciones":observaciones, "estado":estado,"folio":folio, "interpretacion1":interpretacion1, "interpretacion2":interpretacion2,"medicoInterpretacion1":medicoInterpretacion1,
-                     "medicoInterpretacion2":medicoInterpretacion2,"medicoReporte":medicoReporte, "rutaImagen":rutaImagen,"rutaVideo":rutaVideo  })
+                     "medicoInterpretacion2":medicoInterpretacion2,"medicoReporte":medicoReporte, "rutaImagen":rutaImagen,"rutaVideo":rutaVideo , "estadoNombre":estadoNombre, "dependencias":dependencias})
 
         miConexionx.close()
         print(resultadoApoyoTerapeutico)
@@ -426,6 +451,8 @@ def PostConsultaApoyoTerapeutico(request):
 
         envio.append({'MedicoReporte':medicoRep})
         envio.append({'DependenciasRealizado': dependenciasRealizado})
+        envio.append({'EstadosExamenes': estadosExamenes})
+
 
         print ("ENVIO FINAL =", envio)
 
@@ -505,12 +532,14 @@ def load_dataRasgos(request, data):
 
 def GuardarResultadoRasgo ( request):
 
+    print ("Entre guardar resultado rasgo")
+
     if request.method == 'POST':
 
         examId = request.POST["examId"]
         rasgo = request.POST["rasgo"]
         valor = request.POST["valor"]
-        observaciones = request.POST["observaciones"]
+        observaciones = request.POST["observa"]
         estadoReg= 'A'
         #dependenciasRealizado_id= 1
         consecResultado= 1
@@ -519,7 +548,7 @@ def GuardarResultadoRasgo ( request):
         ## falta usuarioRegistro_id
         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
         curt = miConexiont.cursor()
-        comando = 'INSERT INTO clinico_historiaresultados ("estadoReg", "estadoExamenes_id", "consecResultado","examenesRasgos_id", "fechaResultado", "fechaServicio", "historiaExamenes_id", observaciones, valor) values (' + "'" + str(estadoReg) + "'," + "'" + str(estadoExamenes_id) + "'," +   "'" + str(consecResultado) + "'," + str(rasgo) + "'," + str(fechaResultado) + "'," + "'" + str(fechaResultado) + "'," + "'" + str(examId) + "'," + "'" + str(observaciones) + "'," + "'" + str(valor) + "')"
+        comando = 'INSERT INTO clinico_historiaresultados ("estadoReg",  "consecResultado","examenesRasgos_id", "fechaResultado", "fechaServicio", "historiaExamenes_id", observaciones, valor) values (' + "'" + str(estadoReg) + "'," +   "'" + str(consecResultado) + "'," + "'" + str(rasgo) + "'," + "'" +  str(fechaResultado) + "'," + "'" + str(fechaResultado) + "'," + "'" + str(examId) + "'," + "'" + str(observaciones) + "'," + "'" + str(valor) + "')"
 
         print(comando)
         curt.execute(comando)
@@ -542,8 +571,11 @@ def PostDeleteExamenesRasgos(request):
 
     post = HistoriaResultados.objects.get(id=id)
     post.delete()
-    #return HttpResponseRedirect(reverse('index'))
+    
+    print( "voy para el JSONresponse")
+    #return HttpResponseRedirect(reverse('index'))	
     return JsonResponse({'success': True, 'message': 'Resultado borrado!'})
+    #return JsonResponse({'message':'Resultado borrado!'})
 
 
 
@@ -560,15 +592,22 @@ def GuardarResultado ( request):
         medicoReporte = request.POST["medicoReporte"]
         rutaImagen = request.POST["rutaImagen"]
         rutaVideo = request.POST["rutaVideo"]
+        estadoExamen = request.POST["estadoExamen"]
         dependenciasRealizado = request.POST["dependenciasRealizado"]
+        if dependenciasRealizado == '':
+            dependenciasRealizado = null
+
         estadoReg= 'A'
         usuarioToma = request.POST["usuarioToma"]
-        fechaResultado = datetime.datetime.now()
- 
+        fechaReporte = datetime.datetime.now()
+        fechaInterpretacion1 = datetime.datetime.now()
+        fechaInterpretacion2 = datetime.datetime.now()
+
+        print ("examId =", examId)
 
         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
         curt = miConexiont.cursor()
-        #comando = 'UPDATE historiaexamenes set interpretacion1 = ' + "'" +str(interpretacion1) + "'," + "fechaInterpretacion1 = "  + "'" + str(fechaInterpretacion1) + "'," + ' "medicoInterpretacion1" = ' + "'" + str(medicoInterpretacion1) + "', interpretacion2 = "  + "'" +str(interpretacion2) + "'," + "fechaInterpretacion2 = "  + "'" + str(fechaInterpretacion2) + "'," + ' "medicoInterpretacion2" = ' + "'" + str(medicoInterpretacion2) + "', observaciones = " + "'" + str(observaciones) + "'," + '"rutaImagen" = ' + "'" + str(rutaImagen) +  "'" + ',"rutaVideo = ' + "'" + str(rutaVideo) + "'," +    '"fechaReporte = " + "'" + str(fechaResultado) + "'," + ' "usuarioToma_id" = ' + "'" + str(usuarioToma) + "'"
+        comando = 'UPDATE clinico_historiaexamenes set interpretacion1 = ' + "'" +str(interpretacion1) + "'," +  '"fechaInterpretacion1" = '  + "'" + str(fechaInterpretacion1) + "'," + ' "medicoInterpretacion1_id" = ' + "'" + str(medicoInterpretacion1) + "',"  + '"medicoReporte_id" = ' + "'" + str(medicoReporte) + "',"  + '  interpretacion2 = '  + "'" +str(interpretacion2) + "'," + '"fechaInterpretacion2"  = '   + "'" + str(fechaInterpretacion2) + "'," + ' "medicoInterpretacion2_id" = ' + "'" + str(medicoInterpretacion2) + "',"  + ' observaciones = ' + "'" + str(observaciones) + "'," + '"rutaImagen" = ' + "'" + str(rutaImagen) +  "'" + ',"rutaVideo" = ' + "'" + str(rutaVideo) + "'," +  '"fechaReporte" = ' + "'" + str(fechaReporte) + "'," + ' "usuarioToma_id" = ' + "'" + str(usuarioToma) + "'," + '"dependenciasRealizado_id" = ' "'" + str(dependenciasRealizado) + "'," + '"estadoExamenes_id" = ' + "'" + str(estadoExamen) + "'" + ' WHERE id = ' + "'" + str(examId) + "'"
 
         print(comando)
         curt.execute(comando)
@@ -578,3 +617,4 @@ def GuardarResultado ( request):
 
 
         return JsonResponse({'success': True, 'message': 'Responsable Actualizado satisfactoriamente!'})
+

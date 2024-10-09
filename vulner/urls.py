@@ -168,7 +168,7 @@ urlpatterns = [
     path('load_dataApoyoTerapeutico/<str:data>', viewsApoyoTerapeutico.load_dataApoyoTerapeutico, name='loaddataApoyoTerapeutico'),
     path('load_dataRasgos/<str:data>', viewsApoyoTerapeutico.load_dataRasgos, name='loadDataRasgos'),
     path('postConsultaApoyoTerapeutico/', viewsApoyoTerapeutico.PostConsultaApoyoTerapeutico , name='Post_editApoyoTerapeutico'),
-    path('guardarResultadoRasgo/<str:data>', viewsApoyoTerapeutico.GuardarResultadoRasgo, name='guardarResultadoRasgo'),
+    path('guardarResultadoRasgo/', viewsApoyoTerapeutico.GuardarResultadoRasgo, name='guardarResultado_Rasgo'),
     path('postDeleteExamenesRasgos/', viewsApoyoTerapeutico.PostDeleteExamenesRasgos, name='PostDeleteExamenesRasgos'),
     path('guardarResultado/', viewsApoyoTerapeutico.GuardarResultado, name='GuardarResultado'),
 

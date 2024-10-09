@@ -150,35 +150,35 @@ Mayor a  1 dia
 
                                 <input type="hidden" id="examId" name="examId" value="">
 
-                                <div class="row row-cols-7">
+                                <div class="row row-cols-8">
 
-                                    <div class="col-1">
+                                    <div class="col">
                                         <label for="tipoExamenId" class="col-sm-3 control-label"> TipoExamenId:</label>
                                         <input type="text" class="form-control form-control-sm" id="tipoExamenId"
                                                name="tipoExamenId" value="" readonly>
 
                                     </div>
 
-                                    <div class="col-1">
+                                    <div class="col">
                                         <label for="tipoExamen" class="col-sm-3 control-label"> TipoExamen:</label>
                                         <input type="text" class="form-control form-control-sm" id="tipoExamen"
                                                name="tipoExamen" value="" readonly>
                                     </div>
 
-                                    <div class="col-1">
+                                    <div class="col">
                                         <label for="CupsId" class="col-sm-1 control-label"> CupsId :</label>
                                         <input type="text" class="form-control form-control-sm" id="CupsId"
                                                name="CupsId" value="" readonly>
                                     </div>
 
-                                    <div class="col-6">
+                                    <div class="col">
                                         <label for="nombreExamen" class="col-sm-6 control-label"> Examen:</label>
                                         <input type="text" class="form-control form-control-sm" id="nombreExamen"
                                                name="nombreExamen" value="" readonly>
 
                                     </div>
 
-				          <div class="col-1">
+				          <div class="col">
                                         <label for="dependenciasRealizado" class="col-sm-6 control-label">RealizadoEnDependencia:</label>
 
                                         <select class="form-select  h-40 w-10" id="dependenciasRealizado"
@@ -192,19 +192,27 @@ Mayor a  1 dia
 
                                     </div>
 				
-                                    <div class="col-1">
+                                    <div class="col">
                                         <label for="cantidad" class="col-sm-1 control-label"> Cantidad:</label>
                                         <input type="text" class="form-control form-control-sm" id="cantidad"
                                                name="cantidad" value="" readonly>
 
                                     </div>
-                                    <div class="col-1">
-                                        <label for="estado" class="col-sm-1 control-label"> Estado:</label>
-                                        <input type="text" class="form-control form-control-sm" id="estado"
-                                               name="estado" value="" readonly>
+                                        <div class="col">
+                                        <label for="estadoExamen" class="col-sm-6 control-label">EstadoExamen:</label>
+
+                                        <select class="form-select  h-40 w-10" id="estadoExamen"
+                                                name="estadoExamen">
+                                            {% for estadosExamenes in EstadosExamenes %}
+                                            <option value="{{estadosExamenes.id}}">
+                                                {{estadosExamenes.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
 
                                     </div>
-                                    <div class="col-1">
+
+                                    <div class="col">
                                         <label for="folio" class="col-sm-1 control-label"> Folio:</label>
                                         <input type="text" class="form-control form-control-sm" id="folio" name="folio"
                                                value="" readonly>
@@ -213,8 +221,8 @@ Mayor a  1 dia
 
                                 </div>
 
-                                <div class="row row-cols-7">
-                                    <div class="col-3">
+                                <div class="row row-cols-8">
+                                    <div class="col">
                                         <label for="observaciones" class="col-sm-6 control-label"> Observaciones
                                             :</label>
                                         <input type="text" class="form-control form-control-sm" id="observaciones"
@@ -222,14 +230,14 @@ Mayor a  1 dia
 
                                     </div>
 
-                                    <div class="col-1">
+                                    <div class="col">
                                         <label for="interpretacion1" class="col-sm-6 control-label"> Interpretacion1
                                             :</label>
                                         <input type="text" class="form-control form-control-sm" id="interpretacion1"
                                                name="interpretacion1" value="">
 
                                     </div>
-                                    <div class="col-1">
+                                    <div class="col">
                                         <label for="medicoInterpretacion1" class="col-sm-6 control-label">MedicoInterpreta:</label>
 
                                         <select class="form-select  h-40 w-10" id="medicoInterpretacion1"
@@ -243,14 +251,14 @@ Mayor a  1 dia
 
                                     </div>
 
-                                    <div class="col-1">
+                                    <div class="col">
                                         <label for="interpretacion2" class="col-sm-6 control-label"> Interpretacion2:</label>
                                         <input type="text" class="form-control form-control-sm" id="interpretacion2"
                                                name="interpretacion2" value="">
 
                                     </div>
 
-                                    <div class="col-1">
+                                    <div class="col">
                                         <label for="medicoInterpretacion2" class="col-sm-6 control-label">MedicoInterpreta:</label>
 
                                         <select class="form-select  h-40 w-10" id="medicoInterpretacion2"
@@ -263,7 +271,7 @@ Mayor a  1 dia
                                         </select>
 
                                     </div>
-                                    <div class="col-1">
+                                    <div class="col">
                                         <label for="medicoReporte" class="col-sm-6 control-label">MedicoReporte:</label>
 
                                         <select class="form-select  h-40 w-10" id="medicoReporte" name="medicoReporte">
@@ -274,12 +282,12 @@ Mayor a  1 dia
                                         </select>
 
                                     </div>
-                                    <div class="col-1">
+                                    <div class="col">
                                         <label for="rutaImagen" class="col-sm-6 control-label"> RutaImagen :</label>
                                         <input type="text" class="form-control form-control-sm" id="rutaImagen"
                                                name="rutaImagen" value="">
                                     </div>
-                                    <div class="col-1">
+                                    <div class="col">
                                         <label for="rutaVideo" class="col-sm-6 control-label"> RutaVideo :</label>
                                         <input type="text" class="form-control form-control-sm" id="rutaVideo"
                                                name="rutaVideo" value="">
@@ -297,7 +305,7 @@ Mayor a  1 dia
                                         <div class="card">
                                             <div class="card-header" style="height:30px;width=90px">
                                                 <div class="row">
-                                                    <div class="col-sm-2">
+                                                    <div class="col">
                                                         <input type="button" id="btn-rango" name="btn-rango"
                                                                value="Guardar ¡" onClick="guardarResultado()">
                                                         <div class="alert alert-success success-msg"
@@ -305,7 +313,7 @@ Mayor a  1 dia
                                                     </div>
 
 
-                                                    <div class="col-sm-6">
+                                                    <div class="col">
                                                         RazgoClinico:
 
                                                         <select class="form-select  h-10 w-10" id="rasgosClinicos"
@@ -318,15 +326,15 @@ Mayor a  1 dia
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-sm-1">
+                                                    <div class="col">
                                                         <input type="text" id="valor" name="valor" value="">
                                                     </div>
 
-						   <div class="col-sm-1">
-                                                        <input type="text" id="observaciones" name="observaciones" value="">
+						   <div class="col">
+                                                        <input type="text" id="observa" name="observa" value="">
                                                     </div>
 
-                                                    <div class="col-sm-3 text-end">
+                                                    <div class="col">
                                                         <span class="text-secondary">Crear Resultado</span>
                                                         <a class="btn btn-success" href="javascript:void(0)"
                                                            id="createNewResultadoRasgo"> <i class="fa fa-plus"></i></a>

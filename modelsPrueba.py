@@ -105,13 +105,17 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
    8. No me desaparecio la ventana  Modal .crear admison desde triage, el query de regreso Nop funciono mostraba en triage aun la persona
    9. Esta pendiente aun no abre la modal encuentraModal, para editar admision 
       Pendiente colocar el default d ela fecha de naciemient en usuarios.-
-   10. En apoyo terapeutico, el seccion no esta fijo sino varia de acuerdo al height de la trabla
    11. el alto de la tabla pilas debe ser fijo para que funcione el scroll   
    12. Mañana arreglar visual pantalla,
        Agregar rasgos, borrar rasgos
-       Arreglar el estado de la orden del examen
-       verificar el guardado del resultyado
        que pasa con los consecutivpos
+       trabajar sobbre DELETE,mensajes de error, presesntacion apoyo terapeutico
+       ojo tengo que sacar lacita medica injeccion compensar
+       Colocar el consecutivo de los examenes y resultados ...
+       Hay un problema con el delete de apoyo terapeutico, por cua ?
+       Toca imprimir en ragos la observacion del resultado
+       Arfreglar un poco el orden de los campos
+
 
  
 

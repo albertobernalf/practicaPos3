@@ -277,7 +277,7 @@ class Historia(models.Model):
     fecha = models.DateTimeField()
     tiposFolio = models.ForeignKey('clinico.TiposFolio', blank=True, null=True, editable=True, on_delete=models.PROTECT)
     causasExterna = models.ForeignKey('clinico.causasExterna', blank=True, null=True, editable=True,             on_delete=models.PROTECT)
-    dependenciasRealizado = models.ForeignKey('sitios.DependenciasTipo', blank=True, null=True, editable=True,            on_delete=models.PROTECT)
+    dependenciasRealizado = models.ForeignKey('sitios.Dependencias', blank=True, null=True, editable=True,            on_delete=models.PROTECT)
     especialidades = models.ForeignKey('clinico.Especialidades', blank=True, null=True, editable=True,             on_delete=models.PROTECT)
     planta = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT)
     motivo = models.CharField(max_length=250,  blank=True, null=True,)
@@ -339,6 +339,7 @@ class HistoriaExamenes(models.Model):
     historia = models.ForeignKey('clinico.Historia', blank=True, null=True, editable=True, on_delete=models.PROTECT)
     tiposExamen = models.ForeignKey('clinico.TiposExamen', default=1, on_delete=models.PROTECT, null=False)
     codigoCups = models.CharField(max_length=20, null=False, blank=True)
+    dependenciasRealizado = models.ForeignKey('sitios.Dependencias', blank=True, null=True, editable=True,            on_delete=models.PROTECT)
     mipres = models.CharField(max_length=15, null=True, blank=True)
     consecutivo = models.IntegerField(blank=True, null=True)
     cantidad = models.IntegerField()
@@ -387,7 +388,7 @@ class HistoriaResultados(models.Model):
                     valor =  models.CharField(max_length=20,  blank=True, null=True, editable=True)
                     observaciones =  models.CharField(max_length=255,  blank=True, null=True, editable=True)
                     consecResultado = models.IntegerField(default=0, blank=True, null=True, editable=True)
-                    estadoExamenes =  models.ForeignKey('clinico.EstadoExamenes', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+                    #estadoExamenes =  models.ForeignKey('clinico.EstadoExamenes', blank=True, null=True, editable=True, on_delete=models.PROTECT)
                     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
                     def __str__(self):
