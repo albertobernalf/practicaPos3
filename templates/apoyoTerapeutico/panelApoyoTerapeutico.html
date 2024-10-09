@@ -136,28 +136,24 @@ Mayor a  1 dia
         <article id="RespuestasApoyoTerapeutico">
             <center>
                 <h3>Ingreso de Resultados</h3></center>
-            <table class="table" style="height: 80px; background-color:LightGray;  width:90%;">
+            <table class="table" style="height: 80px; background-color:LightGray;  width:100%;">
                 <tr>
                     <td>
                     </td>
                     <td>
                     </td>
                     <td>
-                        <!--           <table class="table" style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:90%;">  -->
-                         <!--   <div style="height: 1px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:90%;">  -->
+                        <!--           <table class="table" style="height: 5px;  border: 8px solid black; border-color: #96D4D4;  width:100%;">  -->
+                            <div style="height: 1px;  width:90%;">  
                             <form class="form-inline" action="/crearApoyoTerapeutico/" method="POST"
                                   id="ApoyoTerapeuticoForma">
 
                                 <input type="hidden" id="examId" name="examId" value="">
 
+                                    <input type="hidden" class="form-control form-control-sm" id="tipoExamenId"    name="tipoExamenId" value="" readonly>
+
+
                                 <div class="row row-cols-8">
-
-                                    <div class="col">
-                                        <label for="tipoExamenId" class="col-sm-3 control-label"> TipoExamenId:</label>
-                                        <input type="text" class="form-control form-control-sm" id="tipoExamenId"
-                                               name="tipoExamenId" value="" readonly>
-
-                                    </div>
 
                                     <div class="col">
                                         <label for="tipoExamen" class="col-sm-3 control-label"> TipoExamen:</label>
@@ -198,6 +194,14 @@ Mayor a  1 dia
                                                name="cantidad" value="" readonly>
 
                                     </div>
+
+				   <div class="col">
+                                        <label for="folio" class="col-sm-1 control-label"> Folio:</label>
+                                        <input type="text" class="form-control form-control-sm" id="folio" name="folio"
+                                               value="" readonly>
+
+                                    </div>
+
                                         <div class="col">
                                         <label for="estadoExamen" class="col-sm-6 control-label">EstadoExamen:</label>
 
@@ -212,12 +216,7 @@ Mayor a  1 dia
 
                                     </div>
 
-                                    <div class="col">
-                                        <label for="folio" class="col-sm-1 control-label"> Folio:</label>
-                                        <input type="text" class="form-control form-control-sm" id="folio" name="folio"
-                                               value="" readonly>
-
-                                    </div>
+                                 
 
                                 </div>
 
@@ -295,15 +294,15 @@ Mayor a  1 dia
 
                                 </div>
 
-
+				 </form>
                                 <!-- DESDE AQUIP DATATABLE  -->
 
 
                                 <!-- INICIO TABLE DE  EL DATATABLE  -->
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <div class="card">
-                                            <div class="card-header" style="height:30px;width=90px">
+                                        <div class="card" style="width=100%;">
+                                            <div class="card-header" style="height:30px;width=100%;">
                                                 <div class="row">
                                                     <div class="col">
                                                         <input type="button" id="btn-rango" name="btn-rango"
@@ -341,22 +340,23 @@ Mayor a  1 dia
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body" style="height:30px;">
+                                            <div class="card-body" style="height:30px;width=100%;">
                                                 <div class="row">
-                                                    <div class="col-sm-12">
+                                                     <div class="col-sm-12"> 
 
-                                                        <table id=tablaRasgos
-                                                               class="display nowrap table table table-bordered  tablaRasgos table-hover table-sm dtr-inline">
+                                                         <table id=tablaRasgos  class="display nowrap table table table-bordered  tablaRasgos table-hover table-sm dtr-inline " >  
+                                                      <!--  <table id=tablaRasgos  class="display nowrap table table table-bordered  tablaRasgos table-hover "> -->
 
                                                             <thead>
                                                             <tr>
-                                                                <th style="width:5%;">id</th>
-                                                                <th style="width:25;">Codigo Cups</th>
-                                                                <th style="width:25;">Nombre Rasgo</th>
+                                                             <!--    <th>id</th> -->
+                                                                <th>Codigo Cups</th>
+                                                                <th>Nombre Rasgo</th>
                                                                 <th style="width:25%;">Unidad</th>
                                                                 <th style="width:12%;">Minimo</th>
                                                                 <th style="width:30%;">Maximo</th>
                                                                 <th style="width:30%;">Valor</th>
+								 <th style="width:30%;">Observacion</th>
                                                                 <th style="width:3%;">Borrar</th>
 
                                                             </tr>
@@ -366,15 +366,15 @@ Mayor a  1 dia
                                                             </tr>
                                                             </tbody>
                                                         </table>
-                                                    </div>
+                                                     </div> 
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- FIN TABLE DE  EL DATATABLE  -->
-                        </form>
-                 <!-- </div> -->
+                    <!--     </form>  estaba aquip-->
+                  </div> 
             </table>
 
 

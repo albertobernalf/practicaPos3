@@ -38,6 +38,52 @@ $('.editPostar').on('click',function(event)
 /*	tableActionsApoyoTerapeutico();  */
         initTableRasgos(data);   
 
+/*------------------------------------------
+        --------------------------------------------
+        Delete Post Code Rasgos
+        --------------------------------------------
+        --------------------------------------------*/
+        $("body").on("click",".deletePostRasgos",function(){
+            var current_object = $(this);
+            var action = current_object.attr('data-action');
+            var token = $("input[name=csrfmiddlewaretoken]").val();
+            var id = current_object.attr('data-pk');
+
+       var data =  {}   ;
+
+		 data['username'] = username;
+        	 data['sedeSeleccionada'] = sedeSeleccionada;
+	         data['nombreSede'] = nombreSede;
+	         data['sede'] = sede;
+		 data['username_id'] = username_id;
+	         data['valor'] = examId;
+
+		  data = JSON.stringify(data);
+
+
+		   $.ajax({
+	           url: '/postDeleteExamenesRasgos/' ,
+	            data : {'id':id},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+	  		    alert("vengo de borrar");
+
+	                     tableR= $("#tablaRasgos").dataTable().fnDestroy();
+	
+        		   initTableRasgos(data);
+	
+		  $("#mensajes").html(" ! Registro Borrado !");
+			
+
+                    },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	           });
+	});
+
+
 
 
         /*------------------------------------------
@@ -324,52 +370,6 @@ $('.editPostar').on('click',function(event)
 
 // Esta Afuera  del documento.ready
 
-/*------------------------------------------
-        --------------------------------------------
-        Delete Post Code Rasgos
-        --------------------------------------------
-        --------------------------------------------*/
-        $("body").on("click",".deletePostRasgos",function(){
-            var current_object = $(this);
-            var action = current_object.attr('data-action');
-            var token = $("input[name=csrfmiddlewaretoken]").val();
-            var id = current_object.attr('data-pk');
-
-       var data =  {}   ;
-
-		 data['username'] = username;
-        	 data['sedeSeleccionada'] = sedeSeleccionada;
-	         data['nombreSede'] = nombreSede;
-	         data['sede'] = sede;
-		 data['username_id'] = username_id;
-	         data['valor'] = examId;
-
-		  data = JSON.stringify(data);
-
-
-		   $.ajax({
-	           url: '/postDeleteExamenesRasgos/' ,
-	            data : {'id':id},
-	           type: 'POST',
-	           dataType : 'json',
-	  		success: function (data) {
-	  		    alert("vengo de borrar");
-
-	                     tableR= $("#tablaRasgos").dataTable().fnDestroy();
-	
-        		   initTableRasgos(data);
-	
-		  $("#mensajes").html(" ! Registro Borrado !");
-			
-
-                    },
-	   		    error: function (request, status, error) {
-	   			    $("#mensajes").html(" !  Reproduccion  con error !");
-	   	    	}
-	           });
-	});
-
-
 
 
 
@@ -456,13 +456,14 @@ function initTableRasgos(data) {
             lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
             columns: [
               
-                { data: "fields.id"},
+               
                 { data: "fields.codigoCups"},
                 { data: "fields.nombreRasgo"},
                 { data: "fields.unidad"},
                 { data: "fields.minimo"},
                 { data: "fields.maximo"},
                 { data: "fields.valorResultado"},
+		{ data: "fields.observa"},
             ]
  });
 
@@ -556,6 +557,8 @@ function guardarResultado() {
                         alert("respuesta="  + data);
 
 	               // $('#mensajes').val('! Registro Actualizado !');
+			  $("#mensajes").html(" ! Registro Actualizado !");
+			  window.location.reload();
 			  $("#mensajes").html(" ! Registro Actualizado !");
 
                     },
