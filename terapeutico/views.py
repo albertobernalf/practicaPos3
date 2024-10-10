@@ -31,6 +31,8 @@ import pyodbc
 import psycopg2
 import json 
 import datetime 
+from django.db.models import Avg, Max, Min
+
 
 
 # Create your views here.
@@ -542,7 +544,8 @@ def GuardarResultadoRasgo ( request):
         observaciones = request.POST["observa"]
         estadoReg= 'A'
         #dependenciasRealizado_id= 1
-        consecResultado= 1
+        ultConsec = HistoriaResultados.objects.all().filter(historiaExamenes_id=examId).aggregate(maximo=Coalesce(Max('consecResultado'),0))
+        consecResultad = (ultConsec['maximo']) + 1
         fechaResultado = datetime.datetime.now()
 
         ## falta usuarioRegistro_id
@@ -594,8 +597,13 @@ def GuardarResultado ( request):
         rutaVideo = request.POST["rutaVideo"]
         estadoExamen = request.POST["estadoExamen"]
         dependenciasRealizado = request.POST["dependenciasRealizado"]
+
         if dependenciasRealizado == '':
-            dependenciasRealizado = null
+           dependenciasRealizado="null"
+
+        if medicoReporte == '':
+            medicoReporte ="null"
+
 
         estadoReg= 'A'
         usuarioToma = request.POST["usuarioToma"]
@@ -607,7 +615,7 @@ def GuardarResultado ( request):
 
         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
         curt = miConexiont.cursor()
-        comando = 'UPDATE clinico_historiaexamenes set interpretacion1 = ' + "'" +str(interpretacion1) + "'," +  '"fechaInterpretacion1" = '  + "'" + str(fechaInterpretacion1) + "'," + ' "medicoInterpretacion1_id" = ' + "'" + str(medicoInterpretacion1) + "',"  + '"medicoReporte_id" = ' + "'" + str(medicoReporte) + "',"  + '  interpretacion2 = '  + "'" +str(interpretacion2) + "'," + '"fechaInterpretacion2"  = '   + "'" + str(fechaInterpretacion2) + "'," + ' "medicoInterpretacion2_id" = ' + "'" + str(medicoInterpretacion2) + "',"  + ' observaciones = ' + "'" + str(observaciones) + "'," + '"rutaImagen" = ' + "'" + str(rutaImagen) +  "'" + ',"rutaVideo" = ' + "'" + str(rutaVideo) + "'," +  '"fechaReporte" = ' + "'" + str(fechaReporte) + "'," + ' "usuarioToma_id" = ' + "'" + str(usuarioToma) + "'," + '"dependenciasRealizado_id" = ' "'" + str(dependenciasRealizado) + "'," + '"estadoExamenes_id" = ' + "'" + str(estadoExamen) + "'" + ' WHERE id = ' + "'" + str(examId) + "'"
+        comando = 'UPDATE clinico_historiaexamenes set interpretacion1 = ' + "'" +str(interpretacion1) + "'," +  '"fechaInterpretacion1" = '  + "'" + str(fechaInterpretacion1) + "'," + ' "medicoInterpretacion1_id" = ' + "'" + str(medicoInterpretacion1) + "',"  + '"medicoReporte_id" = ' + str(medicoReporte) + ","  + '  interpretacion2 = '  + "'" +str(interpretacion2) + "'," + '"fechaInterpretacion2"  = '   + "'" + str(fechaInterpretacion2) + "'," + ' "medicoInterpretacion2_id" = ' + "'" + str(medicoInterpretacion2) + "',"  + ' observaciones = ' + "'" + str(observaciones) + "'," + '"rutaImagen" = ' + "'" + str(rutaImagen) +  "'" + ',"rutaVideo" = ' + "'" + str(rutaVideo) + "'," +  '"fechaReporte" = ' + "'" + str(fechaReporte) + "'," + ' "usuarioToma_id" = ' + "'" + str(usuarioToma) + "'," + '"dependenciasRealizado_id" = ' + str(dependenciasRealizado) + "," + '"estadoExamenes_id" = ' + "'" + str(estadoExamen) + "'" + ' WHERE id = ' + "'" + str(examId) + "'"
 
         print(comando)
         curt.execute(comando)
@@ -617,4 +625,57 @@ def GuardarResultado ( request):
 
 
         return JsonResponse({'success': True, 'message': 'Responsable Actualizado satisfactoriamente!'})
+
+def load_dataTerapeuticoConsulta(request, data):
+    print ("Entre load_data TerapeuticoConsulta")
+
+    context = {}
+    d = json.loads(data)
+
+    username = d['username']
+    sede = d['sede']
+    username_id = d['username_id']
+
+    nombreSede = d['nombreSede']
+    print ("sede:", sede)
+    print ("username:", username)
+    print ("username_id:", username_id)
+    
+
+
+
+    ingresos1 = []
+
+
+    # miConexionx = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",     password="pass123")
+    curx = miConexionx.cursor()
+   
+    detalle = 'SELECT histoexa.id examId ,' + "'" + str("INGRESO") + "'" +  ' tipoIng, i.id'  + "||" +"'" + '-INGRESO' + "'," + '  tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" , i."fechaSalida",ser.nombre servicioNombreIng, dep.nombre camaNombreIng ,diag.nombre dxActual ,historia.fecha fechaExamen,tipoExa.nombre tipoExamen ,exam.nombre examen ,estadosExam.nombre estadoExamen ,histoexa.consecutivo consecutivo,histoexa."codigoCups" cups, histoexa.cantidad cantidad, histoexa.observaciones observa, historia.folio folio FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd , clinico_tiposexamen tipoExa,  clinico_examenes exam, clinico_historiaexamenes histoexa, clinico_historia historia, clinico_estadoexamenes estadosExam WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(sede) + "'" +' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + str('O') + "'" + ' AND i."salidaDefinitiva" = '  + "'" + str('N') + "'" + '  and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id" AND u."tipoDoc_id" = historia."tipoDoc_id" AND u.id = historia.documento_id AND historia.id = histoexa.historia_id AND i.consec = historia."consecAdmision" AND histoexa."tiposExamen_id" = tipoExa.id and  histoexa."tiposExamen_id" = exam."TiposExamen_id" and histoexa."codigoCups" = exam."codigoCups" AND histoexa."estadoExamenes_id" = estadosExam.id AND estadosExam.nombre != ' + "'" + str('ORDENADO') + "'" + ' UNION SELECT histoexa.id examId ,' + "'"  + str("TRIAGE") + "'" + ' tipoIng, t.id'  + "||" +"'" + '-TRIAGE' + "'," + '  tp.nombre tipoDoc,u.documento documento,u.nombre nombre,t.consec consec , t."fechaSolicita" , cast(' + "'" + str('0001-01-01 00:00:00') + "'" + ' as timestamp) fechaSalida,ser.nombre servicioNombreIng, dep.nombre camaNombreIng , ' + "''" + ' dxActual , historia.fecha fechaExamen,    tipoExa.nombre tipoExamen,exam.nombre examen,estadosExam.nombre estadoExamen,histoexa.consecutivo consecutivo,histoexa."codigoCups" cups, histoexa.cantidad cantidad, histoexa.observaciones observa , historia.folio folio  FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  ,sitios_serviciosSedes sd, clinico_servicios ser , clinico_tiposexamen tipoExa,  clinico_examenes exam, clinico_historiaexamenes histoexa,  clinico_historia historia, clinico_estadoexamenes estadosExam WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND t."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND dep."sedesClinica_id" =  sd."sedesClinica_id" AND dep.id = t.dependencias_id AND t."serviciosSedes_id" = sd.id  AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and t."tipoDoc_id" = u."tipoDoc_id" and u.id = t."documento_id"  and ser.id = sd.servicios_id and dep."serviciosSedes_id" = sd.id and t."serviciosSedes_id" = sd.id and dep."tipoDoc_id" = t."tipoDoc_id" and t."consecAdmision" = 0 and dep."documento_id" = t."documento_id" and ser.nombre = ' + "'" + str('TRIAGE') + "'" + ' AND u."tipoDoc_id" = historia."tipoDoc_id" AND u.id = historia.documento_id AND historia.id = histoexa.historia_id AND t."consecAdmision" = historia."consecAdmision" AND histoexa."tiposExamen_id" = tipoExa.id and  histoexa."tiposExamen_id" = exam."TiposExamen_id" and histoexa."codigoCups" = exam."codigoCups" AND histoexa."estadoExamenes_id" = estadosExam.id AND estadosExam.nombre != ' + "'" + str('ORDENADO') +  "'"
+    print(detalle)
+
+    curx.execute(detalle)
+
+    for examId, tipoIng, id, tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual, fechaExamen, tipoExamen , examen , estadoExamen , consecutivo, cups, cantidad,  observa, folio in curx.fetchall():
+        ingresos1.append(
+		{"model":"terapeutico.ingresos","pk":examId,"fields":
+			{'examId':examId, 'tipoIng':tipoIng, 'id':id, 'tipoDoc': tipoDoc, 'documento': documento, 'nombre': nombre, 'consec': consec,
+                         'fechaIngreso': fechaIngreso, 'fechaSalida': fechaSalida,
+                         'servicioNombreIng': servicioNombreIng, 'camaNombreIng': camaNombreIng,
+                         'dxActual': dxActual,'fechaExamen':fechaExamen,'tipoExamen':tipoExamen,'examen':examen,'estadoExamen':estadoExamen,'consecutivo': consecutivo,'cups':cups,'cantidad':cantidad,'observa':observa,'folio':folio}})
+
+    miConexionx.close()
+    print(ingresos1)
+    context['Ingresos'] = ingresos1
+
+    envio = []
+    envio.append({'Ingresos':ingresos1})
+
+    print("Estos son los ingresos EMPACADOS =  ", ingresos1)
+
+    serialized1 = json.dumps(ingresos1, default=serialize_datetime)
+
+    return HttpResponse(serialized1,   content_type='application/json')
+    #return JsonResponse(json.dumps(serialized1),  safe=False)
+
 

@@ -157,6 +157,20 @@
 {% endblock %}
 
 
+{% block indicadores %}
+
+<span style="padding-right:3px; padding-top: 3px; display:inline-block;">
+Alta Medica: <img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador3.png' %}></img>
+Hospitalizados: <img class="manImg" src={% static 'img/iloveimg-converted/icons8-enfermera-48.png' %}></img>
+Urgencias: <img class="manImg" src={% static 'img/iloveimg-converted/icons8-enfermera-48.png' %}></img>
+Triage: <img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador3.png' %}></img>
+Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador3.png' %}></img>
+
+</span>
+
+
+{% endblock %}
+
 
 {% block content %}
 <div class="marco">
@@ -497,14 +511,10 @@
                                         </div>
                                         <div class="card-body" style="height:1px;">
                                             <div class="row">
-
-
                                                 <div class="col-sm-12">
-                                                    <table id=tablaLaboratorios
-                                                           class="display nowrap table table table-bordered  tablaLaboratorios table-hover table-sm dtr-inline">
+                                                    <table id=tablaLaboratorios  class="display nowrap table table table-bordered  tablaLaboratorios table-hover table-sm dtr-inline">
                                                         <thead>
                                                         <tr>
-
                                                             <th style="width:5%;">id</th>
                                                             <th style="width:5%;">Nombres</th>
                                                             <th style="width:5%;">Cantidad</th>

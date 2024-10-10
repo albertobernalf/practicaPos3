@@ -35,6 +35,7 @@ $('.editPostar').on('click',function(event)
 
 
 	initTableApoyoTerapeutico(data);
+	initTableTerapeuticoConsulta(data);
 /*	tableActionsApoyoTerapeutico();  */
         initTableRasgos(data);   
 
@@ -422,6 +423,59 @@ function initTableApoyoTerapeutico(data) {
  });
 
 }
+
+
+function initTableTerapeuticoConsulta(data) {
+
+	return new DataTable('.tablaTerapeuticoConsulta', {
+	 "language": {
+                  "lengthMenu": "Display _MENU_ registros",
+                   "search": "Filtrar registros:",
+                    },
+            processing: true,
+            serverSide: false,
+            scrollY: '360px',
+	    scrollX: true,
+	    scrollCollapse: true,
+            paging:false,
+            columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        var btn = '';
+                      //    btn = btn + " <button   class='btn btn-primary editPost' data-pk='" + row.pk + "'>" + "</button>";
+                         btn = btn + " <input type='radio'  class='form-check-input editPostTerapeuticoConsulta' data-pk='" + row.pk + "'>" + "</input>";
+                        return btn;
+                    },
+                    "targets": 11
+               }
+            ],
+            ajax: {
+                 url:"/load_dataTerapeuticoConsulta/" +  data,
+                 type: "POST",
+                dataSrc: ""
+            },
+
+            lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
+            columns: [
+              
+                { data: "fields.id"},
+                { data: "fields.tipoDoc"},
+                { data: "fields.documento"},
+                { data: "fields.nombre"},
+                { data: "fields.consec"},
+                { data: "fields.fechaExamen"},
+                { data: "fields.tipoExamen"},
+	            { data: "fields.examen"},
+                { data: "fields.estadoExamen"},
+                { data: "fields.cantidad"},
+                { data: "fields.folio"},
+
+            ]
+ });
+
+}
+
+
 
 
 function initTableRasgos(data) {

@@ -19,7 +19,7 @@ $(document).ready(function() {
         data = JSON.stringify(data);
 
 
- tableActionsLaboratorios();
+	tableActionsLaboratorios();
 	tableActionsRadiologia();
 	tableActionsTerapias();
 	tableActionsNoQx();
@@ -49,24 +49,14 @@ $(document).ready(function() {
         --------------------------------------------*/
         $("body").on("click",".deletePostLaboratorio",function(){
 		alert("Entre a borrar el id laboratorio ");
-
-	     var rowIndex = $(this).parent().index('#tablaLaboratorios tbody tr');         
-             // var id = current_object.attr('data-pk');
+      	        var rowIndex = $(this).parent().index('#tablaLaboratorios tbody tr');         
 	     	alert("Entre a borrar la fila #  laboratorio Nro" + rowIndex );
+		var tableL = $('#tablaLaboratorios').DataTable(); 
+		// tableL.row(':eq(rowIndex-1)').remove().draw(false);
+		 tableL.row.remove(rowIndex).draw(false);
 
-
-	     	var rowIndex = $(this).parent().index('#tablaLaboratorios tbody tr');
-            var tdIndex = $(this).index('#tablaLaboratorios tbody tr:eq('+rowIndex+') td');
-            alert('Row Number de tabla laboratorios : '+(rowIndex+1)+'\nColumn Number: '+(tdIndex+1));
-
-
-	     	var tableL = $('#tablaLaboratorios');
-            tableL.find( 'tbody tr:eq(rowIndex)' ).remove();
-
-		document.getElementById("tablaLaboratorios").deleteRow(rowIndex);
-
-            alert("valores = " + valores);
-			             tableL.ajax.reload();
+		// document.getElementById("tablaLaboratorios").deleteRow(rowIndex);
+                // tableL.ajax.reload();
 	});
 
 
@@ -217,23 +207,21 @@ $(document).ready(function() {
 	});
 
 
-//$('#tablaLaboratorios tbody').on('click', 'tr', function () {
-//    confirm("Desea eliminar LA FILA: ");
-//       var tableL = $('#tablaLaboratorios').DataTable();
+$('#tablaLaboratorios tbody').on('click', 'tr', function () {
+    confirm("Desea eliminar LA FILA: ");
+       var tableL = $('#tablaLaboratorios').DataTable();
 
-//      var valor3 = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
- 
-//      valor3 = valor3 -1;
+      var fila = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
 
-//     alert("voy a borrar la fila = " + valor3);
+          alert("Fila a borrar = " + fila);
+		 tableL.row(':eq(fila)').remove().draw(false);
+		// tableL.row.remove(fila).draw(false);
+
+		 document.getElementById("tablaLaboratorios").deleteRow(fila-1);
+               //  tableL.ajax.reload();
 
 
-//      document.getElementById("tablaLaboratorios").deleteRow(valor3);
-//         tableL.row.remove(valor3).draw(true);
-//         tableL.row.remove(valor3);
-
-//        tableL.ajax.reload();
-//} );
+} );
 
 //$('#tablaTerapias tbody').on('click', 'tr', function () {
 //    confirm("Desea eliminar LA FILA: ");
@@ -570,9 +558,8 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
            var select = document.getElementById("lab"); /*Obtener el SELECT */
       	   var lab = select.options[select.selectedIndex].value; /* Obtener el valor */
       	   text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
-	        tableL.row.add([
-                    lab, text,  cantidad, observa, ""
-                ]).draw(false);
+	        tableL.row.add([lab, text,  cantidad, observa, ""]).draw(false);
+		
         });
       
 

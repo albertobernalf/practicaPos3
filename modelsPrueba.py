@@ -113,13 +113,9 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
        ojo tengo que sacar lacita medica injeccion compensar
        Colocar el consecutivo de los examenes y resultados ...
        Hay un problema con el delete de apoyo terapeutico, por cua ?
-       Toca imprimir en ragos la observacion del resultado
-       Arfreglar un poco el orden de los campos
+       Falta colocar el nombre del paciente en respuestas apoyo terapeutico
 
-
- 
-
-     
+    
 
 -----------------------------------------------------------------------------------------------------------------------
 --  APOYO TERAPEUTICO 

@@ -155,6 +155,21 @@ Mayor a  1 dia
 
                                 <div class="row row-cols-8">
 
+				     <div class="col">
+                                        <label for="tipoDocPaci" class="col-sm-3 control-label"> TipoDoc:</label>
+                                        <input type="text" class="form-control form-control-sm" id="tipoDocPaci"
+                                               name="tipoDocPaci" value="" readonly>
+                                    </div>
+
+
+				     <div class="col">
+                                        <label for="nombrePaciente" class="col-sm-3 control-label">Paciente:</label>
+                                        <input type="text" class="form-control form-control-sm" id="nombrePaciente"
+                                               name="nombrePaciente" value="" readonly>
+                                    </div>
+
+
+
                                     <div class="col">
                                         <label for="tipoExamen" class="col-sm-3 control-label"> TipoExamen:</label>
                                         <input type="text" class="form-control form-control-sm" id="tipoExamen"
@@ -195,6 +210,11 @@ Mayor a  1 dia
 
                                     </div>
 
+                                 
+
+                                </div>
+
+                                <div class="row row-cols-8">
 				   <div class="col">
                                         <label for="folio" class="col-sm-1 control-label"> Folio:</label>
                                         <input type="text" class="form-control form-control-sm" id="folio" name="folio"
@@ -216,11 +236,7 @@ Mayor a  1 dia
 
                                     </div>
 
-                                 
 
-                                </div>
-
-                                <div class="row row-cols-8">
                                     <div class="col">
                                         <label for="observaciones" class="col-sm-6 control-label"> Observaciones
                                             :</label>
@@ -401,6 +417,53 @@ Mayor a  1 dia
     <article id="ConsultaResultados">
             <center>
                 <h3>Consulta de Resultados</h3></center>
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                        </div>
+                        <div class="card-body">
+                            <div class="row" style="height=250px;">
+                                <div class="col-md-12">
+                                    <div class="alert alert-success success-msg" style="display:none"></div>
+                                    <table id="tablaTerapeuticoConsulta"
+                                           class="display nowrap table table table-bordered  tablaTerapeuticoConsulta table-hover table-sm dtr-inline">
+                                        <thead>
+                                        <tr>
+                                            <!--  <th style="width:5%;">Tipo</th> -->
+                                            <th style="width:5%;">id</th>
+                                            <th style="width:5%;">TipoDoc</th>
+                                            <th style="width:12%;">Documento</th>
+                                            <th style="width:20%;">Paciente</th>
+                                            <th style="width:3%;">#</th>
+                                            <th style="width:3%;">FecExamen</th>
+                                            <th style="width:12%;">TipoExamen</th>
+                                            <th style="width:12%;">Examen</th>
+                                            <th style="width:12%;">Estado</th>
+                                            <!-- <th style="width:12%;">Cups</th> -->
+                                            <th style="width:12%;">Cantidad</th>
+                                            <!--    <th style="width:12%;">Observa</th> -->
+                                            <th style="width:12%;">Folio</th>
+
+                                            <th style="width:5%;">Action</th>
+                                            <!--  <th data-visible="true"></th>  -->
+                                        </tr>
+                                        </thead>
+                                        <tbody style="vertical-align:bottom">
+                                        <tr style="height:10%">
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div> <!-- Cierra col -->
+                            </div> <!-- Cierra row -->
+                        </div>  <!-- Cierra body -->
+
+                    </div>   <!-- Cierra Card -->
+                </div>   <!-- Cierra col -->
+            </div>  <!-- Cierra row -->
+
         </article>
 
     </div>

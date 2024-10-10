@@ -171,6 +171,7 @@ urlpatterns = [
     path('guardarResultadoRasgo/', viewsApoyoTerapeutico.GuardarResultadoRasgo, name='guardarResultado_Rasgo'),
     path('postDeleteExamenesRasgos/', viewsApoyoTerapeutico.PostDeleteExamenesRasgos, name='PostDeleteExamenesRasgos'),
     path('guardarResultado/', viewsApoyoTerapeutico.GuardarResultado, name='GuardarResultado'),
+    path('load_dataTerapeuticoConsulta/<str:data>', viewsApoyoTerapeutico.load_dataTerapeuticoConsulta, name='loaddataTerapeuticoConsulta'),
 
 # Facturacion
 
