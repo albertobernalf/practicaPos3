@@ -373,6 +373,21 @@ function clickEvent() {
 		 $('#responsablesC').val(cambioServicio['Usuarios'].responsable);
 		  $('#acompananteC').val(cambioServicio['Usuarios'].acompanante);
 
+                     // Desde aquip FURIPS
+		  $('#fechaRadicado').val(cambioServicio['Furips'].fechaRadicado);
+		  $('#numeroRadicacion').val(cambioServicio['Furips'].numeroRadicacion);
+		  $('#numeroFactura').val(cambioServicio['Furips'].numeroFactura);
+		  $('#primerNombreVictima').val(cambioServicio['Furips'].primerNombreVictima);
+		  $('#segundoNombreVictima').val(cambioServicio['Furips'].segundoNombreVictima);
+		  $('#primerApellidoVictima').val(cambioServicio['Furips'].primerApellidoVictima);
+		$('#segundoApellidoVictima').val(cambioServicio['Furips'].segundoApellidoVictima);
+		  $('#tipoDocVictima').val(cambioServicio['Furips'].tipoDocVictima);
+
+
+
+
+                     // Hasta Aqui FURIPS
+
                     },
 	   		    error: function (request, status, error) {
 	   	    	}
@@ -465,6 +480,25 @@ $(document).on('change', '#ingresoId', function(event) {
 
 		 $('#responsablesC').val(cambioServicio['Usuarios'].responsable);
 		  $('#acompananteC').val(cambioServicio['Usuarios'].acompanante);
+
+
+
+                     // Desde aquip FURIPS
+		  $('#fechaRadicado').val(cambioServicio['Furips'].fechaRadicado);
+		  $('#numeroRadicacion').val(cambioServicio['Furips'].numeroRadicacion);
+		  $('#numeroFactura').val(cambioServicio['Furips'].numeroFactura);
+		  $('#primerNombreVictima').val(cambioServicio['Furips'].primerNombreVictima);
+		  $('#segundoNombreVictima').val(cambioServicio['Furips'].segundoNombreVictima);
+		  $('#primerApellidoVictima').val(cambioServicio['Furips'].primerApellidoVictima);
+		$('#segundoApellidoVictima').val(cambioServicio['Furips'].segundoApellidoVictima);
+		  $('#tipoDocVictima').val(cambioServicio['Furips'].tipoDocVictima);
+
+
+
+
+                     // Hasta Aqui FURIPS
+
+
                     },
 	   		    error: function (request, status, error) {
 	   	    	}
@@ -1960,29 +1994,36 @@ $(document).on('click', '#Convenios', function(event) {
         });
 
 
-$(document).on('click', '#furips', function(event) {
+$(document).on('click', '#Furips', function(event) {
+
+	alert("Entre FURIPS");
+
 
   var sede = document.getElementById("sede").value; 
-  var valor = document.getElementById("ingresoIdF").value;
+//  var valor = document.getElementById("ingresoIdF").value;
+var valor = $('input[name="ingresoId"]:checked').val();
+	var numeroRadicacion = document.getElementById("numeroRadicacion").value; 
+	var numeroFactura = document.getElementById("numeroFactura").value;
+	var primerApellidoVictima = "lalo";
+	var fechaRadicado = "2024-12-01"
 
-	var formData = new FormData();
-        formData.append('sede', $('#sede').val())
-        formData.append('ingresoIdF', $('#ingresoIdF').val())
-        formData.append('numeroRadicacion', $('#numeroRadicacion').val())
-        formData.append('numeroFactura', $('#numeroFactura').val())
-        formData.append('primerApellidoVictima', $('#primerApellidoVictima').val())
-        alert("Este es mi formData" + JSON.stringify(formData));
-        formData = JSON.stringify(formData);
 
-	// alert("Este es mi ingreso para Furips" + valor);
-	//	alert("Este es mi Form" + JSON.stringify($('#furipsForma').serialize()));
+	alert("La fila selecionada es el id = " + valor);
+	alert("numeroradicacion = " + numeroRadicacion);
+
 
      
 	$.ajax({
 		type: 'POST',
     	url: '/guardaFurips/',
-		
-		data: formData,  // DEJARRLO COMO ESTABA ANTES SIN FORMDATA DE PRONTO TRAEER COPIA DE GITHUB
+		data: {'sede':sede,
+			'ingresoId':valor,
+			'numeroRadicacion':numeroRadicacion,
+			'numeroFactura':numeroFactura,
+			'primerApellidoVictima':primerApellidoVictima,
+			'fechaRadicado':fechaRadicado
+			},
+
 		dataType : 'json',
 		success: function (furips) {
 

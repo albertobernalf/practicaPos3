@@ -142,11 +142,13 @@ function initTableClinico(data) {
         
             ]
  });
-
 }
 
  function tableActionsClinico() {
    var table = initTableClinico();
+   	document.getElementById("hosp").innerText = '234';
+	document.getElementById("urg").innerText = '14';
+
 
     // perform API operations with `table`
     // ...

@@ -106,15 +106,15 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
    9. Esta pendiente aun no abre la modal encuentraModal, para editar admision 
       Pendiente colocar el default d ela fecha de naciemient en usuarios.-
    11. el alto de la tabla pilas debe ser fijo para que funcione el scroll   
-   12. Mañana arreglar visual pantalla,
-       Agregar rasgos, borrar rasgos
-       que pasa con los consecutivpos
        trabajar sobbre DELETE,mensajes de error, presesntacion apoyo terapeutico
-       ojo tengo que sacar lacita medica injeccion compensar
-       Colocar el consecutivo de los examenes y resultados ...
-       Hay un problema con el delete de apoyo terapeutico, por cua ?
+       Hay un problema con el delete de apoyo terapeutico RASGOS, por cua ?
        Falta colocar el nombre del paciente en respuestas apoyo terapeutico
 
+       hoy
+	1. indicadores (como enviarlo por load_ en ajax estos valores 
+        2. delete terapeutico
+        3. consulta resultados (solo falta al momento de ingresar selccinar un registro)
+        4. furips
     
 
 -----------------------------------------------------------------------------------------------------------------------

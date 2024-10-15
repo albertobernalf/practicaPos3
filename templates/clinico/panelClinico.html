@@ -30,6 +30,25 @@ tablaClinico tr {
 </style>
 {% endblock %}
 
+
+{% block indicadores %}
+
+<span style="padding-right:3px; padding-top: 3px; display:inline-block;">
+Alta Medica: <img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador31.JPG' %}></img>
+Hospitalizados: <img class="manImg" src={% static 'img/iloveimg-converted/icons8-enfermera-48_X.JPGg' %}></img> <span id="hosp" name="hosp" style='color:red'>Indicador1= </span>
+Urgencias: <img class="manImg" src={% static 'img/iloveimg-converted/icons8-enfermera-48_X.JPG' %}></img> <span id="urg" name="urg" style='color:red'>Indicador2 = </span>
+Triage: <img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador31.JPG' %}></img>
+Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador31.JPG' %}></img>
+</span>
+
+
+
+
+
+{% endblock %}
+
+
+
 {% block content %}
 
 <div class="marco">

@@ -1409,6 +1409,7 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
 
         print ("especialidadesMedicos =", especialidadesMedicos)
 
+
         ## FIN CONTEXTO
         return render(request, "clinico/panelClinico.html", context)
 
@@ -4481,8 +4482,14 @@ def cambioServicio(request):
     datosTip = TiposDocumento.objects.get(nombre=datos.tipoDoc)
 
     datosDoc = Usuarios.objects.get(nombre=datos.documento)
+  
+
+    tipoDocPaciente  =  datosTip.id
+    documentoPaciente = datosDoc.id
+    consecutivo = datos.consec
     print("datos Tipo doc = ", datosTip.id)
     print("datos  documento = ", datosDoc.id)
+    print("datos  consecutivo= ", datos.consec)
 
 
     miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",password="pass123")
@@ -4604,9 +4611,33 @@ def cambioServicio(request):
 
     cambioServicio['Habitaciones'] = habitaciones
 
-    # Aqui FURIPS Leer el id y enviar un Frurips form por aqui a ver que pasa
+    # Aqui FURIPS Leer el id y enviar un Furips form por aqui a ver que pasa
+
+    tipoDocPaciente  =  datosTip.id
+    documentoPaciente = datosDoc.id
+    consecutivo = datos.consec
 
 
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = 'SELECT "consecVictima",  "numeroFactura" ,  "fechaRadicado" ,  "lugarRecogeVictima" ,  "eventoDescripcion" ,  "direccionEvento" ,  "fechaEvento" ,  "documentoInvolucrado" ,  "tipoVehiculo" ,  codigoaseguradora ,   "numeroPlacaTranporto" ,  "fechaIniPoliza" ,  "fechaFinPoliza" ,  "codigoInscripcion" ,  "codigoInscripcionRecibe" ,  "documentoPropietario" , "numeroRadicadoAnterior" ,  "direccionPropietario" ,  "primerApellidoInvolucrado" ,  "cobroExcedentePoliza" ,   "numeroRadicacion" ,  "direccionInvolucrado" ,  "placaVehiculo" ,  "primerApellidoPropietario" ,  "marcaVehiculo" ,  "primerApellidoVictima" ,  "numeroPoliza" ,  "fechaRegistro" ,  "estadoReg" ,   "documentoProfesionalAtendio_id" ,  "dxPrincEgreso_id" ,  "dxPrincIngreso_id" ,  "dxRel1Egreso_id" ,  "dxRel1Ingreso_id" ,  "dxRel2Egreso_id" ,  "dxRel2Ingreso_id" ,  "evento_id" ,  "localidadEvento_id" ,  "municipioEvento_id" ,  "municipioPropietario_id" ,"sedesClinica_id" ,"tipoDocVictima_id" ,  "tipoDocPropietario_id" ,"usuarioCrea_id",  "amparoReclamaAFosygaGastos" ,  "amparoReclamaAFosygaQx" ,  "amparoReclamaFacturadoGastos" , "amparoReclamaFacturadoQx" ,  "certificacionEgreso" ,  "certificacionIngreso" ,  "condicionAccidentado" ,  "departamentoEvento_id" ,  "departamentoInvolucrado_id" ,  "departamentoPropietario_id" ,  "documentoVictima_id" ,  estado,  "fechaAceptacion" ,  "fechaRemision" ,  "intervencionAutoridad" ,  "localidadInvolucrado_id" ,  "localidadPropietario_id" ,  "municipioInvolucrado_id" ,  "prestadorRecibe_id" ,  "prestadorRemite_id" ,  "primerNombreInvolucrado" ,  "primerNombrePropietario" ,  "primerNombreVictima" ,  "profesionalRecibe" ,  "profesionalRemite_id" ,  "segundoApellidoInvolucrado" ,  "segundoApellidoPropietario" ,  "segundoApellidoVictima" ,  "segundoNombreInvolucrado" ,  "segundoNombrePropietario" ,  "segundoNombreVictima" ,  "tipoDocInvolucrado_id" ,  "tipoDocProfesionalAtendio_id" ,  "tipoReferencia" ,  "tipoServicioVehiculo" ,  "tipoTransporteTransporto" ,  "trasportoVictimaDesde" ,  "trasportoVictimaHasta",   "zonaEvento" ,  consec ,  "documento_id" ,  "tipoDoc_id" FROM admisiones_furips where documento_id = ' + "'" + str(tipoDocPaciente) + "'" + ' AND "tipoDoc_id" = ' + "'" + str(documentoPaciente) + "'" + '  AND consec = ' +"'" + str(consecutivo) + "'"
+
+
+    curt.execute(comando)
+    print(comando)
+
+    furips = []
+    furips.append({'id': '', 'nombre': ''})
+
+    for  consecVictima,  numeroFactura ,  fechaRadicado ,  lugarRecogeVictima ,  eventoDescripcion ,  direccionEvento ,  fechaEvento ,  documentoInvolucrado ,  tipoVehiculo ,  codigoAseguradora ,  numeroPlacaTranporto ,  fechaIniPoliza ,  fechaFinPoliza ,  codigoInscripcion ,  codigoInscripcionRecibe ,  documentoPropietario , numeroRadicadoAnterior ,  direccionPropietario ,  primerApellidoInvolucrado ,  cobroExcedentePoliza ,  numeroRadicacion ,  direccionInvolucrado ,  placaVehiculo ,  primerApellidoPropietario ,  marcaVehiculo ,  primerApellidoVictima ,  numeroPoliza ,  fechaRegistro ,  estadoReg ,  documentoProfesionalAtendio_id ,  dxPrincEgreso_id ,  dxPrincIngreso_id ,  dxRel1Egreso_id ,  dxRel1Ingreso_id ,  dxRel2Egreso_id ,  dxRel2Ingreso_id ,  evento_id ,  localidadEvento_id ,  municipioEvento_id ,  municipioPropietario_id ,  sedesClinica_id ,  tipoDocVictima_id ,  tipoDocPropietario_id ,  usuarioCrea_id ,  amparoReclamaAFosygaGastos ,  amparoReclamaAFosygaQx ,  amparoReclamaFacturadoGastos ,  amparoReclamaFacturadoQx ,  certificacionEgreso ,  certificacionIngreso ,  condicionAccidentado ,  departamentoEvento_id ,  departamentoInvolucrado_id ,  departamentoPropietario_id ,  documentoVictima_id ,  estado,  fechaAceptacion ,  fechaRemision ,  intervencionAutoridad ,  localidadInvolucrado_id ,  localidadPropietario_id ,  municipioInvolucrado_id ,  prestadorRecibe_id ,  prestadorRemite_id ,  primerNombreInvolucrado ,  primerNombrePropietario ,  primerNombreVictima ,  profesionalRecibe ,  profesionalRemite_id ,  segundoApellidoInvolucrado ,  segundoApellidoPropietario ,  segundoApellidoVictima ,  segundoNombreInvolucrado ,  segundoNombrePropietario ,  segundoNombreVictima ,  tipoDocInvolucrado_id ,  tipoDocProfesionalAtendio_id ,  tipoReferencia ,  tipoServicioVehiculo ,  tipoTransporteTransporto ,  trasportoVictimaDesde ,  trasportoVictimaHasta,  zonaEvento ,  consec ,  documento_id ,  tipoDoc_id  in curt.fetchall():
+        furips.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(furips)
+
+    cambioServicio['Furips'] = furips
 
 
     # FIN FURIPS
@@ -5075,9 +5106,9 @@ def GuardarAcompananteAdmision(request):
 
 def GuardaFurips(request):
 
-    print ("Entre GuardaFurps" )
+    print ("Entre GuardaFurips" )
 
-    ingresoId = request.POST["valor"]
+    ingresoId = request.POST["ingresoId"]
     sede = request.POST["sede"]
     print ("ingresoId = ", ingresoId)
     print("sede = ", sede)
@@ -5085,31 +5116,28 @@ def GuardaFurips(request):
     registroId = Ingresos.objects.get(id=ingresoId)
     print  ("registroId documento =" , registroId.documento_id)
 
-    numeroRadicacion = request.POST.get("numeroRadicacion")
+    primerApellidoVictima = request.POST["primerApellidoVictima"]
+    print("primerApellidoVictima = ", primerApellidoVictima)
+
+
+    numeroRadicacion = request.POST["numeroRadicacion"]
     print ("numeroRadicacion = ", numeroRadicacion)
+    fechaRadicado = request.POST["fechaRadicado"]
+    print ("fechaRadicado = ", fechaRadicado)
+    numeroFactura = request.POST["numeroFactura"]
+    print ("numeroFactura = ", numeroFactura)
+    primerNombreVictima = request.POST["primerNombreVictima"]
+    print ("primerNombreVictima = ", primerNombreVictima)
 
-    forma = furipsForm(request.POST["form"])
-    forma1 = json.loads(forma)
-    print ("forma1", forma1)
-    #print("forma = ", forma)
-    print("forma1 numeroFactura = ", forma.numeroFactura)
 
-    if forma.is_valid():
-        print ("Entre forma valida")
-        nuevo_furips = Furips(tipoDoc_id=registroId.tipoDoc_id,
-                            documento_id=registroId.documento_id,
-                            consec=registroId.consec,
-                              numeroRadicacion=999,
-                              consecVictim=0)
-    nuevo_furips.save()
 
-    ## falta usuarioRegistro_id
+    
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
     cur3 = miConexion3.cursor()
-    #comando = 'insert into cartera_Pagos ("fecha", "tipoDoc_id" , documento_id, consec,  "tipoPago_id" , "formaPago_id", valor, descripcion ,"fechaRegistro","estadoReg") values ('  + "'" + str(fechaRegistro) + "'," +  "'" + str(registroId.tipoDoc_id) + "'" + ' , ' + "'" + str(registroId.documento_id) + "'" + ', ' + "'" + str(registroId.consec) + "'" + '  , ' + "'" + str(tipoPago) + "'" + '  , ' + "'" + str(formaPago) + "'" + ', ' + "'" + str(valor) + "',"   + "'" + str(descripcion) + "','"   + str(fechaRegistro) + "'," + "'" +  str("A") + "');"
-    #print(comando)
-    #cur3.execute(comando)
-    #miConexion3.commit()
+    comando = 'insert into cartera_Pagos ("fecha", "tipoDoc_id" , documento_id, consec,  "tipoPago_id" , "formaPago_id", valor, descripcion ,"fechaRegistro","estadoReg") values ('  + "'" + str(fechaRegistro) + "'," +  "'" + str(registroId.tipoDoc_id) + "'" + ' , ' + "'" + str(registroId.documento_id) + "'" + ', ' + "'" + str(registroId.consec) + "'" + '  , ' + "'" + str(tipoPago) + "'" + '  , ' + "'" + str(formaPago) + "'" + ', ' + "'" + str(valor) + "',"   + "'" + str(descripcion) + "','"   + str(fechaRegistro) + "'," + "'" +  str("A") + "');"
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
     miConexion3.close()
 
     return JsonResponse({'success': True, 'message': 'Furips Actualizado satisfactoriamente!'})

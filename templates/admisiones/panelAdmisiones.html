@@ -306,8 +306,8 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
 
                 <!--  Espacio para las modal de Edicion de admisiones -->
 
- <!--
-        <div class="container"> -->
+ 
+        <div class="container"> 
         <div class="card">
             <div class="myForm">
                 <form id="guardaAdmisionModal" method="POST" onsubmit="CierraModal()">
@@ -516,8 +516,8 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
             </div>
         </div>
 
-        <!--
-    </div>  -->
+        
+    </div>  
 
             <!--  Fin Modal de Edicion Admisiones -->
     </article>
@@ -1180,32 +1180,44 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
 
                          <div class="row row-cols-8">
                                         <div class="col-1">
-                                             {{FuripsForm.fechaRadicado.label}}
-                                            {{FuripsForm.fechaRadicado}}
+                                                     <label for="fechaRadicado" class="col-sm-6 control-label">fechaRadicado:</label>
+
+				 <input type="text" id="fechaRadicado" name="fechaRadicado" value="">
+					
+
                                         </div>
                                         <div class="col-1">
-                                            {{FuripsForm.numeroRadicacion.label}}
-                                            {{FuripsForm.numeroRadicacion}}
+                                                     <label for="numeroRadicacion" class="col-sm-6 control-label">numeroRadicacion:</label>
+				 <input type="text" id="numeroRadicacion" name="numeroRadicacion" value="">
+
+                                            
                                         </div>
                                         <div class="col-1">
-                                            {{FuripsForm.numeroFactura.label}}
-                                            {{FuripsForm.numeroFactura}}
+                                                     <label for="numeroFactura" class="col-sm-6 control-label">numeroFactura:</label>
+				 <input type="text" id="numeroFactura" name="numeroFactura" value="">
+		
+					
+                                            
                                         </div>
                                         <div class="col-1">
                                             {{FuripsForm.primerNombreVictima.label}}
-                                            {{FuripsForm.primerNombreVictima}}
+					{{FuripsForm.primerNombreVictima}}
+                                            
                                         </div>
                                         <div class="col-1">
                                             {{FuripsForm.segundoNombreVictima.label}}
-                                            {{FuripsForm.segundoNombreVictima}}
+					{{FuripsForm.segundoNombreVictima}}
+                                            
                                         </div>
                                         <div class="col-1">
                                             {{FuripsForm.primerApellidoVictima.label}}
-                                            {{FuripsForm.primerApellidoVictima}}
+					{{FuripsForm.primerApellidoVictima}}
+                                            
                                         </div>
                                         <div class="col-1">
                                             {{FuripsForm.segundoApellidoVictima.label}}
-                                            {{FuripsForm.segundoApellidoVictima}}
+					 {{FuripsForm.segundoApellidoVictima}}
+                                           
                                         </div>
                                        <div class="col-1">
                                              {{FuripsForm.tipoDocVictima.label}}

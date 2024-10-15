@@ -19,15 +19,15 @@ $(document).ready(function() {
         data = JSON.stringify(data);
 
 
-	tableActionsLaboratorios();
-	tableActionsRadiologia();
-	tableActionsTerapias();
-	tableActionsNoQx();
-	tableActionsAntecedentes();
-	tableActionsDiagnosticos();
-	tableActionsInterconsultas();
-	tableActionsRevisionSistemas();
-	tableActionsFormulacion();
+//	tableActionsLaboratorios();
+//	tableActionsRadiologia();
+//	tableActionsTerapias();
+//	tableActionsNoQx();
+//	tableActionsAntecedentes();
+//	tableActionsDiagnosticos();
+//	tableActionsInterconsultas();
+//	tableActionsRevisionSistemas();
+//	tableActionsFormulacion();
 
         /*------------------------------------------
         --------------------------------------------
@@ -210,99 +210,102 @@ $(document).ready(function() {
 $('#tablaLaboratorios tbody').on('click', 'tr', function () {
     confirm("Desea eliminar LA FILA: ");
        var tableL = $('#tablaLaboratorios').DataTable();
-
       var fila = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
-
           alert("Fila a borrar = " + fila);
-		 tableL.row(':eq(fila)').remove().draw(false);
-		// tableL.row.remove(fila).draw(false);
-
+		var rows = tableL
+			    .rows(fila)
+			    .remove()
+			    .draw();
 		 document.getElementById("tablaLaboratorios").deleteRow(fila-1);
-               //  tableL.ajax.reload();
 
+});
 
-} );
-
-//$('#tablaTerapias tbody').on('click', 'tr', function () {
-//    confirm("Desea eliminar LA FILA: ");
-//       var table3 = $('#tablaTerapias').DataTable();
-//      var valor3 = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
-
-//      document.getElementById("tablaTerapias").deleteRow(valor3);
-//         table3.row.remove(valor3).draw(false);
-
-//        table3.ajax.reload();
-//} );
+$('#tablaTerapias tbody').on('click', 'tr', function () {
+      var tableL = $('#tablaTerapias').DataTable();
+      var fila = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
+          alert("Fila a borrar = " + fila);
+		var rows = tableL
+			    .rows(fila)
+			    .remove()
+			    .draw();
+		 document.getElementById("tablaTerapias").deleteRow(fila-1);
+});
 
 $('#tablaNoQx tbody').on('click', 'tr', function () {
-    confirm("Desea eliminar LA FILA: ");
-       var table4 = $('#tablaNoQx').DataTable();
-      var valor3 = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
-
-      document.getElementById("tablaTerapias").deleteRow(valor3);
-         table4.row.remove(valor3).draw(false);
-
-        table4.ajax.reload();
-} );
+ 
+ var tableL = $('#tablaNoQx').DataTable();
+      var fila = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
+          alert("Fila a borrar = " + fila);
+		var rows = tableL
+			    .rows(fila)
+			    .remove()
+			    .draw();
+		 document.getElementById("tablaNoQx").deleteRow(fila-1);
+});
 
 
 
 $('#tablaAntecedentes tbody').on('click', 'tr', function () {
-    confirm("Desea eliminar LA FILA: ");
-       var table5 = $('#tablaAntecedentes').DataTable();
-      var valor3 = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
-
-      document.getElementById("tablaAntecedentes").deleteRow(valor3);
-         table5.row.remove(valor3).draw(false);
-
-        table5.ajax.reload();
-} );
+ 
+ var tableL = $('#tablaAntecedentes').DataTable();
+      var fila = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
+          alert("Fila a borrar = " + fila);
+		var rows = tableL
+			    .rows(fila)
+			    .remove()
+			    .draw();
+		 document.getElementById("tablaAntecedentes").deleteRow(fila-1);
+});
 
 $('#tablaDiagnosticos tbody').on('click', 'tr', function () {
-    confirm("Desea eliminar LA FILA: ");
-       var table6 = $('#tablaDiagnosticos').DataTable();
-      var valor3 = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
 
-      document.getElementById("tablaDiagnosticos").deleteRow(valor3);
-         table6.row.remove(valor3).draw(false);
-
-        table6.ajax.reload();
-} );
+ var tableL = $('#tablaDiagnosticos').DataTable();
+      var fila = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
+          alert("Fila a borrar = " + fila);
+		var rows = tableL
+			    .rows(fila)
+			    .remove()
+			    .draw();
+		 document.getElementById("tablaDiagnosticos").deleteRow(fila-1);
+});
 
 
 $('#tablaInterconsultas tbody').on('click', 'tr', function () {
-    confirm("Desea eliminar LA FILA: ");
-       var table7 = $('#tablaDInterconsultas').DataTable();
-      var valor3 = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
 
-      document.getElementById("tablaDInterconsultas").deleteRow(valor3);
-         table7.row.remove(valor3).draw(false);
-
-        table7.ajax.reload();
-} );
+ var tableL = $('#tablaInterconsultas').DataTable();
+      var fila = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
+          alert("Fila a borrar = " + fila);
+		var rows = tableL
+			    .rows(fila)
+			    .remove()
+			    .draw();
+		 document.getElementById("tablaInterconsultas").deleteRow(fila-1);
+});
 
 $('#tablaRevisionSistemas tbody').on('click', 'tr', function () {
-    confirm("Desea eliminar LA FILA: ");
-       var table8 = $('#tablaRevisionSistemas').DataTable();
-      var valor3 = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
 
-      document.getElementById("tablaRevisionSistemas").deleteRow(valor3);
-         table8.row.remove(valor3).draw(false);
-
-        table8.ajax.reload();
-} );
+ var tableL = $('#tablaRevisionSistemas').DataTable();
+      var fila = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
+          alert("Fila a borrar = " + fila);
+		var rows = tableL
+			    .rows(fila)
+			    .remove()
+			    .draw();
+		 document.getElementById("tablaRevisionSistemas").deleteRow(fila-1);
+});
 
 
 $('#tablaFacturacions tbody').on('click', 'tr', function () {
-    confirm("Desea eliminar LA FILA: ");
-       var table10 = $('#tablaFacturacion').DataTable();
-      var valor3 = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
 
-      document.getElementById("tablaFacturacion").deleteRow(valor3);
-         table10.row.remove(valor3).draw(false);
-
-        table10.ajax.reload();
-} );
+ var tableL = $('#tablaFacturacion').DataTable();
+      var fila = $(this).parents("tr")['prevObject']['0']['_DT_RowIndex'];
+          alert("Fila a borrar = " + fila);
+		var rows = tableL
+			    .rows(fila)
+			    .remove()
+			    .draw();
+		 document.getElementById("tablaFacturacion").deleteRow(fila-1);
+});
 
 
         /*------------------------------------------
@@ -329,7 +332,7 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
       	   text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
 
 	        table1.row.add([
-                    rad, text,  cantidad, observa, ""
+                    rad, text,  cantidad, observa, '<i class="fa fa-trash"></i>'
                 ]).draw(false);
         });
 
@@ -357,7 +360,7 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
       	   text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
 
 	        table3.row.add([
-                    ter, text,  cantidad, observa, ""
+                    ter, text,  cantidad, observa, '<i class="fa fa-trash"></i>'
                 ]).draw(false);
         });
 
@@ -385,7 +388,7 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
       	   text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
 
 	        table4.row.add([
-                    noQx, text,  cantidad, observa, ""
+                    noQx, text,  cantidad, observa, '<i class="fa fa-trash"></i>'
                 ]).draw(false);
         });
 
@@ -407,7 +410,7 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
       	   text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
 
 	        table5.row.add([
-                    antecedentes, text,   observa, ""
+                    antecedentes, text,   observa, '<i class="fa fa-trash"></i>'
                 ]).draw(false);
         });
 
@@ -432,7 +435,7 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
       	   textTiposDiagnosticos = select1.options[select1.selectedIndex].innerText; //El texto de la opción seleccionada
 
 	        table6.row.add([
-                    tiposDiagnosticos ,  textTiposDiagnosticos  ,diagnosticos,  textDiagnosticos,  observa, ""
+                    tiposDiagnosticos ,  textTiposDiagnosticos  ,diagnosticos,  textDiagnosticos,  observa, '<i class="fa fa-trash"></i>'
                 ]).draw(false);
         });
 
@@ -465,7 +468,7 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
       	   textmedicoConsultado = select3.options[select3.selectedIndex].innerText; //El texto de la opción seleccionada
 
 
-	        table7.row.add([ tiposInterconsulta, texttiposInterconsulta,   especialidadConsultada ,  textespecialidadConsultada ,medicoConsultado, textmedicoConsultado , descripcion, diagnosticos,  textDiagnosticos,  ""]).draw(false);
+	        table7.row.add([ tiposInterconsulta, texttiposInterconsulta,   especialidadConsultada ,  textespecialidadConsultada ,medicoConsultado, textmedicoConsultado , descripcion, diagnosticos,  textDiagnosticos,  '<i class="fa fa-trash"></i>']).draw(false);
         });
 
 
@@ -486,7 +489,7 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
       	   textRevisionSistemas = select3.options[select3.selectedIndex].innerText; //El texto de la opción seleccionada
 
 
-	        table9.row.add([ revisionSistemas, textRevisionSistemas,  observa,  ""]).draw(false);
+	        table9.row.add([ revisionSistemas, textRevisionSistemas,  observa,  '<i class="fa fa-trash"></i>']).draw(false);
         });
 
 
@@ -530,11 +533,9 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
 	   var cantidadMedicamento =  document.getElementById("cantidadMedicamento").value;
 	   var diasTratamiento =  document.getElementById("diasTratamiento").value;
 
-	    table10.row.add([ medicamentos, textMedicamentos, dosis,uMedidaDosis, textUMedidaDosis, formaFarma,  textFormaFarma, frecuencia, textFrecuencia,viasAdministracion, textViasAdministracion, cantidadMedicamento,  diasTratamiento    ,  ""]).draw(false);
+	    table10.row.add([ medicamentos, textMedicamentos, dosis,uMedidaDosis, textUMedidaDosis, formaFarma,  textFormaFarma, frecuencia, textFrecuencia,viasAdministracion, textViasAdministracion, cantidadMedicamento,  diasTratamiento    ,  '<i class="fa fa-trash"></i>']).draw(false);
+
         });
-
-
-
 
   /*------------------------------------------
         --------------------------------------------
@@ -558,8 +559,7 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
            var select = document.getElementById("lab"); /*Obtener el SELECT */
       	   var lab = select.options[select.selectedIndex].value; /* Obtener el valor */
       	   text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
-	        tableL.row.add([lab, text,  cantidad, observa, ""]).draw(false);
-		
+	        tableL.row.add([lab, text,  cantidad, observa, '<i class="fa fa-trash"></i>']).draw(false);
         });
       
 
@@ -567,7 +567,6 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
 // I. LABORATORIOS
 
 function tableActionsLaboratorios() {
-
 
    var table= $('#tablaLaboratorios').DataTable({
                 "language": {
@@ -601,17 +600,7 @@ function tableActionsLaboratorios() {
             ],
     });
 }
-
-
-
-
 });  // Aquip fin del document.ready
-
-
-
-
-
-
 
 
 

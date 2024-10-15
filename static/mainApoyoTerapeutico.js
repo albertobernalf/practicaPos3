@@ -35,15 +35,19 @@ $('.editPostar').on('click',function(event)
 
 
 	initTableApoyoTerapeutico(data);
+  
 	initTableTerapeuticoConsulta(data);
+	initTableRasgos(data); 
 /*	tableActionsApoyoTerapeutico();  */
-        initTableRasgos(data);   
+
+	initTableRasgosConsulta(data);   
 
 /*------------------------------------------
         --------------------------------------------
         Delete Post Code Rasgos
         --------------------------------------------
         --------------------------------------------*/
+
         $("body").on("click",".deletePostRasgos",function(){
             var current_object = $(this);
             var action = current_object.attr('data-action');
@@ -71,11 +75,11 @@ $('.editPostar').on('click',function(event)
 	  		    alert("vengo de borrar");
 
 	                     tableR= $("#tablaRasgos").dataTable().fnDestroy();
-	
+
         		   initTableRasgos(data);
 	
 		  $("#mensajes").html(" ! Registro Borrado !");
-			
+	
 
                     },
 	   		    error: function (request, status, error) {
@@ -83,9 +87,6 @@ $('.editPostar').on('click',function(event)
 	   	    	}
 	           });
 	});
-
-
-
 
         /*------------------------------------------
         --------------------------------------------
@@ -100,7 +101,107 @@ $('.editPostar').on('click',function(event)
             });
         }
 
+
+
+
+
    });  // Aquip fin del document.ready
+
+
+
+
+
+function initTableRasgos(data) {
+
+	return new DataTable('.tablaRasgos', {
+	 "language": {
+                  "lengthMenu": "Display _MENU_ registros",
+                   "search": "Filtrar registros:",
+                    },
+            processing: true,
+            serverSide: false,
+            scrollY: '360px',
+	    scrollX: true,
+	    scrollCollapse: true,
+            paging:false,
+            columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        var btn = '';
+			btn = btn + " <button class='btn btn-danger deletePostRasgos' data-action='post/" + row.pk + "/delete' data-pk='" + row.pk + "'>" + '<i class="fa fa-trash"></i>' + "</button>";
+                        return btn;
+                    },
+                    "targets": 7
+               }
+            ],
+            ajax: {
+                 url:"/load_dataRasgos/" +  data,
+                 type: "POST",
+                dataSrc: ""
+            },
+
+            lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
+            columns: [
+
+
+                { data: "fields.codigoCups"},
+                { data: "fields.nombreRasgo"},
+                { data: "fields.unidad"},
+                { data: "fields.minimo"},
+                { data: "fields.maximo"},
+                { data: "fields.valorResultado"},
+		{ data: "fields.observa"},
+            ]
+ });
+
+}
+
+
+
+function initTableRasgosConsulta(data) {
+
+	return new DataTable('.tablaRasgosConsulta', {
+	 "language": {
+                  "lengthMenu": "Display _MENU_ registros",
+                   "search": "Filtrar registros:",
+                    },
+            processing: true,
+            serverSide: false,
+            scrollY: '360px',
+	    scrollX: true,
+	    scrollCollapse: true,
+            paging:false,
+            columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        var btn = '';
+		//	 btn = btn + " <button class='btn btn-danger deletePostRasgos' data-action='post/" + row.pk + "/delete' data-pk='" + row.pk + "'>" + '<i class="fa fa-trash"></i>' + "</button>";
+                        return btn;
+                    },
+                    "targets": 6
+               }
+            ],
+            ajax: {
+                 url:"/load_dataRasgosConsulta/" +  data,
+                 type: "POST",
+                dataSrc: ""
+            },
+
+            lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
+            columns: [
+
+
+                { data: "fields.codigoCups"},
+                { data: "fields.nombreRasgo"},
+                { data: "fields.unidad"},
+                { data: "fields.minimo"},
+                { data: "fields.maximo"},
+                { data: "fields.valorResultado"},
+		        { data: "fields.observa"},
+            ]
+ });
+
+}
 
 
 
@@ -307,6 +408,219 @@ $('.editPostar').on('click',function(event)
         });
 
 
+/*** DESDE AQUI CONSULTA DE RESPUESTAS ***/
+
+
+	/*--------------------------------------------
+        Click to Edit Button
+        --------------------------------------------
+        --------------------------------------------*/
+        $('body').on('click', '.editPostTerapeuticoConsulta', function () {
+          alert ("Entre boton Apoyo Terapeutico Consulta");
+	
+          var post_id = $(this).data('pk');
+          alert("pk1 = " + $(this).data('pk'));
+
+         var tipoExamenId = document.getElementById("ztipoExamenId").value;
+         var tipoExamen = document.getElementById("ztipoExamen").value;
+         var CupsId = document.getElementById("zCupsId").value;
+         var nombreExamen = document.getElementById("znombreExamen").value;
+         var cantidad = document.getElementById("zcantidad").value;
+	 var observaciones = document.getElementById("zobservaciones").value;
+         var estadoExamen = document.getElementById("zestadoExamen").value;
+         var folio = document.getElementById("ztipoExamenId").value;
+         var interpretacion1 = document.getElementById("zinterpretacion1").value;
+         var medicoInterpretacion1 = document.getElementById("zmedicoInterpretacion1").value;
+         var interpretacion2 = document.getElementById("zinterpretacion2").value;
+	 var medicoInterpretacion2 = document.getElementById("zmedicoInterpretacion2").value;
+         var medicoReporte = document.getElementById("zmedicoReporte").value;
+         var rutaImagen = document.getElementById("zrutaImagen").value;
+         var rutaVideo = document.getElementById("zrutaVideo").value;
+         var username_id = document.getElementById("username_id").value;
+
+        var data =  {}   ;
+
+	 data['username'] = username;
+         data['sedeSeleccionada'] = sedeSeleccionada;
+         data['nombreSede'] = nombreSede;
+         data['sede'] = sede;
+	 data['username_id'] = username_id;
+         data['valor'] = post_id;	
+
+	  data = JSON.stringify(data);
+
+          tableR= $("#tablaRasgosConsulta").dataTable().fnDestroy();
+	alert("username_id ASI VA " + username_id );
+
+           initTableRasgosConsulta(data);
+
+
+
+	$.ajax({
+	           url: '/postConsultaApoyoTerapeuticoConsulta/',
+	            data : {post_id:post_id,
+			   tipoExamenId:tipoExamenId,
+			   tipoExamen:tipoExamen,
+			   CupsId:CupsId,
+			   nombreExamen:nombreExamen,
+			   cantidad:cantidad,
+                           observaciones:observaciones,
+			   estadoExamen:estadoExamen,
+			   folio:folio,
+			   interpretacion1:interpretacion1,
+			   medicoInterpretacion1:medicoInterpretacion1,
+			   interpretacion2:interpretacion2,
+			   medicoInterpretacion2:medicoInterpretacion2,
+                           medicoReporte:medicoReporte,
+   			   rutaImagen:rutaImagen,
+			   rutaVideo:rutaVideo
+},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese");
+
+                      alert("dataResultado3="  + data[0]['ResultadoApoyoTerapeutico']); // este es el Registro
+                       alert("dataResultado5="  + data[0]['ResultadoApoyoTerapeutico'][0].tipoExamenId);
+                         alert("RasgosClinicos="  + data[1]['RasgosClinicos']);  // esye es el combo
+
+                            alert("data[2].MedicoInterpretacion1="  + data[2]['MedicoInterpretacion1'][1]['nombre']);  // esye es el combo
+                               alert("MedicoInterpretacion2="  + data[3]['MedicoInterpretacion2'][1]['nombre']);  // esye es el combo
+                                  alert("MedicoReporte="  + data[4]['MedicoReporte'][1]['nombre']);  // esye es el combo
+			alert("dependenciasRealizado1 = " + data[0]['ResultadoApoyoTerapeutico'][0]);
+			alert("dependenciasRealizado2 = " + data[0]['ResultadoApoyoTerapeutico'][0].dependencias);
+			
+
+	  		  // var dato = JSON.parse(respuesta);
+			 $('#pk').val(data.pk);
+	       	        $('#ztipoExamenId').val(data[0]['ResultadoApoyoTerapeutico'][0].tipoExamenId);
+        	       	$('#ztipoExamen').val(data[0]['ResultadoApoyoTerapeutico'][0].tipoExamen);
+	                $('#zCupsId').val(data[0]['ResultadoApoyoTerapeutico'][0].CupsId);
+	                $('#znombreExamen').val(data[0]['ResultadoApoyoTerapeutico'][0].nombreExamen);
+	                $('#zcantidad').val(data[0]['ResultadoApoyoTerapeutico'][0].cantidad);
+	                $('#zobservaciones').val(data[0]['ResultadoApoyoTerapeutico'][0].observaciones);
+	                $('#zestadoExamen').val(data[0]['ResultadoApoyoTerapeutico'][0].estado);
+	                $('#zfolio').val(data[0]['ResultadoApoyoTerapeutico'][0].folio);
+	                $('#zinterpretacion1').val(data[0]['ResultadoApoyoTerapeutico'][0].interpretacion1);
+	                $('#zmedicoInterpretacion1').val(data[0]['ResultadoApoyoTerapeutico'][0].medicoInterpretacion1);
+	                $('#zinterpretacion2').val(data[0]['ResultadoApoyoTerapeutico'][0].interpretacion2);
+	                $('#zmedicoInterpretacion2').val(data[0]['ResultadoApoyoTerapeutico'][0].medicoInterpretacion2);
+	                $('#zmedicoReporte').val(data[0]['ResultadoApoyoTerapeutico'][0].medicoReporte);
+	                $('#zrutaImagen').val(data[0]['ResultadoApoyoTerapeutico'][0].rutaImagen);
+	                $('#zrutaVideo').val(data[0]['ResultadoApoyoTerapeutico'][0].rutaVideo);
+			
+
+			 $('#zingresoIdA').val(data[4]['MedicoReporte']);
+			 $('#zexamId').val(data[0]['ResultadoApoyoTerapeutico'][0].examId);
+			
+
+           	  		   var options = '<option value="=================="></option>';
+
+
+                     const $id2 = document.querySelector("#zrasgosClinicos");
+ 	      		     $("#zrasgosClinicos").empty();
+
+	                 $.each(data[1]['RasgosClinicos'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id2.appendChild(option);
+ 	      		      });
+
+
+                     const $id3 = document.querySelector("#zmedicoInterpretacion1");
+ 	      		     $("#zmedicoInterpretacion1").empty();
+
+	                 $.each(data[2]['MedicoInterpretacion1'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id3.appendChild(option);
+ 	      		      });
+
+
+
+                     const $id4 = document.querySelector("#zmedicoInterpretacion2");
+ 	      		     $("#zmedicoInterpretacion2").empty();
+
+	                 $.each(data[3]['MedicoInterpretacion2'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id4.appendChild(option);
+ 	      		      });
+
+
+
+                     const $id5 = document.querySelector("#zmedicoReporte");
+ 	      		     $("#zmedicoReporte").empty();
+
+	                 $.each(data[4]['MedicoReporte'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id5.appendChild(option);
+ 	      		      });
+
+
+
+                     const $id6 = document.querySelector("#zdependenciasRealizado");
+ 	      		     $("#zdependenciasRealizado").empty();
+
+	                 $.each(data[5]['DependenciasRealizado'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id6.appendChild(option);
+ 	      		      });
+
+	         const $id7 = document.querySelector("#zestadoExamen");
+ 	      		     $("#zestadoExamen").empty();
+
+	                 $.each(data[6]['EstadosExamenes'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id7.appendChild(option);
+ 	      		      });
+
+
+			
+	                 $('#zmedicoInterpretacion1').val(data[0]['ResultadoApoyoTerapeutico'][0].medicoInterpretacion1);
+	                 $('#zmedicoInterpretacion2').val(data[0]['ResultadoApoyoTerapeutico'][0].medicoInterpretacion2);
+	                 $('#zmedicoReporte').val(data[0]['ResultadoApoyoTerapeutico'][0].medicoReporte);
+			  $('#zdependenciasRealizado').val(data[0]['ResultadoApoyoTerapeutico'][0].dependencias);
+ 			 $('#zestadoExamen').val(data[0]['ResultadoApoyoTerapeutico'][0].estado);
+
+
+
+
+
+
+
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+
+        });
+
+
+
+
+
+/**** HASTA AQUI  ***/
+
+
+
 
     	/*------------------------------------------
         --------------------------------------------
@@ -475,53 +789,6 @@ function initTableTerapeuticoConsulta(data) {
 
 }
 
-
-
-
-function initTableRasgos(data) {
-
-	return new DataTable('.tablaRasgos', {
-	 "language": {
-                  "lengthMenu": "Display _MENU_ registros",
-                   "search": "Filtrar registros:",
-                    },
-            processing: true,
-            serverSide: false,
-            scrollY: '360px',
-	    scrollX: true,
-	    scrollCollapse: true,
-            paging:false,
-            columnDefs: [
-                {
-                    "render": function ( data, type, row ) {
-                        var btn = '';
-			btn = btn + " <button class='btn btn-danger deletePostRasgos' data-action='post/" + row.pk + "/delete' data-pk='" + row.pk + "'>" + '<i class="fa fa-trash"></i>' + "</button>";
-                        return btn;
-                    },
-                    "targets": 7
-               }
-            ],
-            ajax: {
-                 url:"/load_dataRasgos/" +  data,
-                 type: "POST",
-                dataSrc: ""
-            },
-
-            lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
-            columns: [
-              
-               
-                { data: "fields.codigoCups"},
-                { data: "fields.nombreRasgo"},
-                { data: "fields.unidad"},
-                { data: "fields.minimo"},
-                { data: "fields.maximo"},
-                { data: "fields.valorResultado"},
-		{ data: "fields.observa"},
-            ]
- });
-
-}
 
 
 function tableActionsApoyoTerapeutico() {

@@ -480,6 +480,261 @@ def PostConsultaApoyoTerapeutico(request):
         return JsonResponse({'errors':'Something went wrong!'})
 
 
+    # Desdde aqui lo nuevo conulta respuesta
+
+
+def PostConsultaApoyoTerapeuticoConsulta(request):
+
+    print ("Entre PostConsultaApoyoTerapeuticoConsulta ")
+
+
+    Post_id = request.POST["post_id"]
+
+    print("id = ", Post_id)
+    llave = Post_id.split('-')
+    print ("llave = " ,llave)
+    print ("primero=" ,llave[0])
+
+    # Combo estadosExamenes
+
+    # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = 'SELECT e.id id, e.nombre nombre FROM clinico_estadoexamenes e order by e.id'
+
+    curt.execute(comando)
+    print(comando)
+
+    estadosExamenes = []
+    estadosExamenes.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+        estadosExamenes.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(estadosExamenes)
+
+      # Fin combo estadosExamenes
+
+
+
+    # Combo RazgosExamenes
+
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                      password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = 'SELECT t.id id, t.nombre  nombre FROM clinico_examenesrasgos t, clinico_historiaexamenes exa where exa.id= ' + "'" + str(llave[0].strip()) + "'" + ' and exa."tiposExamen_id" = t."tiposExamen_id"  and exa."codigoCups" = t."codigoCups"'
+
+    curt.execute(comando)
+    print(comando)
+
+    rasgosClinicos = []
+    rasgosClinicos.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+        rasgosClinicos.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(rasgosClinicos)
+
+    #context['RasgosClinicos'] = rasgosClinicos
+
+    # Fin combo rASGOSeXAMENES
+
+    # Combo medicoInterpretacion1
+
+    # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = 'SELECT med.id id, med.nombre nombre FROM clinico_medicos med order by med.nombre'
+
+    curt.execute(comando)
+    print(comando)
+
+    medicoInt1 = []
+    medicoInt1.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+           medicoInt1.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print("medicoInt1 = OBSERVERLA ", medicoInt1)
+
+    #context['MedicoInterpretacion1'] = medicoInterpretacion1
+
+    # Fin combo medicoInterpretacion1
+
+
+    # Combo medicoInterpretacion2
+
+    # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = 'SELECT med.id id, med.nombre nombre FROM clinico_medicos med order by med.nombre'
+
+    curt.execute(comando)
+    print(comando)
+
+    medicoInt2 = []
+    medicoInt2.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+           medicoInt2.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(medicoInt2)
+
+    #context['MedicoInterpretacion2'] = medicoInterpretacion2
+
+    # Fin combo medicoInterpretacion2
+
+    # Combo medicoReporte
+
+    # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                       password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = 'SELECT med.id id, med.nombre nombre FROM clinico_medicos med order by med.nombre'
+
+    curt.execute(comando)
+    print(comando)
+
+    medicoRep = []
+    medicoRep.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+           medicoRep.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(medicoRep)
+
+    #context['MedicoReporte'] = medicoReporte
+
+    # Fin combo medicoReporte
+
+    # Combo DependenciasRealizado
+
+    # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = 'SELECT d.id id, d.nombre nombre FROM sitios_dependencias d WHERE "dependenciasTipo_id" = 5 order by d.nombre'
+
+    curt.execute(comando)
+    print(comando)
+
+    dependenciasRealizado = []
+    dependenciasRealizado.append({'id': '', 'nombre': ''})
+
+    for id, nombre in curt.fetchall():
+        dependenciasRealizado.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(dependenciasRealizado)
+
+
+    # Fin combo dependenciasRealizado
+
+
+    if request.method == 'POST':
+
+        tipoExamenId=request.POST["tipoExamenId"]
+        tipoExamen=request.POST["tipoExamen"]
+        CupsId =  request.POST["CupsId"]
+        nombreExamen =  request.POST["nombreExamen"]
+        cantidad =  request.POST["cantidad"]
+        observaciones =  request.POST["observaciones"]
+        estadoExamen =  request.POST["estadoExamen"]
+        folio =  request.POST["folio"]
+        interpretacion1 =  request.POST["interpretacion1"]
+        medicoInterpretacion1 =  request.POST["medicoInterpretacion1"]
+        interpretacion2 =  request.POST["interpretacion2"]
+        medicoInterpretacion2 =  request.POST["medicoInterpretacion2"]
+        medicoReporte =  request.POST["medicoReporte"]
+        rutaImagen =  request.POST["rutaImagen"]
+        rutaVideo =  request.POST["rutaVideo"]
+
+
+        # Abro Conexion
+
+        miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",password="pass123")
+        cur = miConexionx.cursor()
+
+    
+        #comando = 'SELECT i.id id, i."tipoDoc_id" tipoDocId,td.nombre nombreTipoDoc, i.documento_id documentoId, u.documento documento , i.consec consec FROM admisiones_ingresos i, usuarios_usuarios u, usuarios_tiposDocumento td where i.id=' + "'" +  str(llave[0].strip()) + "'" + ' and i."tipoDoc_id" =td.id and i.documento_id=u.id'
+        comando = 'select exam.id examId,  exam."tiposExamen_id" tipoExamenId, tip.nombre tipoExamen, exam."codigoCups" CupsId , examenes.nombre nombreExamen,exam.cantidad cantidad, exam.observaciones observaciones, exam."estadoExamenes_id" estado,historia.folio folio,exam.interpretacion1 interpretacion1,exam.interpretacion2 interpretacion2, exam."medicoInterpretacion1_id" medicoInterpretacion1,exam."medicoInterpretacion2_id" medicoInterpretacion2,exam."medicoReporte_id" medicoReporte, exam."rutaImagen" rutaImagen, exam."rutaVideo" rutaVideo , est.nombre estadoNombre, exam."dependenciasRealizado_id" dependencias  from clinico_historiaexamenes exam, clinico_historia historia, clinico_tiposexamen tip, clinico_examenes examenes , clinico_estadoexamenes est where historia.id= exam.historia_id and exam.id = '  + "'" +  str(llave[0].strip()) + "'" + ' and  tip.id=exam."tiposExamen_id" and exam."tiposExamen_id" = examenes."TiposExamen_id"  And exam."codigoCups" = examenes."codigoCups" and est.id = exam."estadoExamenes_id"'
+
+
+        print(comando)
+
+        cur.execute(comando)
+
+        zresultadoApoyoTerapeutico = []
+
+        for examId,  tipoExamenId, tipoExamen,  CupsId ,  nombreExamen, cantidad, observaciones,  estado, folio,interpretacion1, interpretacion2,  medicoInterpretacion1,medicoInterpretacion2, medicoReporte,  rutaImagen, rutaVideo, estadoNombre, dependencias in cur.fetchall():
+            zresultadoApoyoTerapeutico.append( {"examId": examId,
+                     "tipoExamenId": tipoExamenId,
+                     "tipoExamen": tipoExamen,
+                     "CupsId": CupsId, "nombreExamen": nombreExamen,
+                     "cantidad": cantidad, "observaciones":observaciones, "estado":estado,"folio":folio, "interpretacion1":interpretacion1, "interpretacion2":interpretacion2,"medicoInterpretacion1":medicoInterpretacion1,
+                     "medicoInterpretacion2":medicoInterpretacion2,"medicoReporte":medicoReporte, "rutaImagen":rutaImagen,"rutaVideo":rutaVideo , "estadoNombre":estadoNombre, "dependencias":dependencias})
+
+        miConexionx.close()
+        print(zresultadoApoyoTerapeutico)
+
+        # Cierro Conexion
+
+        envio = []
+
+        envio.append({'ResultadoApoyoTerapeutico': zresultadoApoyoTerapeutico})
+
+        envio.append({'RasgosClinicos':rasgosClinicos})
+
+        envio.append({'MedicoInterpretacion1':medicoInt1})
+
+        envio.append({'MedicoInterpretacion2':medicoInt2})
+
+        envio.append({'MedicoReporte':medicoRep})
+        envio.append({'DependenciasRealizado': dependenciasRealizado})
+        envio.append({'EstadosExamenes': estadosExamenes})
+
+
+        print ("ENVIO FINAL =", envio)
+
+        serialized1 = json.dumps(envio, default=serialize_datetime)
+
+        return HttpResponse(serialized1,   content_type='application/json')
+
+        #return JsonResponse({'pk':resultadoApoyoTerapeutico[0]['examId'],'tipoExamenId':resultadoApoyoTerapeutico[0]['tipoExamenId'],'tipoExamen':resultadoApoyoTerapeutico[0]['tipoExamen'],
+        #                     'CupsId':resultadoApoyoTerapeutico[0]['CupsId'],  'nombreExamen': resultadoApoyoTerapeutico[0]['nombreExamen'],
+	#			'cantidad': resultadoApoyoTerapeutico[0]['cantidad'],
+	#			'observaciones': resultadoApoyoTerapeutico[0]['observaciones'],
+	#			'estado': resultadoApoyoTerapeutico[0]['estado'],
+	#			'folio': resultadoApoyoTerapeutico[0]['folio'],
+	#			'interpretacion1': resultadoApoyoTerapeutico[0]['interpretacion1'],
+	#			'interpretacion2': resultadoApoyoTerapeutico[0]['interpretacion2'],
+	#			'medicoInterpretacion1': resultadoApoyoTerapeutico[0]['medicoInterpretacion1'],
+	#			'medicoInterpretacion2': resultadoApoyoTerapeutico[0]['medicoInterpretacion2'],
+	#			'medicoReporte': resultadoApoyoTerapeutico[0]['medicoReporte'],
+	#			'rutaImagen': resultadoApoyoTerapeutico[0]['rutaImagen'],
+        #                     'rutaVideo': resultadoApoyoTerapeutico[0]['rutaVideo']})
+
+    else:
+        return JsonResponse({'errors':'Something went wrong!'})
+
+    # hasta quip
+	
+
+
 
 
 def load_dataRasgos(request, data):
@@ -532,6 +787,59 @@ def load_dataRasgos(request, data):
 
 
 
+def load_dataRasgosConsulta(request, data):
+    print ("Entre load_data Rasgos Consulta... ")
+
+    context = {}
+    d = json.loads(data)
+
+    username = d['username']
+    sede = d['sede']
+    username_id = d['username_id']
+    valor = d['valor']
+
+    nombreSede = d['nombreSede']
+    print ("sede:", sede)
+    print ("username:", username)
+    print ("username_id:", username_id)
+    #valor = 127
+
+    rasgos = []
+
+
+    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",     password="pass123")
+    curx = miConexionx.cursor()
+   
+ 
+    detalle = 'select resul.id rasgosId, exam.id examId,  exam."tiposExamen_id" tipoExamenId, tip.nombre tipoExamen, exam."codigoCups" codigoCups,examenes.nombre nombreExamen,exam.cantidad cantidad,rasgos.unidad unidad, exam.observaciones observaciones, exam."estadoExamenes_id" estado,resul.valor valorResultado,rasgos.nombre nombreRasgo, rasgos.minimo minimo, rasgos.maximo maximo, resul.observaciones observa from clinico_historiaexamenes exam, clinico_tiposexamen tip, clinico_examenes examenes, clinico_historiaresultados resul, clinico_examenesrasgos rasgos where resul."historiaExamenes_id" = exam.id and exam.id =' + "'" + str(valor) + "'" + ' and tip.id=exam."tiposExamen_id" and exam."tiposExamen_id" = examenes."TiposExamen_id" And exam."codigoCups" = examenes."codigoCups" AND resul."examenesRasgos_id" = rasgos.id  And exam."codigoCups" = rasgos."codigoCups"'
+    print(detalle)
+
+    curx.execute(detalle)
+
+    for rasgosId, examId,  tipoExamenId, tipoExamen,  codigoCups,  nombreExamen,  cantidad, unidad, observaciones,  estado,  valorResultado, nombreRasgo, minimo, maximo , observa in curx.fetchall():
+        rasgos.append(
+		{"model":"examenesrasgos.riesgos","pk":rasgosId,"fields":
+			{'rasgosId':rasgosId, 'examId':examId, 'tipoExamenId':tipoExamenId, 'tipoExamen':tipoExamen, 'codigoCups': codigoCups, 'nombreExamen': nombreExamen, 'cantidad': cantidad, 'observaciones': observaciones,
+                         'unidad':unidad, 'observaciones': observaciones, 'estado': estado,
+                         'valorResultado': valorResultado, 'nombreRasgo': nombreRasgo,
+                         'minimo': minimo,'maximo':maximo, 'observa':observa}})
+
+    miConexionx.close()
+    print(rasgos)
+    context['Rasgos'] = rasgos
+
+    print("Rasgos  =  ", rasgos)
+
+    serialized1 = json.dumps(rasgos, default=serialize_datetime)
+
+    return HttpResponse(serialized1,   content_type='application/json')
+    #return JsonResponse(json.dumps(serialized1),  safe=False)
+
+
+
+
+
+
 def GuardarResultadoRasgo ( request):
 
     print ("Entre guardar resultado rasgo")
@@ -545,7 +853,7 @@ def GuardarResultadoRasgo ( request):
         estadoReg= 'A'
         #dependenciasRealizado_id= 1
         ultConsec = HistoriaResultados.objects.all().filter(historiaExamenes_id=examId).aggregate(maximo=Coalesce(Max('consecResultado'),0))
-        consecResultad = (ultConsec['maximo']) + 1
+        consecResultado = (ultConsec['maximo']) + 1
         fechaResultado = datetime.datetime.now()
 
         ## falta usuarioRegistro_id
