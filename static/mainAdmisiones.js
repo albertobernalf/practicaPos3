@@ -2004,8 +2004,9 @@ $(document).on('click', '#Furips', function(event) {
 var valor = $('input[name="ingresoId"]:checked').val();
 	var numeroRadicacion = document.getElementById("numeroRadicacion").value; 
 	var numeroFactura = document.getElementById("numeroFactura").value;
-	var primerApellidoVictima = "lalo";
-	var fechaRadicado = "2024-12-01"
+	var primerNombreVictima = document.getElementById("primerNombreVictima").value;
+	var primerApellidoVictima = document.getElementById("primerApellidoVictima").value;
+	var fechaRadicado  = document.getElementById("fechaRadicado").value; 
 
 
 	alert("La fila selecionada es el id = " + valor);
@@ -2020,6 +2021,7 @@ var valor = $('input[name="ingresoId"]:checked').val();
 			'ingresoId':valor,
 			'numeroRadicacion':numeroRadicacion,
 			'numeroFactura':numeroFactura,
+			'primerNombreVictima':primerNombreVictima,
 			'primerApellidoVictima':primerApellidoVictima,
 			'fechaRadicado':fechaRadicado
 			},
@@ -2032,6 +2034,7 @@ var valor = $('input[name="ingresoId"]:checked').val();
 		 $('#convConsecA').val(cambioServicio['Usuarios'].consec);
 		 $('#responsablesC').val(cambioServicio['Usuarios'].responsable);
 		  $('#acompananteC').val(cambioServicio['Usuarios'].acompanante);
+		 $("#mensajes").html(" !  Registro Actualizado !");
 
                     },
 	   		    error: function (request, status, error) {

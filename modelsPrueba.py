@@ -104,14 +104,14 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
    7. Comenzar a crear tablas cums, cups solidas las dfinitivas
    8. No me desaparecio la ventana  Modal .crear admison desde triage, el query de regreso Nop funciono mostraba en triage aun la persona
    9. Esta pendiente aun no abre la modal encuentraModal, para editar admision 
-      Pendiente colocar el default d ela fecha de naciemient en usuarios.-
+      Pendiente colocar el default de la fecha de nacimiento en usuarios.-
    11. el alto de la tabla pilas debe ser fijo para que funcione el scroll   
        trabajar sobbre DELETE,mensajes de error, presesntacion apoyo terapeutico
        Hay un problema con el delete de apoyo terapeutico RASGOS, por cua ?
        Falta colocar el nombre del paciente en respuestas apoyo terapeutico
 
        hoy
-	1. indicadores (como enviarlo por load_ en ajax estos valores 
+	1. indicadores (como enviarlo por load_ en ajax estos valores)
         2. delete terapeutico
         3. consulta resultados (solo falta al momento de ingresar selccinar un registro)
         4. furips

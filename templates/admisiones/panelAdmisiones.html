@@ -50,12 +50,12 @@ tablaConveniosAdmisiones tr {
 
 {% block indicadores %}
 
-<span style="padding-right:3px; padding-top: 3px; display:inline-block;">
-Hospitalizados: <img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador3.png' %}></img>
-Urgencias: <img class="manImg" src={% static 'img/iloveimg-converted/icons8-enfermera-48.png' %}></img>
-Triage: <img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador3.png' %}></img>
-Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador3.png' %}></img>
-
+<span style="padding-left:8px; padding-right:3px; padding-top: 3px; display:inline-block;">
+Alta Medica: <img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador31.JPG' %}></img> <span id="alta" name="alta" style='color:red'>{{altaMedica}} </span>
+Hospitalizados: <img class="manImg" src={% static 'img/iloveimg-converted/icons8-enfermera-48_X.JPGg' %}></img> <span id="hosp" name="hosp" style='color:red'>{{Hospitalizados}} </span>
+Urgencias: <img class="manImg" src={% static 'img/iloveimg-converted/icons8-enfermera-48_X.JPG' %}></img> <span id="urg" name="urg" style='color:red'>{{Urgencias}} </span>
+Triage: <img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador31.JPG' %}></img> <span id="tria" name="tria" style='color:red'>{{Triage}} </span>
+Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador31.JPG' %}></img> <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </span>
 </span>
 
 
@@ -1200,8 +1200,10 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
                                             
                                         </div>
                                         <div class="col-1">
-                                            {{FuripsForm.primerNombreVictima.label}}
-					{{FuripsForm.primerNombreVictima}}
+                                            <label for="primerNombreVictima" class="col-sm-6 control-label">primerNombreVictima:</label>
+
+				 <input type="text" id="primerNombreVictima" name="primerNombreVictima" value="">
+
                                             
                                         </div>
                                         <div class="col-1">
@@ -1210,8 +1212,12 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
                                             
                                         </div>
                                         <div class="col-1">
-                                            {{FuripsForm.primerApellidoVictima.label}}
-					{{FuripsForm.primerApellidoVictima}}
+
+                                            <label for="primerApellidoVictima" class="col-sm-6 control-label">primerNombreVictima:</label>
+
+				 <input type="text" id="primerApellidoVictima" name="primerApellidoVictima" value="">
+
+
                                             
                                         </div>
                                         <div class="col-1">
