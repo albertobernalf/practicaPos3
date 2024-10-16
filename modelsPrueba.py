@@ -130,6 +130,78 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 --  FACTURACION 
 -----------------------------------------------------------------------------------------------------------------------
 
+  -- Procesos de Calculo para Tarifas
+	a) Se consulta el convenio del paciente y el tipo de tarifa que maneja el convenio del paciente
+        b) Se va al detalle del convenio, se consulta el CUPS A calcular
+           b) Si es SOAT
+	      Si existe Grupo Qx:	
+			 Es Honorario Profesional
+			 Es material de sautura y/o curacion
+			 Es sala de Cirugia
+ 			  (Se busca en la tabla liquidacionHonorarios, el grupo Qx de acuerdo a la tabla examenes
+			   y cada tipo de honorario, se extracta el # de salarios minimos legales y se multiplica
+                           por el valor del año . salario.minmo legal y yap)
+
+	      Si No existe Grupo Qx, o hay un valorSoat en la tabla Tarifas para el Cups en cuestion:	
+
+			  (Se busca en la tabla tarifas.Tarifas el valorSoat)
+			 
+ 	   c) Si es ISS2001
+
+			 Es Honorario Profesional
+			 Es material de sautura y/o curacion
+			 Es sala de Cirugia
+			 Es sala de Cirugia
+
+ 			  (Se busca en la tabla liquidacionHonorarios, el codigoCups_id de acuerdo a la tabla examenes
+			   y se compara la cantidad de uvr del proced con minUvr, maxUvr de la tabla tarifas 
+                           y de acuerdo a cada tipo de honorario, se extracta el valor en uvr * el valoruvrAño y
+                          de acuerdo a cada tipo de honorario y yap)
+
+	      Si No existe Grupo Qx, o hay un valorIss en la tabla Tarifas para el Cups en cuestion:	
+
+			  (Se busca en la tabla tarifas.Tarifas el valorIss)
+
+
+
+
+
+	   d) Particular
+
+			 Es Honorario Profesional
+			 Es material de sautura y/o curacion
+			 Es sala de Cirugia
+			
+			(Se busca en la tabla LiquidacionHonorarios el codigoCups_id de acuerdo a la tabla examenes
+                         y de acuerdo al Valor se liquida y de acuerdo al tipo de honorario)
+
+		  Si No existe Grupo Qx, o hay un valorPropio en la tabla Tarifas para el Cups en cuestion:	
+
+			  (Se busca en la tabla tarifas.Tarifas el valorPropio)
+                         
+
+
+	   e) Propias
+
+
+
+  			 Es Honorario Profesional
+			 Es material de sautura y/o curacion
+			 Es sala de Cirugia
+
+			(Se busca en la tabla LiquidacionHonorarios el codigoCups_id de acuerdo a la tabla examenes
+                         y de acuerdo al Valor se liquida y de acuerdo al tipo de honorario)
+
+		  Si No existe Grupo Qx, o hay un valorPropio en la tabla Tarifas para el Cups en cuestion:	
+
+			  (Se busca en la tabla tarifas.Tarifas el valorPropio)
+                         
+
+
+
+
+      
+
 -----------------------------------------------------------------------------------------------------------------------
 --  GLOSAS
 -----------------------------------------------------------------------------------------------------------------------

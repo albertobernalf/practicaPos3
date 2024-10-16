@@ -1,7 +1,323 @@
 {% extends "facturacion/menuFacturacion.html" %}
 {% load static %}
 
+{% block head %}
+
+
+<link rel="stylesheet" type="text/css" href={% static 'css/panelFacturacion.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+<link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
+<script src={% static 'js/panelTabsFacturacion.js' %} defer >         </script>
+<script src="https://kit.fontawesome.com/5d0337a043.js" crossorigin="anonymous"></script>
+ <script src={% static 'mainFacturacion.js' %} defer > </script>
+
+<div class="marco">
+    <ul class="tabs">
+        <li><a href="#Facturacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
+            Facturacion Clinica </a></li>
+        <li><a href="#Liquidacion"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Liquidacion Cuenta</a></li>
+        <li><a href="#Factura"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Elaboracion Factura </a></li>
+        <li><a href="#Abonos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Abonos Pacientes </a></li>
+	 <li><a href="#Traslados"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Traslados Convenios </a></li>
+    </ul>
+</div>
+
+{% endblock %}
+
+{% block encabezado %}
+
+
+
+{% endblock %}
+
+
 {% block content %}
-PANEL DE APOYO FACTURACION RELLENAR
+
+<div class="marco">
+    <div class="secciones">
+        <article id="Facturacion">
+        <center><h3>Facturacion</h3></center>
+            <form action="/crearFacturacion/" method="get" id="FormFacturacion">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+
+            </form>
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+
+                            </div>
+                        </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="alert alert-success success-msg" style="display:none"></div>
+                                        <table  id= "tablaFacturacion" class="display nowrap table table table-bordered  tablaFacturacion table-hover table-sm dtr-inline">
+
+
+                                            <thead>
+                                            <tr>
+                                                <th style="width:5%;">Tipo</th>
+                                                <th style="width:5%;">id</th>
+                                                <th style="width:5%;">TipoDoc</th>
+                                                <th style="width:12%;">Documento</th>
+                                                <th style="width:20%;">Paciente</th>
+                                                <th style="width:3%;">#</th>
+                                                <th style="width:3%;">FecIngreso</th>
+
+                                                <th style="width:12%;">Servicio</th>
+                                                <th style="width:12%;">Cama</th>
+
+                                                <th style="width:5%;">Action</th>
+                                                <!--  <th data-visible="true"></th>  -->
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom">
+                                            <tr style="height:10%">
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> <!-- cierra body -->
+
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article id="Liquidacion">
+            <center><h3>Liquidacion de Cuentas</h3></center>
+
+        </article>
+
+            <article id="Factura">
+            <center><h3>Impresion Factura</h3></center>
+        </article>
+
+        <article id="Abonos">
+            <center><h3>Abonos</h3></center>
+
+            <script type="text/javascript">
+		    var $ = jQuery;
+		    function cargarTablaAbonosPaciente()
+	        {
+
+
+  	        var data =  {}   ;
+                var sede = document.getElementById("sede").value;
+                data['sede'] = sede;
+                var ingresoId= document.getElementById("ingresoId4").value;
+                data['ingresoId'] = ingresoId;
+                data = JSON.stringify(data);
+	            table = $("#tablaAbonosAdmisiones").dataTable().fnDestroy();
+                initTableAbonos(data);
+            }
+            </script>
+
+            <table class="table  " style="height: 50px; background-color:LightGray;  width:90%;">
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <!-- DESDE AQUIP DATATABLE  -->
+
+                        <table class="table"
+                               style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+                            <form class="form-inline" action="/crearAbonosPacienteDef/" method="POST"
+                                  id="FormaAbonosPaciente">
+                                <input type="hidden" id="sede4" name="sede4" value="{{Sede}}">
+                                <input type="hidden" id="ingresoId4" name="ingresoId4" value="">
+
+
+                                <!-- INICIO TABLE DE  EL DATATABLE  -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <input type="button" id="btn-rango" name="btn-rango"
+                                                               value="Generar consulta ¡"
+                                                               onClick="cargarTablaAbonosPaciente()">
+                                                        <div class="alert alert-success success-msg"
+                                                             style="display:none"></div>
+
+                                                    </div>
+
+                                                    <div class="col-sm-1">
+                                                        <input type="text" id="convTipoDocA" name="convTipoDocA"
+                                                               value="" readonly>
+                                                    </div>
+
+                                                    <div class="col-sm-1">
+                                                        <input type="text" id="convNumdocA" name="convNumdocA" value=""
+                                                               readonly>
+                                                    </div>
+
+                                                    <div class="col-sm-1">
+                                                        <input type="text" id="convPacienteA" name="convPacienteA"
+                                                               value="" readonly>
+                                                    </div>
+
+                                                    <div class="col-sm-1">
+                                                        <input type="text" id="convConsecA" name="convConsecA" value=""
+                                                               readonly>
+                                                    </div>
+
+
+                                                    <div class="col-sm-3 text-end">
+                                                        <span class="text-secondary">Crear Abono</span>
+                                                        <a class="btn btn-success" href="javascript:void(0)"
+                                                           id="createNewPostAbonos"> <i class="fa fa-plus"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+
+                                                        <table id=tablaAbonosAdmisiones
+                                                               class="display nowrap table table table-bordered  tablaAbonosAdmisiones table-hover table-sm dtr-inline">
+
+                                                            <thead>
+                                                            <tr>
+                                                                <th style="width:25;">Tipo Pago</th>
+                                                                <th style="width:25;">Forma Pago</th>
+                                                                <th style="width:25%;">Valor</th>
+                                                                <th style="width:12%;">Descripcion</th>
+                                                                <th style="width:3%;">Borrar</th>
+                                                                <!--  <th data-visible="true"></th>  -->
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody style="vertical-align:bottom">
+                                                            <tr style="height:10%">
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIN TABLE DE  EL DATATABLE  -->
+                            </form>
+                        </table>
+
+                        <!-- HASTA AQUI DATATABLE -->
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <!-- Espacio Modales  -->
+
+            <div class="modal fade" id="crearAbonosModel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeading"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+                            <form id="postFormCrearAbonos" name="postFormCrearAbonos" class="form-horizontal"
+                                  novalidate>
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" id="post_id">
+                                <input type="hidden" id="sede22" name="sede22" value="{{Sede}}">
+                                <input type="hidden" id="ingresoId22" name="ingresoId22" value="">
+
+                                <div class="col">
+                                    <label for="tipoPago" class="col-sm-2 control-label">Tipo Pago:</label>
+                                    <select class="form-select  h-100 w-200" aria-label="" id="tipoPago"
+                                            name="tipoPago">
+                                        {% for tiposPagos in TiposPagos %}
+                                        <option value="{{tiposPagos.id}}"> {{tiposPagos.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="formaPago" class="col-sm-2 control-label">Forma Pago:</label>
+                                    <select class="form-select  h-100 w-200" aria-label="" id="formaPago"
+                                            name="formaPago">
+                                        {% for formasPagos in FormasPagos %}
+                                        <option value="{{formasPagos.id}}"> {{formasPagos.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    Valor:
+                                    <input type="text" id="valorAbono" name="valorAbono" value="0"></input>
+                                </div>
+                                <div class="col">
+                                    Descripcion:
+                                    <input type="text" id="descripcionAbono" name="descripcionAbono" value="0"> </input>
+                                </div>
+                                <div class="col-sm-offset-2 col-sm-10 mt-2">
+                                    <button type="submit" class="btn btn-primary" id="saveBtnCrearAbonos"
+                                            value="create">Guardar
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article id="Traslados">
+            <center><h3>Traslados Convenios</h3></center>
+        </article>
+
+
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+<span> Avisos ... </span>
+     <span id="mensajes" name="mensajes">xxxx </span>
+
+</div>
+{% endblock %}
+
+
+{% block footer %}
+
 {% endblock %}
 

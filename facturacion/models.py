@@ -101,6 +101,7 @@ class Suministros (models.Model):
     viaAdministracion = models.ForeignKey('clinico.ViasAdministracion', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     codigoAtc  =  models.ForeignKey('clinico.Atc', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     cums = models.ForeignKey('rips.RipsCums', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    tipoHonorario = models.ForeignKey('tarifas.TiposHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     ripsTipoMedicamento = models.ForeignKey('rips.RipsTipoMedicamento', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='RipsTipo01')
     ripsCums = models.ForeignKey('rips.RipsCums', blank=True,null= True, editable=True, on_delete=models.PROTECT,  related_name='RipsCums01')
     ripsDci = models.ForeignKey('rips.RipsDci', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='RipsDci01')

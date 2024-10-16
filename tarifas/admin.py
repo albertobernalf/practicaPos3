@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from tarifas.models import TiposHonorarios, LiquidacionHonorarios, Uvr, TiposSalas, LiquidacionDerechos, Tarifas, TiposTarifa, GruposQx, Tarifassuministros
+from tarifas.models import TiposHonorarios, LiquidacionHonorarios, Uvr, TiposSalas, LiquidacionDerechos, Tarifas, TiposTarifa, GruposQx, TarifasSuministros
 
 
 @admin.register(TiposHonorarios)
@@ -77,8 +77,8 @@ class gruposQxAdmin(admin.ModelAdmin):
    list_filter = ("id", "nombre")
 
 
-@admin.register(Tarifassuministros)
-class tarifassuministrosAdmin(admin.ModelAdmin):
+@admin.register(TarifasSuministros)
+class tarifasSuministrosAdmin(admin.ModelAdmin):
 
    list_display = ("id", "tipoTarifa", "suministro_id", "codigoHomologado")
    search_fields = ("id", "tipoTarifa", "suministro_id", "codigoHomologado")

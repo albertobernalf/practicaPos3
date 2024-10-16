@@ -3,14 +3,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src={% static 'mainTarifas.js' %} defer> </script>
+    <script src={% static 'mainFacturacion.js' %} defer> </script>
     <title>
         {% block title %} {% endblock %}
     </title>
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom css -->
     <link rel="stylesheet" type="text/css"  href = {% static 'css/login.css' %} >
- <link rel="stylesheet" type="text/css" href={% static 'css/panelFacturacion.css' %}
+ <link rel="stylesheet" type="text/css" href={% static 'css/panelFacturacion.css' %} 
     <link rel="stylesheet" type="text/css"  href = {% static 'nav_sidebar.css' %} >
     <link rel="stylesheet" type="text/css"  href = {% static 'css/base.css' %} >
     <link rel="stylesheet" type="text/css"  href = {% static 'css/responsive.css' %} >
@@ -171,22 +171,9 @@
 
 {% block head  %}
 <script>
-window.onload = function(){
-  var fecha = new Date(); //Fecha actual
-  var mes = fecha.getMonth()+1; //obteniendo mes
-  var dia = fecha.getDate(); //obteniendo dia
-  var ano = fecha.getFullYear(); //obteniendo año
-  if(dia<10)
-    dia='0'+dia; //agrega cero si el menor de 10
-  if(mes<10)
-    mes='0'+mes //agrega cero si el menor de 10
-  document.getElementById('busDesde').value=ano+"-"+mes+"-"+dia;
-  document.getElementById('busHasta').value=ano+"-"+mes+"-"+dia;
-}
 </script>
-
-
 {% endblock %}
+
 
 <div class="marco">
     {% block usuarios %}
@@ -196,17 +183,22 @@ window.onload = function(){
     {% endblock %}
 </div>
 
+{% block encabezado  %}
 
+{% endblock %}
 
 {% block content  %}
 
 {% endblock %}
 
-{% block mensajeria  %}
+{% block totales  %}
 
 {% endblock %}
 
 
+{% block mensajeria  %}
+
+{% endblock %}
 
 {% block footer  %}
 
@@ -232,4 +224,3 @@ window.onload = function(){
 
 </body>
 </html>
-
