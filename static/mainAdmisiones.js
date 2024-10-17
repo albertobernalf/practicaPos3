@@ -79,7 +79,7 @@ $(document).ready(function () {
         Click to Edit Button
         --------------------------------------------
         --------------------------------------------*/
-        $('body').on('click', '.editPostConvenios', function () {
+        $('body').on('click', '.editPost', function () {
 
           var post_id = $(this).data('pk');
           alert("pk1 = " + $(this).data('pk'));
@@ -233,7 +233,7 @@ $(document).ready(function () {
         Delete Post Code
         --------------------------------------------
         --------------------------------------------*/
-        $("body").on("click",".deletePost",function(){
+        $("body").on("click",".deletePostConvenios",function(){
             var current_object = $(this);
             var action = current_object.attr('data-action');
             var token = $("input[name=csrfmiddlewaretoken]").val();
@@ -1845,7 +1845,7 @@ function initTableConvenios(data) {
                     "render": function ( data, type, row ) {
                         var btn = '';
                        //   btn = btn + " <button   class='btn btn-primary editPostConvenios' data-pk='" + row.pk + "'>" + "</button>";
-			  btn = btn + " <button class='btn btn-danger deletePostAbonos' data-action='post/" + row.pk + "/delete' data-pk='" + row.pk + "'>" + '<i class="fa fa-trash"></i>' + "</button>";
+			  btn = btn + " <button class='btn btn-danger deletePostConvenios' data-action='post/" + row.pk + "/delete' data-pk='" + row.pk + "'>" + '<i class="fa fa-trash"></i>' + "</button>";
 
                         return btn;
                     },

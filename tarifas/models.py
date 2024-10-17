@@ -20,6 +20,7 @@ class Tarifas (models.Model):
     tipoTarifa = models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TipoTarifa01')
     codigoHomologado = models.CharField(max_length=10, blank=True, null=True, editable=True)
     concepto = models.ForeignKey('facturacion.Conceptos', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Concepto01')
+    codigoSuministro =  models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Suminis123')
     codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Cups101')
     cantidadUvr = models.DecimalField( max_digits=10, decimal_places=4,blank=True,null= True, editable=True,) 	
     uvrAño = models.ForeignKey('tarifas.Uvr', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Uvr101')
@@ -33,6 +34,7 @@ class Tarifas (models.Model):
     estadoReg = models.CharField(max_length=1, default='A', editable=False )
 
     def __str__(self):
+
         return str(self.nombre)
 
 class TarifasSuministros (models.Model):
@@ -47,7 +49,7 @@ class TarifasSuministros (models.Model):
     estadoReg = models.CharField(max_length=1, default='A', editable=False )
 
     def __str__(self):
-        return str(self.nombre)
+        return str(self.suministro)
 
 
 
@@ -80,6 +82,7 @@ class LiquidacionHonorarios(models.Model):
     codigoHomologado = models.CharField(max_length=10, blank=True,null= True , editable=True )
     tipoHonorario =  models.ForeignKey('tarifas.TiposHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoHonorario01')
     descripcion =  models.CharField(max_length=100, blank=True,null= True , editable=True )
+    codigoSuministro =  models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Suminis127')
     grupoQx =  models.ForeignKey('tarifas.GruposQx', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='GrupoQx01')
     salMinLeg = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
     salariosMinimosLegales =  models.ForeignKey('facturacion.SalariosMinimosLegales', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='MinLeg01')

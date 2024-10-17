@@ -97,7 +97,7 @@ function initTableFacturacion(data) {
                           btn = btn + " <input type='radio'  class='form-check-input editPostFacturacion' data-pk='" + row.pk + "'>" + "</input>";
                         return btn;
                     },
-                    "targets": 9
+                    "targets": 10
                }
             ],
             ajax: {
@@ -118,6 +118,7 @@ function initTableFacturacion(data) {
   
 		{ data: "fields.servicioNombreIng"},
                 { data: "fields.camaNombreIng"},
+		 { data: "fields.convenio"},
 
         
             ]

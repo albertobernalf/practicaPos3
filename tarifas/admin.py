@@ -80,7 +80,7 @@ class gruposQxAdmin(admin.ModelAdmin):
 @admin.register(TarifasSuministros)
 class tarifasSuministrosAdmin(admin.ModelAdmin):
 
-   list_display = ("id", "tipoTarifa", "suministro_id", "codigoHomologado")
-   search_fields = ("id", "tipoTarifa", "suministro_id", "codigoHomologado")
+   list_display = ("id", "tipoTarifa", "suministro", "codigoHomologado")
+   search_fields = ("id", "tipoTarifa", "suministro", "codigoHomologado")
    # Filtrar
-   list_filter =("id", "tipoTarifa", "suministro_id", "codigoHomologado")
+   list_filter =("id", "tipoTarifa", "suministro", "codigoHomologado")

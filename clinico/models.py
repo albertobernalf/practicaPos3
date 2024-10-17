@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.timezone import now
+from django.db.models.functions import Cast
+from django.db.models import IntegerField
+from django.db.models import CharField
 
 # Create your models here.
 
@@ -207,12 +210,15 @@ class Examenes(models.Model):
     cuentaContable = models.CharField(max_length=20, blank=True, null=True, editable=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
+    class Meta:
+        ordering = [Cast('nombre' , output_field=CharField)]
 
     class Meta:
         unique_together = (('codigoCups'),)
 
     def __str__(self):
-        return self.nombre
+        return '%s %s' % (self.nombre , self.codigoCups)
+        #return self.nombre
 
 class EstadosInterconsulta(models.Model):
                 id = models.AutoField(primary_key=True)

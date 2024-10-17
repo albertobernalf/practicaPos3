@@ -100,7 +100,7 @@ class Suministros (models.Model):
     formasFarmaceutica = models.ForeignKey('rips.RipsFormaFarmaceutica', blank=True,null= True, editable=True, on_delete=models.PROTECT )
     viaAdministracion = models.ForeignKey('clinico.ViasAdministracion', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     codigoAtc  =  models.ForeignKey('clinico.Atc', blank=True,null= True, editable=True, on_delete=models.PROTECT)
-    cums = models.ForeignKey('rips.RipsCums', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    cums =  models.CharField(max_length=50,blank=True,null= True,  editable=True )
     tipoHonorario = models.ForeignKey('tarifas.TiposHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     ripsTipoMedicamento = models.ForeignKey('rips.RipsTipoMedicamento', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='RipsTipo01')
     ripsCums = models.ForeignKey('rips.RipsCums', blank=True,null= True, editable=True, on_delete=models.PROTECT,  related_name='RipsCums01')
@@ -316,9 +316,6 @@ class Facturacion(models.Model):
 
 class FacturacionDetalle(models.Model):
     id = models.AutoField(primary_key=True)
-    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TablaTiposDoc101')
-    documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
-    consecAdmision = models.IntegerField(editable=True, null=True, blank=True)
     facturacion = models.ForeignKey('facturacion.facturacion', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Fact01')
     consecutivoFactura =  models.IntegerField(editable=True, null=True, blank=True)
     fecha = models.DateTimeField(editable=True, null=True, blank=True)
@@ -392,9 +389,7 @@ class Liquidacion(models.Model):
 
 class LiquidacionDetalle(models.Model):
     id = models.AutoField(primary_key=True)
-    tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TiposDoc125')
-    documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
-    consecAdmision = models.IntegerField(editable=True, null=True, blank=True)
+    liquidacion = models.ForeignKey('facturacion.Liquidacion', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Liquid01')
     consecutivo = models.IntegerField(editable=True, null=True, blank=True)
     fecha = models.DateTimeField(editable=True, null=True, blank=True)
     #tarifa

@@ -129,6 +129,13 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 -----------------------------------------------------------------------------------------------------------------------
 --  FACTURACION 
 -----------------------------------------------------------------------------------------------------------------------
+	-- Ojo en buscar examenes EN ADMIN error en buscar campo
+        -- Ojo crear programa ( Query) que tomo un porcentaje de una tarifa ejempo SOAT - 10% y cree nuevo tarifario
+        -- Ojo crear programa (Query) que tome toda la tarifa y lo copie a un convenio
+        -- Ojo ops no hay forma de traer un convenio a una persona con TRIAGE ops, ERROR como arreglar???
+       Mañana : -- formular a paula, medica, proc qx, etc
+                -- Responder por apoyo teraputico lo uqe se pueda
+                -- crear ventana liquidacion con datatables a liquidacion, liquidaciondetalle
 
   -- Procesos de Calculo para Tarifas
 	a) Se consulta el convenio del paciente y el tipo de tarifa que maneja el convenio del paciente
