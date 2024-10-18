@@ -34,13 +34,15 @@ class Tarifas (models.Model):
     tipoTarifa = models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TipoTarifa01')
     codigoHomologado = models.CharField(max_length=10, blank=True, null=True, editable=True)
     concepto = models.ForeignKey('facturacion.Conceptos', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Concepto01')
-    codigoSuministro =  models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Suminis123')
+    grupoQx = models.ForeignKey('tarifas.GruposQx', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Grupo01')
     codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Cups101')
+    salMinLeg = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    salariosMinimosLegales =  models.ForeignKey('facturacion.SalariosMinimosLegales', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='MinLeg01')
+    valorSoat = models.DecimalField( max_digits=20, decimal_places=4,blank=True,null= True, editable=True,)
+    codigoSuministro =  models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Suminis123')
     cantidadUvr = models.DecimalField( max_digits=10, decimal_places=4,blank=True,null= True, editable=True,) 	
     uvrAño = models.ForeignKey('tarifas.Uvr', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Uvr101')
     valorIss = models.DecimalField( max_digits=20, decimal_places=4,blank=True,null= True, editable=True,)
-    grupoQx = models.ForeignKey('tarifas.GruposQx', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Grupo01')
-    valorSoat = models.DecimalField( max_digits=20, decimal_places=4,blank=True,null= True, editable=True,)
     valorPropio =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
     paquete = models.CharField(max_length=1, blank=True,null= True, editable=True)
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT , related_name='plantas200')
@@ -64,8 +66,6 @@ class TarifasSuministros (models.Model):
 
     def __str__(self):
         return str(self.suministro)
-
-
 
 
 class GruposQx(models.Model):

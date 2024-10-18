@@ -134,60 +134,79 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
         -- Ojo crear programa (Query) que tome toda la tarifa y lo copie a un convenio
         -- Ojo ops no hay forma de traer un convenio a una persona con TRIAGE ops, ERROR como arreglar???
         -- ojo en Apoyo terapeutico falta colocar el nombre del paciente, servicio, cama
+        -- ojo en apoyp terapeutico cuando responden hacer la parte de factutracionm crear cabeza detalle con los datos
+           que ingresan
 
        Mañana : -- formular a paula, medica, proc qx, etc
          
                 -- Responder por apoyo teraputico lo uqe se pueda
                 -- crear ventana liquidacion con datatables a liquidacion, liquidaciondetalle
 
-  -- Procesos de Calculo para Tarifas
+  -- Procesos de Calculo para Tarifas (Se debe crear aplicativo, que actualize en tabla Tarifas , LiquidacionHonorarios)
+
+        La tabla TarifasSuministros creo desaparece
+
+
 	a) Se consulta el convenio del paciente y el tipo de tarifa que maneja el convenio del paciente
         b) Se va al detalle del convenio, se consulta el CUPS A calcular
            b) Si es SOAT
-	      Si existe Grupo Qx:	
-			 Es Honorario Profesional
-			 Es material de sautura y/o curacion
-			 Es sala de Cirugia
- 			  (Se busca en la tabla liquidacionHonorarios, el grupo Qx de acuerdo a la tabla examenes
-			   y cada tipo de honorario, se extracta el # de salarios minimos legales y se multiplica
-                           por el valor del año . salario.minmo legal y yap)
 
-	      Si No existe Grupo Qx, o hay un valorSoat en la tabla Tarifas para el Cups en cuestion:	
+              Es cirugia : El liquidacionHonorarios se buscan los tiposhonorarios: medico,anestesiologo,audante
+			   Se liquidan los Derechos de Sala
+			   Se liquidan los materilaes de SUTURA
+			   
 
-			  (Se busca en la tabla tarifas.Tarifas el valorSoat)
-			 
+	      No es cirugia: se busca en examenes el gruppoqx, se ubica en la tabla tarifas y en examenes se busca el grupoQx se actualzian salmingel minlegaño y valorSoat
+
+	      Se liquidan los medicamentos
+	      Se liquida el oxigeno
+	
+				 
  	   c) Si es ISS2001
 
-			 Es Honorario Profesional
-			 Es material de sautura y/o curacion
-			 Es sala de Cirugia
-			 Es sala de Cirugia
+	     Es cirugia : De acuerdo tabla HonorariosIss creo
 
- 			  (Se busca en la tabla liquidacionHonorarios, el codigoCups_id de acuerdo a la tabla examenes
-			   y se compara la cantidad de uvr del proced con minUvr, maxUvr de la tabla tarifas 
+                        Se liquidan el Honorario Profesional,, de acuerdo a la tabla HonorariosIss
+			Se liquida el honorario Anestesilogo ,, de acuerdo a la tabla HonorariosIss
+ 			Se liquida el honorario Ayudante ,, de acuerdo a la tabla HonorariosIss
+			Se liquidan Derechos de Sala, creo tabla liquidacionHonorarios
+			Se liquida los materiales de sutura y curacion creo tabla de acuerdo a la tabla HonorariosIss y se graban en la tabla LiquidacionHonorarios
+			Se liquida oxigeno  ??? Crear esto como un honorario
+
+	    No es Cirugia, es Procedimiento
+
+			Crea en la tabla Tarifas se consulta, se crea alli creo.-
+
+ 			  (Se busca en la tabla examenes, el codigoCups_id 
+			   y se compara la cantidad de uvr del proced con minUvr, maxUvr de la tabla TarifasIss
                            y de acuerdo a cada tipo de honorario, se extracta el valor en uvr * el valoruvrAño y
-                          de acuerdo a cada tipo de honorario y yap)
-
-	      Si No existe Grupo Qx, o hay un valorIss en la tabla Tarifas para el Cups en cuestion:	
-
-			  (Se busca en la tabla tarifas.Tarifas el valorIss)
+                          de acuerdo a cada tipo de honorario y yap y se guarda en liquidacionHonorarios)
 
 
+
+           Se liquidan los medicamentos , creo en la tabla Tarifas, pues sacamosTarifasSuministros
+	   Se liquida el oxigeno, estop de donde ????
 
 
 
 	   d) Particular
 
+
+	      Si es cirugia
+
 			 Es Honorario Profesional
+			 Es honorario anestesiologo
+			 Es honoraro ayudante
 			 Es material de sautura y/o curacion
 			 Es sala de Cirugia
 			
 			(Se busca en la tabla LiquidacionHonorarios el codigoCups_id de acuerdo a la tabla examenes
-                         y de acuerdo al Valor se liquida y de acuerdo al tipo de honorario)
+                         y ser guarda en liquidacionHonorarios y de acuerdo al tipo de honorario)
 
-		  Si No existe Grupo Qx, o hay un valorPropio en la tabla Tarifas para el Cups en cuestion:	
+	     Si no es cirugia
 
 			  (Se busca en la tabla tarifas.Tarifas el valorPropio)
+
                          
 
 
@@ -207,6 +226,8 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 			  (Se busca en la tabla tarifas.Tarifas el valorPropio)
                          
 
+
+  -- Procesos de Calculo para traer convenio - tarifa (Aqui ya esta todo calculado, solo es leer ele valor)
 
 
 
