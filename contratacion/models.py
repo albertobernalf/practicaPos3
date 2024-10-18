@@ -69,10 +69,26 @@ class ConveniosDetalle (models.Model):
 
     tarifaSuministros = models.ForeignKey('tarifas.TarifasSuministros', blank=True,null= True, editable=True, on_delete=models.PROTECT) 
     codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Cups110')
-    valorPropio =  models.DecimalField( max_digits=15, decimal_places=4,blank=True,null= True, editable=True)
+    #valorPropio =  models.DecimalField( max_digits=15, decimal_places=4,blank=True,null= True, editable=True)
+    valorNeto =  models.DecimalField( max_digits=15, decimal_places=4,blank=True,null= True, editable=True)
     usuarioRegistro = models.ForeignKey('planta.Planta', default=1, on_delete=models.PROTECT, null=True)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False )
 
     def __str__(self):
         return str(self.id)
+
+class ConveniosLiquidacionHonorarios (models.Model):
+    id = models.AutoField(primary_key=True)
+    convenio = models.ForeignKey('contratacion.Convenios', blank=True,null= True, editable=True, on_delete=models.PROTECT)        
+    liquidacionHonorario = models.ForeignKey('tarifas.LiquidacionHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT)    
+    valorNeto =  models.DecimalField( max_digits=15, decimal_places=4,blank=True,null= True, editable=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='plantas212')
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False )
+
+
+    def __str__(self):
+        return str(self.id)
+
+

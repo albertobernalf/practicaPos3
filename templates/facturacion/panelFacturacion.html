@@ -22,6 +22,15 @@
     </ul>
 </div>
 
+<style>
+div.dataTables_wrapper  div.dataTables_filter input {
+   height: 5px;
+   padding:10px;
+   border-radius:8px;
+}
+</style>
+
+
 {% endblock %}
 
 {% block encabezado %}
@@ -111,8 +120,86 @@
             </div>
         </article>
 
-        <article id="Liquidacion">
-            <center><h3>Liquidacion de Cuentas</h3></center>
+ <article id="Liquidacion">
+          <!--   <center><h3>Liquidacion de Cuentas</h3></center> -->
+
+		 <!--  Datos Liquidacion Cabecera READONLY (crear Div de Encabezados -->
+			<div style="height: 70px;  width:100%; background-color:#EBEBEB;"> 
+
+			AQUI ENZABEZADOS
+
+
+
+
+
+
+
+			</div>
+
+		 <!--  FIN Datos Liquidacion Cabecera READONLY (crear Div de Encabezados -->
+
+		 <!--  Data Table LiquidacionDetalle  -->
+
+	
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+				AQU CAMPOS QUE ADICIONAN VALORES 
+				 <!--  Campos y botones ADICIONAR para añadir valores  -->
+                            </div>
+                        </div>
+                            <div class="card-body" style="height:350px;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="alert alert-success success-msg" style="display:none"></div>
+                                        <table  id= "tablaFacturacionDetalle" class="display nowrap table table table-bordered  tablaFacturacionDetalle table-hover table-sm dtr-inline">
+
+                                            <thead>
+                                            <tr>
+                                                <th>Tipo</th>
+                                                <th>id</th>
+                                                <th>TipoDoc</th>
+                                                <th>Documento</th>
+                                                <th>Paciente</th>
+                                                <th>#</th>
+                                                <th>FecIngreso</th>
+
+                                                <th">Servicio</th>
+                                                <th>Cama</th>
+						 <th>Convenio</th>
+
+                                                <th>Action</th>
+                                              
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom">
+                                            <tr style="height:10%">
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> <!-- cierra body -->
+
+                    </div>
+                </div>
+            </div>
+
+
+		 <!--  FIN Data Table LiquidacionDetalle  -->
+
+		 <!--  Totales  (Crear Div De Totales)-->
+
+			<div style="height: 40px;  width:100%;  background-color:#EBEBEB;"> 
+
+
+				AQUI TOTALES
+
+			</div>
+
+		 <!--  Fin Totales  (Crear Div De Totales)-->
 
         </article>
 
@@ -125,7 +212,7 @@
 
             <script type="text/javascript">
 		    var $ = jQuery;
-		    function cargarTablaAbonosPaciente()
+		    function cargarTablaAbonosFacPaciente()
 	        {
 
 
@@ -135,8 +222,8 @@
                 var ingresoId= document.getElementById("ingresoId4").value;
                 data['ingresoId'] = ingresoId;
                 data = JSON.stringify(data);
-	            table = $("#tablaAbonosAdmisiones").dataTable().fnDestroy();
-                initTableAbonos(data);
+	            table = $("#tablaAbonosFacturacion").dataTable().fnDestroy();
+                initTableAbonosFacturacion(data);
             }
             </script>
 
@@ -151,7 +238,7 @@
 
                         <table class="table"
                                style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
-                            <form class="form-inline" action="/crearAbonosPacienteDef/" method="POST"
+                            <form class="form-inline" action="/crearAbonosFacturacionDef/" method="POST"
                                   id="FormaAbonosPaciente">
                                 <input type="hidden" id="sede4" name="sede4" value="{{Sede}}">
                                 <input type="hidden" id="ingresoId4" name="ingresoId4" value="">
@@ -166,7 +253,7 @@
                                                     <div class="col-sm-3">
                                                         <input type="button" id="btn-rango" name="btn-rango"
                                                                value="Generar consulta ¡"
-                                                               onClick="cargarTablaAbonosPaciente()">
+                                                               onClick="cargarTablaAbonosFacPaciente()">
                                                         <div class="alert alert-success success-msg"
                                                              style="display:none"></div>
 
@@ -204,8 +291,8 @@
                                                 <div class="row">
                                                     <div class="col-sm-12">
 
-                                                        <table id=tablaAbonosAdmisiones
-                                                               class="display nowrap table table table-bordered  tablaAbonosAdmisiones table-hover table-sm dtr-inline">
+                                                        <table id=tablaAbonosFacturacion
+                                                               class="display nowrap table table table-bordered  tablaAbonosFacturacion table-hover table-sm dtr-inline">
 
                                                             <thead>
                                                             <tr>
@@ -242,7 +329,7 @@
             </table>
             <!-- Espacio Modales  -->
 
-            <div class="modal fade" id="crearAbonosModel" aria-hidden="true">
+            <div class="modal fade" id="crearAbonosFacturacionModel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -252,7 +339,7 @@
                             <div class="alert alert-danger error-msg" style="display:none">
                                 <ul class="mb-0"></ul>
                             </div>
-                            <form id="postFormCrearAbonos" name="postFormCrearAbonos" class="form-horizontal"
+                            <form id="postFormCrearFacturacionAbonos" name="postFormCrearFacturacionAbonos" class="form-horizontal"
                                   novalidate>
                                 {% csrf_token %}
                                 <input type="hidden" name="post_id" id="post_id">
@@ -321,4 +408,6 @@
 {% block footer %}
 
 {% endblock %}
+
+
 

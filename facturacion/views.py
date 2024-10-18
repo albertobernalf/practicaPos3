@@ -104,3 +104,75 @@ def load_dataFacturacion(request, data):
 
 
     return HttpResponse(serialized1, content_type='application/json')
+
+def PostConsultaFacturacion(request):
+    print ("Entre PostConsultaFacturacion ")
+
+
+    Post_id = request.POST["post_id"]
+
+    print("id = ", Post_id)
+    llave = Post_id.split('-')
+    print ("llave = " ,llave)
+    print ("primero=" ,llave[0])
+    print("segundo = " ,llave[1])
+
+
+    if request.method == 'POST':
+
+
+
+        # Abro Conexion
+
+        miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",password="pass123")
+        cur = miConexionx.cursor()
+
+
+        cur.execute(comando)
+
+        liquidacion = []
+
+
+        miConexionx.close()
+        print(liquidacion)
+
+        totales = []
+
+        # Abro Conexion
+
+        miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",password="pass123")
+        cur = miConexionx.cursor()
+
+        if (llave[1].strip() == 'INGRESO'):
+            comando = 'SELECT i.id id, i."tipoDoc_id" tipoDocId,td.nombre nombreTipoDoc, i.documento_id documentoId, u.documento documento , i.consec consec FROM admisiones_ingresos i, usuarios_usuarios u, usuarios_tiposDocumento td where i.id=' + "'" +  str(llave[0].strip()) + "'" + ' and i."tipoDoc_id" =td.id and i.documento_id=u.id'
+        else:
+            comando = 'SELECT t.id id, t."tipoDoc_id" tipoDocId,td.nombre nombreTipoDoc, t.documento_id documentoId, u.documento documento , t.consec consec FROM triage_triage t, usuarios_usuarios u, usuarios_tiposDocumento td where t.id=' + "'" + str(llave[0].strip()) + "'" + ' and t."tipoDoc_id" =td.id and t.documento_id=u.id'
+
+        print(comando)
+
+        cur.execute(comando)
+
+        liquidacionDetalle = []
+
+        for id, tipoDocId, nombreTipoDoc, documentoId, documento, consec in cur.fetchall():
+            liquidacionDetalle.append( {"id": id,
+                     "tipoDocId": tipoDocId,
+                     "nombreTipoDoc": nombreTipoDoc,
+                     "documentoId": documentoId, "documento": documento,
+                     "consec": consec  })
+
+        miConexionx.close()
+        print(liquidacionDetalle)
+
+        # Cierro Conexion
+
+        return JsonResponse({'pk':liquidacionDetalle[0]['id'],'tipoDocId':liquidacionDetalle[0]['tipoDocId'],'nombreTipoDoc':liquidacionDetalle[0]['nombreTipoDoc'],
+                             'documentoId':liquidacionDetalle[0]['documentoId'],  'documento': liquidacionDetalle[0]['documento'],
+                             'consec': liquidacionDetalle[0]['consec']})
+
+    else:
+        return JsonResponse({'errors':'Something went wrong!'})
+
+
+
+

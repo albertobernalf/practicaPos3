@@ -179,6 +179,7 @@ urlpatterns = [
     # Facturacion
 
     path('load_dataFacturacion/<str:data>', viewsFacturacion.load_dataFacturacion, name='loaddataFacturacion'),
+    path('postConsultaFacturacion/', viewsFacturacion.PostConsultaFacturacion , name='Post_editFacturacion'),
 
     # Citas Medicas
 
