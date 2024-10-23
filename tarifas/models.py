@@ -30,7 +30,7 @@ class OxigenoIss (models.Model):
 
 class Tarifas (models.Model):
     id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
+    nombre = models.CharField(max_length=400, blank=True, null=True, editable=True)
     tipoTarifa = models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TipoTarifa01')
     codigoHomologado = models.CharField(max_length=10, blank=True, null=True, editable=True)
     concepto = models.ForeignKey('facturacion.Conceptos', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Concepto01')
@@ -71,9 +71,6 @@ class TarifasSuministros (models.Model):
 class GruposQx(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=30, blank=True, null=True, editable=True)
-    #codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Cups101')
-    #salariosMinimosLegales =  models.ForeignKey('facturacion.SalariosMinimosLegales', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='MinLeg02')
-    #salMinLeg = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False )
 
@@ -97,11 +94,9 @@ class LiquidacionHonorarios(models.Model):
     tipoHonorario =  models.ForeignKey('tarifas.TiposHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoHonorario01')
     descripcion =  models.CharField(max_length=100, blank=True,null= True , editable=True )
     codigoSuministro =  models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Suminis127')
-    grupoQx =  models.ForeignKey('tarifas.GruposQx', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='GrupoQx01')
+    codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Cups117')
     salMinLeg = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
-    salariosMinimosLegales =  models.ForeignKey('facturacion.SalariosMinimosLegales', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='MinLeg01')
-    #minUvr =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
-    #maxUvr =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    salariosMinimosLegales =  models.ForeignKey('facturacion.SalariosMinimosLegales', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='MinLeg011')
     cantidadUvr = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
     uvrAño = models.ForeignKey('tarifas.Uvr', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Uvr103')  
     valorIss =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
@@ -116,15 +111,58 @@ class LiquidacionHonorarios(models.Model):
 
 
 
+class LiquidacionTarifasHonorarios(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoTarifa =  models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoTarifa032')
+    codigoHomologado = models.CharField(max_length=10, blank=True,null= True , editable=True )
+    tipoHonorario =  models.ForeignKey('tarifas.TiposHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoHonorario012')
+    descripcion =  models.CharField(max_length=100, blank=True,null= True , editable=True )
+    codigoSuministro =  models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Suminis1272')
+    codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Cups1172')
+    salMinLeg = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    salariosMinimosLegales =  models.ForeignKey('facturacion.SalariosMinimosLegales', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='MinLeg0112')
+    cantidadUvr = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    uvrAño = models.ForeignKey('tarifas.Uvr', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Uvr1032')  
+    valorIss =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valorSoat =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valorPropio =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='plantas2172')
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False )
+
+    def __str__(self):
+        return str(self.codigoHomologado)
+
+
+
 
 class HonorariosIss(models.Model):
     id = models.AutoField(primary_key=True)
     descripcion = models.CharField(max_length=500, blank=True, null=True, editable=True)
     tipoHonorario =  models.ForeignKey('tarifas.TiposHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoHonorario122')
+    codigoHomologado = models.CharField(max_length=10, blank=True,null= True , editable=True )
     minUvr =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
     maxUvr =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
     valor =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    tipoTarifa = models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TipoTarifa1122')
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='plantas223')
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False )
+
+    def __str__(self):
+        return str(self.descripcion)
+
+class HonorariosSoat(models.Model):
+    id = models.AutoField(primary_key=True)
+    descripcion = models.CharField(max_length=500, blank=True, null=True, editable=True)
+    tipoHonorario =  models.ForeignKey('tarifas.TiposHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoHonorario222')
+    codigoHomologado = models.CharField(max_length=10, blank=True,null= True , editable=True )
+    grupoQx =  models.ForeignKey('tarifas.GruposQx', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='GrupoQx11')
+    salMinLeg = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    salariosMinimosLegales =  models.ForeignKey('facturacion.SalariosMinimosLegales', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='MinLeg111')
+    valor =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    tipoTarifa = models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TipoTarifa111')
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='plantas333')
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False )
 
@@ -156,20 +194,7 @@ class TiposSalas(models.Model):
         return str(self.nombre)
 
 
-class LiquidacionDerechos(models.Model):
-    id = models.AutoField(primary_key=True)
-    tipoTarifa = models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoTarifa08')
-    codigoHomologado = models.CharField(max_length=10, blank=True,null= True , editable=True )
-    tipoSala = models.ForeignKey('tarifas.TiposSalas', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoSala03')
-    grupoQx =  models.ForeignKey('tarifas.GruposQx', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='GrupoQx12')
-    salMinLeg = models.DecimalField( max_digits=15, decimal_places=2)
-    salariosMinimosLegales =  models.ForeignKey('facturacion.SalariosMinimosLegales', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='SalMinLeg12')
-    valor = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
-    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
-    estadoReg = models.CharField(max_length=1, default='A', editable=False )
 
-    def __str__(self):
-        return str(self.codigoHomologado)
 
 
 class LiquidacionDerechosIss(models.Model):

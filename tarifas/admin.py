@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from tarifas.models import TiposHonorarios, LiquidacionHonorarios, Uvr, TiposSalas, LiquidacionDerechos, Tarifas, TiposTarifa, GruposQx, TarifasSuministros,  HonorariosIss
+from tarifas.models import TiposHonorarios,  Uvr, TiposSalas,  Tarifas, TiposTarifa, GruposQx, TarifasSuministros,  HonorariosIss
 
 
 @admin.register(TiposHonorarios)
@@ -14,13 +14,6 @@ class tiposHonorariosAdmin(admin.ModelAdmin):
    list_filter = ("id", "nombre")
 
 
-@admin.register(LiquidacionHonorarios)
-class liquidacionHonorariosAdmin(admin.ModelAdmin):
-
-   list_display = ("id", "tipoTarifa","codigoHomologado","tipoHonorario","grupoQx","salMinLeg")
-   search_fields = ("id", "tipoTarifa","codigoHomologado","tipoHonorario","grupoQx","salMinLeg")
-   # Filtrar
-   list_filter = ("id", "tipoTarifa","codigoHomologado","tipoHonorario","grupoQx","salMinLeg")
 
 
 @admin.register(Uvr)
@@ -44,13 +37,6 @@ class tiposSalasAdmin(admin.ModelAdmin):
 
 
 
-@admin.register(LiquidacionDerechos)
-class liquidacionDerechosAdmin(admin.ModelAdmin):
-
-   list_display = ("id", "tipoTarifa","codigoHomologado","tipoSala","grupoQx","salMinLeg")
-   search_fields = ("id", "tipoTarifa","codigoHomologado","tipoSala","grupoQx","salMinLeg")
-   # Filtrar
-   list_filter = ("id", "tipoTarifa","codigoHomologado","tipoSala","grupoQx","salMinLeg")
 
 @admin.register(Tarifas)
 class tarifasAdmin(admin.ModelAdmin):

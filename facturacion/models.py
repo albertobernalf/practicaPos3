@@ -59,7 +59,7 @@ class Empresas (models.Model):
 class Conceptos(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=30, null=False)
-    tipoCups = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    #tipoCups = models.ForeignKey('clinico.TiposExamen', blank=True, null=True, editable=True, on_delete=models.PROTECT)
     codAd = models.CharField(max_length=2, default='A', editable=False)
     codAt = models.CharField(max_length=3, default='A', editable=False)
     ripsAc = models.CharField(max_length=1, default='A', editable=False)
@@ -100,6 +100,7 @@ class Suministros (models.Model):
     formasFarmaceutica = models.ForeignKey('rips.RipsFormaFarmaceutica', blank=True,null= True, editable=True, on_delete=models.PROTECT )
     viaAdministracion = models.ForeignKey('clinico.ViasAdministracion', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     codigoAtc  =  models.ForeignKey('clinico.Atc', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    cantidadUvr =  models.CharField(max_length=10,blank=True, null=True, editable=True)
     cums =  models.CharField(max_length=50,blank=True,null= True,  editable=True )
     tipoHonorario = models.ForeignKey('tarifas.TiposHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     ripsTipoMedicamento = models.ForeignKey('rips.RipsTipoMedicamento', blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='RipsTipo01')

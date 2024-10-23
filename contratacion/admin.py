@@ -4,7 +4,7 @@ from django.contrib import admin
 
 
 from clinico.models import TiposExamen
-from contratacion.models import  Procedimientos, Convenios, ConveniosDetalle,  ConveniosLiquidacionHonorarios
+from contratacion.models import  Procedimientos, Convenios, ConveniosDetalle,  ConveniosTarifasHonorarios
 
 
 @admin.register(Procedimientos)
@@ -33,10 +33,10 @@ class conveniosDetalleAdmin(admin.ModelAdmin):
     list_filter =  ( "id","convenio","tarifa", "codigoCups", "tarifaSuministros","valorNeto")
 
 
-@admin.register( ConveniosLiquidacionHonorarios)
-class  conveniosLiquidacionHonorariosAdmin(admin.ModelAdmin):
+@admin.register( ConveniosTarifasHonorarios)
+class  conveniosTarifasHonorariosAdmin(admin.ModelAdmin):
 
-    list_display = ( "id","convenio", "liquidacionHonorario", "valorNeto")
-    search_fields = ( "id","convenio", "liquidacionHonorario", "valorNeto")
+    list_display = ( "id","convenio", "liquidacionTarifa", "valorNeto")
+    search_fields = ( "id","convenio", "liquidacionTarifa", "valorNeto")
     # Filtrar
-    list_filter =  ( "id","convenio","liquidacionHonorario", "valorNeto")
+    list_filter =  ( "id","convenio","liquidacionTarifa", "valorNeto")

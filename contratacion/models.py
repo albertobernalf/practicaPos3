@@ -78,12 +78,14 @@ class ConveniosDetalle (models.Model):
     def __str__(self):
         return str(self.id)
 
-class ConveniosLiquidacionHonorarios (models.Model):
+
+
+class ConveniosTarifasHonorarios (models.Model):
     id = models.AutoField(primary_key=True)
     convenio = models.ForeignKey('contratacion.Convenios', blank=True,null= True, editable=True, on_delete=models.PROTECT)        
-    liquidacionHonorario = models.ForeignKey('tarifas.LiquidacionHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT)    
+    liquidacionTarifa = models.ForeignKey('tarifas.LiquidacionTarifasHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='liqtar101')    
     valorNeto =  models.DecimalField( max_digits=15, decimal_places=4,blank=True,null= True, editable=True)
-    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='plantas212')
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='plantas213')
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False )
 

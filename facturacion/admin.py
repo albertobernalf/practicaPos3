@@ -16,10 +16,10 @@ class empresasAdmin(admin.ModelAdmin):
 
 @admin.register(Conceptos)
 class conceptosAdmin(admin.ModelAdmin):
-   list_display = ("id", "nombre", "tipoCups")
-   search_fields = ("id", "nombre", "tipoCups")
+   list_display = ("id", "nombre")
+   search_fields = ("id", "nombre")
    # Filtrar
-   list_filter = ("id", "nombre", "tipoCups")
+   list_filter = ("id", "nombre")
 
 @admin.register(ConveniosPaciente)
 class conveniosPacienteAdmin(admin.ModelAdmin):
