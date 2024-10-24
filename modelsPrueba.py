@@ -236,31 +236,25 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
      Lo cups, el Grupo Qx Soat, Las uvr Iss estan en la tabla examenes, para Cups, 
      Los cums  para uvr Iss estan en la tabla FacturacionSuministros (medicamentos, materiales, sutura, etc)
 
-	En tarifas_Tarifas van todas las traifas, suministros + cups . Menos Honorarios
-           tarifas_TarifasSuministros, esta por definir
+	En tarifas_Tarifas van todas las tarifas, cups . Menos Honorarios
+           tarifas_TarifasSuministros, Esmejor mtodos los suministros aquip, para no complicar
 	   tarifas_GruposQx, grupos Qx Soat
-           tarifas_TiposHonorarios
-           tarifas_LiquidacionTarifasHonorarios Todos los honorarios ISS + SOAT
+           tarifas_TiposHonorarios, tipos honorarios
+           tarifas_LiquidacionTarifasHonorarios Todos los honorarios ISS + SOAT y demas tipostarifa
 	   tarifas_LiquidacionHonorarios (creo se debe borrar)
 	   tarifas_HonorariosIss ( iss manual tarifario honoraros)
 	   tarifas_HonorariosSoat (solo soat Honorarios manual tarifario)
            tarifas_Uvr valor de las uvr x Año
 	   tarifas_TiposSalas
-           tarifas_LiquidacionDerechosIss (No toy seguro depronot borrar)
-           tarifas_FormasLiquidacion (No creo que sirva a lo mejor borrar)
            tarifas_conceptosAfacturar (No creo que sirva a lo mejor borrar)
 
-	
-     -- MOMENTOS :
 
-       Se parametrizan los honorarios Medicos SOAT  (tarifas_HonorariosSoat)
-       Se crea SQl que cargue en liquidacionTarifasHonorarios a partir de tarifasSoat
-       Se parametriza en tabla liquidacionISS
-       Se crea SQl que cargue en liquidacionTarifasHonorarios a partir de tarifasSoat	
+	-- IDEA Como se deben porder crear los convenios
+
+           a) A patrir de 1 tarifa 100%
+	   b) A partir de 1 tarifa aplicar un porcentaje
+           c) A partir de una tarifa y de 1 concepto_id un vbalor y/o porcentaje
          
-
-
-
 
 
       
@@ -268,6 +262,8 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 -----------------------------------------------------------------------------------------------------------------------
 --  GLOSAS
 -----------------------------------------------------------------------------------------------------------------------
+
+
 
 -----------------------------------------------------------------------------------------------------------------------
 --  RIPS 

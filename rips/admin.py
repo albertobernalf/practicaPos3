@@ -166,10 +166,10 @@ class ripsTipoMedicamentoAdmin(admin.ModelAdmin):
 
 @admin.register(RipsCums)
 class ripsCumsAdmin(admin.ModelAdmin):
-   list_display = ("id", "codigo", "nombre")
-   search_fields =   ("id", "codigo", "nombre")
+   list_display = ("id", "cum", "nombre")
+   search_fields =   ("id", "cum", "nombre")
    # Filtrar
-   list_filter = ("id", "codigo", "nombre")
+   list_filter = ("id", "cum", "nombre")
 
 
 @admin.register(RipsUmm)

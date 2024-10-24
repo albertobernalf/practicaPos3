@@ -1753,6 +1753,14 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
 
         return render(request, "facturacion/panelFacturacion.html", context)
 
+    if (escogeModulo == 'CONTRATACION'):
+        print("WENTRE PERMSISO FACTURACION")
+        ## Aqui contexto para solo Facturacion
+
+        ## FIN CONTEXTO
+
+        return render(request, "contratacion/panelConvenios.html", context)
+
 
     if (escogeModulo == 'APOYO TERAPEUTICO'):
         print("WENTRE PERMSISO APOYO TERAPEUTICO")

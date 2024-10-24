@@ -908,16 +908,17 @@ class Trasfusiones(models.Model):
     def __str__(self):
         return str(self.id)
 
-class Oxigeno(models.Model):
+
+class HistoriaOxigeno(models.Model):
     id = models.AutoField(primary_key=True)
-    historia = models.ForeignKey('clinico.Historia',  blank=True, null=True, editable=True, on_delete=models.PROTECT,   related_name='DocumentoHistoriaDiag26')
+    historia = models.ForeignKey('clinico.Historia',  blank=True, null=True, editable=True, on_delete=models.PROTECT,   related_name='DocumentoHistoriaDiag29')
     fechaInicio = models.DateTimeField()
     fechaFinal = models.DateTimeField()
-    tipoOxigenacion = models.CharField(max_length=15, blank=True)
+    tipoOxigenacion = models.ForeignKey('clinico.TipoOxigenacion',  blank=True, null=True, editable=True, on_delete=models.PROTECT,   related_name='tipoOxigenacion02')
     aire = models.CharField(max_length=1, blank=True)
     saturacionOxigeno = models.DecimalField(max_digits=3, decimal_places=2)
-    flujoLtsOxigeno = models.DecimalField(max_digits=3, decimal_places=2)
-    flujoLtsAire = models.DecimalField(max_digits=3, decimal_places=2)
+    #flujoLtsOxigeno = models.DecimalField(max_digits=3, decimal_places=2)
+    #flujoLtsAire = models.DecimalField(max_digits=3, decimal_places=2)
     horasOxigeno = models.DecimalField(max_digits=3, decimal_places=2)
     horasAire = models.DecimalField(max_digits=3, decimal_places=2)
     totalLtsoxigeno = models.DecimalField(max_digits=3, decimal_places=2)
@@ -928,7 +929,23 @@ class Oxigeno(models.Model):
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.tipoOxigenacion)
+
+
+class TipoOxigenacion(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=50, blank=True)
+    flujoLtsOxigeno = models.DecimalField(max_digits=3, decimal_places=2)
+    flujoLtsAire = models.DecimalField(max_digits=3, decimal_places=2)
+    codFacturar =  models.CharField(max_length=30, blank=True)
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __str__(self):
+        return str(self.tipoOxigenacion)
+
+
 
 class ImHaloTerapia(models.Model):
     id = models.AutoField(primary_key=True)
@@ -1024,7 +1041,7 @@ class HistoriaMedicamentos(models.Model):
 
 class PrincipiosActivos(models.Model):
     id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=100, null=False)
+    nombre = models.CharField(max_length=300, null=False)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __str__(self):

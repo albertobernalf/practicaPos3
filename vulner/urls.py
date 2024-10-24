@@ -33,6 +33,7 @@ from django.conf.urls.static import  static
 from clinico import views as viewsClinico
 from terapeutico import views as viewsApoyoTerapeutico
 from facturacion import views as viewsFacturacion
+from contratacion import views as viewsConvenios
 #from mecanicosPacientes import views as viewsmecanicosPacientes
 
 
@@ -180,6 +181,9 @@ urlpatterns = [
 
     path('load_dataFacturacion/<str:data>', viewsFacturacion.load_dataFacturacion, name='loaddataFacturacion'),
     path('postConsultaFacturacion/', viewsFacturacion.PostConsultaFacturacion , name='Post_editFacturacion'),
+
+    # Contratacion
+    path('load_dataConvenios/<str:data>', viewsConvenios.load_dataConvenios, name='loaddataConvenios'),
 
     # Citas Medicas
 

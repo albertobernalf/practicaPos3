@@ -363,8 +363,18 @@ class RipsTipoMedicamento (models.Model):
 class RipsCums (models.Model):
 
    id = models.AutoField(primary_key=True)
-   codigo = models.CharField(max_length=20, blank=True,null= True, editable=True)
-   nombre =   models.CharField(max_length=80, blank=True,null= True, editable=True)
+   #codigo = models.CharField(max_length=15, blank=True,null= True, editable=True)
+   cum = models.CharField(max_length=15, blank=True,null= True, editable=True)
+   nombre =   models.CharField(max_length=300, blank=True,null= True, editable=True)
+   descripcion =   models.CharField(max_length=300, blank=True,null= True, editable=True)
+   codigoAtc =    models.CharField(max_length=50, blank=True,null= True, editable=True)
+   nombreAtc =    models.CharField(max_length=300, blank=True,null= True, editable=True)
+   invima =    models.CharField(max_length=50, blank=True,null= True, editable=True)
+   principioActivo =    models.CharField(max_length=300, blank=True,null= True, editable=True)
+   administracion =    models.CharField(max_length=100, blank=True,null= True, editable=True)
+   viaAdministracion =  models.ForeignKey('clinico.ViasAdministracion', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='ViasAdmon10')
+   principiosActivos =  models.ForeignKey('clinico.PrincipiosActivos', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='ViasAdmon11')
+
 
    def __str__(self):
         return self.nombre

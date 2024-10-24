@@ -58,7 +58,7 @@ class TarifasSuministros (models.Model):
     tipoTarifa = models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TipoTarifa02')
     suministro =  models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Suministro101')
     codigoHomologado = models.CharField(max_length=20, blank=True, null=True, editable=True)
-    concepto = models.ForeignKey('facturacion.Conceptos', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Concepto02')
+    #concepto = models.ForeignKey('facturacion.Conceptos', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Concepto02')
     valor = models.DecimalField( max_digits=20, decimal_places=2)
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='platas201')
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
@@ -197,22 +197,6 @@ class TiposSalas(models.Model):
 
 
 
-class LiquidacionDerechosIss(models.Model):
-    id = models.AutoField(primary_key=True)
-    tipoTarifa = models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TipoTarifa07')
-    suministro = models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoSuminiistro112')
-    codigoHomologado = models.CharField(max_length=10, blank=True,null= True , editable=True )
-    tipoSala = models.ForeignKey('tarifas.TiposSalas', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TipoSala01')
-    desdeUvr = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
-    hastaUvr = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
-    valor = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
-    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
-    estadoReg = models.CharField(max_length=1, default='A', editable=False )
-
-    def __str__(self):
-        return str(self.codigoHomologado)
-
-
 class LiquidacionCirugias(models.Model):
     id = models.AutoField(primary_key=True)
     tipo =  models.CharField(max_length=50, default='A', editable=False )
@@ -228,24 +212,6 @@ class LiquidacionCirugias(models.Model):
 
     def __str__(self):
         return str(self.codigoHomologado)
-
-class FormasLiquidacion(models.Model):
-    id = models.AutoField(primary_key=True)
-    #nombre =
-    #Codigo =
-    #tipoCruento =
-    #caracteristica =
-    #valorHonorario =
-    #tiposHonorarios =
-    #cuentaContable =
-    #centroCosto=
-    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='plantas205')
-    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
-    estadoReg = models.CharField(max_length=1, default='A', editable=False )
-
-
-    def __str__(self):
-        return str(self.id)
 
 
 class ConceptosAfacturar(models.Model):

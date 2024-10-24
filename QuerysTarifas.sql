@@ -57,7 +57,7 @@ select * from clinico_examenes;
 
 
 select * from tarifas_tarifas;
-select * from clinico_examenes WHERE ID=15;
+
 
 select * from tmp_tar_tmp_imhotep where cod_tipotarifa = 'SOAT-2024'; -- DEBEN SER 9500
 
@@ -102,6 +102,15 @@ COMMIT;
 select * from tmp_tar_tmp_imhotep where cod_tipotarifa = 'ISS'; -- 5733 No mas
 
 --3. Todos los Suministros
+DROP TABLE pruebascums
+create table pruebascums (cum  character(15) , nombre character varying (300),  descripcion character varying (300) , codigoAtc character(50),nombreAtc character varying (300), invima character varying (50), principioActivo character varying (300),administracion character varying (100))
+ 
+copy pruebascums from '/mnt/sda3/PostgreSQL/9.4/backups/Referencia_CUM__Pruebas2.csv' WITH DELIMITER ';' CSV;
+
+select * from pruebascums;
+delete from pruebascums;
+
+
 
 -- Tarifas SOAT-2024
 
@@ -112,7 +121,64 @@ select * from tmp_tar_tmp_imhotep where cod_tipotarifa = 'ISS'; -- 5733 No mas
 
 
 
-select * from tmp_tar_tmp_imhotep;
+-- Tarifas PARTCULAR 2024
+select * from tmpsuministros;
+select * from
+begin transaction;
+insert into tarifas_tarifassuministros ("codigoHomologado", valor,"fechaRegistro", "estadoReg","suministro_id" , "tipoTarifa_id", "usuarioRegistro_id")
+select '', 0,'2024-10-23 00:00:00','A',sum.id suministroId,2,1
+ from facturacion_suministros sum
+;
+select * from tarifas_tarifassuministros;
+-- rollback
+-- commit;
+select * from facturacion_empresas;
+select * from contratacion_convenios;
+select * from tarifas_tipostarifas;
+
+select conv.nombre, "vigenciaDesde" vigenciaDesde, "vigenciaHasta" vigenciaHasta, emp.nombre  empresa, tar.nombre
+from contratacion_convenios conv, facturacion_empresas emp, tarifas_tipostarifa tar
+WHERE emp.id = conv.empresa_id and tar.id = conv."tipoTarifa_id";
+
+detalle = 'select conv.nombre nombre, "vigenciaDesde" vigenciaDesde, "vigenciaHasta" vigenciaHasta, emp.nombre  empresa, tar.nombre from contratacion_convenios conv, facturacion_empresas emp, tarifas_tipostarifa tar WHERE emp.id = conv.empresa_id and tar.id = conv."tipoTarifa_id"'
+
+-- Fin Tarifas PARTCULAR 2024
+select * from tarifas_tarifassuministros;
+select * from tarifas_tarifas;
+select * from tarifas_tipostarifa; -- 2 medical
+
+
+ 
+
+select * from pruebascums where cum= '104739-1';
+select * from rips_ripscums where id=5779
+select distinct "principioActivo" from rips_ripscums
+select * from rips_ripsformafarmaceutica; -- 6
+
+select * from facturacion_conceptos; -- 6 medicamento
+select * from facturacion_tipossuministro; -- 1 med
+select cums, nombre, "concepto_id", "tipoSuministro_id","viaAdministracion_id","formasFarmaceutica_id",
+"unidadMedida_id" , "principioActivo_id", * 
+from facturacion_suministros
+order by cums
+
+
+select * from clinico_formasfarmaceuticas;
+select * from rips_ripscums 
+select * from clinico_examenes;
+select * from facturacion_suministros;
+
+insert into facturacion_suministros (nombre,"nombreGenerico",cums,"estadoReg",concepto_id,"tipoSuministro_id", "unidadMedida_id", 
+                   "viaAdministracion_id"  ,"formasFarmaceutica_id","principioActivo_id","descripcionComercial" , "fechaExpedicion", 
+                    "registroSanitario", "ripsCums_id")
+select nombre,nombre,cum ,'A', 6  , 1 ,1 , "viaAdministracion_id", 6, "principiosActivos_id"  , descripcion, '20245-10-23 00:00:00' , invima ,
+         id
+from rips_ripscums 
+
+select * from clinico_viasadministracion;
+
+
+
 
 
 
