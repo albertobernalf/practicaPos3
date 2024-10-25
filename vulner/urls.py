@@ -184,6 +184,12 @@ urlpatterns = [
 
     # Contratacion
     path('load_dataConvenios/<str:data>', viewsConvenios.load_dataConvenios, name='loaddataConvenios'),
+    path('load_dataConveniosProcedimientos/<str:data>', viewsConvenios.load_dataConveniosProcedimientos, name='loaddataConveniosProcedimientos'),
+    path('postConsultaConvenios/', viewsConvenios.PostConsultaConvenios , name='Post_editConvenios'),
+    path('guardarConveniosProcedimientos/', viewsConvenios.GuardarConveniosProcedimientos, name='guardarConveniosProcedimientos'),
+    path('guardarConvenio/', viewsConvenios.GuardarConvenio , name='guadarConvenio'),
+    path('guardarConvenio1/', viewsConvenios.GuardarConvenio1, name='guadarConvenio1'),
+    path('ggrabarTarifa/', viewsConvenios.GrabarTarifa, name='grabarTarifa'),
 
     # Citas Medicas
 

@@ -15,7 +15,7 @@ from datetime import datetime
 from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos, HistorialInterconsultas, EstadosInterconsulta, HistorialIncapacidades,  HistoriaSignosVitales, HistoriaRevisionSistemas, HistoriaMedicamentos
 from sitios.models import Dependencias
 from planta.models import Planta
-from contratacion.models import Procedimientos
+#from contratacion.models import Procedimientos
 from usuarios.models import Usuarios, TiposDocumento
 
 

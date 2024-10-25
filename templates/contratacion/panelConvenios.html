@@ -15,7 +15,8 @@
     <ul class="tabs">
         <li><a href="#Convenios"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
             Convenios </a></li>
-        <li><a href="#Creacion Convenio"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Creacion convenio</a></li>
+        <li><a href="#Convenio"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span>Convenio</a></li>
+        <li><a href="#Creacion_Convenio"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Creacion convenio</a></li>
         <li><a href="#Procedimientos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Procedimientos </a></li>
 	<li><a href="#Suministros"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Suministros </a></li>
 	<li><a href="#Honorarios"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Honorarios </a></li>
@@ -46,6 +47,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
     <div class="secciones">
         <article id="Convenios">
         <center><h3>Convenios </h3></center>
+    	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
             <form action="/crearConvenio/" method="get" id="FormConvenio">
 
                 <input type="hidden" id="username" name="username" value="{{Username}}">
@@ -86,17 +88,16 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                     <div class="col-md-12">
                                         <div class="alert alert-success success-msg" style="display:none"></div>
                                         <table  id= "tablaConvenios" class="display nowrap table table table-bordered  tablaConvenios table-hover table-sm dtr-inline">
-
-
                                             <thead>
                                             <tr>
-                                                <th style="width:5%;">Nombre</th>
-                                                <th style="width:5%;">id</th>
-                                                <th style="width:5%;">VigenciaDesde</th>
-                                                <th style="width:12%;">VigenciaHasta</th>
-                                                <th style="width:20%;">Empresa</th>
-                                                <th style="width:20%;">Tarifa</th>
-                                                <th style="width:5%;">Action</th>
+                                                <th>Nombre</th>
+                                                <th>id</th>
+                                                <th>VigenciaDesde</th>
+                                                <th>VigenciaHasta</th>
+                                                <th>Empresa</th>
+                                                <th>Tarifa</th>
+
+                                                <th>Action</th>
                                                 <!--  <th data-visible="true"></th>  -->
                                             </tr>
                                             </thead>
@@ -112,14 +113,539 @@ div.dataTables_wrapper  div.dataTables_filter input {
                     </div>
                 </div>
             </div>
+	 </div>
+</article>
+
+        <article id="Creacion_Convenio">
+            <center><h3> Creacion de convenios </h3></center>
+            <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+
+                <input type="hidden" id="convenioId" name="convenioId" value="{{id}}">
+
+                <div class="row row-cols-8">
+
+                    <div class="col">
+                        <label for="cnombre" class="col-sm-3 control-label"> Nombre:</label>
+                        <input type="text" class="form-control form-control-sm" id="cnombre"
+                               name="cnombre" value="">
+                    </div>
+
+      
+			 <div class="col">
+				 <label for="cempresa" class="col-sm-3 control-label">Empresa:</label>
+                                            <select class="select-css"  id="cempresa" name="cempresa">
+                                                    {% for empresas in Empresas %}
+                                                            <option value="{{empresas.id}}"> {{empresas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+                          </div>
+
+
+
+
+                    <div class="col">
+                        <label for="cvigenciaDesde" class="col-sm-3 control-label"> VigenciaDesde:</label>
+                        <input type="datetime-local" class="form-control form-control-sm" id="cvigenciaDesde"
+                               name="cvigenciaDesde" value="">
+                    </div>
+
+                    <div class="col">
+                        <label for="cvigenciaHasta" class="col-sm-1 control-label"> VigenciaHasta :</label>
+                        <input type="datetime-local" class="form-control form-control-sm" id="cvigenciaHasta"
+                               name="cvigenciaHasta" value="">
+                    </div>
+
+
+                    <div class="col">
+                        <label for="cporcTarifario" class="col-sm-6 control-label"> PorcTarifario:</label>
+                        <input type="text" class="form-control form-control-sm" id="cporcTarifario"
+                               name="cporcTarifario" value="">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="cporcSuministros" class="col-sm-6 control-label"> PorcSuministros:</label>
+                        <input type="text" class="form-control form-control-sm" id="cporcSuministros"
+                               name="cporcSuministros" value="">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="cvalorOxigeno" class="col-sm-1 control-label"> ValorOxigeno:</label>
+                        <input type="text" class="form-control form-control-sm" id="cvalorOxigeno"
+                               name="cvalorOxigeno" value="">
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="row row-cols-8">
+
+                    <div class="col">
+                        <label for="cporcEsterilizacion" class="col-sm-3 control-label"> PorcEsterilizacion:</label>
+                        <input type="text" class="form-control form-control-sm" id="cporcEsterilizacion"
+                               name="cporcEsterilizacion" value="">
+                    </div>
+
+                    <div class="col">
+                        <label for="cporcMaterial" class="col-sm-3 control-label">PorcMaterial:</label>
+                        <input type="text" class="form-control form-control-sm" id="cporcMaterial"
+                               name="cporcMaterial" value="">
+                    </div>
+
+
+                    <div class="col">
+                        <label for="chospitalario" class="col-sm-3 control-label"> Hospitalario:</label>
+                        <input type="text" class="form-control form-control-sm" id="chospitalario"
+                               name="chospitalario" value="">
+                    </div>
+
+                    <div class="col">
+                        <label for="curgencias" class="col-sm-1 control-label"> Urgencias :</label>
+                        <input type="text" class="form-control form-control-sm" id="curgencias"
+                               name="curgencias" value="">
+                    </div>
+
+                    <div class="col">
+                        <label for="cambulatorio" class="col-sm-6 control-label"> Ambulatorio:</label>
+                        <input type="text" class="form-control form-control-sm" id="cambulatorio"
+                               name="cambulatorio" value="">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="cconsultaExterna" class="col-sm-6 control-label"> ConsultaExterna:</label>
+                        <input type="text" class="form-control form-control-sm" id="cconsultaExterna"
+                               name="cconsultaExterna" value="">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="ccopago" class="col-sm-6 control-label"> Copago:</label>
+                        <input type="text" class="form-control form-control-sm" id="ccopago"
+                               name="ccopago" value="">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="cmoderadora" class="col-sm-1 control-label"> Moderadora:</label>
+                        <input type="text" class="form-control form-control-sm" id="cmoderadora"
+                               name="cmoderadora" value="">
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="row row-cols-8">
+
+                    <div class="col">
+                        <label for="ctipoFactura" class="col-sm-3 control-label"> TipoFactura:</label>
+                        <input type="text" class="form-control form-control-sm" id="ctipoFactura"
+                               name="ctipoFactura" value="">
+                    </div>
+
+                    <div class="col">
+                        <label for="cagrupada" class="col-sm-3 control-label">Agrupada:</label>
+                        <input type="text" class="form-control form-control-sm" id="cagrupada"
+                               name="cagrupada" value="">
+                    </div>
+
+                    <div class="col">
+                        <label for="cfacturacionSuministros" class="col-sm-3 control-label">
+                            FacturacionSuministros:</label>
+                        <input type="text" class="form-control form-control-sm" id="cfacturacionSuministros"
+                               name="cfacturacionSuministros" value="">
+                    </div>
+
+                    <div class="col">
+                        <label for="cfacturacionCups" class="col-sm-1 control-label"> FacturacionCups :</label>
+                        <input type="text" class="form-control form-control-sm" id="cfacturacionCups"
+                               name="cfacturacionCups" value="">
+                    </div>
+
+                    <div class="col">
+                        <label for="ccuentaContable" class="col-sm-6 control-label"> CuentaContable:</label>
+                        <input type="text" class="form-control form-control-sm" id="ccuentaContable"
+                               name="ccuentaContable" value="">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="crequisitos" class="col-sm-6 control-label"> Requisitos:</label>
+                        <input type="text" class="form-control form-control-sm" id="crequisitos"
+                               name="crequisitos" value="">
+
+                    </div>
+
+                    <div class="col">
+                        <label for="btnGrabarConvenio" class="col-sm-6 control-label"> Grabar Convenio:</label>
+                        <input type="button" class="form-control form-control-sm" id="btnGrabarConvenio"
+                               name="btnGrabarConvenio" value="" onclick="GrabarConvenio()">
+
+                    </div>
+
+
+                </div>
+            </div>
+
 
         </article>
 
- <article id="Creacion Convenio">
- </article>
+        <article id="Convenio">
+            <center><h3> Convenio </h3></center>
+            <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 
-  <article id="Procedimientos">
+
+                <input type="hidden" id="convenioId1" name="convenioId1" value="{{id}}">
+
+                <div class="row row-cols-8">
+
+                    <div class="col">
+                        <label for="nombre" class="col-sm-3 control-label"> Nombre:</label>
+                        <input type="text" class="form-control form-control-sm" id="nombre"
+                               name="nombre" value="{{nombre}}">
+                    </div>
+
+
+			 <div class="col">
+				 <label for="empresa" class="col-sm-3 control-label">Empresa:</label>
+                                            <select class="select-css"  id="empresa" name="empresa">
+                                                    {% for empresas in Empresas %}
+                                                            <option value="{{empresas.id}}"> {{empresas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+                          </div>
+
+
+                    <div class="col">
+                        <label for="vigenciaDesde" class="col-sm-3 control-label"> VigenciaDesde:</label>
+                        <input type="datetime-local" class="form-control form-control-sm" id="vigenciaDesde"
+                               name="vigenciaDesde" value="{{vigenciaDesde}}">
+                    </div>
+
+                    <div class="col">
+                        <label for="vigenciaHasta" class="col-sm-1 control-label"> VigenciaHasta :</label>
+                        <input type="datetime-local" class="form-control form-control-sm" id="vigenciaHasta"
+                               name="vigenciaHasta" value="{{vigenciaHasta}}">
+                    </div>
+
+
+                    <div class="col">
+                        <label for="porcTarifario" class="col-sm-6 control-label"> PorcTarifario:</label>
+                        <input type="text" class="form-control form-control-sm" id="porcTarifario"
+                               name="porcTarifario" value="{{porcTarifario}}">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="porcSuministros" class="col-sm-6 control-label"> PorcSuministros:</label>
+                        <input type="text" class="form-control form-control-sm" id="porcSuministros"
+                               name="porcSuministros" value="{{porcSuministros}}">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="valorOxigeno" class="col-sm-1 control-label"> ValorOxigeno:</label>
+                        <input type="text" class="form-control form-control-sm" id="valorOxigeno"
+                               name="valorOxigeno" value="{{valorOxigeno}}">
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="row row-cols-8">
+
+                    <div class="col">
+                        <label for="porcEsterilizacion" class="col-sm-3 control-label"> PorcEsterilizacion:</label>
+                        <input type="text" class="form-control form-control-sm" id="porcEsterilizacion"
+                               name="porcEsterilizacion" value="{{porcEsterilizacion}}">
+                    </div>
+
+                    <div class="col">
+                        <label for="porcMaterial" class="col-sm-3 control-label">PorcMaterial:</label>
+                        <input type="text" class="form-control form-control-sm" id="porcMaterial"
+                               name="porcMaterial" value="{{porcMaterial}}">
+                    </div>
+
+
+                    <div class="col">
+                        <label for="hospitalario" class="col-sm-3 control-label"> Hospitalario:</label>
+                        <input type="text" class="form-control form-control-sm" id="hospitalario"
+                               name="hospitalario" value="{{hospitalario}}">
+                    </div>
+
+                    <div class="col">
+                        <label for="urgencias" class="col-sm-1 control-label"> Urgencias :</label>
+                        <input type="text" class="form-control form-control-sm" id="urgencias"
+                               name="urgencias" value="{{urgencias}}">
+                    </div>
+
+                    <div class="col">
+                        <label for="ambulatorio" class="col-sm-6 control-label"> Ambulatorio:</label>
+                        <input type="text" class="form-control form-control-sm" id="ambulatorio"
+                               name="ambulatorio" value="{{ambulatorio}}">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="consultaExterna" class="col-sm-6 control-label"> ConsultaExterna:</label>
+                        <input type="text" class="form-control form-control-sm" id="consultaExterna"
+                               name="consultaExterna" value="{{consultaExterna}}">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="copago" class="col-sm-6 control-label"> Copago:</label>
+                        <input type="text" class="form-control form-control-sm" id="copago"
+                               name="copago" value="{{copago}}">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="moderadora" class="col-sm-1 control-label"> Moderadora:</label>
+                        <input type="text" class="form-control form-control-sm" id="moderadora"
+                               name="moderadora" value="{{moderadora}}">
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="row row-cols-8">
+
+                    <div class="col">
+                        <label for="tipoFactura" class="col-sm-3 control-label"> TipoFactura:</label>
+                        <input type="text" class="form-control form-control-sm" id="tipoFactura"
+                               name="tipoFactura" value="{{tipoFactura}}">
+                    </div>
+
+                    <div class="col">
+                        <label for="agrupada" class="col-sm-3 control-label">Agrupada:</label>
+                        <input type="text" class="form-control form-control-sm" id="agrupada"
+                               name="agrupada" value="{{agrupada}}">
+                    </div>
+
+
+                    <div class="col">
+                        <label for="facturacionSuministros" class="col-sm-3 control-label">
+                            FacturacionSuministros:</label>
+                        <input type="text" class="form-control form-control-sm" id="facturacionSuministros"
+                               name="facturacionSuministros" value="{{facturacionSuministros}}">
+                    </div>
+
+                    <div class="col">
+                        <label for="facturacionCups" class="col-sm-1 control-label"> FacturacionCups :</label>
+                        <input type="text" class="form-control form-control-sm" id="facturacionCups"
+                               name="facturacionCups" value="{{facturacionCups}}">
+                    </div>
+
+                    <div class="col">
+                        <label for="cuentaContable" class="col-sm-6 control-label"> CuentaContable:</label>
+                        <input type="text" class="form-control form-control-sm" id="cuentaContable"
+                               name="cuentaContable" value="{{cuentaContable}}">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="requisitos" class="col-sm-6 control-label"> Requisitos:</label>
+                        <input type="text" class="form-control form-control-sm" id="requisitos"
+                               name="requisitos" value="{{requisitos}}">
+
+                    </div>
+
+
+                    <div class="col">
+                        <label for="btnGrabarConvenio1" class="col-sm-6 control-label"> Guardar:</label>
+                        <input type="button" class="form-control form-control-sm" id="btnGrabarConvenio1"
+                               name="btnGrabarConvenio1" value="" onclick="GrabarConvenio1()">
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+    </article>
+
+    <article id="Procedimientos">
             <center><h3>Procedimientos </h3></center>
+   <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+
+       <div class="row row-cols-8">
+
+           <div class="col">
+               <label for="pnombre" class="col-sm-3 control-label"> Nombre:</label>
+               <input type="text" class="form-control form-control-sm" id="pnombre"
+                      name="pnombre" value="{{nombre}}" readonly>
+           </div>
+
+           <div class="col">
+               <label for="pempresa" class="col-sm-3 control-label">Empresa:</label>
+               <input type="text" class="form-control form-control-sm" id="pempresa"
+                      name="pempresa" value="{{empresa}}" readonly>
+           </div>
+
+
+           <div class="col">
+               <label for="pvigenciaDesde" class="col-sm-3 control-label"> VigenciaDesde:</label>
+               <input type="datetime-local" class="form-control form-control-sm" id="pvigenciaDesde"
+                      name="pvigenciaDesde" value="{{vigenciaDesde}}" readonly>
+           </div>
+
+           <div class="col">
+               <label for="pvigenciaHasta" class="col-sm-1 control-label"> VigenciaHasta :</label>
+               <input type="datetime-local" class="form-control form-control-sm" id="pvigenciaHasta"
+                      name="pvigenciaHasta" value="{{vigenciaHasta}}" readonly>
+           </div>
+       </div>
+
+       <div class="row row-cols-8">
+
+                 <div class="col">
+			 <label for="tiposTarifa1" class="col-sm-1 control-label"> TiposTarifa :</label>
+                          <select class="select-css"  id="tiposTarifa1" name="tiposTarifa1">
+                                             {% for tiposTarifa in TiposTarifas %}
+                                                       <option value="{{tiposTarifa.id}}"> {{tiposTarifa.nombre}}
+                                                        </option>
+                                                       {% endfor %}
+                           </select>
+                </div>
+
+           <div class="col">
+			 <label for="conceptos" class="col-sm-1 control-label"> Conceptos :</label>
+                          <select class="select-css"  id="conceptos" name="conceptos">
+                                             {% for conceptos in Conceptos %}
+                                                       <option value="{{conceptos.id}}"> {{conceptos.nombre}}
+                                                        </option>
+                                                       {% endfor %}
+                           </select>
+                </div>
+
+
+           <div class="col">
+               <label for="porcentage" class="col-sm-3 control-label"> Porcentage(%):</label>
+               <input type="text" class="form-control form-control-sm" id="porcentage"
+                      name="porcentage" value="">
+           </div>
+
+           <div class="col">
+               <label for="valorVariacion" class="col-sm-1 control-label"> Valor :</label>
+               <input type="text" class="form-control form-control-sm" id="valorVariacion"
+                      name="valorVariacion" value="" >
+           </div>
+
+		  <div class="col">
+                        <label for="btnGrabarTarifa" class="col-sm-6 control-label"> Guardar:</label>
+                        <input type="button" class="form-control form-control-sm" id="btnGrabarTarifa"
+                               name="btnGrabarTarifa" value="" onclick="GrabarTarifa()">
+
+                    </div>
+       </div>
+
+
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                     <div class="col">
+					                     CodigoHomologado:  <input type="text" id="codHomologado9" name="codHomologado" value="">
+                                      </div>
+
+                                      <div class="col">
+					 <label for="tiposTarifa" class="col-sm-1 control-label"> TiposTarifa :</label>
+                                            <select class="select-css"  id="tiposTarifa" name="tiposTarifa">
+                                                    {% for tiposTarifa in TiposTarifas %}
+                                                            <option value="{{tiposTarifa.id}}"> {{tiposTarifa.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+                                      </div>
+
+				      <div class="col">
+					 <label for="cups" class="col-sm-1 control-label"> Cups :</label>
+                                            <select class="select-css"  id="cups" name="cups">
+                                                    {% for cups in Cups %}
+                                                            <option value="{{cups.id}}"> {{cups.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+                                      </div>
+
+
+                                                    
+                                      <div class="col">
+							Valor:  <input type="text" id="valor" name="valor" value="">
+                                      </div>
+
+
+                                     <div class="col">
+                                                       <span class="text-secondary">Adicionar</span>
+                                                        <a class="btn btn-success" href="javascript:void(0)"
+                                                           id="BtnAdicionarConvenio"> <i class="fa fa-plus"></i></a>
+                                     </div>
+                            </div>
+                        </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="alert alert-success success-msg" style="display:none"></div>
+                                        <table  id= "tablaConveniosProcedimientos" class="display nowrap table table table-bordered  tablaConveniosProcedimientos table-hover table-sm dtr-inline">
+
+
+                                            <thead>
+                                            <tr>
+                                                <th>Codigo Homologado</th>
+                                                <th>id</th>
+                                                <th>Tarifa Nombre</th>
+                                                <th>cupsId</th>
+                                                <th>CupsNombre</th>
+                                                <th>Valor</th>
+                                                <th>Action</th>
+                                                <!--  <th data-visible="true"></th>  -->
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom">
+                                            <tr style="height:10%">
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> <!-- cierra body -->
+
+                    </div>
+                </div>
+            </div>
+	            </div>
+
+
   </article>
 
   <article id="Suministros">

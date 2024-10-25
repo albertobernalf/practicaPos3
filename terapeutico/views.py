@@ -14,7 +14,7 @@ from datetime import datetime
 from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos, HistorialInterconsultas, EstadosInterconsulta, HistorialIncapacidades,  HistoriaSignosVitales, HistoriaRevisionSistemas, HistoriaMedicamentos, HistoriaResultados
 from sitios.models import Dependencias
 from planta.models import Planta
-from contratacion.models import Procedimientos
+#from contratacion.models import Procedimientos
 from usuarios.models import Usuarios, TiposDocumento
 from clinico.forms import  IncapacidadesForm, HistorialDiagnosticosCabezoteForm, HistoriaSignosVitalesForm
 from django.db.models import Avg, Max, Min

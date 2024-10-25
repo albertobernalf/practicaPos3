@@ -4,17 +4,7 @@ from django.contrib import admin
 
 
 from clinico.models import TiposExamen
-from contratacion.models import  Procedimientos, Convenios, ConveniosDetalle,  ConveniosTarifasHonorarios
-
-
-@admin.register(Procedimientos)
-class procedimientosAdmin(admin.ModelAdmin):
-
-    list_display = ( "id","tiposExamen", "cups","nombre","solicitaEnfermeria")
-    search_fields = ( "id","tiposExamen", "cups","nombre","solicitaEnfermeria")
-    # Filtrar
-    list_filter = ( "id","tiposExamen", "cups","nombre","solicitaEnfermeria")
-
+from contratacion.models import  Convenios,  ConveniosTarifasHonorarios, ConveniosSuministros, ConveniosProcedimientos
 
 @admin.register(Convenios)
 class conveniosAdmin(admin.ModelAdmin):
@@ -24,19 +14,31 @@ class conveniosAdmin(admin.ModelAdmin):
     # Filtrar
     list_filter = ( "id","nombre", "descripcion","empresa","vigenciaDesde","vigenciaHasta")
 
-@admin.register(ConveniosDetalle)
-class conveniosDetalleAdmin(admin.ModelAdmin):
-
-    list_display = ( "id","convenio", "tarifa", "codigoCups", "tarifaSuministros","valorNeto")
-    search_fields = ( "id","convenio", "tarifa", "codigoCups", "tarifaSuministros","valorNeto")
-    # Filtrar
-    list_filter =  ( "id","convenio","tarifa", "codigoCups", "tarifaSuministros","valorNeto")
 
 
 @admin.register( ConveniosTarifasHonorarios)
 class  conveniosTarifasHonorariosAdmin(admin.ModelAdmin):
 
-    list_display = ( "id","convenio", "liquidacionTarifa", "valorNeto")
-    search_fields = ( "id","convenio", "liquidacionTarifa", "valorNeto")
+    list_display = ( "id","convenio",  "valor")
+    search_fields = ( "id","convenio","valor")
     # Filtrar
-    list_filter =  ( "id","convenio","liquidacionTarifa", "valorNeto")
+    list_filter =  ( "id","convenio",  "valor")
+
+
+@admin.register(ConveniosProcedimientos)
+class conveniosProcedimientosAdmin(admin.ModelAdmin):
+
+    list_display = ( "id","convenio","tipoTarifa", "codigoHomologado","cups","valor")
+    search_fields = ( "id","convenio","tipoTarifa", "codigoHomologado","cups","valor")
+    # Filtrar
+    list_filter = ( "id","convenio","tipoTarifa", "codigoHomologado","cups","valor")
+
+
+@admin.register(ConveniosSuministros)
+class conveniosSuministrosAdmin(admin.ModelAdmin):
+
+    list_display = ( "id","convenio","tipoTarifa", "codigoHomologado","suministro","valor")
+    search_fields = ( "id","convenio","tipoTarifa", "codigoHomologado","suministro","valor")
+    # Filtrar
+    list_filter = ( "id","convenio","tipoTarifa", "codigoHomologado","suministro","valor")
+
