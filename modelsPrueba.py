@@ -255,7 +255,9 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 	   b) A partir de 1 tarifa aplicar un porcentaje
            c) A partir de una tarifa y de 1 concepto_id un vbalor y/o porcentaje
          
-
+	PARA EL 28 de octubre :
+	-- Arreglar el UPDATE De convenios los sumercos str(campo) sin commillas
+        -- colocar labels a la izquiera de los input, yop creo a todo. Es mas presentable
 
       
 

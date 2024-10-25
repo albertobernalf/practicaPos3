@@ -495,7 +495,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
             <center><h3>Procedimientos </h3></center>
    <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 
-       <div class="row row-cols-8">
+       <div class="row row-cols-8" style="height=3px;">
 
            <div class="col">
                <label for="pnombre" class="col-sm-3 control-label"> Nombre:</label>
@@ -523,40 +523,60 @@ div.dataTables_wrapper  div.dataTables_filter input {
            </div>
        </div>
 
-       <div class="row row-cols-8">
-
-                 <div class="col">
-			 <label for="tiposTarifa1" class="col-sm-1 control-label"> TiposTarifa :</label>
-                          <select class="select-css"  id="tiposTarifa1" name="tiposTarifa1">
-                                             {% for tiposTarifa in TiposTarifas %}
-                                                       <option value="{{tiposTarifa.id}}"> {{tiposTarifa.nombre}}
-                                                        </option>
-                                                       {% endfor %}
-                           </select>
-                </div>
-
-           <div class="col">
-			 <label for="conceptos" class="col-sm-1 control-label"> Conceptos :</label>
-                          <select class="select-css"  id="conceptos" name="conceptos">
-                                             {% for conceptos in Conceptos %}
-                                                       <option value="{{conceptos.id}}"> {{conceptos.nombre}}
-                                                        </option>
-                                                       {% endfor %}
-                           </select>
-                </div>
+       <div class="row row-cols-8" style="height=3px;">
 
 
-           <div class="col">
-               <label for="porcentage" class="col-sm-3 control-label"> Porcentage(%):</label>
-               <input type="text" class="form-control form-control-sm" id="porcentage"
-                      name="porcentage" value="">
-           </div>
 
-           <div class="col">
-               <label for="valorVariacion" class="col-sm-1 control-label"> Valor :</label>
-               <input type="text" class="form-control form-control-sm" id="valorVariacion"
-                      name="valorVariacion" value="" >
-           </div>
+					<div class="col">
+					<div class="form-group row">
+				                <label for="tiposTarifa1" class="col-form-label col-sm-3">Tarifario:</label>
+				              <div class="col-sm-6">
+					             <select class="select-css"  id="tiposTarifa1" name="tiposTarifa1">
+                                                    {% for tiposTarifa in TiposTarifas %}
+                                                            <option value="{{tiposTarifa.id}}"> {{tiposTarifa.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+				              </div>
+				        </div>
+					 </div>
+
+
+
+					<div class="col">
+					<div class="form-group row">
+				                <label for="conceptos" class="col-form-label col-sm-3">Concepto:</label>
+				              <div class="col-sm-6">
+					             <select class="select-css"  id="conceptos" name="conceptos">
+                                                    {% for conceptos in Conceptos %}
+                                                            <option value="{{conceptos.id}}"> {{conceptos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+				              </div>
+				        </div>
+					 </div>
+
+
+					<div class="col">
+					<div class="form-group row">
+						 <label for="porcentage" class="col-form-label col-sm-4">Porcentaje(%):</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="porcentage" name="porcentage" value="">
+                                      </div>
+                                      </div>
+                                      </div>
+
+
+					<div class="col">
+					<div class="form-group row">
+						 <label for="valorVariacion" class="col-form-label col-sm-4">Valor:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="valorVariacion" name="valorVariacion" value="">
+                                      </div>
+                                      </div>
+                                      </div>
+
 
 		  <div class="col">
                         <label for="btnGrabarTarifa" class="col-sm-6 control-label"> Guardar:</label>
@@ -572,36 +592,58 @@ div.dataTables_wrapper  div.dataTables_filter input {
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header" style="height:60px;">
                             <div class="row">
-                                     <div class="col">
-					                     CodigoHomologado:  <input type="text" id="codHomologado9" name="codHomologado" value="">
+                                  
+					<div class="col">
+					<div class="form-group row">
+						 <label for="codHomologado" class="col-form-label col-sm-4">Homologado:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="codHomologado" name="codHomologado" value="">
+                                      </div>
+                                      </div>
                                       </div>
 
-                                      <div class="col">
-					 <label for="tiposTarifa" class="col-sm-1 control-label"> TiposTarifa :</label>
-                                            <select class="select-css"  id="tiposTarifa" name="tiposTarifa">
+
+
+
+					<div class="col">
+					<div class="form-group row">
+				                <label for="nombre" class="col-form-label col-sm-3">Tarifario:</label>
+				              <div class="col-sm-6">
+					             <select class="select-css"  id="tiposTarifa" name="tiposTarifa">
                                                     {% for tiposTarifa in TiposTarifas %}
                                                             <option value="{{tiposTarifa.id}}"> {{tiposTarifa.nombre}}
                                                             </option>
                                                             {% endfor %}
                                             </select>
-                                      </div>
+				              </div>
+				        </div>
+					 </div>
 
-				      <div class="col">
-					 <label for="cups" class="col-sm-1 control-label"> Cups :</label>
-                                            <select class="select-css"  id="cups" name="cups">
+					<div class="col">
+					<div class="form-group row">
+				                <label for="cups" class="col-form-label col-sm-3">Cups:</label>
+				              <div class="col-sm-6">
+					              <select class="select-css"  id="cups" name="cups">
                                                     {% for cups in Cups %}
                                                             <option value="{{cups.id}}"> {{cups.nombre}}
                                                             </option>
                                                             {% endfor %}
                                             </select>
-                                      </div>
+				              </div>
+				        </div>
+					 </div>
 
 
                                                     
                                       <div class="col">
-							Valor:  <input type="text" id="valor" name="valor" value="">
+					<div class="form-group row">
+						 <label for="valor" class="col-form-label col-sm-4">Valor:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="valor" name="valor" value="">
+                                      </div>
+                                      </div>
                                       </div>
 
 

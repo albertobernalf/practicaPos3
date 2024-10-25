@@ -19,10 +19,15 @@ import MySQLdb
 import pyodbc
 import psycopg2
 import json 
-import datetime 
+import datetime
+from decimal import Decimal
 
 
 # Create your views here.
+def decimal_serializer(obj):
+    if isinstance(obj, Decimal):
+        return str(obj)
+    raise TypeError("Type not serializable")
 
 def serialize_datetime(obj): 
     if isinstance(obj, datetime.datetime): 
@@ -48,6 +53,53 @@ def load_dataConvenios(request, data):
     
 
     #print("data = ", request.GET('data'))
+
+    convenios = []
+
+
+    
+    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",     password="pass123")
+    curx = miConexionx.cursor()
+   
+    detalle = 'select conv.id id,conv.nombre nombre, "vigenciaDesde" vigenciaDesde, "vigenciaHasta" vigenciaHasta, emp.nombre  empresa from contratacion_convenios conv, facturacion_empresas emp WHERE emp.id = conv.empresa_id '
+
+    print(detalle)
+
+    curx.execute(detalle)
+
+    for id, nombre, vigenciaDesde, vigenciaHasta, empresa  in curx.fetchall():
+        convenios.append(
+		{"model":"convenios.convenios","pk":id,"fields":
+			{'id':id, 'nombre': nombre, 'vigenciaDesde': vigenciaDesde, 'vigenciaHasta': vigenciaHasta, 'empresa': empresa,
+                         }})
+
+    miConexionx.close()
+    print(convenios)
+    context['Convenios'] = convenios
+    #convenios.append({"model":"empresas.empresas","pk":id,"fields":{'Empresas':empresas}})
+    #convenios.append({"model":"tiposTarifa.tiposTarifa","pk":id,"fields":{'TiposTarifa':tiposTarifa}})
+    #convenios.append({"model":"cups.cups","pk":id,"fields":{'Cups':cups}})
+    #convenios.append({"model":"conceptos.conceptos","pk":id,"fields":{'Conceptos':conceptos}})
+
+
+    serialized1 = json.dumps(convenios, default=serialize_datetime)
+
+
+    return HttpResponse(serialized1, content_type='application/json')
+
+
+
+def PostConsultaConvenios(request):
+    print ("Entre PostConsultaConvenios ")
+
+    Post_id = request.POST["post_id"]
+
+    print("id = ", Post_id)
+    llave = Post_id.split('-')
+    print ("llave = " ,llave)
+    print ("primero=" ,llave[0])
+
+    context = {}
 
     # Combo Empresas
 
@@ -105,15 +157,15 @@ def load_dataConvenios(request, data):
                                    password="pass123")
     curt = miConexiont.cursor()
 
-    comando = 'SELECT c.id id,c."codigoCups" codigoCups, c.nombre nombre FROM clinico_examenes c order by c.nombre'
+    comando = 'SELECT c.id id,c."codigoCups" ||' + "'" + str(' ') + "'" +  '||c.nombre nombre FROM clinico_examenes c order by c.nombre'
 
     curt.execute(comando)
     print(comando)
 
     cups = []
 
-    for id, codigoCups, nombre in curt.fetchall():
-        cups.append({'id': id, 'codigoCups':codigoCups,  'nombre': nombre})
+    for id, nombre in curt.fetchall():
+        cups.append({'id': id,  'nombre': nombre})
 
     miConexiont.close()
     print(cups)
@@ -136,8 +188,8 @@ def load_dataConvenios(request, data):
 
     conceptos = []
 
-    for id, codigoCups, nombre in curt.fetchall():
-        conceptos.append({'id': id, 'codigoCups':codigoCups,  'nombre': nombre})
+    for id,  nombre in curt.fetchall():
+        conceptos.append({'id': id,  'nombre': nombre})
 
     miConexiont.close()
     print(conceptos)
@@ -145,54 +197,6 @@ def load_dataConvenios(request, data):
     context['Conceptos'] = conceptos
 
     # Fin combo conceptos
-
-    convenios = []
-
-
-    
-    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",     password="pass123")
-    curx = miConexionx.cursor()
-   
-    detalle = 'select conv.id id,conv.nombre nombre, "vigenciaDesde" vigenciaDesde, "vigenciaHasta" vigenciaHasta, emp.nombre  empresa from contratacion_convenios conv, facturacion_empresas emp WHERE emp.id = conv.empresa_id '
-
-    print(detalle)
-
-    curx.execute(detalle)
-
-    for id, nombre, vigenciaDesde, vigenciaHasta, empresa  in curx.fetchall():
-        convenios.append(
-		{"model":"convenios.convenios","pk":id,"fields":
-			{'id':id, 'nombre': nombre, 'vigenciaDesde': vigenciaDesde, 'vigenciaHasta': vigenciaHasta, 'empresa': empresa,
-                         }})
-
-    miConexionx.close()
-    print(convenios)
-    context['Convenios'] = convenios
-    convenios.append({"model":"convenios.convenios","pk":id,"fields":{'empresas':empresas}})
-    convenios.append({"model":"convenios.convenios","pk":id,"fields":{'tiposTarifa':tiposTarifa}})
-    convenios.append({"model":"convenios.convenios","pk":id,"fields":{'cups':cups}})
-    convenios.append({"model":"convenios.convenios","pk":id,"fields":{'conceptos':conceptos}})
-
-
-    serialized1 = json.dumps(convenios, default=serialize_datetime)
-
-
-    return HttpResponse(serialized1, content_type='application/json')
-
-
-
-def PostConsultaConvenios(request):
-    print ("Entre PostConsultaConvenios ")
-
-
-    Post_id = request.POST["post_id"]
-
-    print("id = ", Post_id)
-    llave = Post_id.split('-')
-    print ("llave = " ,llave)
-    print ("primero=" ,llave[0])
-
-
 
     if request.method == 'POST':
 
@@ -257,7 +261,7 @@ def PostConsultaConvenios(request):
                              'facturacionSuministros': conveniosD[0]['fields']['facturacionSuministros'],
                              'facturacionCups': conveniosD[0]['fields']['facturacionCups'],
                              'cuentaContable': conveniosD[0]['fields']['cuentaContable'],
-                             'requisitos': conveniosD[0]['fields']['requisitos']
+                             'requisitos': conveniosD[0]['fields']['requisitos'], 'Empresas': empresas, 'TiposTarifa':tiposTarifa, 'Conceptos': conceptos, 'Cups':cups
                              })
 
     else:
@@ -300,11 +304,13 @@ def load_dataConveniosProcedimientos(request, data):
     conveniosP = []
 
     for id, codigoHomologado, valor,  cupsId ,cupsNombre,tarifa in curx.fetchall():
-            conveniosP.append( {"id": id,
+            conveniosP.append(
+                {"model": "conveniosP.conveniosP", "pk": id, "fields":
+                  {"id": id,
                      "codigoHomologado": codigoHomologado,
                      "valor": valor,
                      "cupsId": cupsId, "cupsNombre": cupsNombre,
-                     "tarifa": tarifa })
+                     "tarifa": tarifa }})
 
     miConexionx.close()
     print(conveniosP)
@@ -312,7 +318,7 @@ def load_dataConveniosProcedimientos(request, data):
     context['ConveniosP'] = conveniosP
 
 
-    serialized1 = json.dumps(conveniosP, default=serialize_datetime)
+    serialized1 = json.dumps(conveniosP, default=decimal_serializer)
 
 
     return HttpResponse(serialized1, content_type='application/json')
@@ -500,32 +506,7 @@ def GuardarConvenio1( request):
 
         return JsonResponse({'success': True, 'message': 'Convenio Creado satisfactoriamente!'})
 
-
-
 def GrabarTarifa( request):
 
-    print ("Entre Grabar Tarifa")	
-
-    if request.method == 'POST':
-
-        estadoReg= 'A'
-        username_id = request.POST["username_id"]
-        fechaRegistro = datetime.datetime.now()
-
-  
-
-        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
-        curt = miConexiont.cursor()
-
-        comando = 'INSERT INTO contratacion_convenios (nombre,empresa_id,"vigenciaDesde","vigenciaHasta","porcTarifario", "porcSuministros", "valorOxigeno", "porcEsterilizacion", "porcMaterial",hospitalario, urgencias,"consultaExterna",copago, moderadora, "tipofactura",agrupada,"facturacionSuministros","facturacionCups", "cuentaContable", requisitos,"fechaRegistro","estadoReg","usuarioRegistro_id") VALUES (' + "'" + str(nombre) + "'," + "'" + str(empresa) + "'," + "'" + str(vigenciaDesde) + "'," + "'" + str(vigenciaHasta) + "',"  +  str(porcTarifario) + "," + str(porcSuministros) + "," + str(valorOxigeno) + "," + str(porcEsterilizacion) + ","  + str(porcMaterial) + "," + "'" + str(hospitalario) + "'," + "'" + str(urgencias) + "'," + "'" + str(consultaExterna) + "'," + "'" + str(copago) + "'," + "'" + str(moderadora) + "'," + "'" + str(tipoFactura) + "'," + "'" + str(agrupada) + "'," + "'" + str(facturacionSuministros) + "'," + "'" + str(facturacionCups) + "'," + "'" + str(cuentaContable) + "'," + "'" + str(requisitos) + "'," + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(username_id) + "')"
-
-
-
-        print(comando)
-        curt.execute(comando)
-        miConexiont.commit()
-        miConexiont.close()
-
-
-
-        return JsonResponse({'success': True, 'message': 'Tarifa Creada satisfactoriamente!'})
+    print ("Entre Grabar Tarifa")
+    pass

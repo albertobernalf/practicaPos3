@@ -125,6 +125,74 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			 $('#tiposTarifa').val(data.tiposTarifa);
 			 $('#cups').val(data.cups);
 
+			alert("data" + data);
+
+	  		   var options = '<option value="=================="></option>';
+
+	  		  // var dato = JSON.parse(data);
+
+
+                     const $id2 = document.querySelector("#tiposTarifa1");
+
+
+ 	      		     $("#tiposTarifa1").empty();
+
+	                 $.each(data['TiposTarifa'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id2.appendChild(option);
+ 	      		      });
+
+
+                     const $id3 = document.querySelector("#tiposTarifa");
+
+
+ 	      		     $("#tiposTarifa").empty();
+
+	                 $.each(data['TiposTarifa'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id3.appendChild(option);
+ 	      		      });
+
+                     const $id4 = document.querySelector("#conceptos");
+
+
+ 	      		     $("#conceptos").empty();
+
+	                 $.each(data['Conceptos'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id4.appendChild(option);
+ 	      		      });
+
+
+
+                     const $id5 = document.querySelector("#cups");
+
+
+ 	      		     $("#cups").empty();
+
+	                 $.each(data['Cups'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id5.appendChild(option);
+ 	      		      });
+
+
+
+
+
+
+
 
                   },
 	   		    error: function (request, status, error) {
