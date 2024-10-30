@@ -44,18 +44,22 @@ class Tarifas (models.Model):
     uvrAño = models.ForeignKey('tarifas.Uvr', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Uvr101')
     valorIss = models.DecimalField( max_digits=20, decimal_places=4,blank=True,null= True, editable=True,)
     valorPropio =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    valor =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
     paquete = models.CharField(max_length=1, blank=True,null= True, editable=True)
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT , related_name='plantas200')
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False )
 
-    def __str__(self):
+    class Meta:
+        unique_together = (('tipoTarifa', 'codigoCups'),)
 
+    def __str__(self):
         return str(self.nombre)
 
 class TarifasSuministros (models.Model):
     id = models.AutoField(primary_key=True)
     tipoTarifa = models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TipoTarifa02')
+    concepto = models.ForeignKey('facturacion.Conceptos', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Concepto227')
     suministro =  models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Suministro101')
     codigoHomologado = models.CharField(max_length=20, blank=True, null=True, editable=True)
     #concepto = models.ForeignKey('facturacion.Conceptos', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Concepto02')
@@ -63,6 +67,14 @@ class TarifasSuministros (models.Model):
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='platas201')
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False )
+
+
+    class Meta:
+        unique_together = (('tipoTarifa', 'suministro'),)
+
+
+    def __str__(self):
+            return self.nombre
 
     def __str__(self):
         return str(self.suministro)
@@ -130,6 +142,10 @@ class LiquidacionTarifasHonorarios(models.Model):
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False )
 
+
+    def __str__(self):
+            return self.nombre
+
     def __str__(self):
         return str(self.codigoHomologado)
 
@@ -149,6 +165,7 @@ class HonorariosIss(models.Model):
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False )
 
+
     def __str__(self):
         return str(self.descripcion)
 
@@ -165,6 +182,7 @@ class HonorariosSoat(models.Model):
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='plantas333')
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False )
+
 
     def __str__(self):
         return str(self.descripcion)

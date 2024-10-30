@@ -20,11 +20,17 @@ class ConveniosProcedimientos(models.Model):
     convenio = models.ForeignKey('contratacion.Convenios', blank=True,null= True, editable=True, on_delete=models.PROTECT)        
     tipoTarifa = models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT)    
     codigoHomologado = models.CharField(max_length=10, blank=True, null=True, editable=True)
+    concepto = models.ForeignKey('facturacion.Conceptos', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Concepto21')
     cups = models.ForeignKey('clinico.Examenes',   blank=True,null= True, editable=True,  on_delete=models.PROTECT,  related_name='Cups206')
     valor = models.DecimalField( max_digits=15, decimal_places=2, blank=True,null= True, editable=True)
     fechaRegistro = models.DateTimeField(default=now, editable=False)
     usuarioRegistro = models.ForeignKey('planta.Planta', default=1, on_delete=models.PROTECT, null=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+
+    class Meta:
+        unique_together = (('tipoTarifa', 'cups'),)
+
 
     def __str__(self):
             return self.nombre
@@ -75,6 +81,13 @@ class ConveniosTarifasHonorarios (models.Model):
     usuarioRegistro = models.ForeignKey('planta.Planta', default=1, on_delete=models.PROTECT, null=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
+    class Meta:
+        unique_together = (('tipoTarifa', 'tipoHonorario'),)
+
+
+    def __str__(self):
+            return self.convenio
+
 
 class ConveniosSuministros(models.Model):
     Si = 'S'
@@ -87,14 +100,19 @@ class ConveniosSuministros(models.Model):
     convenio = models.ForeignKey('contratacion.Convenios', blank=True,null= True, editable=True, on_delete=models.PROTECT)        
     tipoTarifa = models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT)    
     codigoHomologado = models.CharField(max_length=10, blank=True, null=True, editable=True)
+    concepto = models.ForeignKey('facturacion.Conceptos', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Concepto221')
     suministro = models.ForeignKey('facturacion.Suministros',on_delete=models.PROTECT, null= False)
     valor = models.DecimalField( max_digits=15, decimal_places=2, blank=True,null= True, editable=True)
     fechaRegistro = models.DateTimeField(default=now, editable=False)
     usuarioRegistro = models.ForeignKey('planta.Planta', default=1, on_delete=models.PROTECT, null=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
+    class Meta:
+        unique_together = (('tipoTarifa', 'suministro'),)
+
+
     def __str__(self):
-            return self.nombre
+            return self.convenio
 
 
 

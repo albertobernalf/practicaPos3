@@ -248,16 +248,12 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 	   tarifas_TiposSalas
            tarifas_conceptosAfacturar (No creo que sirva a lo mejor borrar)
 
+	ojo falta cuando se consulta un convenio coloque la vigenciaDesde , vigenciaHasta
+	el window.reload(9 nop funciona cuando se graba y/o actualuzaun coonvenio
 
-	-- IDEA Como se deben porder crear los convenios
-
-           a) A patrir de 1 tarifa 100%
-	   b) A partir de 1 tarifa aplicar un porcentaje
-           c) A partir de una tarifa y de 1 concepto_id un vbalor y/o porcentaje
+  
          
-	PARA EL 28 de octubre :
-	-- Arreglar el UPDATE De convenios los sumercos str(campo) sin commillas
-        -- colocar labels a la izquiera de los input, yop creo a todo. Es mas presentable
+
 
       
 

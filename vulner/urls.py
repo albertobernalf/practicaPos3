@@ -189,7 +189,13 @@ urlpatterns = [
     path('guardarConveniosProcedimientos/', viewsConvenios.GuardarConveniosProcedimientos, name='guardarConveniosProcedimientos'),
     path('guardarConvenio/', viewsConvenios.GuardarConvenio , name='guadarConvenio'),
     path('guardarConvenio1/', viewsConvenios.GuardarConvenio1, name='guadarConvenio1'),
-    path('ggrabarTarifa/', viewsConvenios.GrabarTarifa, name='grabarTarifa'),
+    path('grabarTarifa/', viewsConvenios.GrabarTarifa, name='grabarTarifa'),
+    path('deleteConveniosProcedimientos/', viewsConvenios.DeleteConveniosProcedimientos, name='deleteConveniosProcedimientos'),
+
+    path('load_dataConveniosSuministros/<str:data>', viewsConvenios.load_dataConveniosSuministros, name='loaddataConveniosSuministros'),
+    path('grabarSuministro/', viewsConvenios.GrabarSuministro, name='grabarSuministro'),
+    path('deleteConveniosSuministros/', viewsConvenios.DeleteConveniosSuministros, name='deleteConveniosSuministros'),
+
 
     # Citas Medicas
 

@@ -51,10 +51,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 
-      alert(" fila seleccionada radio = " + valor );
+        alert(" fila seleccionada radio = " + valor );
 
 	
 	initTableConveniosProcedimientos(data);
+	initTableConveniosSuministros(data);
 
 
 	/*--------------------------------------------
@@ -79,7 +80,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
    	 alert("ya destrui tablaConveniosProcedimientos");
 
            initTableConveniosProcedimientos(data);
-           // initTableConveniosSuministros(data);
+
+         tableS= $("#tablaConveniosSuministros").dataTable().fnDestroy();
+   	 alert("ya destrui tablaConveniosSuministros");
+           initTableConveniosSuministros(data);
+
            // initTableConveniosHonorarios(data);
 
 	$.ajax({
@@ -95,9 +100,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	       	        $('#convenioId').val(data.pk);
 	       	        $('#convenioId1').val(data.pk);
 	       	        $('#nombre').val(data.nombre);
+			$('#snombre').val(data.nombre);
         	       	$('#empresa').val(data.empresa);
+			$('#sempresa').val(data.empresa);
 	                $('#vigenciaDesde').val(data.vigenciaDesde);
+	                $('#svigenciaDesde').val(data.vigenciaDesde);
 	                $('#vigenciaHasta').val(data.vigenciaHasta);
+	                $('#svigenciaHasta').val(data.vigenciaHasta);
 	                $('#porcTarifario').val(data.porcTarifario);
 	                $('#porcSuministros').val(data.porcSuministros);
 	                $('#valorOxigeno').val(data.valorOxigeno);
@@ -119,17 +128,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 			$('#pnombre').val(data.nombre);
         	       	$('#pempresa').val(data.empresa);
-	                $('#pvigenciaDesde').val(data.vigenciaDesde);
-	                $('#pvigenciaHasta').val(data.vigenciaHasta);
+			alert("vigenciaDesde " + data.vigenciaDesde);
+			alert("vigenciaHasta " + data.vigenciaHasta);
+
+
+	                $('#vigenciaDesde').val(data.vigenciaDesde);
+	                $('#vigenciaHasta').val(data.vigenciaHasta);
 
 			 $('#tiposTarifa').val(data.tiposTarifa);
 			 $('#cups').val(data.cups);
 
-			alert("data" + data);
 
 	  		   var options = '<option value="=================="></option>';
-
-	  		  // var dato = JSON.parse(data);
 
 
                      const $id2 = document.querySelector("#tiposTarifa1");
@@ -146,10 +156,42 @@ document.addEventListener("DOMContentLoaded", function(event) {
  	      		      });
 
 
-                     const $id3 = document.querySelector("#tiposTarifa");
 
 
- 	      		     $("#tiposTarifa").empty();
+                     const $id22 = document.querySelector("#stiposTarifa1");
+
+
+ 	      		     $("#stiposTarifa1").empty();
+
+	                 $.each(data['TiposTarifa'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id22.appendChild(option);
+ 	      		      });
+
+
+
+                     const $id222 = document.querySelector("#ttiposTarifa");
+
+
+ 	      		     $("#ttiposTarifa").empty();
+
+	                 $.each(data['TiposTarifa'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id222.appendChild(option);
+ 	      		      });
+
+
+
+                     const $id3 = document.querySelector("#xtiposTarifa");
+
+
+ 	      		     $("#xtiposTarifa").empty();
 
 	                 $.each(data['TiposTarifa'], function(key,value) {
                                     options +='<option value="' + value.id + '">' + value.nombre + '</option>';
@@ -174,10 +216,40 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 
-                     const $id5 = document.querySelector("#cups");
+
+                     const $id44 = document.querySelector("#tconceptos");
 
 
- 	      		     $("#cups").empty();
+ 	      		     $("#tconceptos").empty();
+
+	                 $.each(data['Conceptos'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id44.appendChild(option);
+ 	      		      });
+
+
+                     const $id444 = document.querySelector("#sconceptos");
+
+
+ 	      		     $("#sconceptos").empty();
+
+	                 $.each(data['Conceptos'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id444.appendChild(option);
+ 	      		      });
+
+
+
+                     const $id5 = document.querySelector("#xcups");
+
+
+ 	      		     $("#xcups").empty();
 
 	                 $.each(data['Cups'], function(key,value) {
                                     options +='<option value="' + value.id + '">' + value.nombre + '</option>';
@@ -189,10 +261,65 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 
+                     const $id42 = document.querySelector("#tsum");
+
+
+ 	      		     $("#tsum").empty();
+
+	                 $.each(data['Suministras'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id42.appendChild(option);
+ 	      		      });
+
+
+		  const $id6 = document.querySelector("#xconceptos");
+
+
+ 	      		     $("#xconceptos").empty();
+
+	                 $.each(data['Conceptos'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id6.appendChild(option);
+ 	      		      });
+
+
+		  const $id7 = document.querySelector("#empresa");
+
+
+ 	      		     $("#empresa").empty();
+
+	                 $.each(data['Empresas'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id7.appendChild(option);
+ 	      		      });
 
 
 
+		  const $id77 = document.querySelector("#sempresa");
 
+
+ 	      		     $("#sempresa").empty();
+
+	                 $.each(data['Sempresas'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id77.appendChild(option);
+ 	      		      });
+
+
+			 $('#empresa').val(data.empresa);
+			$('#sempresa').val(data.Sempresas);
 
                   },
 	   		    error: function (request, status, error) {
@@ -212,22 +339,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
           alert("pk1 = " + $(this).data('pk'));
 
 	$.ajax({
-	           url: '/postConsultaConveniosProcedimientos/',
+	           url: '/deleteConveniosProcedimientos/',
 	            data : {post_id:post_id},
 	           type: 'POST',
 	           dataType : 'json',
 	  		success: function (data) {
                         alert("Regrese");
-                       alert("data="  + data);
 
-		
+			 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
 
-			 $('#pk').val(data.pk);
-	       	        $('#tipoDocId').val(data.tipoDocId);
-        	       	$('#nombreTipoDoc').val(data.nombreTipoDoc);
-	                $('#documentoId').val(data.documentoId);
-	                $('#documento2').val(data.documento);
-	                $('#consec').val(data.consec);
+			 var valor = document.getElementById("convenioId").value;
+
+		        data2['valor'] = valor;	
+		        data2 = JSON.stringify(data2);
+			   $("#mensajes").html(data.message);
+			
+		    tableC= $("#tablaConveniosProcedimientos").dataTable().fnDestroy();	
+	           initTableConveniosProcedimientos(data2);
+			 
 
                   },
 	   		    error: function (request, status, error) {
@@ -236,6 +370,52 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	     });
 
         });
+
+
+
+	/*--------------------------------------------
+        Click to Edit Button
+        --------------------------------------------
+        --------------------------------------------*/
+        $('body').on('click', '.editPostConveniosSuministros', function () {
+	
+          var post_id = $(this).data('pk');
+          alert("pk1 = " + $(this).data('pk'));
+
+	$.ajax({
+	           url: '/deleteConveniosSuministros/',
+	            data : {post_id:post_id},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese");
+
+			 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+
+			 var valor = document.getElementById("convenioId").value;
+
+		        data2['valor'] = valor;	
+		        data2 = JSON.stringify(data2);
+			   $("#mensajes").html(data.message);
+			
+		    tableC= $("#tablaConveniosSuministros").dataTable().fnDestroy();	
+	           initTableConveniosSuministros(data2);
+			 
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+
+        });
+
+
 
 
         /*------------------------------------------
@@ -265,7 +445,7 @@ function initTableConvenios(data) {
                     },
             processing: true,
             serverSide: false,
-            scrollY: '300px',
+            scrollY: '350px',
 	    scrollX: true,
 	    scrollCollapse: true,
             paging:false,
@@ -311,7 +491,7 @@ function initTableConveniosProcedimientos(data) {
                     },
             processing: true,
             serverSide: false,
-            scrollY: '300px',
+            scrollY: '220px',
 	    scrollX: true,
 	    scrollCollapse: true,
             paging:false,
@@ -346,6 +526,51 @@ function initTableConveniosProcedimientos(data) {
  });
 }
 
+
+
+function initTableConveniosSuministros(data) {
+
+	return new DataTable('.tablaConveniosSuministros', {
+	 "language": {
+                  "lengthMenu": "Display _MENU_ registros",
+                   "search": "Filtrar registros:",
+                    },
+            processing: true,
+            serverSide: false,
+            scrollY: '220px',
+	    scrollX: true,
+	    scrollCollapse: true,
+            paging:false,
+            columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        var btn = '';
+                      //    btn = btn + " <button   class='btn btn-primary editPost' data-pk='" + row.pk + "'>" + "</button>";
+                          btn = btn + " <input type='radio'  class='form-check-input editPostConveniosSuministros' data-pk='" + row.pk + "'>" + "</input>";
+                        return btn;
+                    },
+                    "targets": 6
+               }
+            ],
+            ajax: {
+                 url:"/load_dataConveniosSuministros/" +  data,
+                 type: "POST",
+                dataSrc: ""
+            },
+
+            lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
+            columns: [
+                { data: "fields.codigoHomologado"},
+                { data: "fields.id"},
+                { data: "fields.tarifa"},
+                { data: "fields.suministroId"},
+                { data: "fields.suministroNombre"},
+                { data: "fields.valor"},
+        
+            ]
+
+ });
+}
 
 
  function tableActionsConvenios() {
@@ -481,7 +706,30 @@ function GrabarConvenio1()
 	           dataType : 'json',
 	  		success: function (data) {
                         alert("Regrese");
-                       alert("data y escribir en mensajes="  + data);
+
+			    $("#mensajes").html(data.message);
+
+
+			 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+
+			 var valor = document.getElementById("convenioId").value;
+
+		        data2['valor'] = valor;	
+		        data2 = JSON.stringify(data2);
+			   $("#mensajes").html(data.message);
+			
+		    tableC= $("#tablaConvenios").dataTable().fnDestroy();	
+	           initTableConvenios(data2);
+
+
+
+
+
 
 			    $("#mensajes").html(data.message);
 
@@ -500,64 +748,368 @@ function BtnAdicionarConvenio()
 	alert("Entre Adicionar Convenio");
 
         var codigoHomologado = document.getElementById("codHomologado").value;
-        var tiposTarifa = document.getElementById("tiposTarifa"); /*Obtener el SELECT */
-        var nombreTiposTarifa = select.options[tiposTarifa.selectedIndex].value; /* Obtener el valor */
-        var cups = document.getElementById("cups").value;
-	var nombreCups = select.options[cups.selectedIndex].value; /* Obtener el valor */
+        var tiposTarifa = document.getElementById("xtiposTarifa").value; /*Obtener el SELECT */
+        // var nombreTiposTarifa = tiposTarifa.options[tiposTarifa.selectedIndex].value; /* Obtener el valor */
+        var xcups = document.getElementById("xcups").value;
         var valor = document.getElementById("valor").value;
-	var username_id = document.getElementById("username_id").value;
-	var convenioId = document.getElementById("convenioId").value;
+	    var username_id = document.getElementById("username_id").value;
+	    var convenioId = document.getElementById("convenioId").value;
+	    var xconceptos = document.getElementById("xconceptos").value;
+
+
+
+
 
 		$.ajax({
 	           url: '/guardarConveniosProcedimientos/',
-	            data : {codigoHomologado:codigoHomologado,
-			    tiposTarifa:tiposTarifa,
-			    nombreTiposTarifa:nombreTiposTarifa,
-    			    cups:_cups,
-			    nombreCups:nombreCups,
-			    valor:valor,
-			    username_id:username_id,
-			    convenioId:convenioId},
+	            data :
+	            {'codigoHomologado':codigoHomologado,  'tiposTarifa':tiposTarifa,
+			    'xcups':xcups,  'valor':valor,
+			    'username_id':username_id,   'convenioId':convenioId, 'xconceptos':xconceptos },
 	           type: 'POST',
 	           dataType : 'json',
 	  		success: function (data) {
-                        alert("Regrese");
-                       alert("data y escribir en mensajes="  + data);
-			    $("#mensajes").html(data.message);
-		
+                        alert("Regrese PRESENTE");
 
+            		 var data2 =  {}   ;
+        			data2['username'] = username;
+    		        data2['sedeSeleccionada'] = sedeSeleccionada;
+	    	        data2['nombreSede'] = nombreSede;
+		            data2['sede'] = sede;
+	            	var convenioId1 = document.getElementById("convenioId1").value;
+
+	                var username_id = document.getElementById("username_id").value;
+
+		            data2['username_id'] = username_id;
+		            data2['valor'] = convenioId;
+		            data2 = JSON.stringify(data2);
+
+		            tableC= $("#tablaConveniosProcedimientos").dataTable().fnDestroy();
+		   	        alert("ya destrui tablaConveniosProcedimientos");
+
+	                    initTableConveniosProcedimientos(data2);
+			                $("#mensajes").html(data.message);
                   },
 	   		    error: function (request, status, error) {
 	   			    $("#mensajes").html(" !  Reproduccion  con error !");
 	   	    	}
 	     });
-
-
 }
 
 function GrabarTarifa()
 {
 	alert("Entre Grabar Tarifa no hago nada");
+	var convenioId = document.getElementById("convenioId1").value;
+          alert("convenio =  " +convenioId1);
 
-$.ajax({
+	
+	var tiposTarifa = document.getElementById("tiposTarifa1").value;
+	var conceptos = document.getElementById("conceptos").value;
+	var porcentage = document.getElementById("porcentage").value;
+	var valorVariacion = document.getElementById("valorVariacion").value;
+	var convenioId1 = document.getElementById("convenioId1").value;
+	alert("convenioId1 =" + convenioId1);	
+	var username_id = document.getElementById("username_id").value;
+         
+
+	$.ajax({
 	           url: '/grabarTarifa/',
-	            data : {},
+	            data : {tiposTarifa:tiposTarifa,
+			    conceptos:conceptos,
+			    porcentage:porcentage,
+			    valorVariacion:valorVariacion,
+			    convenioId1:convenioId1,
+			    username_id:username_id,
+                            accion:'Crear'},
 	           type: 'POST',
 	           dataType : 'json',
 	  		success: function (data) {
                         alert("Regrese");
                        alert("data y escribir en mensajes="  + data);
 
+			 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+		        data2['valor'] = convenioId;	
+		        data2 = JSON.stringify(data2);
+
+
+		    tableC= $("#tablaConveniosProcedimientos").dataTable().fnDestroy();
+		   	 alert("ya destrui tablaConveniosProcedimientos");
+			
+		alert("DATA CON QUE CREO EL DATATABLE = " + data);
+
+
+	           initTableConveniosProcedimientos(data2);
+
+
+			    $("#mensajes").html(data.message);
 		
 
                   },
 	   		    error: function (request, status, error) {
-	   			    $("#mensajes").html(data.message);
+	   			    $("#mensajes").html("Error:");
 	   	    	}
 	     });
 
 
 
 }
+
+
+
+function BorrarTarifa()
+{
+	alert("Entre Borrar Tarifa no hago nada");
+	var convenioId = document.getElementById("convenioId1").value;
+          alert("convenio =  " +convenioId1);
+
+	
+	var tiposTarifa = document.getElementById("tiposTarifa1").value;
+	var conceptos = document.getElementById("conceptos").value;
+	var porcentage = document.getElementById("porcentage").value;
+	var valorVariacion = document.getElementById("valorVariacion").value;
+	var convenioId1 = document.getElementById("convenioId1").value;
+	alert("convenioId1 =" + convenioId1);	
+	var username_id = document.getElementById("username_id").value;
+         
+
+	$.ajax({
+	           url: '/grabarTarifa/',
+	            data : {tiposTarifa:tiposTarifa,
+			    conceptos:conceptos,
+			    porcentage:porcentage,
+			    valorVariacion:valorVariacion,
+			    convenioId1:convenioId1,
+			    username_id:username_id,
+                            accion:'Borrar'},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese");
+                       alert("data y escribir en mensajes="  + data);
+
+			 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+		        data2['valor'] = convenioId;	
+		        data2 = JSON.stringify(data2);
+
+
+		    tableC= $("#tablaConveniosProcedimientos").dataTable().fnDestroy();
+		   	 alert("ya destrui tablaConveniosProcedimientos");
+			
+		alert("DATA CON QUE CREO EL DATATABLE = " + data);
+
+
+	           initTableConveniosProcedimientos(data2);
+
+
+			    $("#mensajes").html(data.message);
+		
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html("Error:");
+	   	    	}
+	     });
+
+
+
+}
+
+////////////////////////////////
+/// DESDE AQUIP SUMINISTROS
+////////////////////////////////
+
+function BtnAdicionarSuministro()
+{
+	alert("Entre Adicionar Suministro");
+
+        var codigoHomologado = document.getElementById("scodHomologado").value;
+        var tiposTarifa = document.getElementById("ttiposTarifa").value; /*Obtener el SELECT */
+
+        var tsum = document.getElementById("tsum").value;
+        var svalor = document.getElementById("svalor").value;
+	    var username_id = document.getElementById("username_id").value;
+	    var convenioId = document.getElementById("convenioId").value;
+	    var tconceptos = document.getElementById("tconceptos").value;
+
+
+
+		$.ajax({
+	           url: '/guardarConveniosSuministros/',
+	            data :
+	            {'codigoHomologado':codigoHomologado,  'tiposTarifa':tiposTarifa,
+			    'sum':tsum,  'valor':svalor,
+			    'username_id':username_id,   'convenioId':convenioId, 'conceptos':tconceptos },
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese PRESENTE");
+
+            		 var data2 =  {}   ;
+        			data2['username'] = username;
+    		        data2['sedeSeleccionada'] = sedeSeleccionada;
+	    	        data2['nombreSede'] = nombreSede;
+		            data2['sede'] = sede;
+	            	var convenioId1 = document.getElementById("convenioId1").value;
+
+	                var username_id = document.getElementById("username_id").value;
+
+		            data2['username_id'] = username_id;
+		            data2['valor'] = convenioId;
+		            data2 = JSON.stringify(data2);
+
+		            tableC= $("#tablaConveniosSuministros").dataTable().fnDestroy();
+		   	        alert("ya destrui tablaConveniosSuministros");
+
+	                    initTableConveniosSuministros(data2);
+			                $("#mensajes").html(data.message);
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+}
+
+function GrabarSuministro()
+{
+	alert("Entre Grabar Suministro  no hago nada");
+	var convenioId = document.getElementById("convenioId1").value;
+          alert("convenio =  " +convenioId1);
+
+	
+	var tiposTarifa = document.getElementById("stiposTarifa1").value;
+	var conceptos = document.getElementById("sconceptos").value;
+	var porcentage = document.getElementById("sporcentage").value;
+	var valorVariacion = document.getElementById("svalorVariacion").value;
+	var convenioId1 = document.getElementById("convenioId1").value;
+	alert("convenioId1 =" + convenioId1);	
+	var username_id = document.getElementById("username_id").value;
+         
+
+	$.ajax({
+	           url: '/grabarSuministro/',
+	            data : {tiposTarifa:tiposTarifa,
+			    conceptos:conceptos,
+			    porcentage:porcentage,
+			    valorVariacion:valorVariacion,
+			    convenioId1:convenioId1,
+			    username_id:username_id,
+                            accion:'Crear'},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese");
+                       alert("data y escribir en mensajes="  + data);
+
+			 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+		        data2['valor'] = convenioId;	
+		        data2 = JSON.stringify(data2);
+
+
+		    tableC= $("#tablaConveniosSuministros").dataTable().fnDestroy();
+		   	 alert("ya destrui tablaConveniosSuministros");
+			
+		alert("DATA CON QUE CREO EL DATATABLE = " + data);
+
+
+	           initTableConveniosSuministros(data2);
+
+
+			    $("#mensajes").html(data.message);
+		
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html("Error:");
+	   	    	}
+	     });
+
+
+
+}
+
+
+
+function BorrarSuministro()
+{
+	alert("Entre Borrar Suministro no hago nada");
+	var convenioId = document.getElementById("convenioId1").value;
+          alert("convenio =  " +convenioId1);
+
+	
+	var tiposTarifa = document.getElementById("tiposTarifa1").value;
+	var conceptos = document.getElementById("conceptos").value;
+	var porcentage = document.getElementById("porcentage").value;
+	var valorVariacion = document.getElementById("valorVariacion").value;
+	var convenioId1 = document.getElementById("convenioId1").value;
+	alert("convenioId1 =" + convenioId1);	
+	var username_id = document.getElementById("username_id").value;
+         
+
+	$.ajax({
+	           url: '/grabarSuministro/',
+	            data : {tiposTarifa:tiposTarifa,
+			    conceptos:conceptos,
+			    porcentage:porcentage,
+			    valorVariacion:valorVariacion,
+			    convenioId1:convenioId1,
+			    username_id:username_id,
+                            accion:'Borrar'},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese");
+                       alert("data y escribir en mensajes="  + data);
+
+			 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+		        data2['valor'] = convenioId;	
+		        data2 = JSON.stringify(data2);
+
+
+		    tableC= $("#tablaConveniosSuministros").dataTable().fnDestroy();
+		   	 alert("ya destrui tablaConveniosSuministros");
+			
+		alert("DATA CON QUE CREO EL DATATABLE = " + data);
+
+
+	           initTableConveniosSuministros(data2);
+
+
+			    $("#mensajes").html(data.message);
+		
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html("Error:");
+	   	    	}
+	     });
+
+
+
+}
+
+
+
+
+
 
 
