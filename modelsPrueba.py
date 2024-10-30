@@ -251,6 +251,7 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 	ojo falta cuando se consulta un convenio coloque la vigenciaDesde , vigenciaHasta
 	el window.reload(9 nop funciona cuando se graba y/o actualuzaun coonvenio
 
+        Mejorar la presicion de la presentacion de los convenios los datatables, titulos , etc
   
          
 

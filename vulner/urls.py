@@ -195,7 +195,7 @@ urlpatterns = [
     path('load_dataConveniosSuministros/<str:data>', viewsConvenios.load_dataConveniosSuministros, name='loaddataConveniosSuministros'),
     path('grabarSuministro/', viewsConvenios.GrabarSuministro, name='grabarSuministro'),
     path('deleteConveniosSuministros/', viewsConvenios.DeleteConveniosSuministros, name='deleteConveniosSuministros'),
-
+    path('guardarConveniosSuministros/', viewsConvenios.GuardarConveniosSuministros, name='guardarConveniosSuministros'),
 
     # Citas Medicas
 

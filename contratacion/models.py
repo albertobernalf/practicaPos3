@@ -82,7 +82,7 @@ class ConveniosTarifasHonorarios (models.Model):
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     class Meta:
-        unique_together = (('tipoTarifa', 'tipoHonorario'),)
+        unique_together = (('convenio','tipoTarifa', 'tipoHonorario'),)
 
 
     def __str__(self):
@@ -108,7 +108,7 @@ class ConveniosSuministros(models.Model):
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     class Meta:
-        unique_together = (('tipoTarifa', 'suministro'),)
+        unique_together = (('convenio','tipoTarifa', 'suministro'),)
 
 
     def __str__(self):
@@ -116,4 +116,20 @@ class ConveniosSuministros(models.Model):
 
 
 
+class ConveniosLiquidacionTarifasHonorarios(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipoTarifa =  models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoTarifa037')
+    codigoHomologado = models.CharField(max_length=10, blank=True,null= True , editable=True )
+    tipoHonorario =  models.ForeignKey('tarifas.TiposHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoHonorario017')
+    descripcion =  models.CharField(max_length=300, blank=True,null= True , editable=True )
+    codigoSuministro =  models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Suminis1277')
+    codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Cups1177')
+    valor =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
+    usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='plantas2177')
+    fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False )
+
+
+    def __str__(self):
+            return self.descripcion
 

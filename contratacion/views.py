@@ -674,22 +674,22 @@ def GrabarTarifa( request):
 
         if (accion == 'Borrar' and conceptos == '' and valorVariacion == '0' ):
             print("Entre11")
-            comando = 'DELETE FROM contratacion_conveniosProcedimientos  where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'"
+            comando = 'DELETE FROM contratacion_conveniosProcedimientos  where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'"
 
 
         if (accion == 'Borrar' and conceptos != '' and valorVariacion == '0'):
             print("Entre12")
-            comando = 'DELETE FROM contratacion_conveniosProcedimientos where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'"
+            comando = 'DELETE FROM contratacion_conveniosProcedimientos where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'"
 
 
         if (accion == 'Borrar' and conceptos == '' and valorVariacion != '0'):
             print("Entre13")
-            comando = 'DELETE FROM contratacion_conveniosProcedimientos where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' and valor = " + "'" + str(valorVariacion) + "'"
+            comando = 'DELETE FROM contratacion_conveniosProcedimientos where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' and valor = " + "'" + str(valorVariacion) + "'"
 
 
         if (accion == 'Borrar' and conceptos != '' and valorVariacion !='0'):
             print("Entre14")
-            comando = 'DELETE FROM contratacion_conveniosProcedimientos where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "' AND valor = " + "'" +str(valorVariacion) + "'"
+            comando = 'DELETE FROM contratacion_conveniosProcedimientos where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "' AND valor = " + "'" +str(valorVariacion) + "'"
 
 
         print(comando)
@@ -810,7 +810,7 @@ def GuardarConveniosSuministros( request):
 
         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
         curt = miConexiont.cursor()
-        comando = 'INSERT INTO contratacion_conveniossumnistros ("codigoHomologado", valor, "fechaRegistro", "estadoReg", convenio_id, suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id) values (' + "'" + str(codigoHomologado) + "'," + "'" + str(valor) + "'," + "'" + str(fechaRegistro) +"'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + "'" + str(suministro) + "'," + "'" + str(tiposTarifa) + "'," + "'" + str(username_id) + "',"  + str(conceptos) + ")"
+        comando = 'INSERT INTO contratacion_conveniossuministros ("codigoHomologado", valor, "fechaRegistro", "estadoReg", convenio_id, suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id) values (' + "'" + str(codigoHomologado) + "'," + "'" + str(valor) + "'," + "'" + str(fechaRegistro) +"'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + "'" + str(suministro) + "'," + "'" + str(tiposTarifa) + "'," + "'" + str(username_id) + "',"  + str(conceptos) + ")"
 
 
         print(comando)
@@ -860,42 +860,42 @@ def GrabarSuministro( request):
 
         if (accion == 'Crear' and porcentage != 0 and conceptos == '' and valorVariacion == '0' ):
             print("Entre1")
-            comando = 'INSERT INTO contratacion_conveniosSuministros ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id) select "codigoHomologado", round((+"valor" +"valor"*' + str(porcentage) + '/100)) subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + ' cast(suminsitro_id as numeric), '  + str(tiposTarifa) + "," + "'" +  str(username_id) + "'" +  ', concepto_id from tarifas_tarifassuministros where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'"
+            comando = 'INSERT INTO contratacion_conveniosSuministros ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id) select "codigoHomologado", round((+"valor" +"valor"*' + str(porcentage) + '/100)) subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + ' cast(suministro_id as numeric), '  + str(tiposTarifa) + "," + "'" +  str(username_id) + "'" +  ', concepto_id from tarifas_tarifassuministros where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'"
 
 
         if (accion == 'Crear' and porcentage != 0 and conceptos != '' and valorVariacion == '0'):
             print("Entre2")
-            comando = 'INSERT INTO contratacion_conveniosSuministros ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id) select "codigoHomologado", round((+"valor" +"valor"*' + str(porcentage) + '/100)) subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + ' cast(suminsitro_id as numeric), ' +"'"  + str(tiposTarifa)  + "'," + "'" + str(username_id) + "'" + ', concepto_id from tarifas_tarifassuministros where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'"
+            comando = 'INSERT INTO contratacion_conveniosSuministros ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id) select "codigoHomologado", round((+"valor" +"valor"*' + str(porcentage) + '/100)) subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + ' cast(suministro_id as numeric), ' +"'"  + str(tiposTarifa)  + "'," + "'" + str(username_id) + "'" + ', concepto_id from tarifas_tarifassuministros where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'"
 
 
         if (accion == 'Crear' and porcentage == '0'  and conceptos == '' and valorVariacion != '0'):
             print("Entre3")
-            comando = 'INSERT INTO contratacion_conveniosSuministros ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id) select "codigoHomologado", round( ' + "'" + str(valorVariacion) + "')" + ' subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) +  "'," + ' cast(suminsitro_id as numeric), '   +"'" + str(tiposTarifa)  + "'," + "'" + str(username_id) + "'" + ', concepto_id from tarifas_tarifassuministros where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'"
+            comando = 'INSERT INTO contratacion_conveniosSuministros ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id) select "codigoHomologado", round( ' + "'" + str(valorVariacion) + "')" + ' subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) +  "'," + ' cast(suministro_id as numeric), '   +"'" + str(tiposTarifa)  + "'," + "'" + str(username_id) + "'" + ', concepto_id from tarifas_tarifassuministros where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'"
 
 
         if (accion == 'Crear' and porcentage == '0'  and conceptos != '' and valorVariacion !='0'):
             print("Entre4")
-            comando = 'INSERT INTO contratacion_conveniosSuministros ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id) select "codigoHomologado", round( ' + "'" + str(valorVariacion) + "')" + ' subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + ' cast(suminsitro_id as numeric), '  +"'"  + str(tiposTarifa)  + "'," + "'" + str(username_id) + "'" + ', concepto_id from tarifas_tarifassuministros where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'"
+            comando = 'INSERT INTO contratacion_conveniosSuministros ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id) select "codigoHomologado", round( ' + "'" + str(valorVariacion) + "')" + ' subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + ' cast(suministro_id as numeric), '  +"'"  + str(tiposTarifa)  + "'," + "'" + str(username_id) + "'" + ', concepto_id from tarifas_tarifassuministros where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'"
 
 
         if (accion == 'Borrar' and conceptos == '' and valorVariacion == '0' ):
             print("Entre11")
-            comando = 'DELETE FROM contratacion_conveniosSuministros  where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'"
+            comando = 'DELETE FROM contratacion_conveniosSuministros  where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'"
 
 
         if (accion == 'Borrar' and conceptos != '' and valorVariacion == '0'):
             print("Entre12")
-            comando = 'DELETE FROM contratacion_conveniosSuministros where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'"
+            comando = 'DELETE FROM contratacion_conveniosSuministros where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'"
 
 
         if (accion == 'Borrar' and conceptos == '' and valorVariacion != '0'):
             print("Entre13")
-            comando = 'DELETE FROM contratacion_conveniosSuministros where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' and valor = " + "'" + str(valorVariacion) + "'"
+            comando = 'DELETE FROM contratacion_conveniosSuministros where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' and valor = " + "'" + str(valorVariacion) + "'"
 
 
         if (accion == 'Borrar' and conceptos != '' and valorVariacion !='0'):
             print("Entre14")
-            comando = 'DELETE FROM contratacion_conveniosSuministros where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "' AND valor = " + "'" +str(valorVariacion) + "'"
+            comando = 'DELETE FROM contratacion_conveniosSuministros where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "' AND valor = " + "'" +str(valorVariacion) + "'"
 
 
         print(comando)

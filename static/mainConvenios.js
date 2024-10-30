@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
            initTableConveniosProcedimientos(data);
 
          tableS= $("#tablaConveniosSuministros").dataTable().fnDestroy();
-   	 alert("ya destrui tablaConveniosSuministros");
+   	
            initTableConveniosSuministros(data);
 
            // initTableConveniosHonorarios(data);
@@ -93,8 +93,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	           type: 'POST',
 	           dataType : 'json',
 	  		success: function (data) {
-                        alert("Regrese");
-                       alert("data="  + data);
   
 			 $('#pk').val(data.pk);
 	       	        $('#convenioId').val(data.pk);
@@ -104,8 +102,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
         	       	$('#empresa').val(data.empresa);
 			$('#sempresa').val(data.empresa);
 	                $('#vigenciaDesde').val(data.vigenciaDesde);
-	                $('#svigenciaDesde').val(data.vigenciaDesde);
 	                $('#vigenciaHasta').val(data.vigenciaHasta);
+	                $('#svigenciaDesde').val(data.vigenciaDesde);
 	                $('#svigenciaHasta').val(data.vigenciaHasta);
 	                $('#porcTarifario').val(data.porcTarifario);
 	                $('#porcSuministros').val(data.porcSuministros);
@@ -128,9 +126,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 			$('#pnombre').val(data.nombre);
         	       	$('#pempresa').val(data.empresa);
-			alert("vigenciaDesde " + data.vigenciaDesde);
-			alert("vigenciaHasta " + data.vigenciaHasta);
-
 
 	                $('#vigenciaDesde').val(data.vigenciaDesde);
 	                $('#vigenciaHasta').val(data.vigenciaHasta);
@@ -138,8 +133,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			 $('#tiposTarifa').val(data.tiposTarifa);
 			 $('#cups').val(data.cups);
 
-
-	  		   var options = '<option value="=================="></option>';
+    		         var options = '<option value="=================="></option>';
 
 
                      const $id2 = document.querySelector("#tiposTarifa1");
@@ -319,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 			 $('#empresa').val(data.empresa);
-			$('#sempresa').val(data.Sempresas);
+			$('#sempresa').val(data.empresa);
 
                   },
 	   		    error: function (request, status, error) {
@@ -971,6 +965,14 @@ function BtnAdicionarSuministro()
 		   	        alert("ya destrui tablaConveniosSuministros");
 
 	                    initTableConveniosSuministros(data2);
+
+			document.getElementById("scodHomologado").value = '';
+			
+			document.getElementById("tsum").value ='';
+			document.getElementById("svalor").value ='0';
+			document.getElementById("tconceptos").value = '';
+
+
 			                $("#mensajes").html(data.message);
                   },
 	   		    error: function (request, status, error) {
@@ -1028,6 +1030,11 @@ function GrabarSuministro()
 
 	           initTableConveniosSuministros(data2);
 
+			
+			 document.getElementById("sconceptos").value = '';
+			 document.getElementById("sporcentage").value = 0;
+			 document.getElementById("svalorVariacion").value=0;
+
 
 			    $("#mensajes").html(data.message);
 		
@@ -1051,10 +1058,10 @@ function BorrarSuministro()
           alert("convenio =  " +convenioId1);
 
 	
-	var tiposTarifa = document.getElementById("tiposTarifa1").value;
-	var conceptos = document.getElementById("conceptos").value;
-	var porcentage = document.getElementById("porcentage").value;
-	var valorVariacion = document.getElementById("valorVariacion").value;
+	var tiposTarifa = document.getElementById("stiposTarifa1").value;
+	var conceptos = document.getElementById("sconceptos").value;
+	var porcentage = document.getElementById("sporcentage").value;
+	var valorVariacion = document.getElementById("svalorVariacion").value;
 	var convenioId1 = document.getElementById("convenioId1").value;
 	alert("convenioId1 =" + convenioId1);	
 	var username_id = document.getElementById("username_id").value;
@@ -1066,7 +1073,7 @@ function BorrarSuministro()
 			    conceptos:conceptos,
 			    porcentage:porcentage,
 			    valorVariacion:valorVariacion,
-			    convenioId1:convenioId1,
+			    convenioId1:convenioId,
 			    username_id:username_id,
                             accion:'Borrar'},
 	           type: 'POST',

@@ -16,7 +16,7 @@
         <li><a href="#Facturacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
             Facturacion Clinica </a></li>
         <li><a href="#Liquidacion"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Liquidacion Cuenta</a></li>
-        <li><a href="#Factura"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Elaboracion Factura </a></li>
+        <li><a href="#Convenios"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Convenios </a></li>
         <li><a href="#Abonos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Abonos Pacientes </a></li>
 	 <li><a href="#Traslados"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Traslados Convenios </a></li>
     </ul>
@@ -46,6 +46,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
     <div class="secciones">
         <article id="Facturacion">
         <center><h3>Facturacion</h3></center>
+	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
             <form action="/crearFacturacion/" method="get" id="FormFacturacion">
 
                 <input type="hidden" id="username" name="username" value="{{Username}}">
@@ -85,25 +86,25 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="alert alert-success success-msg" style="display:none"></div>
-                                        <table  id= "tablaFacturacion" class="display nowrap table table table-bordered  tablaFacturacion table-hover table-sm dtr-inline">
+                                        <table  id= "tablaFacturacion" class="display nowrap table table table-bordered  tablaFacturacion table-hover table-sm dtr-inline" style="width:100%;">
 
 
                                             <thead>
                                             <tr>
-                                                <th style="width:5%;">Tipo</th>
-                                                <th style="width:5%;">id</th>
-                                                <th style="width:5%;">TipoDoc</th>
-                                                <th style="width:12%;">Documento</th>
-                                                <th style="width:20%;">Paciente</th>
-                                                <th style="width:3%;">#</th>
-                                                <th style="width:3%;">FecIngreso</th>
+                                                <th>Tipo</th>
+                                                <th>id</th>
+                                                <th>TipoDoc</th>
+                                                <th>Documento</th>
+                                                <th>Paciente</th>
+                                                <th>#</th>
+                                                <th>FecIngreso</th>
 
-                                                <th style="width:12%;">Servicio</th>
-                                                <th style="width:12%;">Cama</th>
-						 <th style="width:12%;">Convenio</th>
+                                                <th>Servicio</th>
+                                                <th>Cama</th>
+						 <th>Convenio</th>
 
-                                                <th style="width:5%;">Action</th>
-                                                <!--  <th data-visible="true"></th>  -->
+                                                <th>Action</th>
+
                                             </tr>
                                             </thead>
                                             <tbody style="vertical-align:bottom">
@@ -118,10 +119,12 @@ div.dataTables_wrapper  div.dataTables_filter input {
                     </div>
                 </div>
             </div>
+	   </div>
         </article>
 
  <article id="Liquidacion">
           <!--   <center><h3>Liquidacion de Cuentas</h3></center> -->
+	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 
 		 <!--  Datos Liquidacion Cabecera READONLY (crear Div de Encabezados -->
 			<div style="height: 70px;  width:100%; background-color:#EBEBEB;"> 
@@ -154,7 +157,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="alert alert-success success-msg" style="display:none"></div>
-                                        <table  id= "tablaFacturacionDetalle" class="display nowrap table table table-bordered  tablaFacturacionDetalle table-hover table-sm dtr-inline">
+                                        <table  id= "tablaFacturacionDetalle" class="display nowrap table table table-bordered  tablaFacturacionDetalle table-hover table-sm dtr-inline" style="width:100%;">
 
                                             <thead>
                                             <tr>
@@ -200,16 +203,18 @@ div.dataTables_wrapper  div.dataTables_filter input {
 			</div>
 
 		 <!--  Fin Totales  (Crear Div De Totales)-->
-
+	</div>
         </article>
 
-            <article id="Factura">
-            <center><h3>Impresion Factura</h3></center>
+            <article id="Convenios">
+            <center><h3>Convenios Paciente</h3></center>
+	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+	  </div>
         </article>
 
         <article id="Abonos">
             <center><h3>Abonos</h3></center>
-
+		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
             <script type="text/javascript">
 		    var $ = jQuery;
 		    function cargarTablaAbonosFacPaciente()
@@ -292,7 +297,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                                     <div class="col-sm-12">
 
                                                         <table id=tablaAbonosFacturacion
-                                                               class="display nowrap table table table-bordered  tablaAbonosFacturacion table-hover table-sm dtr-inline">
+                                                               class="display nowrap table table table-bordered  tablaAbonosFacturacion table-hover table-sm dtr-inline" style="width:100%;">
 
                                                             <thead>
                                                             <tr>
@@ -383,10 +388,13 @@ div.dataTables_wrapper  div.dataTables_filter input {
                     </div>
                 </div>
             </div>
+	  </div>
         </article>
 
         <article id="Traslados">
             <center><h3>Traslados Convenios</h3></center>
+	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+	 </div>
         </article>
 
 
@@ -404,6 +412,9 @@ div.dataTables_wrapper  div.dataTables_filter input {
 </div>
 {% endblock %}
 
+{% block totales %}
+
+{% endblock %}
 
 {% block footer %}
 
