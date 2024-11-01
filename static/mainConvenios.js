@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	
 	initTableConveniosProcedimientos(data);
 	initTableConveniosSuministros(data);
+	initTableConveniosHonorarios(data);
 
 
 	/*--------------------------------------------
@@ -99,10 +100,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	       	        $('#convenioId1').val(data.pk);
 	       	        $('#nombre').val(data.nombre);
 			$('#snombre').val(data.nombre);
+	       	        $('#lnombre').val(data.nombre);
         	       	$('#empresa').val(data.empresa);
 			$('#sempresa').val(data.empresa);
 	                $('#vigenciaDesde').val(data.vigenciaDesde);
 	                $('#vigenciaHasta').val(data.vigenciaHasta);
+	                $('#lvigenciaDesde').val(data.vigenciaDesde);
+	                $('#lvigenciaHasta').val(data.vigenciaHasta);
+
 	                $('#svigenciaDesde').val(data.vigenciaDesde);
 	                $('#svigenciaHasta').val(data.vigenciaHasta);
 	                $('#porcTarifario').val(data.porcTarifario);
@@ -195,6 +200,62 @@ document.addEventListener("DOMContentLoaded", function(event) {
                                     $id3.appendChild(option);
  	      		      });
 
+                    const $id33 = document.querySelector("#ltiposTarifa1");
+
+
+ 	      		     $("#ltiposTarifa1").empty();
+
+	                 $.each(data['TiposTarifa'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id33.appendChild(option);
+ 	      		      });
+
+
+                    const $id339 = document.querySelector("#ltiposTarifa");
+
+
+ 	      		     $("#ltiposTarifa").empty();
+
+	                 $.each(data['TiposTarifa'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id339.appendChild(option);
+ 	      		      });
+
+		 const $id449 = document.querySelector("#lhonorarios");
+
+
+ 	      		     $("#lhonorarios").empty();
+
+	                 $.each(data['Honorarios'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id449.appendChild(option);
+ 	      		      });
+
+
+
+		 const $id450 = document.querySelector("#llhonorarios");
+
+
+ 	      		     $("#llhonorarios").empty();
+
+	                 $.each(data['Honorarios'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id450.appendChild(option);
+ 	      		      });
+
+
                      const $id4 = document.querySelector("#conceptos");
 
 
@@ -238,6 +299,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
                                     $id444.appendChild(option);
  	      		      });
 
+                     const $id4445 = document.querySelector("#lconceptos");
+
+
+ 	      		     $("#lconceptos").empty();
+
+	                 $.each(data['Conceptos'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id4445.appendChild(option);
+ 	      		      });
+
+
+                     const $id4447 = document.querySelector("#llconceptos");
+
+
+ 	      		     $("#llconceptos").empty();
+
+	                 $.each(data['Conceptos'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id4447.appendChild(option);
+ 	      		      });
+
+
+
+
 
 
                      const $id5 = document.querySelector("#xcups");
@@ -255,6 +346,34 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 
+                     const $id51 = document.querySelector("#lcups");
+
+
+ 	      		     $("#lcups").empty();
+
+	                 $.each(data['Cups'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id51.appendChild(option);
+ 	      		      });
+
+
+                     const $id55 = document.querySelector("#llcups");
+
+
+ 	      		     $("#llcups").empty();
+
+	                 $.each(data['Cups'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id55.appendChild(option);
+ 	      		      });
+
+
                      const $id42 = document.querySelector("#tsum");
 
 
@@ -266,6 +385,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
                                     option.value = value.id;
                                     option.text = value.nombre;
                                     $id42.appendChild(option);
+ 	      		      });
+
+
+                     const $id425 = document.querySelector("#lsum");
+
+
+ 	      		     $("#lsum").empty();
+
+	                 $.each(data['Suministras'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id425.appendChild(option);
  	      		      });
 
 
@@ -310,6 +443,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
                                     option.text = value.nombre;
                                     $id77.appendChild(option);
  	      		      });
+
+		  const $id778 = document.querySelector("#lempresa");
+
+
+ 	      		     $("#lempresa").empty();
+
+	                 $.each(data['Empresas'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id778.appendChild(option);
+ 	      		      });
+
 
 
 			 $('#empresa').val(data.empresa);
@@ -408,6 +555,54 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	     });
 
         });
+
+
+
+
+
+	/*--------------------------------------------
+        Click to Edit Button
+        --------------------------------------------
+        --------------------------------------------*/
+        $('body').on('click', '.editPostConveniosHonorarios', function () {
+	
+          var post_id = $(this).data('pk');
+          alert("pk1 = " + $(this).data('pk'));
+
+	$.ajax({
+	           url: '/deleteConveniosHonorarios/',
+	            data : {post_id:post_id},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese");
+
+			 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+
+			 var valor = document.getElementById("convenioId").value;
+
+		        data2['valor'] = valor;	
+		        data2 = JSON.stringify(data2);
+			   $("#mensajes").html(data.message);
+			
+		    tableC= $("#tablaConveniosHonorarios").dataTable().fnDestroy();	
+	           initTableConveniosHonorarios(data2);
+			 
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+
+        });
+
+
 
 
 
@@ -565,6 +760,56 @@ function initTableConveniosSuministros(data) {
 
  });
 }
+
+
+
+function initTableConveniosHonorarios(data) {
+
+	return new DataTable('.tablaConveniosHonorarios', {
+	 "language": {
+                  "lengthMenu": "Display _MENU_ registros",
+                   "search": "Filtrar registros:",
+                    },
+            processing: true,
+            serverSide: false,
+            scrollY: '220px',
+	    scrollX: true,
+	    scrollCollapse: true,
+            paging:false,
+            columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        var btn = '';
+                      //    btn = btn + " <button   class='btn btn-primary editPost' data-pk='" + row.pk + "'>" + "</button>";
+                          btn = btn + " <input type='radio'  class='form-check-input editPostConveniosHonorarios' data-pk='" + row.pk + "'>" + "</input>";
+                        return btn;
+                    },
+                    "targets": 8
+               }
+            ],
+            ajax: {
+                 url:"/load_dataConveniosHonorarios/" +  data,
+                 type: "POST",
+                dataSrc: ""
+            },
+
+            lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
+            columns: [
+                { data: "fields.codigoHomologado"},
+                { data: "fields.id"},
+                { data: "fields.tarifa"},
+                { data: "fields.suministroId"},
+                { data: "fields.suministroNombre"},
+                { data: "fields.cupsId"},
+                { data: "fields.cupsNombre"},
+                { data: "fields.valor"},
+        
+            ]
+
+ });
+}
+
+
 
 
  function tableActionsConvenios() {
@@ -1113,6 +1358,217 @@ function BorrarSuministro()
 
 
 }
+
+
+////////////////////////////////
+/// DESDE AQUIP HONORARIOS
+////////////////////////////////
+
+function BtnAdicionarHonorarios()
+{
+	alert("Entre Adicionar Honorario");
+
+        var codigoHomologado = document.getElementById("lcodHomologado").value;
+        var tiposTarifa = document.getElementById("ltiposTarifa").value; /*Obtener el SELECT */
+
+        var lsum = document.getElementById("lsum").value;
+        var lvalor = document.getElementById("lvalor").value;
+	    var username_id = document.getElementById("username_id").value;
+	    var convenioId = document.getElementById("convenioId").value;
+	    var llconceptos = document.getElementById("llconceptos").value;
+		var llhonorarios = document.getElementById("llhonorarios").value;
+		var llcups = document.getElementById("llcups").value;
+
+
+
+		$.ajax({
+	           url: '/guardarConveniosHonorarios/',
+	            data :
+	            {'codigoHomologado':codigoHomologado,  'tiposTarifa':tiposTarifa,
+			    'sum':lsum,  'valor':lvalor,
+			    'username_id':username_id,   'convenioId':convenioId, 'conceptos':llconceptos,
+			    honorarios:llhonorarios,
+			    cups:llcups},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese PRESENTE");
+
+            		 var data2 =  {}   ;
+        			data2['username'] = username;
+    		        data2['sedeSeleccionada'] = sedeSeleccionada;
+	    	        data2['nombreSede'] = nombreSede;
+		            data2['sede'] = sede;
+	            	var convenioId1 = document.getElementById("convenioId1").value;
+
+	                var username_id = document.getElementById("username_id").value;
+
+		            data2['username_id'] = username_id;
+		            data2['valor'] = convenioId;
+		            data2 = JSON.stringify(data2);
+
+		            tableC= $("#tablaConveniosHonorarios").dataTable().fnDestroy();
+		   	        alert("ya destrui tablaConveniosHonorarios");
+
+	                    initTableConveniosHonorarios(data2);
+
+			document.getElementById("lcodHomologado").value = '';
+			
+			document.getElementById("lsum").value ='';
+			document.getElementById("lvalor").value ='0';
+			document.getElementById("llconceptos").value = '';
+
+
+			                $("#mensajes").html(data.message);
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+}
+
+
+
+
+function BorrarHonorarios()
+{
+	alert("Entre Borrar Suministro no hago nada");
+	var convenioId = document.getElementById("convenioId1").value;
+          alert("convenio =  " +convenioId1);
+
+	
+	var tiposTarifa = document.getElementById("ltiposTarifa1").value;
+	var conceptos = document.getElementById("lconceptos").value;
+	var porcentage = document.getElementById("lporcentage").value;
+	var valorVariacion = document.getElementById("lvalorVariacion").value;
+	var honorarios = document.getElementById("lhonorarios").value;
+	var cups = document.getElementById("lcups").value;
+
+	var convenioId1 = document.getElementById("convenioId1").value;
+	alert("convenioId1 =" + convenioId1);	
+	var username_id = document.getElementById("username_id").value;
+         
+
+	$.ajax({
+	           url: '/grabarHonorarios/',
+	            data : {tiposTarifa:tiposTarifa,
+			    conceptos:conceptos,
+			    porcentage:porcentage,
+			    valorVariacion:valorVariacion,
+			    convenioId1:convenioId,
+			    username_id:username_id,
+			    honorarios:honorarios,
+			    cups:cups,
+                            accion:'Borrar'},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese");
+                       alert("data y escribir en mensajes="  + data);
+
+			 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+		        data2['valor'] = convenioId;	
+		        data2 = JSON.stringify(data2);
+
+
+		    tableC= $("#tablaConveniosHonorarios").dataTable().fnDestroy();
+		   	 alert("ya destrui tablaConveniosHonorarios");
+			
+		alert("DATA CON QUE CREO EL DATATABLE = " + data);
+
+
+	           initTableConveniosHonorarios(data2);
+
+
+			    $("#mensajes").html(data.message);
+		
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html("Error:");
+	   	    	}
+	     });
+}
+
+function GrabarHonorarios()
+{
+	alert("Entre Grabar Suministro  no hago nada");
+	var convenioId = document.getElementById("convenioId1").value;
+          alert("convenio =  " +convenioId1);
+
+	
+	var tiposTarifa = document.getElementById("ltiposTarifa1").value;
+	var conceptos = document.getElementById("lconceptos").value;
+	var porcentage = document.getElementById("lporcentage").value;
+	var valorVariacion = document.getElementById("lvalorVariacion").value;
+	var honorarios = document.getElementById("lhonorarios").value;
+	var cups = document.getElementById("lcups").value;
+	var convenioId1 = document.getElementById("convenioId1").value;
+	alert("convenioId1 =" + convenioId1);	
+	var username_id = document.getElementById("username_id").value;
+         
+
+	$.ajax({
+	           url: '/grabarHonorarios/',
+	            data : {tiposTarifa:tiposTarifa,
+			    conceptos:conceptos,
+			    porcentage:porcentage,
+			    valorVariacion:valorVariacion,
+			    convenioId1:convenioId1,
+			    username_id:username_id,
+			    honorarios:honorarios,
+			    cups:cups,
+
+                            accion:'Crear'},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese");
+                       alert("data y escribir en mensajes="  + data);
+
+			 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+		        data2['valor'] = convenioId;	
+		        data2 = JSON.stringify(data2);
+
+
+		    tableC= $("#tablaConveniosHonorarios").dataTable().fnDestroy();
+		   	 alert("ya destrui tablaConveniosHonorarios");
+			
+		alert("DATA CON QUE CREO EL DATATABLE = " + data);
+
+
+	           initTableConveniosHonorarios(data2);
+
+			
+			 document.getElementById("lconceptos").value = '';
+			 document.getElementById("lporcentage").value = 0;
+			 document.getElementById("lvalorVariacion").value=0;
+
+
+			    $("#mensajes").html(data.message);
+		
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html("Error:");
+	   	    	}
+	     });
+
+
+
+}
+
+
 
 
 

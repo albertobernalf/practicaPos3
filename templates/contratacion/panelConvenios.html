@@ -939,6 +939,286 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
   <article id="Honorarios">
             <center><h3>Honorarios </h3></center>
+
+   <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+       <div class="row row-cols-8" style="height=1px;">
+
+			<div class="col">
+			    <div class="form-group row">
+						 <label for="lnombre" class="col-form-label col-sm-4">Convenio:</label>
+				 <div class="col-sm-6">
+					  <input type="text" id="lnombre" name="lnombre" value="{{nombre}}" readonly>
+                                 </div>
+                            </div>
+                        </div>
+
+			 <div class="col">
+				 <label for="lempresa" class="col-sm-3 control-label">Empresa:</label>
+                                            <select class="select-css"  id="lempresa" name="lempresa">
+                                                    {% for sempresas in Sempresas %}
+                                                            <option value="{{sempresas.id}}"> {{sempresas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+                          </div>
+
+			<div class="col">
+			    <div class="form-group row">
+						 <label for="lvigenciaDesde" class="col-form-label col-sm-4">Desde:</label>
+				 <div class="col-sm-6">
+					  <input type="datetime-local" id="lvigenciaDesde" name="lvigenciaDesde" value="{{vigenciaDesde}}" readonly>
+                                 </div>
+                            </div>
+                        </div>
+
+			<div class="col">
+			    <div class="form-group row">
+						 <label for="lvigenciaHasta" class="col-form-label col-sm-4">Hasta:</label>
+				 <div class="col-sm-6">
+					  <input type="datetime-local" id="lvigenciaHasta" name="lvigenciaHasta" value="{{vigenciaHasta}}" readonly>
+                                 </div>
+                            </div>
+                        </div>
+
+	       <div class="row row-cols-8" style="height=1px;">
+					<div class="col">
+					<div class="form-group row">
+				                <label for="ltiposTarifa1" class="col-form-label col-sm-3">Tarifario:</label>
+				              <div class="col-sm-6">
+					             <select class="select-css"  id="ltiposTarifa1" name="ltiposTarifa1">
+                                                    {% for tiposTarifa in TiposTarifas %}
+                                                            <option value="{{tiposTarifa.id}}"> {{tiposTarifa.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+				              </div>
+				        </div>
+					 </div>
+
+					<div class="col">
+					<div class="form-group row">
+				                <label for="lhonorarios" class="col-form-label col-sm-3">Honorarios:</label>
+				              <div class="col-sm-6">
+					             <select class="select-css"  id="lhonorarios" name="lhonorarios">
+                                                    {% for honorarios in Honorarios %}
+                                                            <option value="{{honorarios.id}}"> {{honorarios.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+				              </div>
+				        </div>
+					 </div>
+
+
+
+					<div class="col">
+					<div class="form-group row">
+				                <label for="lconceptos" class="col-form-label col-sm-3">Concepto:</label>
+				              <div class="col-sm-6">
+					             <select class="select-css"  id="lconceptos" name="lconceptos">
+                                                    {% for conceptos in Conceptos %}
+                                                            <option value="{{conceptos.id}}"> {{conceptos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+				              </div>
+				        </div>
+					 </div>
+
+					<div class="col">
+					<div class="form-group row">
+				                <label for="lcups" class="col-form-label col-sm-3">Cups:</label>
+				              <div class="col-sm-6">
+					             <select class="select-css"  id="lcups" name="lcups">
+                                                    {% for cups in Cups %}
+                                                            <option value="{{cups.id}}"> {{cups.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+				              </div>
+				        </div>
+					 </div>
+
+
+
+
+
+					<div class="col">
+					<div class="form-group row">
+						 <label for="lporcentage" class="col-form-label col-sm-4">Porcentaje(%):</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="lporcentage" name="lporcentage" value="0">
+                                      </div>
+                                      </div>
+                                      </div>
+
+
+					<div class="col">
+					<div class="form-group row">
+						 <label for="lvalorVariacion" class="col-form-label col-sm-4">Valor:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="lvalorVariacion" name="lvalorVariacion" value="0">
+                                      </div>
+                                      </div>
+                                      </div>
+
+
+		  <div class="col">
+		<div class="form-group row">
+                        <label for="btnGrabarHonorarios" class="col-sm-3 control-label"> Guardar:</label>
+			 <div class="col-sm-3">
+                        <input type="button" class="form-control form-control-sm" id="btnGrabarHonorarios"  name="btnGrabarHonorarios" value="" onclick="GrabarHonorarios()">
+			</div>
+		  </div>
+                    </div>
+
+
+		  <div class="col">
+		<div class="form-group row">
+                        <label for="btnBorrarHonorarios" class="col-sm-3 control-label"> Borrar:</label>
+			 <div class="col-sm-3">
+                        <input type="button" class="form-control form-control-sm" id="btnBorrarHonorarios"  name="btnBorrarHonorarios" value="" onclick="BorrarHonorarios()">
+			</div>
+		  </div>
+                    </div>
+
+
+       </div>
+
+
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+            <div class="row" style="width:100%;">
+                <div class="col-md-12" style="width:100%;">
+                    <div class="card" style="width:100%;">
+                        <div class="card-header" style="height:60px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
+			 <div class="row row-cols-8" style="height=1px;">
+                     
+                                  
+					<div class="col">
+
+						Homologa
+
+							  <input type="text" id="lcodHomologado" name="lcodHomologado" value="">
+
+
+                                      </div>
+
+				<div class="col">
+					Tarifario:
+					             <select class="select-css"  id="ltiposTarifa" name="ltiposTarifa">
+                                                    {% for tiposTarifa in TiposTarifas %}
+                                                            <option value="{{tiposTarifa.id}}"> {{tiposTarifa.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+					 </div>
+
+					<div class="col">
+					<div class="form-group row">
+				                <label for="llhonorarios" class="col-form-label col-sm-3">Honorarios:</label>
+				              <div class="col-sm-6">
+					             <select class="select-css"  id="llhonorarios" name="llhonorarios">
+                                                    {% for honorarios in Honorarios %}
+                                                            <option value="{{honorarios.id}}"> {{honorarios.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+				              </div>
+				        </div>
+					 </div>
+
+					<div class="col">
+					<div class="form-group row">
+				                <label for="llcups" class="col-form-label col-sm-3">Cups:</label>
+				              <div class="col-sm-6">
+					             <select class="select-css"  id="llcups" name="llcups">
+                                                    {% for cups in Cups %}
+                                                            <option value="{{cups.id}}"> {{cups.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+				              </div>
+				        </div>
+					 </div>
+
+
+					<div class="col">
+						Suministros:
+					              <select class="select-css"  id="lsum" name="lsum">
+                                                    {% for suministras in Suministras %}
+                                                            <option value="{{suministras.id}}">{{suministras.nombre}} </option>
+                                                            {% endfor %}
+                                            		</select>
+				              </div>
+
+
+					<div class="col">
+
+				            Conceptos:
+
+					              <select class="select-css"  id="llconceptos" name="llconceptos">
+                                                    {% for conceptosa in Conceptosa %}
+                                                            <option value="{{conceptosa.id}}"> {{conceptosa.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                            </select>
+					 </div>
+                                                    
+                                      <div class="col">
+
+						Valor
+
+							  <input type="text" id="lvalor" name="lvalor" value="">
+                                      </div>
+
+			 		 <div class="col">
+
+					 <label for="BtnAdicionarSuministro" class="col-form-label col-sm-6">Adicionar:</label>
+
+					     <div class="col col-sm-2">
+			                        <input type="button" class="form-control form-control-sm" id="BtnAdicionarHonorarios"  name="BtnAdicionarHonorarios" value="" onclick="BtnAdicionarHonorarios()">
+					</div>
+					</div>
+
+
+                            </div>
+                        </div>
+                            <div class="card-body" style="width:100%; height:60px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
+                                <div class="row" style="width:100%;">
+                                    <div class="col-md-12" style="width:100%;">
+                                        <div class="alert alert-success success-msg" style="display:none"></div>
+                                        <table  id= "tablaConveniosHonorarios" class="display nowrap table table table-bordered  tablaConveniosHonorarios table-hover table-sm dtr-inline" style="width:100%";>
+
+
+                                            <thead style="width:100%;">
+                                            <tr style="width:100%;">
+                                                <th>Codigo Homologado</th>
+                                                <th>id</th>
+                                                <th>Tarifa Nombre</th>
+                                                <th>suministroId</th>
+                                                <th>SuministroNombre</th>
+                                                <th>cupsId</th>
+                                                <th>CupsNombre</th>
+                                                <th>Valor</th>
+                                                <th>Delete</th>
+                                              
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom">
+                                            <tr style="height:10%">
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> <!-- cierra body -->
+
+                    </div>
+                </div>
+            </div>
+	            </div>
+
   </article>
 
     </div>

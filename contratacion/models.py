@@ -29,7 +29,7 @@ class ConveniosProcedimientos(models.Model):
 
 
     class Meta:
-        unique_together = (('tipoTarifa', 'cups'),)
+        unique_together = (('convenio', 'tipoTarifa', 'cups'),)
 
 
     def __str__(self):
@@ -118,12 +118,16 @@ class ConveniosSuministros(models.Model):
 
 class ConveniosLiquidacionTarifasHonorarios(models.Model):
     id = models.AutoField(primary_key=True)
+    convenio = models.ForeignKey('contratacion.Convenios', blank=True,null= True, editable=True, on_delete=models.PROTECT)  
     tipoTarifa =  models.ForeignKey('tarifas.TiposTarifa', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoTarifa037')
     codigoHomologado = models.CharField(max_length=10, blank=True,null= True , editable=True )
     tipoHonorario =  models.ForeignKey('tarifas.TiposHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoHonorario017')
+    concepto = models.ForeignKey('facturacion.Conceptos', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Concepto224')
     descripcion =  models.CharField(max_length=300, blank=True,null= True , editable=True )
-    codigoSuministro =  models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Suminis1277')
-    codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Cups1177')
+    #codigoSuministro =  models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Suminis1277')
+    suministro =  models.ForeignKey('facturacion.Suministros', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Suminis1277')
+    #codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='Cups1177')
+    cups = models.ForeignKey('clinico.Examenes',   blank=True,null= True, editable=True,  on_delete=models.PROTECT,  related_name='Cups209')
     valor =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='plantas2177')
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)

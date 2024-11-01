@@ -21,7 +21,7 @@ import psycopg2
 import json 
 import datetime
 from decimal import Decimal
-from contratacion.models import ConveniosProcedimientos, ConveniosSuministros
+from contratacion.models import ConveniosProcedimientos, ConveniosSuministros, ConveniosLiquidacionTarifasHonorarios
 
 
 # Create your views here.
@@ -175,6 +175,30 @@ def PostConsultaConvenios(request):
     context['TiposTarifa'] = tiposTarifa
 
     # Fin combo Tipos Tarifa
+
+    # Combo Tipos Honorarios
+
+    # iConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = "SELECT c.id id,c.nombre nombre FROM tarifas_TiposHonorarios c"
+
+    curt.execute(comando)
+    print(comando)
+
+    honorarios = []
+
+    for id, nombre in curt.fetchall():
+        honorarios.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(honorarios)
+
+    context['Honorarios'] = honorarios
+    # Fin combo Tipos Honorarios
+
 
 
     # Combo Cups
@@ -348,7 +372,7 @@ def PostConsultaConvenios(request):
                              'facturacionSuministros': conveniosD[0]['fields']['facturacionSuministros'],
                              'facturacionCups': conveniosD[0]['fields']['facturacionCups'],
                              'cuentaContable': conveniosD[0]['fields']['cuentaContable'],
-                             'requisitos': conveniosD[0]['fields']['requisitos'], 'Empresas': empresas, 'TiposTarifa':tiposTarifa, 'Conceptos': conceptos, 'Cups':cups, 'Suministras':suministras, 'Sempresas':sempresas
+                             'requisitos': conveniosD[0]['fields']['requisitos'], 'Empresas': empresas, 'TiposTarifa':tiposTarifa, 'Conceptos': conceptos, 'Cups':cups, 'Suministras':suministras, 'Sempresas':sempresas, 'Honorarios':honorarios
                              })
 
     else:
@@ -932,3 +956,243 @@ def DeleteConveniosSuministros(request):
     post.delete()
 
     return JsonResponse({'success': True, 'message': 'Registro Borrado !'})
+
+
+def DeleteConveniosHonorarios(request):
+
+    print ("Entre DeleteConveniosHonorarios" )
+
+
+    id = request.POST["post_id"]
+    print ("el id es = ", id)
+
+    post = ConveniosLiquidacionTarifasHonorarios.objects.get(id=id)
+    post.delete()
+
+    return JsonResponse({'success': True, 'message': 'Registro Borrado !'})
+
+
+def GrabarHonorarios( request):
+
+    print ("Entre Grabar Honorarios")
+
+
+    if request.method == 'POST':
+
+        convenioId=request.POST["convenioId1"]
+        print("convenioId = " , convenioId)
+        tiposTarifa=request.POST["tiposTarifa"]
+        print("tiposTarifa = ", tiposTarifa)
+        conceptos=request.POST["conceptos"]
+        print("conceptos = ", conceptos)
+        porcentage=request.POST["porcentage"]
+        print("porcentage = ", porcentage)
+        valorVariacion=request.POST["valorVariacion"]
+        print("valorVariacion = ", valorVariacion)
+        honorarios=request.POST["honorarios"]
+        print("honorarios = ", honorarios)
+        cups=request.POST["cups"]
+        print("cups = ", cups)
+
+        estadoReg= 'A'
+        username_id = request.POST["username_id"]
+        fechaRegistro = datetime.datetime.now()
+
+        accion = request.POST["accion"]
+
+
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+        curt = miConexiont.cursor()
+
+        if (accion == 'Crear' and porcentage != 0 and conceptos == '' and valorVariacion == '0' and honorarios == '' and cups == ''):
+            print("Entre1")
+            comando = 'INSERT INTO contratacion_ConveniosLiquidacionTarifasHonorarios ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id , "tipoHonorario_id", cups_id) select "codigoHomologado", round((+"valor" +"valor"*' + str(porcentage) + '/100)) subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + ' cast(suministro_id as numeric), '  + str(tiposTarifa) + "," + "'" +  str(username_id) + "'" +  ', concepto_id , "tipoHonorario_id", "codigoCups_id"  from tarifas_LiquidacionTarifasHonorarios where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'"
+
+
+        if (accion == 'Crear' and porcentage != 0 and conceptos == '' and valorVariacion == '0' and honorarios != '' and cups == ''):
+            print("Entre1UNO")
+            comando = 'INSERT INTO contratacion_ConveniosLiquidacionTarifasHonorarios ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id, "tipoHonorario_id" , cups_id) select "codigoHomologado", round((+"valor" +"valor"*' + str(porcentage) + '/100)) subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + ' cast(suministro_id as numeric), '  + str(tiposTarifa) + "," + "'" +  str(username_id) + "'" +  ', concepto_id  , "tipoHonorario_id", "codigoCups_id" from tarifas_LiquidacionTarifasHonorarios where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'" + ' AND "tipoHonorario_id" = ' + honorarios
+
+        if (accion == 'Crear' and porcentage != 0 and conceptos == '' and valorVariacion == '0' and honorarios != '' and cups != ''):
+                print("Entre1DOS")
+                comando = 'INSERT INTO contratacion_ConveniosLiquidacionTarifasHonorarios ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id, "tipoHonorario_id" , cups_id) select "codigoHomologado", round((+"valor" +"valor"*' + str(porcentage) + '/100)) subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + ' cast(suministro_id as numeric), ' + str(tiposTarifa) + "," + "'" + str(username_id) + "'" + ', concepto_id  , "tipoHonorario_id", "codigoCups_id" from tarifas_LiquidacionTarifasHonorarios where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'" + ' AND "tipoHonorario_id" = ' + honorarios + ' AND "codigoCups_id" = ' + cups
+
+            ## VERIFICAR ESTEP DE ABAJO
+
+        if (accion == 'Crear' and porcentage != 0 and conceptos != '' and valorVariacion == '0'):
+                print("Entre2")
+                comando = 'INSERT INTO contratacion_ConveniosLiquidacionTarifasHonorarios ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id) select "codigoHomologado", round((+"valor" +"valor"*' + str(porcentage) + '/100)) subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + ' cast(suministro_id as numeric), ' + "'" + str(tiposTarifa) + "'," + "'" + str(username_id) + "'" + ', concepto_id from tarifas_LiquidacionTarifasHonorarios where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'"
+
+                ## es decir por valor
+        if (accion == 'Crear' and porcentage == '0'  and conceptos == '' and valorVariacion != '0' and honorarios == '' and cups == ''):
+            print("Entre3")
+            comando = 'INSERT INTO contratacion_ConveniosLiquidacionTarifasHonorarios ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id, "tipoHonorario_id", cups_id) select "codigoHomologado", round( ' + "'" + str(valorVariacion) + "')" + ' subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) +  "'," + ' cast(suministro_id as numeric), '   +"'" + str(tiposTarifa)  + "'," + "'" + str(username_id) + "'" + ', concepto_id , "tipoHonorario_id", "codigoCups_id"  from tarifas_LiquidacionTarifasHonorarios where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'"
+
+
+        if (accion == 'Crear' and porcentage == '0'  and conceptos != '' and valorVariacion !='0' and honorarios == '' and cups == ''):
+            print("Entre4")
+            comando = 'INSERT INTO contratacion_ConveniosLiquidacionTarifasHonorarios ("codigoHomologado", valor,  "fechaRegistro", "estadoReg",convenio_id,suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id, "tipoHonorario_id", cups_id) select "codigoHomologado", round( ' + "'" + str(valorVariacion) + "')" + ' subido  ,' + "'" + str(fechaRegistro) + "'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + ' cast(suministro_id as numeric), '  +"'"  + str(tiposTarifa)  + "'," + "'" + str(username_id) + "'" + ', concepto_id , "tipoHonorario_id", "codigoCups_id"  from tarifas_LiquidacionTarifasHonorarios where "tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'"
+
+        if (accion == 'Borrar' and conceptos == '' and valorVariacion == '0' and honorarios == '' and cups == ''):
+            print("Entre11")
+            comando = 'DELETE FROM contratacion_ConveniosLiquidacionTarifasHonorarios  where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "'"
+
+
+        if (accion == 'Borrar' and conceptos != '' and valorVariacion == '0' and honorarios == '' and cups == ''):
+            print("Entre12")
+            comando = 'DELETE FROM contratacion_ConveniosLiquidacionTarifasHonorarios where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'"
+
+        if (accion == 'Borrar' and conceptos != '' and valorVariacion == '0' and honorarios != '' and cups == ''):
+            print("Entre122")
+            comando = 'DELETE FROM contratacion_ConveniosLiquidacionTarifasHonorarios where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'" + ' AND "tipoHonorario_id" = ' + honorarios
+
+
+        if (accion == 'Borrar' and conceptos != '' and valorVariacion == '0' and honorarios != '' and cups != ''):
+            print("Entre123")
+            comando = 'DELETE FROM contratacion_ConveniosLiquidacionTarifasHonorarios where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'" + ' AND "tipoHonorario_id" = ' + honorarios + ' AND cups_id = ' + cups
+
+        if (accion == 'Borrar' and conceptos == '' and valorVariacion != '0' and honorarios == '' and cups == ''):
+            print("Entre13")
+            comando = 'DELETE FROM contratacion_ConveniosLiquidacionTarifasHonorarios where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' and valor = " + "'" + str(valorVariacion) + "'"
+
+
+        if (accion == 'Borrar' and conceptos == '' and valorVariacion != '0' and honorarios != '' and cups == ''):
+            print("Entre133")
+            comando = 'DELETE FROM contratacion_ConveniosLiquidacionTarifasHonorarios where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'" + ' AND "tipoHonorario_id" = ' + honorarios
+
+
+        if (accion == 'Borrar' and conceptos == '' and valorVariacion != '0' and honorarios != '' and cups != ''):
+            print("Entre135")
+            comando = 'DELETE FROM contratacion_ConveniosLiquidacionTarifasHonorarios where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'" + ' AND "tipoHonorario_id" = ' + honorarios + ' AND cups_id = ' + cups
+
+        if (accion == 'Borrar' and conceptos != '' and valorVariacion !='0' and honorarios != '' and cups != ''):
+            print("Entre14")
+            comando = 'DELETE FROM contratacion_ConveniosLiquidacionTarifasHonorarios where convenio_id =  ' + "'" + str(convenioId) + "' AND " + '"tipoTarifa_id" = ' + "'" + str(tiposTarifa) + "' AND concepto_id =" + "'" + str(conceptos) + "'" + ' AND "tipoHonorario_id" = ' + honorarios + ' AND cups_id = ' + cups + ' AND concepto_id = "' + conceptos
+
+
+
+        try:
+
+            curt.execute(comando)
+
+        except (Exception, psycopg2.DatabaseError) as error:
+        	print("Error = " ,error)
+
+        miConexiont.commit()
+        miConexiont.close()
+
+
+        if (accion == 'Crear'):
+	        return JsonResponse({'success': True, 'message': 'Tarifas de convenio suministros actualizadas satisfactoriamente!'})
+
+        if (accion == 'Borrar'):
+	        return JsonResponse({'success': True, 'message': 'Registros borrados satisfactoriamente!'})
+
+
+# Create your views here.
+def load_dataConveniosHonorarios(request, data):
+    print ("Entre load_data ConveniosHonorarios")
+
+    context = {}
+    d = json.loads(data)
+
+    username = d['username']
+    sede = d['sede']
+    username_id = d['username_id']
+
+    nombreSede = d['nombreSede']
+    print ("sede:", sede)
+    print ("username:", username)
+    print ("username_id:", username_id)
+
+    convenioId = d['valor']
+    
+
+    #print("data = ", request.GET('data'))
+
+    conveniosS = []
+
+    
+    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",     password="pass123")
+    curx = miConexionx.cursor()
+   
+    detalle = 'select convHon.id sumId, conv.id id, convHon."codigoHomologado" codigoHomologado, convHon.valor valor,  convHon.suministro_id suministroId ,exa.nombre suministroNombre, tipostar.nombre tarifa FROM contratacion_convenios conv , contratacion_ConveniosLiquidacionTarifasHonorarios convHon, tarifas_tipostarifa tipostar, facturacion_suministros exa WHERE conv.id = convHon.convenio_id and convHon."tipoTarifa_id" = tipostar.id and convHon.suministro_id = exa.id and conv.id = ' + "'" + str(convenioId) + "'"
+
+    print(detalle)
+
+    curx.execute(detalle)
+
+    conveniosH = []
+
+    for sumId , id, codigoHomologado, valor,  suministroId ,suministroNombre,tarifa in curx.fetchall():
+            conveniosH.append(
+                {"model": "conveniosS.conveniosS", "pk": sumId, "fields":
+                  {"sumId":sumId, "id": id,
+                     "codigoHomologado": codigoHomologado,
+                     "valor": valor,
+                     "suministroId": suministroId, "suministroNombre": suministroNombre,
+                     "tarifa": tarifa }})
+
+    miConexionx.close()
+    print(conveniosH)
+
+    context['ConveniosH'] = conveniosH
+
+
+    serialized1 = json.dumps(conveniosH, default=decimal_serializer)
+
+
+    return HttpResponse(serialized1, content_type='application/json')
+
+
+def GuardarConveniosHonorarios( request):
+
+    if request.method == 'POST':
+
+        codigoHomologado = request.POST["lcodHomologado"]
+        tiposTarifa = request.POST["ltiposTarifa"]
+        honorarios = request.POST["llhonorarios"]
+        cups = request.POST["llcups"]
+        suministro = request.POST["lsum"]
+        valor = request.POST["lvalor"]
+        conceptos = request.POST["lconceptos"]
+        convenioId = request.POST["convenioId"]
+        conceptos = request.POST["conceptos"]
+        conceptos = request.POST["conceptos"]
+        conceptos = request.POST["conceptos"]
+
+     
+        if tiposTarifa == '':
+           tiposTarifa="null"
+
+        if suministro == '':
+            cups ="null"
+
+
+        estadoReg= 'A'
+        username_id = request.POST["username_id"]
+        fechaRegistro = datetime.datetime.now()
+
+     
+
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+        curt = miConexiont.cursor()
+        comando = 'INSERT INTO contratacion_ConveniosLiquidacionTarifasHonorarios ("codigoHomologado", valor, "fechaRegistro", "estadoReg", convenio_id, suministro_id, "tipoTarifa_id", "usuarioRegistro_id", concepto_id, "tipoHonorario_id", cups_id) values (' + "'" + str(codigoHomologado) + "'," + "'" + str(valor) + "'," + "'" + str(fechaRegistro) +"'," + "'" + str(estadoReg) + "'," + "'" + str(convenioId) + "'," + "'" + str(suministro) + "'," + "'" + str(tiposTarifa) + "'," + "'" + str(username_id) + "',"  + str(conceptos) + "," + honorarios + "," + cups + ")"
+
+        print(comando)
+
+
+        try:
+            curt.execute(comando)
+        except (Exception, psycopg2.DatabaseError) as error:
+
+            print("Error = " ,error)
+            #serialized1 = json.dumps(error)
+            return JsonResponse({'success': True, 'message': 'Registro ya existe ¡'})
+
+
+        miConexiont.commit()
+        miConexiont.close()
+
+        return JsonResponse({'success': True, 'message': 'Tarifa Honorario Creada satisfactoriamente!'})
+

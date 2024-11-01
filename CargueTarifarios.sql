@@ -83,8 +83,50 @@ order by exa.nombre -- 6030 registros
 
 
 select * from tarifas_honorariosiss; 
-select * from tarifas_liquidaciontarifashonorarios order by "tipoHonorario_id"
+select * from tarifas_liquidaciontarifashonorarios where "tipoTarifa_id" = 1 order by "tipoHonorario_id"
 
 select * from contratacion_conveniosliquidaciontarifashonorarios
+update tarifas_liquidaciontarifashonorarios SET concepto_id =3 where id in (3542,3541,3540,65,66,67,68,69);
+select * from facturacion_conceptos;
+
+select convHon.id sumId, conv.id id, convHon."codigoHomologado" codigoHomologado, convHon.valor valor,  convHon.suministro_id suministroId ,exa.nombre suministroNombre, tipostar.nombre tarifa 
+FROM contratacion_convenios conv , contratacion_ConveniosLiquidacionTarifasHonorarios convHon, tarifas_tipostarifa tipostar, facturacion_suministros exa 
+WHERE conv.id = convHon.convenio_id and convHon."tipoTarifa_id" = tipostar.id and convHon.suministro_id = exa.id and conv.id = '10'
 
 
+select * from facturacion_conveniospacienteingresos;
+select * from contratacion_conveniosprocedimientos where convenio_id in (10);
+select * from contratacion_convenios;
+
+select * from clinico_examenes where id = 238;
+select * from usuarios_usuarios;
+       
+SELECT conv.convenio_id convenio ,proc.cups_id cups, proc.valor tarifaValor
+ FROM facturacion_conveniospacienteingresos conv, contratacion_conveniosprocedimientos proc 
+WHERE conv."tipoDoc_id" = '1' AND conv.documento_id = '19' AND conv."consecAdmision" = 1 AND
+ conv.convenio_id = proc.convenio_id AND proc.cups_id = 238
+
+select * from facturacion_conveniospacienteingresos CONV WHERE conv."tipoDoc_id" = '1' AND conv.documento_id = '19' AND conv."consecAdmision" = 1
+
+SELECT conv.convenio_id convenio ,proc.cups_id cups, proc.valor tarifaValor
+ FROM facturacion_conveniospacienteingresos conv, contratacion_conveniosprocedimientos proc 
+WHERE conv."tipoDoc_id" = '1' AND conv.documento_id = '19' AND conv."consecAdmision" = 1 AND
+ conv.convenio_id = proc.convenio_id AND proc.cups_id = 238 and conv.convenio_id in (select min(c.id) from contratacion_convenios c )
+
+
+INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento, "consecAdmision", fecha, "totalCopagos", 
+"totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", 
+anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") 
+VALUES (' + "'" +  str(tipoDocId.id)  + "','" + str(documentoId.id) + "','" + str(ingresoPaciente) + "','" + str(fechaRegistro) + "'" + '0,0,0,0,0,0,0,' +
+ str(fechaRegistro) + "','" + str(estadoReg) + "'," + convenioId + ',' + "'" + str(usuarioRegistro) + "',0)"
+
+select * from facturacion_liquidacion
+select * from facturacion_liquidaciondetalle
+select * from clinico_historia order by id;
+select * from clinico_historiaexamenes order by id;
+
+INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorUnitario", "valorTotal",cirugia,"fechaCrea", 
+"fechaRegistro", "estadoRegistro", "codigoCups_id",  "usuarioRegistro_id", liquidacion_id, "tipoRegistro") 
+VALUES (' + "'" +  str(consecutivo)  + "','" + str(fechaRegistro) + "','" + str(cantidad) + "','" + str(fechaRegistro) +
+"','" + str(tarifaValor) + "','" + str(tarifaValor)  + "','" + str('N') + "','" + str(fechaRegistro) + "'," + "'" + str(fechaRegistro) + 
+"','" + str(estadoReg) + "','" + str(codigoCupsId[0].id) + "','" + str(usuarioRegistro) + "'," + liquidacionId, + ",'" + str(usuarioRegistro) + "')"

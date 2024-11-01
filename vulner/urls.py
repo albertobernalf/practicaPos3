@@ -197,6 +197,11 @@ urlpatterns = [
     path('deleteConveniosSuministros/', viewsConvenios.DeleteConveniosSuministros, name='deleteConveniosSuministros'),
     path('guardarConveniosSuministros/', viewsConvenios.GuardarConveniosSuministros, name='guardarConveniosSuministros'),
 
+    path('load_dataConveniosHonorarios/<str:data>', viewsConvenios.load_dataConveniosHonorarios, name='loaddataConveniosHonorarios'),
+    path('grabarHonorarios/', viewsConvenios.GrabarHonorarios, name='grabarHonorarios'),
+    path('deleteConveniosHonorarios/', viewsConvenios.DeleteConveniosHonorarios, name='deleteConveniosHonorarios'),
+    path('guardarConveniosHonorarios/', viewsConvenios.GuardarConveniosHonorarios, name='guardarConveniosHonorarios'),
+
     # Citas Medicas
 
     # Usuarios

@@ -15,6 +15,7 @@ from datetime import datetime
 from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos, HistorialInterconsultas, EstadosInterconsulta, HistorialIncapacidades,  HistoriaSignosVitales, HistoriaRevisionSistemas, HistoriaMedicamentos
 from sitios.models import Dependencias
 from planta.models import Planta
+from facturacion.models import Liquidacion
 #from contratacion.models import Procedimientos
 from usuarios.models import Usuarios, TiposDocumento
 
@@ -437,15 +438,47 @@ def crearHistoriaClinica(request):
 
 
                 # Fin Grabacion Historia
+		
+		        # Aqui rutina busca Convenio del Paciente
+
+                miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",        password="pass123")
+                curt = miConexiont.cursor()
+
+                comando = 'SELECT min(p.convenio_id) id FROM facturacion_conveniospacienteingresos p WHERE "tipoDoc_id" = ' + "'" + str(tipoDocId.id) + "'" + ' AND documento_id = ' + "'" + str(documentoId.id) + "'" + ' AND "consecAdmision" = ' + "'" + str(ingresoPaciente) + "'"
+
+                curt.execute(comando)
+
+                print(comando)
+
+                convenio = []
+
+                for id in curt.fetchall():
+                      convenio.append({'id': id})
+
+                miConexiont.close()
+                print("convenioId = ", convenio[0])
+
+                convenioId = convenio[0]['id']
+                convenioId = str(convenioId)
+                print ("convenioId = ", convenioId)
+
+                convenioId = convenioId.replace("(",' ')
+                convenioId = convenioId.replace(")", ' ')
+                convenioId = convenioId.replace(",", ' ')
+                print("convenioId = ", convenioId)
 
 
-                # Grabacion Laboratorios
+
+		        # Fin Rutina busca convenio del paciente
+            #
+                #Grabacion Laboratorios
+            #
                 laboratorios = request.POST["laboratorios"]
                 print("laboratorios =", laboratorios)
-
-		        ## Rutina leer el JSON de laboratorios en python primero
+                ## Rutina leer el JSON de laboratorios en python primero
                 consecutivo=0
                 jsonLaboratorios = json.loads(laboratorios)
+
                 for key in jsonLaboratorios:
 
                     print("key = " ,key)
@@ -462,17 +495,99 @@ def crearHistoriaClinica(request):
 
                     if cups != "":
                         consecutivo = consecutivo + 1
-                        #codigoId = Examenes.objects.get(codigoCups=cups)
+                        #codigoCupsId = Examenes.objects.get(codigoCups=cups)
+                        codigoCupsId = Examenes.objects.filter(codigoCups=cups)
                         a = HistoriaExamenes(tiposExamen_id= tiposExamen_Id ,codigoCups =  cups,consecutivo=consecutivo, cantidad = cantidad, observaciones=observa,estadoReg='A' , estadoExamenes_id= estadoExamenes_id, anulado="N", historia_id=historiaId, usuaroRegistra_id=usuarioRegistro)
                         a.save()
 
-                    print ("tipoExamen =" , queda["tiposExamen_Id"])
-                    print("cups =", queda["cups"])
-                    print("cantidad =", queda["cantidad"])
-                    print("observaciones =", queda["observa"])
+                        print ("codigoCupsId", codigoCupsId[0].id)
+
+                        
+                        # Validacion si existe o No existe CABEZOTE
+                        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+
+                        curt = miConexiont.cursor()
+                        comando = 'SELECT id FROM facturacion_liquidacion WHERE "tipoDoc_id" = ' + "'" +  str(tipoDocId.id) + "' AND documento = " + "'" + str(documentoId.id) + "'" + ' AND "consecAdmision" = ' + "'" + str(ingresoPaciente) + "'"
+                        curt.execute(comando)
+
+                        cabezoteLiquidacion = []
+
+                        for id in curt.fetchall():
+                           cabezoteLiquidacion.append({'id': id})
+
+                        miConexiont.close()
+                        if (cabezoteLiquidacion == []):
+                            # Si no existe liquidacion CABEZOTE se debe crear con los totales, abonos, anticipos, procedimiento, suministros etc
+                            miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",        	                               password="pass123")
+                            curt = miConexiont.cursor()
+                            comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + "'" +  str(tipoDocId.id)  + "','" + str(documentoId.id) + "','" + str(ingresoPaciente) + "','" + str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "'," + convenioId + ',' + "'" + str(usuarioRegistro) + "',0)"
+                            curt.execute(comando)
+                            miConexiont.commit()
+                            miConexiont.close()
+                            liquidacionU = Liquidacion.objects.all().aggregate(maximo=Coalesce(Max('id'), 0))
+                            liquidacionId = (liquidacionU['maximo']) + 0
+                        else:
+                            liquidacionId = cabezoteLiquidacion[0]['id']
+                            liquidacionId = str(liquidacionId)
+                            print("liquidacionId = ", liquidacionId)
+
+                        liquidacionId = str(liquidacionId)
+                        liquidacionId = liquidacionId.replace("(", ' ')
+                        liquidacionId = liquidacionId.replace(")", ' ')
+                        liquidacionId = liquidacionId.replace(",", ' ')
 
 
-		        ## Fin
+                        # Rutiva busca en convenio el valor de la tarifa CUPS
+                        print("liquidacionId = ", liquidacionId)
+
+                        print ("cups no id = ",cups)
+
+                        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432",
+                                                       user="postgres", password="pass123")
+
+                        curt = miConexiont.cursor()
+                        comando = 'SELECT conv.convenio_id convenio ,proc.cups_id cups, proc.valor tarifaValor FROM facturacion_conveniospacienteingresos conv, contratacion_conveniosprocedimientos proc WHERE conv."tipoDoc_id" = ' + "'" +  str(tipoDocId.id) + "' AND conv.documento_id = " + "'" + str(documentoId.id) + "'" + ' AND conv."consecAdmision" = ' + "'" + str(ingresoPaciente) + "' AND conv.convenio_id = proc.convenio_id AND proc.cups_id = " + "'" +  str(codigoCupsId[0].id) + "'"
+                        curt.execute(comando)
+                        convenioValor = []
+
+                        for id, cups,tarifaValor   in curt.fetchall():
+                            convenioValor.append({'convenio': convenio, 'cups':cups, 'valor':tarifaValor})
+
+                        miConexiont.close()
+                        print ("Cups = "  , convenioValor[0]['cups'])
+                        tarifaValor = convenioValor[0]['valor']
+                        tarifaValor = str(tarifaValor)
+                        print("tarifaValor = ", tarifaValor)
+                        tarifaValor = tarifaValor.replace("(", ' ')
+                        tarifaValor = tarifaValor.replace(")", ' ')
+                        tarifaValor = tarifaValor.replace(",", ' ')
+                        print ("tarifaValor = ", tarifaValor)
+                        #cupsId = convenioValor[0]['cups']
+                        #cupsId = str(cupsId)
+                        #print("cupsId = ", cupsId)
+                        #cupsId = cupsId.replace("(", ' ')
+                        #cupsId = cupsId.replace(")", ' ')
+                        #cupsId = cupsId.replace(",", ' ')
+                        #print("cupsId = ", cupsId)
+
+                    # Aqui Rutina FACTURACION crea en liquidaciondetalle el registro con la tarifa, con campo cups y convenio
+                    #
+                        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
+                        curt = miConexiont.cursor()
+                        comando = 'INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorUnitario", "valorTotal",cirugia,"fechaCrea", "fechaRegistro", "estadoRegistro", "codigoCups_id",  "usuarioRegistro_id", liquidacion_id, "tipoRegistro") VALUES (' + "'" +  str(consecutivo)  + "','" + str(fechaRegistro) + "','" + str(cantidad) + "','"  + str(tarifaValor) + "','" + str(tarifaValor)  + "','" + str('N') + "','" +  str(fechaRegistro) + "','" +  str(fechaRegistro) + "','" + str(estadoReg) + "','" + str(codigoCupsId[0].id) + "','" + str(usuarioRegistro) + "'," + liquidacionId + ",'SISTEMA')"
+                        curt.execute(comando)
+                        miConexiont.commit()
+                        miConexiont.close()
+
+		    # Aqui rutina Actualizar totales de CABEZOTE de liquidacion
+
+                    print ("GRABEEEEE tipoExamen =" , queda["tiposExamen_Id"])
+                    print("GRABEEEEE cups =", queda["cups"])
+                    print("GRABEEEEE cantidad =", queda["cantidad"])
+                    print("GRABEEEEE observaciones =", queda["observa"])
+
+
+	            # Fin rutina Facturacion
 
                 # Fin Grabacion Laboratorios
 
@@ -1644,6 +1759,7 @@ def PostConsultaHcli(request):
 
     else:
         return JsonResponse({'errors':'Something went wrong!'})
+
 
 
 
