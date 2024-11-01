@@ -439,7 +439,7 @@ def crearHistoriaClinica(request):
 
                 # Fin Grabacion Historia
 		
-		        # Aqui rutina busca Convenio del Paciente
+		# Aqui rutina busca Convenio del Paciente
 
                 miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",        password="pass123")
                 curt = miConexiont.cursor()
@@ -469,8 +469,87 @@ def crearHistoriaClinica(request):
 
 
 
-		        # Fin Rutina busca convenio del paciente
-            #
+	        # Fin Rutina busca convenio del paciente
+
+                # Validacion si existe o No existe CABEZOTE
+
+                miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",   password="pass123")
+
+                curt = miConexiont.cursor()
+                comando = 'SELECT id FROM facturacion_liquidacion WHERE "tipoDoc_id" = ' + "'" + str(
+                    tipoDocId.id) + "' AND documento_id = " + "'" + str(
+                    documentoId.id) + "'" + ' AND "consecAdmision" = ' + "'" + str(ingresoPaciente) + "'"
+                curt.execute(comando)
+
+                cabezoteLiquidacion = []
+
+                for id in curt.fetchall():
+                    cabezoteLiquidacion.append({'id': id})
+
+                miConexiont.close()
+                if (cabezoteLiquidacion == []):
+                    # Si no existe liquidacion CABEZOTE se debe crear con los totales, abonos, anticipos, procedimiento, suministros etc
+                    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432",
+                                                   user="postgres", password="pass123")
+                    curt = miConexiont.cursor()
+                    comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + "'" + str(
+                        tipoDocId.id) + "','" + str(documentoId.id) + "','" + str(ingresoPaciente) + "','" + str(
+                        fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(
+                        estadoReg) + "'," + convenioId + ',' + "'" + str(usuarioRegistro) + "',0)"
+                    curt.execute(comando)
+                    miConexiont.commit()
+                    miConexiont.close()
+                    liquidacionU = Liquidacion.objects.all().aggregate(maximo=Coalesce(Max('id'), 0))
+                    liquidacionId = (liquidacionU['maximo']) + 0
+                else:
+                    liquidacionId = cabezoteLiquidacion[0]['id']
+                    liquidacionId = str(liquidacionId)
+                    print("liquidacionId = ", liquidacionId)
+
+                liquidacionId = str(liquidacionId)
+                liquidacionId = liquidacionId.replace("(", ' ')
+                liquidacionId = liquidacionId.replace(")", ' ')
+                liquidacionId = liquidacionId.replace(",", ' ')
+
+                # Fin validacion de Liquidacion cabezote
+
+                # Rutiva busca en convenio el valor de la tarifa CUPS
+                print("liquidacionId = ", liquidacionId)
+
+
+
+                # Aqui RUTINA busca consecutivo de liquidacion
+
+
+                miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",        password="pass123")
+                curt = miConexiont.cursor()
+
+                comando = 'SELECT (max(p.consecutivo) + 1) cons FROM facturacion_liquidaciondetalle p WHERE liquidacion_id = ' + liquidacionId
+
+                curt.execute(comando)
+
+                print(comando)
+
+                consecLiquidacion = []
+
+                for cons in curt.fetchall():
+                      consecLiquidacion.append({'cons': cons})
+
+                miConexiont.close()
+                print("consecLiquidacion = ", consecLiquidacion[0])
+
+                consecLiquidacion = consecLiquidacion[0]['cons']
+                consecLiquidacion = str(consecLiquidacion)
+                print ("consecLiquidacion = ", consecLiquidacion)
+
+                consecLiquidacion = consecLiquidacion.replace("(",' ')
+                consecLiquidacion = consecLiquidacion.replace(")", ' ')
+                consecLiquidacion = consecLiquidacion.replace(",", ' ')
+
+	        # Fin RUTINA busca consecutivo de liquidacion
+
+
+
                 #Grabacion Laboratorios
             #
                 laboratorios = request.POST["laboratorios"]
@@ -496,51 +575,16 @@ def crearHistoriaClinica(request):
                     if cups != "":
                         consecutivo = consecutivo + 1
                         #codigoCupsId = Examenes.objects.get(codigoCups=cups)
-                        codigoCupsId = Examenes.objects.filter(codigoCups=cups)
+
                         a = HistoriaExamenes(tiposExamen_id= tiposExamen_Id ,codigoCups =  cups,consecutivo=consecutivo, cantidad = cantidad, observaciones=observa,estadoReg='A' , estadoExamenes_id= estadoExamenes_id, anulado="N", historia_id=historiaId, usuaroRegistra_id=usuarioRegistro)
                         a.save()
 
+                        ## Desde Aqui rutina de Facturacion
+                        #
+                        codigoCupsId = Examenes.objects.filter(codigoCups=cups)
                         print ("codigoCupsId", codigoCupsId[0].id)
 
                         
-                        # Validacion si existe o No existe CABEZOTE
-                        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
-
-                        curt = miConexiont.cursor()
-                        comando = 'SELECT id FROM facturacion_liquidacion WHERE "tipoDoc_id" = ' + "'" +  str(tipoDocId.id) + "' AND documento = " + "'" + str(documentoId.id) + "'" + ' AND "consecAdmision" = ' + "'" + str(ingresoPaciente) + "'"
-                        curt.execute(comando)
-
-                        cabezoteLiquidacion = []
-
-                        for id in curt.fetchall():
-                           cabezoteLiquidacion.append({'id': id})
-
-                        miConexiont.close()
-                        if (cabezoteLiquidacion == []):
-                            # Si no existe liquidacion CABEZOTE se debe crear con los totales, abonos, anticipos, procedimiento, suministros etc
-                            miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",        	                               password="pass123")
-                            curt = miConexiont.cursor()
-                            comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + "'" +  str(tipoDocId.id)  + "','" + str(documentoId.id) + "','" + str(ingresoPaciente) + "','" + str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "'," + convenioId + ',' + "'" + str(usuarioRegistro) + "',0)"
-                            curt.execute(comando)
-                            miConexiont.commit()
-                            miConexiont.close()
-                            liquidacionU = Liquidacion.objects.all().aggregate(maximo=Coalesce(Max('id'), 0))
-                            liquidacionId = (liquidacionU['maximo']) + 0
-                        else:
-                            liquidacionId = cabezoteLiquidacion[0]['id']
-                            liquidacionId = str(liquidacionId)
-                            print("liquidacionId = ", liquidacionId)
-
-                        liquidacionId = str(liquidacionId)
-                        liquidacionId = liquidacionId.replace("(", ' ')
-                        liquidacionId = liquidacionId.replace(")", ' ')
-                        liquidacionId = liquidacionId.replace(",", ' ')
-
-
-                        # Rutiva busca en convenio el valor de la tarifa CUPS
-                        print("liquidacionId = ", liquidacionId)
-
-                        print ("cups no id = ",cups)
 
                         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432",
                                                        user="postgres", password="pass123")
@@ -554,37 +598,40 @@ def crearHistoriaClinica(request):
                             convenioValor.append({'convenio': convenio, 'cups':cups, 'valor':tarifaValor})
 
                         miConexiont.close()
-                        print ("Cups = "  , convenioValor[0]['cups'])
-                        tarifaValor = convenioValor[0]['valor']
-                        tarifaValor = str(tarifaValor)
-                        print("tarifaValor = ", tarifaValor)
-                        tarifaValor = tarifaValor.replace("(", ' ')
-                        tarifaValor = tarifaValor.replace(")", ' ')
-                        tarifaValor = tarifaValor.replace(",", ' ')
-                        print ("tarifaValor = ", tarifaValor)
-                        #cupsId = convenioValor[0]['cups']
-                        #cupsId = str(cupsId)
-                        #print("cupsId = ", cupsId)
-                        #cupsId = cupsId.replace("(", ' ')
-                        #cupsId = cupsId.replace(")", ' ')
-                        #cupsId = cupsId.replace(",", ' ')
-                        #print("cupsId = ", cupsId)
+
+                        if convenioValor != []:
+
+                            print ("Cups = "  , convenioValor[0]['cups'])
+                            tarifaValor = convenioValor[0]['valor']
+                            tarifaValor = str(tarifaValor)
+                            print("tarifaValor = ", tarifaValor)
+                            tarifaValor = tarifaValor.replace("(", ' ')
+                            tarifaValor = tarifaValor.replace(")", ' ')
+                            tarifaValor = tarifaValor.replace(",", ' ')
+                            print ("tarifaValor = ", tarifaValor)
+                            #cupsId = convenioValor[0]['cups']
+                            #cupsId = str(cupsId)
+                            #print("cupsId = ", cupsId)
+                            #cupsId = cupsId.replace("(", ' ')
+                            #cupsId = cupsId.replace(")", ' ')
+                            #cupsId = cupsId.replace(",", ' ')
+                            #print("cupsId = ", cupsId)
+                            #
+                        else:
+                            tarifaValor=0
+
+                        TotalTarifa = int(tarifaValor) * int(cantidad)
 
                     # Aqui Rutina FACTURACION crea en liquidaciondetalle el registro con la tarifa, con campo cups y convenio
                     #
                         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
                         curt = miConexiont.cursor()
-                        comando = 'INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorUnitario", "valorTotal",cirugia,"fechaCrea", "fechaRegistro", "estadoRegistro", "codigoCups_id",  "usuarioRegistro_id", liquidacion_id, "tipoRegistro") VALUES (' + "'" +  str(consecutivo)  + "','" + str(fechaRegistro) + "','" + str(cantidad) + "','"  + str(tarifaValor) + "','" + str(tarifaValor)  + "','" + str('N') + "','" +  str(fechaRegistro) + "','" +  str(fechaRegistro) + "','" + str(estadoReg) + "','" + str(codigoCupsId[0].id) + "','" + str(usuarioRegistro) + "'," + liquidacionId + ",'SISTEMA')"
+                        comando = 'INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorUnitario", "valorTotal",cirugia,"fechaCrea", "fechaRegistro", "estadoRegistro", "codigoCups_id",  "usuarioRegistro_id", liquidacion_id, "tipoRegistro") VALUES (' + "'" +  str(consecLiquidacion)  + "','" + str(fechaRegistro) + "','" + str(cantidad) + "','"  + str(tarifaValor) + "','" + str(TotalTarifa)  + "','" + str('N') + "','" +  str(fechaRegistro) + "','" +  str(fechaRegistro) + "','" + str(estadoReg) + "','" + str(codigoCupsId[0].id) + "','" + str(usuarioRegistro) + "'," + liquidacionId + ",'SISTEMA')"
                         curt.execute(comando)
                         miConexiont.commit()
                         miConexiont.close()
 
-		    # Aqui rutina Actualizar totales de CABEZOTE de liquidacion
-
-                    print ("GRABEEEEE tipoExamen =" , queda["tiposExamen_Id"])
-                    print("GRABEEEEE cups =", queda["cups"])
-                    print("GRABEEEEE cantidad =", queda["cantidad"])
-                    print("GRABEEEEE observaciones =", queda["observa"])
+                        consecLiquidacion = int(consecLiquidacion) + 1
 
 
 	            # Fin rutina Facturacion
@@ -615,18 +662,73 @@ def crearHistoriaClinica(request):
                      estadoExamenes_id = "1"
 
                      if cups != "":
-                         consecutivo = consecutivo + 1
+                        consecutivo = consecutivo + 1
                          #codigoCups = Examenes.objects.get(nombre=nombreRx)
-                         b = HistoriaExamenes(tiposExamen_id=tiposExamen_Id, codigoCups=cups,
+                        b = HistoriaExamenes(tiposExamen_id=tiposExamen_Id, codigoCups=cups,
                                               cantidad=cantidad, consecutivo=consecutivo, observaciones=observa, estadoReg='A',
                                               estadoExamenes_id=estadoExamenes_id, anulado="N",
                                               historia_id=historiaId, usuaroRegistra_id=usuarioRegistro)
-                         b.save()
+                        b.save()
 
-                     print("tipoExamen =", key1["tiposExamen_Id"])
-                     print("cups =", key1["cups"])
-                     print("cantidad =", key1["cantidad"])
-                     print("observaciones =", key1["observa"])
+                        # Rutiva busca en convenio el valor de la tarifa CUPS
+
+                        codigoCupsId = Examenes.objects.filter(codigoCups=cups)
+                        print("codigoCupsId", codigoCupsId[0].id)
+
+
+                        print("liquidacionId = ", liquidacionId)
+
+
+
+                        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432",
+                                                       user="postgres", password="pass123")
+
+                        curt = miConexiont.cursor()
+                        comando = 'SELECT conv.convenio_id convenio ,proc.cups_id cups, proc.valor tarifaValor FROM facturacion_conveniospacienteingresos conv, contratacion_conveniosprocedimientos proc WHERE conv."tipoDoc_id" = ' + "'" +  str(tipoDocId.id) + "' AND conv.documento_id = " + "'" + str(documentoId.id) + "'" + ' AND conv."consecAdmision" = ' + "'" + str(ingresoPaciente) + "' AND conv.convenio_id = proc.convenio_id AND proc.cups_id = " + "'" +  str(codigoCupsId[0].id) + "'"
+                        curt.execute(comando)
+                        convenioValor = []
+
+                        for id, cups,tarifaValor   in curt.fetchall():
+                            convenioValor.append({'convenio': convenio, 'cups':cups, 'valor':tarifaValor})
+
+                        miConexiont.close()
+
+                        if convenioValor != []:
+
+                            print ("Cups = "  , convenioValor[0]['cups'])
+                            tarifaValor = convenioValor[0]['valor']
+                            tarifaValor = str(tarifaValor)
+                            print("tarifaValor = ", tarifaValor)
+                            tarifaValor = tarifaValor.replace("(", ' ')
+                            tarifaValor = tarifaValor.replace(")", ' ')
+                            tarifaValor = tarifaValor.replace(",", ' ')
+                            print ("tarifaValor = ", tarifaValor)
+                            #cupsId = convenioValor[0]['cups']
+                            #cupsId = str(cupsId)
+                            #print("cupsId = ", cupsId)
+                            #cupsId = cupsId.replace("(", ' ')
+                            #cupsId = cupsId.replace(")", ' ')
+                            #cupsId = cupsId.replace(",", ' ')
+                            #print("cupsId = ", cupsId)
+                            #
+
+                        else:
+                            tarifaValor=0
+                        TotalTarifa = int(tarifaValor) * int(cantidad)
+
+                    # Aqui Rutina FACTURACION crea en liquidaciondetalle el registro con la tarifa, con campo cups y convenio
+                    #
+                        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
+                        curt = miConexiont.cursor()
+                        comando = 'INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorUnitario", "valorTotal",cirugia,"fechaCrea", "fechaRegistro", "estadoRegistro", "codigoCups_id",  "usuarioRegistro_id", liquidacion_id, "tipoRegistro") VALUES (' + "'" +  str(consecLiquidacion)  + "','" + str(fechaRegistro) + "','" + str(cantidad) + "','"  + str(tarifaValor) + "','" + str(TotalTarifa)  + "','" + str('N') + "','" +  str(fechaRegistro) + "','" +  str(fechaRegistro) + "','" + str(estadoReg) + "','" + str(codigoCupsId[0].id) + "','" + str(usuarioRegistro) + "'," + liquidacionId + ",'SISTEMA')"
+                        curt.execute(comando)
+                        miConexiont.commit()
+                        miConexiont.close()
+
+                        consecLiquidacion = int(consecLiquidacion) + 1
+
+
+	            # Fin rutina Facturacion
 
                      ## Fin
 
@@ -656,19 +758,75 @@ def crearHistoriaClinica(request):
                    estadoExamenes_id = "1"
 
                    if cups != "":
-                          consecutivo = consecutivo + 1
+                        consecutivo = consecutivo + 1
                           #codigoCups = Examenes.objects.get(nombre=nombreTerapias)
-                          c = HistoriaExamenes(tiposExamen_id=tiposExamen_Id, codigoCups=cups,
+                        c = HistoriaExamenes(tiposExamen_id=tiposExamen_Id, codigoCups=cups,
                                                cantidad=cantidad, consecutivo=consecutivo, observaciones=observa,
                                                estadoReg='A',
                                                estadoExamenes_id=estadoExamenes_id, anulado="N",
                                                 historia_id=historiaId, usuaroRegistra_id=usuarioRegistro)
-                          c.save()
+                        c.save()
 
-                          print("tipoExamen =", key2["tiposExamen_Id"])
-                          print("cups =", key2["cups"])
-                          print("cantidad =", key2["cantidad"])
-                          print("observaciones =", key2["observa"])
+			## Desde Aqui rutina de Facturacion
+                          #
+                        codigoCupsId = Examenes.objects.filter(codigoCups=cups)
+                        print("codigoCupsId", codigoCupsId[0].id)
+
+                        # Rutiva busca en convenio el valor de la tarifa CUPS
+                        print("liquidacionId = ", liquidacionId)
+
+                        print ("cups no id = ",cups)
+
+                        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432",
+                                                       user="postgres", password="pass123")
+
+                        curt = miConexiont.cursor()
+                        comando = 'SELECT conv.convenio_id convenio ,proc.cups_id cups, proc.valor tarifaValor FROM facturacion_conveniospacienteingresos conv, contratacion_conveniosprocedimientos proc WHERE conv."tipoDoc_id" = ' + "'" +  str(tipoDocId.id) + "' AND conv.documento_id = " + "'" + str(documentoId.id) + "'" + ' AND conv."consecAdmision" = ' + "'" + str(ingresoPaciente) + "' AND conv.convenio_id = proc.convenio_id AND proc.cups_id = " + "'" +  str(codigoCupsId[0].id) + "'"
+                        curt.execute(comando)
+                        convenioValor = []
+
+                        for id, cups,tarifaValor   in curt.fetchall():
+                            convenioValor.append({'convenio': convenio, 'cups':cups, 'valor':tarifaValor})
+
+                        miConexiont.close()
+
+                        if convenioValor != []:
+
+                            print ("Cups = "  , convenioValor[0]['cups'])
+                            tarifaValor = convenioValor[0]['valor']
+                            tarifaValor = str(tarifaValor)
+                            print("tarifaValor = ", tarifaValor)
+                            tarifaValor = tarifaValor.replace("(", ' ')
+                            tarifaValor = tarifaValor.replace(")", ' ')
+                            tarifaValor = tarifaValor.replace(",", ' ')
+                            print ("tarifaValor = ", tarifaValor)
+
+
+                            #cupsId = convenioValor[0]['cups']
+                            #cupsId = str(cupsId)
+                            #print("cupsId = ", cupsId)
+                            #cupsId = cupsId.replace("(", ' ')
+                            #cupsId = cupsId.replace(")", ' ')
+                            #cupsId = cupsId.replace(",", ' ')
+                            #print("cupsId = ", cupsId)
+                        else:
+                            tarifaValor=0
+
+                        TotalTarifa = int(tarifaValor) * int(cantidad)
+
+                    # Aqui Rutina FACTURACION crea en liquidaciondetalle el registro con la tarifa, con campo cups y convenio
+                    #
+                        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
+                        curt = miConexiont.cursor()
+                        comando = 'INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorUnitario", "valorTotal",cirugia,"fechaCrea", "fechaRegistro", "estadoRegistro", "codigoCups_id",  "usuarioRegistro_id", liquidacion_id, "tipoRegistro") VALUES (' + "'" +  str(consecLiquidacion)  + "','" + str(fechaRegistro) + "','" + str(cantidad) + "','"  + str(tarifaValor) + "','" + str(TotalTarifa)  + "','" + str('N') + "','" +  str(fechaRegistro) + "','" +  str(fechaRegistro) + "','" + str(estadoReg) + "','" + str(codigoCupsId[0].id) + "','" + str(usuarioRegistro) + "'," + liquidacionId + ",'SISTEMA')"
+                        curt.execute(comando)
+                        miConexiont.commit()
+                        miConexiont.close()
+
+                        consecLiquidacion = int(consecLiquidacion) + 1
+
+
+	            # Fin rutina Facturacion
 
                          ## Fin
 
@@ -1004,7 +1162,7 @@ def crearHistoriaClinica(request):
 
                 # Fin Grabacion Formulacion
 
-
+   	        # Aqui rutina Actualizar totales de CABEZOTE de liquidacion
 
 
 
@@ -1759,6 +1917,11 @@ def PostConsultaHcli(request):
 
     else:
         return JsonResponse({'errors':'Something went wrong!'})
+
+
+
+
+
 
 
 

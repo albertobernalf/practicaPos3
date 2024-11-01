@@ -258,7 +258,8 @@ class LiquidacionCirugias(models.Model):
 class Facturacion(models.Model):
     id  = models.AutoField(primary_key=True)
     tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TiposDoc101')
-    documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    #documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    documento = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True, on_delete=models.PROTECT,  related_name='DocumentoFac2')
     consecAdmision = models.IntegerField(editable=True, null=True, blank=True)
     factura = models.CharField(max_length=20, blank=True,null= True, editable=True,)
     fechaFactura =  models.DateTimeField(editable=True, null=True, blank=True)
@@ -363,7 +364,8 @@ class FacturacionDetalle(models.Model):
 class Liquidacion(models.Model):
     id = models.AutoField(primary_key=True)
     tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TiposDoc120')
-    documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    #documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    documento = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True, on_delete=models.PROTECT,  related_name='DocumentoFac3')
     consecAdmision = models.IntegerField(editable=True, null=True, blank=True)
     fecha = models.DateTimeField(editable=True, null=True, blank=True)
     convenio = models.ForeignKey('contratacion.Convenios', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Convenio102')
@@ -426,7 +428,8 @@ class LiquidacionDetalle(models.Model):
 class Refacturacion(models.Model):
     id = models.AutoField(primary_key=True)
     tipoDoc = models.ForeignKey('usuarios.TiposDocumento', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TiposDoc145')
-    documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    #documento = models.CharField(max_length=30, blank=True,null= True, editable=True,)
+    documento = models.ForeignKey('usuarios.Usuarios', blank=True, null=True, editable=True, on_delete=models.PROTECT,  related_name='DocumentoFac4')
     consecAdmision = models.IntegerField(editable=True, null=True, blank=True)
     fecha = models.DateTimeField(editable=True, null=True, blank=True)
     facturaInicial = models.CharField(max_length=20, blank=True,null= True, editable=True,)

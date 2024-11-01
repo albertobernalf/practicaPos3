@@ -255,8 +255,14 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
   
          
 
+	-- Ojo arreglar conveniosHonorarios a bsae de if, else:
+	-- Ojo PARON no seguir probar todo el aplicativo
+	-- ojo probar convenios liquidacionhonorariortarifas
+        -- hacer panelde liquidacion cuenta en facturacion
+      	-- Ojo en contratacion panel creo en suministro,honorario no se si proced hay UN </DIV> volado falta
+	-- Ojo tngo un error cuando son dos convenios un poaciente mismo id de ingresos no ditingue siempre trae el meno como hacer??
 
-      
+	-- ojo el dia martes 5-nov hacer porceso AdicionarLiquidacion
 
 -----------------------------------------------------------------------------------------------------------------------
 --  GLOSAS

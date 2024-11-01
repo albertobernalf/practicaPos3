@@ -130,3 +130,131 @@ INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorU
 VALUES (' + "'" +  str(consecutivo)  + "','" + str(fechaRegistro) + "','" + str(cantidad) + "','" + str(fechaRegistro) +
 "','" + str(tarifaValor) + "','" + str(tarifaValor)  + "','" + str('N') + "','" + str(fechaRegistro) + "'," + "'" + str(fechaRegistro) + 
 "','" + str(estadoReg) + "','" + str(codigoCupsId[0].id) + "','" + str(usuarioRegistro) + "'," + liquidacionId, + ",'" + str(usuarioRegistro) + "')"
+
+
+
+select * from cartera_tipospagos;
+select * from cartera_formaspagos;
+select * from cartera_pagos
+--anticipos
+select sum(pagOS.valor) 
+from cartera_pagos pagos, cartera_formaspagos formas
+where pagos."tipoDoc_id" = '1' and pagos.documento_id =18 and pagos.consec=1 and pagos."formaPago_id" = formas.id and
+     formas.nombre like ('%ANTICIPO%');
+
+-- abonos
+
+select sum(pagOS.valor) 
+from cartera_pagos pagos, cartera_formaspagos formas
+where pagos."tipoDoc_id" = '1' and pagos.documento_id =18 and pagos.consec=1 and pagos."formaPago_id" = formas.id and
+     formas.nombre like ('%ABONOS%');
+
+-- moderadora
+
+select sum(pagOS.valor) 
+from cartera_pagos pagos, cartera_formaspagos formas
+where pagos."tipoDoc_id" = '1' and pagos.documento_id =18 and pagos.consec=1 and pagos."formaPago_id" = formas.id and
+     formas.nombre like ('%MODERA%');
+
+-- copago
+
+select sum(pagOS.valor) 
+from cartera_pagos pagos, cartera_formaspagos formas
+where pagos."tipoDoc_id" = '1' and pagos.documento_id =18 and pagos.consec=1 and pagos."formaPago_id" = formas.id and
+     formas.nombre like ('%COPA%');
+
+
+select * from facturacion_liquidaciondetalle;
+select * from facturacion_liquidacion;
+
+--  Total Procedimientos
+
+select sum(liq."valorTotal") 
+from facturacion_liquidacion fac , facturacion_liquidaciondetalle liq
+where fac."tipoDoc_id" = '1' and fac.documento ='19' and fac."consecAdmision"=1 and fac.id = liq.liquidacion_id and
+       liq."codigoCups_id" is not null
+
+--  Total Suministros
+
+select sum(liq."valorTotal") 
+from facturacion_liquidacion fac , facturacion_liquidaciondetalle liq
+where fac."tipoDoc_id" = '1' and fac.documento ='19' and fac."consecAdmision"=1 and fac.id = liq.liquidacion_id and
+       liq.cums_id is not null
+
+-- Model.objects.all().aggregate(Sum('number'))
+-- FinalProduct_out.objects.filter(entry_date=fecha).aggregate(Sum("dried_lsn_exit_amount"), Sum("frass_exit_amount"))
+
+
+SELECT (max(p.consecutivo) + 1) cons 
+FROM facturacion_liquidaciondetalle p 
+WHERE liquidacion_id = 2
+
+select * from facturacion_liquidaciondetalle
+select * from usuarios_usuarios;
+
+
+
+select liq.id id,consecutivo ,  fecha ,  liq.cantidad ,  "valorUnitario" ,  "valorTotal" ,  cirugia ,  "fechaCrea" , 
+liq.observaciones ,  "estadoRegistro" ,  "codigoCups_id" ,  cums_id , 
+case when liq."codigoCups_id" <> null then exa.nombre when liq.cums_id <> null then sum.nombre end nombreExamen ,  
+liquidacion_id ,  liq."tipoHonorario_id" ,  "tipoRegistro"  
+FROM facturacion_liquidaciondetalle liq 
+left join clinico_examenes exa on (exa.id = liq."codigoCups_id") 
+left join facturacion_suministros sum on (sum.id = liq.cums_id) 
+where liquidacion_id= 2 order by consecutivo
+
+select * from clinico_examenes where id=238
+
+
+select liq.id id,consecutivo ,  fecha ,  liq.cantidad ,  "valorUnitario" ,  "valorTotal" ,  cirugia ,  "fechaCrea" , 
+liq.observaciones ,  "estadoRegistro" ,  "codigoCups_id" ,  cums_id , 
+exa.nombre  nombreExamen ,  
+liquidacion_id ,  liq."tipoHonorario_id" ,  "tipoRegistro"  
+FROM facturacion_liquidaciondetalle liq 
+inner join clinico_examenes exa on (exa.id = liq."codigoCups_id") 
+where liquidacion_id= 2
+union
+select liq.id id,consecutivo ,  fecha ,  liq.cantidad ,  "valorUnitario" ,  "valorTotal" ,  cirugia ,  "fechaCrea" , 
+liq.observaciones ,  "estadoRegistro" ,  "codigoCups_id" ,  cums_id , 
+sum.nombre  nombreExamen ,  
+liquidacion_id ,  liq."tipoHonorario_id" ,  "tipoRegistro"  
+FROM facturacion_liquidaciondetalle liq 
+inner join facturacion_suministros sum on (sum.id = liq.cums_id) 
+where liquidacion_id= 2 
+order by 1
+
+select liq.id id,consecutivo ,  cast(date(fecha) as text)||' '||cast(time(fecha) as text) ,  liq.cantidad ,  "valorUnitario" ,  "valorTotal" ,  cirugia ,  "fechaCrea" , 
+liq.observaciones ,  "estadoRegistro" ,  "codigoCups_id" ,  cums_id , 
+exa.nombre  nombreExamen ,  
+liquidacion_id ,  liq."tipoHonorario_id" ,  "tipoRegistro"  
+FROM facturacion_liquidaciondetalle liq 
+inner join clinico_examenes exa on (exa.id = liq."codigoCups_id") 
+where liquidacion_id= 2
+union
+select liq.id id,consecutivo ,  cast(date(fecha) as text)||' '||cast(time(fecha) as text) ,  liq.cantidad ,  "valorUnitario" ,  "valorTotal" ,  cirugia ,  "fechaCrea" , 
+liq.observaciones ,  "estadoRegistro" ,  "codigoCups_id" ,  cums_id , 
+sum.nombre  nombreExamen ,  
+liquidacion_id ,  liq."tipoHonorario_id" ,  "tipoRegistro"  
+FROM facturacion_liquidaciondetalle liq 
+inner join facturacion_suministros sum on (sum.id = liq.cums_id) 
+where liquidacion_id= 2 
+order by 1
+ 
+
+             
+select * from facturacion_liquidaciondetalle
+select * from facturacion_liquidacion
+select * from clinico_historiaexamenes order by id
+select * from clinico_historia order by id
+
+
+select liq.id id,  "consecAdmision",  fecha ,  "totalCopagos" ,  "totalCuotaModeradora" ,  "totalProcedimientos" ,
+"totalSuministros", "totalLiquidacion", "valorApagar", "fechaCorte", anticipos, "detalleAnulacion", "fechaAnulacion", 
+observaciones, liq."fechaRegistro", "estadoRegistro", convenio_id, liq."tipoDoc_id" , liq.documento_id, liq."usuarioRegistro_id", 
+"totalAbonos", conv.nombre nombreConvenio, usu.nombre paciente 
+FROM facturacion_liquidacion liq, contratacion_convenios conv, usuarios_usuarios usu, admisiones_ingresos adm 
+where adm.id = '50083'  AND  liq.convenio_id = conv.id and usu.id = liq.documento_id  and 
+adm."tipoDoc_id" = liq."tipoDoc_id" AND adm.documento_id = liq.documento_id  AND adm.consec = liq."consecAdmision"
+
+
+select *
