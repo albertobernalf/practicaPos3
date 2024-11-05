@@ -263,6 +263,11 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 	-- Ojo tngo un error cuando son dos convenios un poaciente mismo id de ingresos no ditingue siempre trae el meno como hacer??
 
 	-- ojo el dia martes 5-nov hacer porceso AdicionarLiquidacion
+		-- Hacert totales de facturacion en clinico
+		-- hacer proba medicamentos, noqx facturacion automatica
+		-- hacer edit, delete en datatable liquidaciondetalle
+		-- Verificar totales 
+		
 
 -----------------------------------------------------------------------------------------------------------------------
 --  GLOSAS
