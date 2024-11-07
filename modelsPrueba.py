@@ -138,7 +138,6 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
            que ingresan
 
 
-
        Mañana : -- formular a paula, medica, proc qx, etc
          
                 -- Responder por apoyo teraputico lo uqe se pueda
@@ -203,18 +202,11 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 			 Es sala de Cirugia
 			
 			(Se busca en la tabla LiquidacionHonorarios el codigoCups_id de acuerdo a la tabla examenes
-                         y ser guarda en liquidacionHonorarios y de acuerdo al tipo de honorario)
-
+                        y ser guarda en liquidacionHonorarios y de acuerdo al tipo de honorario)
 	     Si no es cirugia
-
 			  (Se busca en la tabla tarifas.Tarifas el valorPropio)
-
-                         
-
-
+                       
 	   e) Propias
-
-
 
   			 Es Honorario Profesional
 			 Es material de sautura y/o curacion
@@ -225,9 +217,7 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 
 		  Si No existe Grupo Qx, o hay un valorPropio en la tabla Tarifas para el Cups en cuestion:	
 
-			  (Se busca en la tabla tarifas.Tarifas el valorPropio)
-                         
-
+			  (Se busca en la tabla tarifas.Tarifas el valorPropio)                  
 
   -- Procesos de Calculo para traer convenio - tarifa (Aqui ya esta todo calculado, solo es leer ele valor)
 
@@ -249,13 +239,13 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
            tarifas_conceptosAfacturar (No creo que sirva a lo mejor borrar)
 
 	ojo falta cuando se consulta un convenio coloque la vigenciaDesde , vigenciaHasta
-	el window.reload(9 nop funciona cuando se graba y/o actualuzaun coonvenio
+	el window.reload() nop funciona cuando se graba y/o actualiza un coonvenio
 
         Mejorar la presicion de la presentacion de los convenios los datatables, titulos , etc
   
          
 
-	-- Ojo arreglar conveniosHonorarios a bsae de if, else:
+	-- Ojo arreglar conveniosHonorarios a base de if, else:
 	-- Ojo PARON no seguir probar todo el aplicativo
 	-- ojo probar convenios liquidacionhonorariortarifas
         -- hacer panelde liquidacion cuenta en facturacion
@@ -264,9 +254,18 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 
 	-- ojo el dia martes 5-nov hacer porceso AdicionarLiquidacion
 		-- Hacert totales de facturacion en clinico
-		-- hacer proba medicamentos, noqx facturacion automatica
+		-- hacer proba medicamentos (Aunque es mejor cuando se dispensa o despacha deberan caer a la facturacion), noqx facturacion automatica
 		-- hacer edit, delete en datatable liquidaciondetalle
 		-- Verificar totales 
+
+       --  ojop ver facturacion automat de No qx
+       -- Ver totales en clinico y en facturacion
+       -- ver edicion liquidacion
+       -- ver borrado de liquidacion
+       -- Ver facturacion
+       -- ver anulacion de facturas
+       -- ver refacturacion
+       -- que mas hicimos hoyp
 		
 
 -----------------------------------------------------------------------------------------------------------------------

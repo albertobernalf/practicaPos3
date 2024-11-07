@@ -15,14 +15,15 @@ from datetime import datetime
 from clinico.models import Historia, HistoriaExamenes, Examenes, TiposExamen, EspecialidadesMedicos, Medicos, Especialidades, TiposFolio, CausasExterna, EstadoExamenes, HistorialAntecedentes, HistorialDiagnosticos, HistorialInterconsultas, EstadosInterconsulta, HistorialIncapacidades,  HistoriaSignosVitales, HistoriaRevisionSistemas, HistoriaMedicamentos
 from sitios.models import Dependencias
 from planta.models import Planta
-from facturacion.models import Liquidacion
+from facturacion.models import Liquidacion, LiquidacionDetalle
 #from contratacion.models import Procedimientos
 from usuarios.models import Usuarios, TiposDocumento
+from cartera.models  import Pagos
 
 
 
 from clinico.forms import  IncapacidadesForm, HistorialDiagnosticosCabezoteForm, HistoriaSignosVitalesForm
-from django.db.models import Avg, Max, Min
+from django.db.models import Avg, Max, Min , Sum
 from usuarios.models import Usuarios, TiposDocumento
 
 from django.contrib import messages
@@ -620,7 +621,7 @@ def crearHistoriaClinica(request):
                         else:
                             tarifaValor=0
 
-                        TotalTarifa = int(tarifaValor) * int(cantidad)
+                        TotalTarifa = float(tarifaValor) * float(cantidad)
 
                     # Aqui Rutina FACTURACION crea en liquidaciondetalle el registro con la tarifa, con campo cups y convenio
                     #
@@ -714,7 +715,7 @@ def crearHistoriaClinica(request):
 
                         else:
                             tarifaValor=0
-                        TotalTarifa = int(tarifaValor) * int(cantidad)
+                        TotalTarifa = float(tarifaValor) * float(cantidad)
 
                     # Aqui Rutina FACTURACION crea en liquidaciondetalle el registro con la tarifa, con campo cups y convenio
                     #
@@ -812,7 +813,7 @@ def crearHistoriaClinica(request):
                         else:
                             tarifaValor=0
 
-                        TotalTarifa = int(tarifaValor) * int(cantidad)
+                        TotalTarifa = float(tarifaValor) * float(cantidad)
 
                     # Aqui Rutina FACTURACION crea en liquidaciondetalle el registro con la tarifa, con campo cups y convenio
                     #
@@ -864,6 +865,57 @@ def crearHistoriaClinica(request):
                                                estadoExamenes_id=estadoExamenes_id, anulado="N",
                                                 historia_id=historiaId, usuaroRegistra_id=usuarioRegistro)
                           c.save()
+
+
+                          ## Desde Aqui rutina de Facturacion
+                        #
+                          codigoCupsId = Examenes.objects.filter(codigoCups=cups)
+                          print ("codigoCupsId", codigoCupsId[0].id)
+
+                        
+
+                          miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432",
+                                                         user="postgres", password="pass123")
+
+                          curt = miConexiont.cursor()
+                          comando = 'SELECT conv.convenio_id convenio ,proc.cups_id cups, proc.valor tarifaValor FROM facturacion_conveniospacienteingresos conv, contratacion_conveniosprocedimientos proc WHERE conv."tipoDoc_id" = ' + "'" +  str(tipoDocId.id) + "' AND conv.documento_id = " + "'" + str(documentoId.id) + "'" + ' AND conv."consecAdmision" = ' + "'" + str(ingresoPaciente) + "' AND conv.convenio_id = proc.convenio_id AND proc.cups_id = " + "'" +  str(codigoCupsId[0].id) + "'"
+                          curt.execute(comando)
+                          convenioValor = []
+
+                          for id, cups,tarifaValor   in curt.fetchall():
+                              convenioValor.append({'convenio': convenio, 'cups':cups, 'valor':tarifaValor})
+
+                          miConexiont.close()
+
+                          if convenioValor != []:
+
+                            print ("Cups = "  , convenioValor[0]['cups'])
+                            tarifaValor = convenioValor[0]['valor']
+                            tarifaValor = str(tarifaValor)
+                            print("tarifaValor = ", tarifaValor)
+                            tarifaValor = tarifaValor.replace("(", ' ')
+                            tarifaValor = tarifaValor.replace(")", ' ')
+                            tarifaValor = tarifaValor.replace(",", ' ')
+                            print ("tarifaValor = ", tarifaValor)
+
+                            #
+                          else:
+                            tarifaValor=0
+
+                          TotalTarifa = float(tarifaValor) * float(cantidad)
+
+                      # Aqui Rutina FACTURACION crea en liquidaciondetalle el registro con la tarifa, con campo cups y convenio
+                      #
+                          miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
+                          curt = miConexiont.cursor()
+                          comando = 'INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorUnitario", "valorTotal",cirugia,"fechaCrea", "fechaRegistro", "estadoRegistro", "codigoCups_id",  "usuarioRegistro_id", liquidacion_id, "tipoRegistro") VALUES (' + "'" +  str(consecLiquidacion)  + "','" + str(fechaRegistro) + "','" + str(cantidad) + "','"  + str(tarifaValor) + "','" + str(TotalTarifa)  + "','" + str('N') + "','" +  str(fechaRegistro) + "','" +  str(fechaRegistro) + "','" + str(estadoReg) + "','" + str(codigoCupsId[0].id) + "','" + str(usuarioRegistro) + "'," + liquidacionId + ",'SISTEMA')"
+                          curt.execute(comando)
+                          miConexiont.commit()
+                          miConexiont.close()
+
+                          consecLiquidacion = int(consecLiquidacion) + 1
+
+    	              # Fin rutina Facturacion
 
                           print("tipoExamen =", key3["tiposExamen_Id"])
                           print("cups =", key3["cups"])
@@ -936,7 +988,6 @@ def crearHistoriaClinica(request):
                           e = HistorialDiagnosticos(observaciones=observa, diagnosticos_id=diagnosticoId,tiposDiagnostico_id=tiposDiagnosticoId,
                                         estadoReg='A', historia_id=historiaId, consecutivo=consecutivo)
                           e.save()
-
 
                          ## Fin
 
@@ -1159,14 +1210,48 @@ def crearHistoriaClinica(request):
                                           historia_id=historiaId,usuarioRegistro_id=usuarioRegistro  , estadoReg='A', fechaRegistro=fechaRegistro )
                         i.save()
 
+                        # Fin Grabacion Formulacion
 
-                # Fin Grabacion Formulacion
+                        # Aqui rutina Actualizar totales de CABEZOTE de liquidacion. Primero por ORM calcula totales
 
-   	        # Aqui rutina Actualizar totales de CABEZOTE de liquidacion
+                totalSuministros = LiquidacionDetalle.objects.all().filter(liquidacion_id=liquidacionId).aggregate(totalS=Coalesce(Sum('valorTotal'), 0))
+                totalSuministros = (totalSuministros['totalS']) + 0
+                print("totalSuministros",totalSuministros )
+                totalProcedimientos = LiquidacionDetalle.objects.all().filter(liquidacion_id=liquidacionId).aggregate(totalP=Coalesce(Sum('valorTotal'), 0))
+                totalProcedimientos = (totalProcedimientos['totalP']) + 0
+                print("totalProcedimientos", totalProcedimientos)
+                totalCopagos = Pagos.objects.all().filter(tipoDoc_id=tipoDocId.id).filter(documento_id=documentoId.id).filter(consec=ingresoPaciente).filter(formaPago_id=4).aggregate(totalC=Coalesce(Sum('valor'), 0))
+                totalCopagos = (totalCopagos['totalC']) + 0
+                print("totalCopagos", totalCopagos)
+                totalCuotaModeradora = Pagos.objects.all().filter(tipoDoc_id=tipoDocId.id).filter(documento_id=documentoId.id).filter(consec=ingresoPaciente).filter(formaPago_id=3).aggregate(totalM=Coalesce(Sum('valor'), 0))
+                totalCuotaModeradora = (totalCuotaModeradora['totalM']) + 0
+                print("totalCuotaModeradora", totalCuotaModeradora)
+                totalAnticipos = Pagos.objects.all().filter(tipoDoc_id=tipoDocId.id).filter(documento_id=documentoId.id).filter(consec=ingresoPaciente).filter(formaPago_id=1).aggregate(Anticipos=Coalesce(Sum('valor'), 0))
+                totalAnticipos = (totalAnticipos['Anticipos']) + 0
+                print("totalAnticipos", totalAnticipos)
+                totalAbonos = Pagos.objects.all().filter(tipoDoc_id=tipoDocId.id).filter(documento_id=documentoId.id).filter(consec=ingresoPaciente).filter(formaPago_id=2).aggregate(totalAb=Coalesce(Sum('valor'), 0))
+                totalAbonos = (totalAbonos['totalAb']) + 0
+                #totalAbonos = totalCopagos + totalAnticipos + totalCuotaModeradora
+                print("totalAbonos", totalAbonos)
+                totalLiquidacion =  totalSuministros + totalProcedimientos - totalAbonos
+                print("totalLiquidacion", totalLiquidacion)
+                totalAPagar = totalLiquidacion - totalAbonos
+                print("totalAPagar", totalAPagar)
 
+                # Rutina Guarda en cabezote los totales
 
+                print ("Voy a grabar el cabezote")
 
-                #data = {'Mensaje': 'Folio exitoso : ' + str(ultimofolio2)}
+                miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
+                curt = miConexiont.cursor()
+                comando = 'UPDATE facturacion_liquidacion SET "totalSuministros" = ' + str(totalSuministros) + ',"totalProcedimientos" = ' + str(totalProcedimientos) + ', "totalCopagos" = ' + str(totalCopagos) + ' , "totalCuotaModeradora" = ' + str(totalCuotaModeradora) + ', anticipos = ' +  str(totalAnticipos) + ' ,"totalAbonos" = ' + str(totalAbonos) + ', "totalLiquidacion" = ' + str(totalLiquidacion) + ', "valorApagar" = ' + str(totalAPagar) + ' WHERE id =' + str(liquidacionId)
+                curt.execute(comando)
+                miConexiont.commit()
+                miConexiont.close()
+
+                print("Ya grabe el cabezote")
+
+                    #data = {'Mensaje': 'Folio exitoso : ' + str(ultimofolio2)}
                 data = {'Mensaje': 'OK'}
 
                 return HttpResponse(json.dumps(data))

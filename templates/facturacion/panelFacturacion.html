@@ -13,10 +13,10 @@
 
 <div class="marco">
     <ul class="tabs">
-        <li><a href="#Facturacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
-            Facturacion Clinica </a></li>
-        <li><a href="#Liquidacion"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Liquidacion Cuenta</a></li>
-        <li><a href="#Convenios"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Convenios </a></li>
+        <li><a href="#Liquidacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
+            Liquidacion Cuentas Clinica </a></li>
+        <li><a href="#LiquidacionDetalle"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Liquidacion DetallE Cuentas</a></li>
+
         <li><a href="#Abonos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Abonos Pacientes </a></li>
 	 <li><a href="#Traslados"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Traslados Convenios </a></li>
     </ul>
@@ -44,8 +44,8 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 <div class="marco">
     <div class="secciones">
-        <article id="Facturacion">
-        <center><h3>Facturacion</h3></center>
+        <article id="Liquidacion">
+        <center><h3>Liquidacion Cuentas</h3></center>
 	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
             <form action="/crearFacturacion/" method="get" id="FormFacturacion">
 
@@ -70,7 +70,8 @@ div.dataTables_wrapper  div.dataTables_filter input {
                 <input type="hidden" id="documento2" name="documento2" value="">
                 <input type="hidden" id="consec" name="consec" value="">
                 <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
-
+		<input type="text" id="convenioId" name="convenioId" value="{{convenioId}}">
+	
             </form>
 
             <!-- INICIO TABLE DE  EL DATATABLE  -->
@@ -87,9 +88,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                     <div class="col-md-12">
                                         <div class="alert alert-success success-msg" style="display:none"></div>
                                         <table  id= "tablaLiquidacion" class="display nowrap table table table-bordered  tablaLiquidacion table-hover table-sm dtr-inline" style="width:100%;">
-
-
-                                            <thead>
+                                           <thead>
                                             <tr>
                                                 <th>Tipo</th>
                                                 <th>id</th>
@@ -122,12 +121,12 @@ div.dataTables_wrapper  div.dataTables_filter input {
 	   </div>
         </article>
 
- <article id="Liquidacion">
-          <!--   <center><h3>Liquidacion de Cuentas</h3></center> -->
+ <article id="LiquidacionDetalle">
+          <!--   <center><h3>Liquidacion detalle Cuentas</h3></center> -->
 	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 
 		
-			<div style="height: 70px;  width:100%; background-color:#EBEBEB;"> 
+			<div style="height: 30px;  width:100%; background-color:#EBEBEB;"> 
 
 
 
@@ -141,8 +140,6 @@ div.dataTables_wrapper  div.dataTables_filter input {
 	                                        </div>
           	                            </div>
                                       </div>
-
-
 					
 					<div class="col">
 			  		     <div class="form-group row">
@@ -153,22 +150,39 @@ div.dataTables_wrapper  div.dataTables_filter input {
           	                            </div>
                                       </div>
 
-
-
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="tipoDoc_id" class="col-form-label col-sm-4">TipoDocumento:</label>
+						 <label for="tipoDoc_id" class="col-form-label col-sm-4"></label>
 						 <div class="col-sm-6">
-							  <input type="text" id="tipoDoc_id" name="tipoDoc_id" value="0" readonly>
+							  <input type="hidden" id="tipoDoc_id" name="tipoDoc_id" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="documento_id" class="col-form-label col-sm-4">Documento:</label>
+						 <label for="documento_id" class="col-form-label col-sm-4"></label>
 						 <div class="col-sm-6">
-							  <input type="text" id="documento_id" name="documentoc_id" value="0" readonly>
+							  <input type="hidden" id="documento_id" name="documentoc_id" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="tipoDoc" class="col-form-label col-sm-4">TipoDocumento:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="tipoDoc" name="tipoDoc" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="documento" class="col-form-label col-sm-4">Documento:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="documento" name="documento" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
@@ -208,12 +222,9 @@ div.dataTables_wrapper  div.dataTables_filter input {
 							  <input type="text" id="observaciones" name="observaciones" value="0" readonly>
 	                                        </div>
           	                            </div>
-                                      </div>
-		
-
+                                     </div>
        </div>
 
-		
 
 
 	</div>
@@ -233,12 +244,12 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 
 
-	       <div class="row row-cols-8" style="height=1px;">
+	       <div class="row row-cols-8" >
 
 				<div class="col">
 					<div class="form-group row">
 				                <label for="lcups" class="col-form-label col-sm-3">Cups:</label>
-				              <div class="col-sm-6">
+				              <div class="col-sm-4">
 					             <select class="select-css"  id="lcups" name="lcups">
                                                     {% for cups in Cups %}
                                                             <option value="{{cups.id}}"> {{cups.nombre}}
@@ -251,8 +262,8 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 					<div class="col">
 					<div class="form-group row">
-				                <label for="lsum" class="col-form-label col-sm-3">Suministro:</label>
-				              <div class="col-sm-6">
+				                <label for="lsum" class="col-form-label col-sm-5">Suministro:</label>
+				              <div class="col-sm-4">
 					             <select class="select-css"  id="lsum" name="lsum">
                                                     {% for suministros in Suministros %}
                                                             <option value="{{suministros.id}}"> {{suministros.nombre}}
@@ -269,7 +280,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="cantidad" class="col-form-label col-sm-4">Cantidad:</label>
-						 <div class="col-sm-6">
+						 <div class="col-sm-3">
 							  <input type="text" id="cantidad" name="cantidad" value="0" >
 	                                        </div>
           	                            </div>
@@ -280,8 +291,8 @@ div.dataTables_wrapper  div.dataTables_filter input {
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="valorUnitario" class="col-form-label col-sm-4">ValorUnitario:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="valorUnitario" name="valorUnitario" value="0" >
+						 <div class="col-sm-3">
+							  <input type="text" id="Unitario" name="valorUnitario" value="0" >
 	                                        </div>
           	                            </div>
                                       </div>
@@ -291,37 +302,37 @@ div.dataTables_wrapper  div.dataTables_filter input {
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="valorTotal" class="col-form-label col-sm-4">valorTotal:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="valorTotal" name="valorTotal" value="0" >
+						 <div class="col-sm-3">
+							  <input type="text" id="Total" name="valorTotal" value="0" >
 	                                        </div>
           	                            </div>
                                       </div>
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="observaciones" class="col-form-label col-sm-4">Observaciones:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="observaciones" name="observaciones" value="0" >
+						 <label for="observaciones" class="col-form-label col-sm-4">Observa:</label>
+						 <div class="col-sm-3">
+							  <input type="text" id="observas" name="observaciones" value="0" >
 	                                        </div>
           	                            </div>
                                       </div>
 
 					<div class="col">
 			  		     <div class="form-group row">
-					<label for="tipoRegistro" class="col-form-label col-sm-4">tipoRegistro:</label>
+					<label for="tipoRegistro" class="col-form-label col-sm-4"></label>
 
-						 <div class="col-sm-6">
-							  <input type="text" id="tipoRegistro" name="tipoRegistro" value="0">
+						 <div class="col-sm-3">
+							  <input type="hidden" id="tipoRegistro" name="tipoRegistro" value="MANUAL">
 	                                        </div>
           	                            </div>
                                       </div>
 
 				 <div class="col">
 
-					 <label for="BtnAdicionarLiquidacion" class="col-form-label col-sm-6">Adicionar:</label>
+					 <label for="BtnAdicionarLiquidacion" class="col-form-label col-sm-3"> +</label>
 
-					     <div class="col col-sm-2">
-			                        <input type="button" class="form-control form-control-sm" id="BtnAdicionarLiquidacion"  name="BtnAdicionarLiquidacion" value="" onclick="AdicionarLiquidacion()">
+					     <div class="col col-sm-7">
+			                        <input type="button" class="form-control form-control-sm" id="BtnAdicionarLiquidacion"  name="BtnAdicionarLiquidacion" value="Adicionar" onclick="AdicionarLiquidacion()">
 					</div>
 					</div>
 
@@ -374,16 +385,14 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 		 <!--  Totales  (Crear Div De Totales)-->
 
-			<div style="height: 40px;  width:100%;  background-color:#EBEBEB;"> 
-
-
+		 <!--	<div style="height: 30px;  width:100%;  background-color:#EBEBEB;">  -->
 
 	       <div class="row row-cols-8" style="height=1px;">
 					
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="totalCopagos" class="col-form-label col-sm-4">TotalCopagos:</label>
-						 <div class="col-sm-6">
+						 <label for="totalCopagos" class="col-form-label col-sm-3">Copagos:</label>
+						 <div class="col-sm-3">
 							  <input type="text" id="totalCopagos" name="totalCopagos" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -393,8 +402,8 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="totalCuotaModeradora" class="col-form-label col-sm-4">TotalCuotaModeradora:</label>
-						 <div class="col-sm-6">
+						 <label for="totalCuotaModeradora" class="col-form-label col-sm-4">CuotaModeradora:</label>
+						 <div class="col-sm-3">
 							  <input type="text" id="totalCuotaModeradora" name="totalCuotaModeradora" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -402,8 +411,8 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="totalProcedimientos" class="col-form-label col-sm-4">TotalProcedimientos:</label>
-						 <div class="col-sm-6">
+						 <label for="totalProcedimientos" class="col-form-label col-sm-4">Procedimientos:</label>
+						 <div class="col-sm-3">
 							  <input type="text" id="totalProcedimientos" name="totalProcedimientos" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -411,9 +420,9 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 					<div class="col">
 			  		     <div class="form-group row">
-					<label for="totalSuministros" class="col-form-label col-sm-4">TotalSuministros:</label>
+					<label for="totalSuministros" class="col-form-label col-sm-4">Suministros:</label>
 
-						 <div class="col-sm-6">
+						 <div class="col-sm-3">
 							  <input type="text" id="totalSuministros" name="totalSuministros" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -421,8 +430,8 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="totalLiquidacion" class="col-form-label col-sm-4">TotalLiquidacion:</label>
-						 <div class="col-sm-6">
+						 <label for="totalLiquidacion" class="col-form-label col-sm-4">Liquidacion:</label>
+						 <div class="col-sm-3">
 							  <input type="text" id="totalLiquidacion" name="totalLiquidacion" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -431,7 +440,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="valorApagar" class="col-form-label col-sm-4">ValorApagar:</label>
-						 <div class="col-sm-6">
+						 <div class="col-sm-3">
 							  <input type="text" id="valorApagar" name="valorApagar" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -440,7 +449,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="anticipos" class="col-form-label col-sm-4">Anticipos:</label>
-						 <div class="col-sm-6">
+						 <div class="col-sm-3">
 							  <input type="text" id="anticipos" name="anticipos" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -448,37 +457,107 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 				<div class="col">
 			  		     <div class="form-group row">
-						 <label for="totalAbonos" class="col-form-label col-sm-4">TotalAbonos:</label>
-						 <div class="col-sm-6">
+						 <label for="totalAbonos" class="col-form-label col-sm-3">Abonos:</label>
+						 <div class="col-sm-3">
 							  <input type="text" id="totalAbonos" name="totalAbonos" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
 		
 
-       </div>
+		       </div>
 
-	
-
-
-			</div>
+	 <!-	</div> -->
 
 		 <!--  Fin Totales  (Crear Div De Totales)-->
 	</div>
+
+	            <!-- Espacio Modales  LiquidacionDetalle-->
+
+            <div class="modal fade" id="crearModelLiquidacionDetalle" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeadingLiquidacionDetalle"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+                            <form id="postFormLiquidacionDetalle" name="postFormLiquidacionDetalle" class="form-horizontal"
+                                  novalidate>
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" id="post_id">
+                               </div>
+
+				<div class="col">
+                                    Cantidad:
+                                    <input type="text" id="ldconsecutivo" name="ldconsecutivo" value="0"></input>
+                                </div>
+
+
+                                <div class="col">
+                                    <label for="ldcups" class="col-sm-2 control-label">NombreExamen:</label>
+                                    <select class="form-select  h-100 w-200" aria-label="" id="ldcups"
+                                            name="ldcups">
+                                        {% for cups in Cups %}
+                                        <option value="{{cups.id}}"> {{cups.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+
+                                <div class="col">
+                                    <label for="ldsuministros" class="col-sm-2 control-label">NombreExamen:</label>
+                                    <select class="form-select  h-100 w-200" aria-label="" id="ldsuministros"
+                                            name="ldsuministros">
+                                        {% for suministros in Suministros %}
+                                        <option value="{{suministros.id}}"> {{suministros.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+				<div class="col">
+                                    Cantidad:
+                                    <input type="text" id="ldcantidad" name="ldcantidad" value="0"></input>
+                                </div>
+				<div class="col">
+                                    Valor Unitario:
+                                    <input type="text" id="ldvalorUnitario" name="ldvalorUnitario" value="0"></input>
+                                </div>
+				<div class="col">
+                                    Valor total:
+                                    <input type="text" id="ldvalorTotal" name="ldvalorTotal" value="0"></input>
+                                </div>
+                                <div class="col">
+                                    Observaciones:
+                                    <input type="text" id="observaciones" name="observaciones" value="0"></input>
+                                </div>
+                                <div class="col">
+                                    TipoRegistro:
+                                    <input type="text" id="ldtipoRegistro" name="ldtiporegistro" value="MANUAL" readonly> </input>
+                                </div>
+                                <div class="col-sm-offset-2 col-sm-10 mt-2">
+                                    <button type="submit" class="btn btn-primary" id="saveBtnCrearLiquidacionDetalle"
+                                            value="create">Guardar
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+     <!-- FIN Espacio Modales  -->
+
         </article>
 
-            <article id="Convenios">
-            <center><h3>Convenios Paciente</h3></center>
-	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
-	  </div>
-        </article>
 
         <article id="Abonos">
             <center><h3>Abonos</h3></center>
 		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
             <script type="text/javascript">
 		    var $ = jQuery;
-		    function cargarTablaAbonosFacPaciente()
+		    function cargarTablaAbonosPacienteFacturacion()
 	        {
 
 
@@ -519,7 +598,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                                     <div class="col-sm-3">
                                                         <input type="button" id="btn-rango" name="btn-rango"
                                                                value="Generar consulta ¡"
-                                                               onClick="cargarTablaAbonosFacPaciente()">
+                                                               onClick="cargarTablaAbonosPacienteFacturacion()">
                                                         <div class="alert alert-success success-msg"
                                                              style="display:none"></div>
 
@@ -549,7 +628,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                                     <div class="col-sm-3 text-end">
                                                         <span class="text-secondary">Crear Abono</span>
                                                         <a class="btn btn-success" href="javascript:void(0)"
-                                                           id="createNewPostAbonos"> <i class="fa fa-plus"></i></a>
+                                                           id="createNewPostAbonosFacturacion"> <i class="fa fa-plus"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -593,9 +672,10 @@ div.dataTables_wrapper  div.dataTables_filter input {
                     </td>
                 </tr>
             </table>
+
             <!-- Espacio Modales  -->
 
-            <div class="modal fade" id="crearAbonosFacturacionModel" aria-hidden="true">
+            <div class="modal fade" id="crearAbonosModelFacturacion" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -605,7 +685,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
                             <div class="alert alert-danger error-msg" style="display:none">
                                 <ul class="mb-0"></ul>
                             </div>
-                            <form id="postFormCrearFacturacionAbonos" name="postFormCrearFacturacionAbonos" class="form-horizontal"
+                            <form id="postFormCrearAbonosFacturacion" name="postFormCrearAbonosFacturacion" class="form-horizontal"
                                   novalidate>
                                 {% csrf_token %}
                                 <input type="hidden" name="post_id" id="post_id">
@@ -639,7 +719,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                     <input type="text" id="descripcionAbono" name="descripcionAbono" value="0"> </input>
                                 </div>
                                 <div class="col-sm-offset-2 col-sm-10 mt-2">
-                                    <button type="submit" class="btn btn-primary" id="saveBtnCrearAbonos"
+                                    <button type="submit" class="btn btn-primary" id="saveBtnCrearAbonosFacturacion"
                                             value="create">Guardar
                                     </button>
                                 </div>
@@ -650,6 +730,9 @@ div.dataTables_wrapper  div.dataTables_filter input {
                 </div>
             </div>
 	  </div>
+
+            <!-- Creo Fin Modales  -->
+
         </article>
 
         <article id="Traslados">
@@ -658,7 +741,110 @@ div.dataTables_wrapper  div.dataTables_filter input {
 	 </div>
         </article>
 
+        <article id="Facturacion">
+            <center><h3>Facturas Clinica</h3></center>
+	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 
+
+
+	 </div>
+        </article>
+
+
+        <article id="Anulacion">
+            <center><h3>Anulacion Facturas </h3></center>
+	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+
+	       <div class="row row-cols-8" style="height=1px;">
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="AliquidacionId" class="col-form-label col-sm-4">LiquidacionId:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="AliquidacionId" name="AliquidacionId" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+
+					
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="Afecha" class="col-form-label col-sm-4">Fecha:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="Afecha" name="Afecha" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="AtipoDoc_id" class="col-form-label col-sm-4">TipoDocumento:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="AtipoDoc_id" name="AtipoDoc_id" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="Adocumento_id" class="col-form-label col-sm-4">Documento:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="Adocumento_id" name="Adocumentoc_id" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+					<label for="paciente" class="col-form-label col-sm-4">Paciente:</label>
+
+						 <div class="col-sm-6">
+							  <input type="text" id="Apaciente" name="Apaciente" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="AconsecAdmision" class="col-form-label col-sm-4">ConsecutivoAdmision:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="AconsecAdmision" name="AconsecAdmision" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="AnombreConvenio" class="col-form-label col-sm-4">Convenio:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="AnombreConvenio" name="AnombreConvenio" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="Aobservaciones" class="col-form-label col-sm-4">Observaciones:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="Aobservaciones" name="Aobservaciones" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+	 </div>
+        </article>
+
+
+        <article id="Refacturacion">
+            <center><h3>Refacturacion </h3></center>
+	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+
+		<!--  Aquip se debe capturar el numero de la Factura OPS ME DOY AQUI SON FACTURAS NOP LIQUIDACIONES  -->
+	 </div>
+        </article>
 
     </div>
 </div>
@@ -674,6 +860,15 @@ div.dataTables_wrapper  div.dataTables_filter input {
 {% endblock %}
 
 {% block totales %}
+
+<div class="marco">
+    <ul class="tabs">
+	 <li><a href="#Facturacion"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Facturacion </a></li>
+	<li><a href="#Anulacion"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Anulacion Facturas </a></li>
+	 <li><a href="#Refacturacion"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Refacturacion </a></li>
+    </ul>
+</div>
+
 
 {% endblock %}
 
