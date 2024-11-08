@@ -22,12 +22,9 @@ $(document).ready(function () {
 
         data = JSON.stringify(data);
 
-		
 	initTableLiquidacion(data);
 	initTableLiquidacionDetalle(data);
-        initTableAbonos(data);
-//	tableActionsLiquidacion();
-
+        initTableFacAbonos(data);
 
 	/*--------------------------------------------
         Click to Edit Button
@@ -38,7 +35,6 @@ $(document).ready(function () {
           var post_id = $(this).data('pk');
           alert("pk1 = " + $(this).data('pk'));
         var username_id = document.getElementById("username_id").value;
-
 
 	$.ajax({
 	           url: '/postConsultaLiquidacion/',
@@ -52,36 +48,21 @@ $(document).ready(function () {
 			// Colocar Encabezadao
 	  		// aqui debe activar un dataTale para liquidacionDetalle
 		$('#liquidacionId').val(data.id);
+		$('#liquidacionId1').val(data.id);
+		$('#ingresoId').val(data.ingresoId1);
+
 		$('#fecha').val(data.fecha);
 		$('#tipoDoc_id').val(data.tipoDoc_id);
 		$('#documento_id').val(data.documento_id);
-		$('#tipoDoc').val(data.tiposNombre);
-		$('#documento').val(data.docPaciente);
+		$('#tipoDoc').val(data.tipoDocumento);
+		$('#documento').val(data.documento);
 		$('#paciente').val(data.paciente);
 		$('#consecAdmision').val(data.consecAdmision);
 		$('#nombreConvenio').val(data.nombreConvenio);
 		$('#convenioId').val(data.convenioId);
 		$('#observaciones').val(data.observaciones);
-
-         
-
+       
 			// Colocar Totales
-
-		$('#totalCopagos').val(data.totalCopagos);
-		$('#totalCuotaModeradora').val(data.totalCuotaModeradora);
-		$('#totalProcedimientos').val(data.totalProcedimientos);
-		$('#totalSuministros').val(data.totalSuministros);
-		$('#totalLiquidacion').val(data.totalLiquidacion);
-		$('#valorApagar').val(data.valorApagar);
-		$('#anticipos').val(data.anticipos);
-
-
-
-      		 alert("Regrese");
-
-
-			// Colocar Totales liquidacioon
-	  		// aqui debe activar un dataTale para liquidacionDetalle
 
 		$('#totalCopagos').val(data.totalCopagos);
 		$('#totalCuotaModeradora').val(data.totalCuotaModeradora);
@@ -109,10 +90,10 @@ $(document).ready(function () {
  	      		      });
 
 
-                     const $id425 = document.querySelector("#lsum");
+                     const $id425 = document.querySelector("#lsuministros");
 
 
- 	      		     $("#lsum").empty();
+ 	      		     $("#lsuministros").empty();
 
 	                 $.each(data['Suministros'], function(key,value) {
                                     options +='<option value="' + value.id + '">' + value.nombre + '</option>';
@@ -151,8 +132,6 @@ $(document).ready(function () {
  	      		      });
 
 
-
-
 			 var data2 =  {}   ;
 			data2['username'] = username;
 		        data2['sedeSeleccionada'] = sedeSeleccionada;
@@ -161,13 +140,19 @@ $(document).ready(function () {
 		        data2['username_id'] = username_id;
 
 			 var valor = document.getElementById("liquidacionId").value;
+			 var ingresoId = document.getElementById("ingresoId").value;
 
 		        data2['valor'] = valor;	
+		        data2['ingresoId'] = ingresoId;	
+
 		        data2 = JSON.stringify(data2);
 			   $("#mensajes").html(data.message);
 			
 		    tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
 	           initTableLiquidacionDetalle(data2);
+
+		    tableA= $("#tablaAbonosFacturacion").dataTable().fnDestroy();	
+	           initTableFacAbonos(data2);
 
                   },
 	   		    error: function (request, status, error) {
@@ -193,14 +178,14 @@ $(document).ready(function () {
 	           type: 'POST',
 	           dataType : 'json',
 	  		success: function (data) {
-                        alert("Regrese");
+                      
                        alert("data="  + data);
-
-			// Colocar datos en Ventana Modal
-	  		// Nop esto debe abrir una ventana Modal
 
 			 $('#pk').val(data.pk);
 	       	        $('#ldconsecutivo').val(data.consecutivo);
+
+			$('#liquidacionDetalleId').val(data.id);
+
 	       	        $('#ldcantidad').val(data.cantidad);
 	       	        $('#ldvalorUnitario').val(data.valorUnitario);
 	       	        $('#ldvalorTotal').val(data.valorTotal);
@@ -208,9 +193,7 @@ $(document).ready(function () {
 	       	        $('#ldtipoRegistro').val(data.tipoRegistro);
 
 
-
-
-	     var options = '<option value="=================="></option>';
+   	     	var options = '<option value="=================="></option>';
 
 		    const $id511 = document.querySelector("#ldcups");
 
@@ -226,10 +209,10 @@ $(document).ready(function () {
  	      		      });
 
 
-                     const $id4256 = document.querySelector("#ldsum");
+                     const $id4256 = document.querySelector("#ldsuministros");
 
 
- 	      		     $("#ldsum").empty();
+ 	      		     $("#ldsuministros").empty();
 
 	                 $.each(data['Suministros'], function(key,value) {
                                     options +='<option value="' + value.id + '">' + value.nombre + '</option>';
@@ -240,13 +223,11 @@ $(document).ready(function () {
  	      		      });
 
 
+		 $('#ldcups').val(data.codigoCups_id);
+		 $('#ldsuministros').val(data.cums_id);
 
-
-
-            $('#postFormLiquidacionDetalle').trigger("reset");
             $('#modelHeadingLiquidacionDetalle').html("Edicion Liquidacion");
             $('#crearModelLiquidacionDetalle').modal('show');
-
 
                   },
 	   		    error: function (request, status, error) {
@@ -264,13 +245,12 @@ $(document).ready(function () {
         --------------------------------------------*/
         $('#createNewPostAbonosFacturacion').click(function () {
 
-	  /*  var ingresoId= document.getElementById("ingresoId1").value;
-	    document.getElementById("ingresoId2").value = ingresoId; */
-
             $('#saveBtnCrearAbonosFacturacion').val("Create Post");
             $('#post_id').val('');
             $('#postFormCrearAbonosFacturacion').trigger("reset");
             $('#modelHeading').html("Creacion Abonos en admision");
+	  var liquidacionId = document.getElementById("liquidacionId").value;
+	document.getElementById("liquidacionId1").value =liquidacionId;
             $('#crearAbonosModelFacturacion').modal('show');
         });
 
@@ -300,12 +280,13 @@ $(document).ready(function () {
                     }else{
                         printErrorMsg(data.error)
                     }
-                    $('#postFormCrearAbonosFacturacion').trigger("reset");
-	 	  var tableA = $('#tablaAbonosFacturacion').DataTable(); // accede de nuevo a la DataTable.
-	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable(); // accede de nuevo a la DataTable.
-	          tableA.ajax.reload();
-	          tableL.ajax.reload();
+		   $("#mensajes").html(data.message);
 
+                    $('#postFormCrearAbonosFacturacion').trigger("reset");
+	 	  var tableA = $('#tablaAbonosFacturacion').DataTable(); 
+	          tableA.ajax.reload();
+	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable(); 
+	          tableL.ajax.reload();
                 },
                 error: function (data) {
 			alert("VENGO CON ERRORES :" , printErrorMsg(data.error));
@@ -320,8 +301,6 @@ $(document).ready(function () {
         });
 
 
-
-
        /*------------------------------------------
         --------------------------------------------
         Create Post Code Abonos
@@ -333,7 +312,6 @@ $(document).ready(function () {
 
             $.ajax({
                 data: $('#postFormLiquidacionDetalle').serialize(),
-
 		  url: "/editarGuardarLiquidacionDetalle/",
                 type: "POST",
                 dataType: 'json',
@@ -349,10 +327,11 @@ $(document).ready(function () {
                         printErrorMsg(data.error)
                     }
                     $('#postFormLiquidacionDetalle').trigger("reset");
-	 	  //var tableA = $('#tablaAbonosFacturacion').DataTable(); // accede de nuevo a la DataTable.
-	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable(); // accede de nuevo a la DataTable.
+	 	  //var tableA = $('#tablaAbonosFacturacion').DataTable(); 
+	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable(); 
 	          //tableA.ajax.reload();
 	          tableL.ajax.reload();
+		   $("#mensajes").html(data.message);
 
                 },
                 error: function (data) {
@@ -368,8 +347,7 @@ $(document).ready(function () {
         });
 
 
-
-/*------------------------------------------
+	/*------------------------------------------
         --------------------------------------------
         Delete Post Code Abonos
         --------------------------------------------
@@ -389,8 +367,9 @@ $(document).ready(function () {
 
 		        	  $('.success-msg').css('display','block');
                         $('.success-msg').text(data.message);
-			            var table = $('#tablaAbonosFacturacion').DataTable(); // accede de nuevo a la DataTable.
+			            var table = $('#tablaAbonosFacturacion').DataTable(); 
 		                table.ajax.reload();
+			   $("#mensajes").html(data.message);
                     },
 	   		    error: function (request, status, error) {
 	   			    $("#mensajes").html(" !  Reproduccion  con error !");
@@ -400,7 +379,7 @@ $(document).ready(function () {
 
 	/*------------------------------------------
         --------------------------------------------
-        Delete Post Code Abonos
+        Delete Post Liquidacion Detalle
         --------------------------------------------
         --------------------------------------------*/
         $("body").on("click",".borrarLiquidacionDetalle",function(){
@@ -420,6 +399,7 @@ $(document).ready(function () {
                         $('.success-msg').text(data.message);
 			            var table = $('#tablaLiquidacionDetalle').DataTable(); // accede de nuevo a la DataTable.
 		                table.ajax.reload();
+			   $("#mensajes").html(data.message);
                     },
 	   		    error: function (request, status, error) {
 	   			    $("#mensajes").html(" !  Reproduccion  con error !");
@@ -463,7 +443,6 @@ function initTableLiquidacion(data) {
                 {
                     "render": function ( data, type, row ) {
                         var btn = '';
-                      //    btn = btn + " <button   class='btn btn-primary editPost' data-pk='" + row.pk + "'>" + "</button>";
                           btn = btn + " <input type='radio'  class='form-check-input editPostLiquidacion' data-pk='"  + row.pk + "'>" + "</input>";
                         return btn;
                     },
@@ -496,8 +475,6 @@ function initTableLiquidacion(data) {
  });
 }
 
-
-
 function initTableLiquidacionDetalle(data) {
 
 	return new DataTable('.tablaLiquidacionDetalle', {
@@ -515,12 +492,11 @@ function initTableLiquidacionDetalle(data) {
                 {
                     "render": function ( data, type, row ) {
                         var btn = '';
-                      //    btn = btn + " <button   class='btn btn-primary editPost' data-pk='" + row.pk + "'>" + "</button>";
-                          btn = btn + " <input type='radio'  class='form-check-input editPostLiquidacionDetalle' data-pk='" + row.pk + "'>" + "</input>";
-			btn = btn + " <input type='radio'  class='form-check-input borrarLiquidacionDetalle' data-pk='" + row.pk + "'>" + "</input>";
+                         btn = btn + " <button   class='btn btn-primary editPostLiquidacionDetalle' data-pk='" + row.pk + "'>" + "</button>";
+                         btn = btn + " <button   class='btn btn-primary borrarLiquidacionDetalle' data-pk='" + row.pk + "'>" + "</button>";
                         return btn;
                     },
-                    "targets": 9
+                    "targets": 8
                }
             ],
             ajax: {
@@ -563,9 +539,7 @@ function initTableFacAbonos(data) {
                 {
                     "render": function ( data, type, row ) {
                         var btn = '';
-                       //   btn = btn + " <button   class='btn btn-primary editPostAbonos' data-pk='" + row.pk + "'>" + "</button>";
 			  btn = btn + " <button class='btn btn-danger deletePostAbonosFacturacion' data-action='post/" + row.pk + "/delete' data-pk='" + row.pk + "'>" + '<i class="fa fa-trash"></i>' + "</button>";
-
                         return btn;
                     },
                     "targets": 4
@@ -590,30 +564,18 @@ function initTableFacAbonos(data) {
 }
 
 
-
- function tableActionsLiquidacion() {
-   var table = initTableLiquiacion();
-
-
-    // perform API operations with `table`
-    // ...
-}
-
-
 function AdicionarLiquidacion()
 {
-	alert("Entre Adicionar Liquidacion");
 
         var cups = document.getElementById("lcups").value;
         var suministros = document.getElementById("lsuministros").value; 
-
         var cantidad = document.getElementById("cantidad").value;
         var valorUnitario = document.getElementById("valorUnitario").value;
         var valorTotal = document.getElementById("valorTotal").value;
-        var observaciones = document.getElementById("observaciones").value;
-	    var username_id = document.getElementById("username_id").value;
-
-
+        var observaciones = document.getElementById("lobservaciones").value;
+        var username_id = document.getElementById("username_id").value;
+        var tipoRegistro = document.getElementById("tipoRegistro").value;
+ 	var liquidacionId = document.getElementById("liquidacionId").value;
 
 
 		$.ajax({
@@ -621,40 +583,30 @@ function AdicionarLiquidacion()
 	            data :
 	            {'cups':cups, 'suministros':suministros,'cantidad':cantidad,  'valorUnitario':valorUnitario,
 			'valorTotal':valorTotal,'observaciones':observaciones,
-			    'username_id':username_id, 'liquidacionId':liquidacionId},
+			    'username_id':username_id, 'liquidacionId':liquidacionId, 'tipoRegistro':tipoRegistro},
 	           type: 'POST',
 	           dataType : 'json',
 	  		success: function (data) {
-                        alert("Regrese PRESENTE");
 
-            		 var data2 =  {}   ;
-        			data2['username'] = username;
+            	        var data2 =  {}   ;
+        		data2['username'] = username;
     		        data2['sedeSeleccionada'] = sedeSeleccionada;
 	    	        data2['nombreSede'] = nombreSede;
-		            data2['sede'] = sede;
-	            	var convenioId1 = document.getElementById("convenioId1").value;
-
+		        data2['sede'] = sede;
+	            	var convenioId1 = document.getElementById("convenioId").value;
 	                var username_id = document.getElementById("username_id").value;
+  	                data2['username_id'] = username_id;
+		        data2['valor'] = convenioId1;
+		        data2 = JSON.stringify(data2);
 
-		            data2['username_id'] = username_id;
-		            data2['valor'] = convenioId;
-		            data2 = JSON.stringify(data2);
+  	                tableL= $("#tablaLiquidacioDetalle").dataTable().fnDestroy();	   	     
+	                initTableLiquidacionDetalle(data2);
+			$("#mensajes").html(data.message);
 
-		            tableC= $("#tablaLiquidacioDetalle").dataTable().fnDestroy();
-		   	        alert("ya destrui tablaLiquidacionDetalle");
-
-	                    initTableLiquidacionDetalle(data2);
-			                $("#mensajes").html(data.message);
                   },
 	   		    error: function (request, status, error) {
 	   			    $("#mensajes").html(" !  Reproduccion  con error !");
 	   	    	}
 	     });
 }
-
-
-
-
-
-
 

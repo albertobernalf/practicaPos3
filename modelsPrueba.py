@@ -258,7 +258,7 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 		-- hacer edit, delete en datatable liquidaciondetalle
 		-- Verificar totales 
 
-       --  ojop ver facturacion automat de No qx
+       -- ojop ver facturacion automatico de No qx
        -- Ver totales en clinico y en facturacion
        -- ver edicion liquidacion
        -- ver borrado de liquidacion

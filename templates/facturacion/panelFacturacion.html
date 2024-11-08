@@ -126,8 +126,9 @@ div.dataTables_wrapper  div.dataTables_filter input {
 	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 
 		
-			<div style="height: 30px;  width:100%; background-color:#EBEBEB;"> 
-
+			<div style="height: 50px;  width:100%; background-color:#EBEBEB;"> 
+			IngresoId
+			<input type="text" id="ingresoId" name="ingresoId" value="">
 
 
 	       <div class="row row-cols-8" style="height=1px;">
@@ -262,9 +263,9 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 					<div class="col">
 					<div class="form-group row">
-				                <label for="lsum" class="col-form-label col-sm-5">Suministro:</label>
+				                <label for="lsuministros" class="col-form-label col-sm-5">Suministro:</label>
 				              <div class="col-sm-4">
-					             <select class="select-css"  id="lsum" name="lsum">
+					             <select class="select-css"  id="lsuministros" name="lsuministros">
                                                     {% for suministros in Suministros %}
                                                             <option value="{{suministros.id}}"> {{suministros.nombre}}
                                                             </option>
@@ -292,7 +293,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
 			  		     <div class="form-group row">
 						 <label for="valorUnitario" class="col-form-label col-sm-4">ValorUnitario:</label>
 						 <div class="col-sm-3">
-							  <input type="text" id="Unitario" name="valorUnitario" value="0" >
+							  <input type="text" id="valorUnitario" name="valorUnitario" value="0" >
 	                                        </div>
           	                            </div>
                                       </div>
@@ -303,16 +304,16 @@ div.dataTables_wrapper  div.dataTables_filter input {
 			  		     <div class="form-group row">
 						 <label for="valorTotal" class="col-form-label col-sm-4">valorTotal:</label>
 						 <div class="col-sm-3">
-							  <input type="text" id="Total" name="valorTotal" value="0" >
+							  <input type="text" id="valorTotal" name="valorTotal" value="0" >
 	                                        </div>
           	                            </div>
                                       </div>
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="observaciones" class="col-form-label col-sm-4">Observa:</label>
+						 <label for="lobservaciones" class="col-form-label col-sm-4">Observa:</label>
 						 <div class="col-sm-3">
-							  <input type="text" id="observas" name="observaciones" value="0" >
+							  <input type="text" id="lobservaciones" name="lobservaciones" value="0" >
 	                                        </div>
           	                            </div>
                                       </div>
@@ -362,8 +363,8 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                                 <th>ValorTotal</th>
                                                 <th>Observaciones</th>
                                                 <th>TipoRegistro</th>
-                                                <th>Editar</th>
-                                                <th>Borrar</th>
+                                                <th>Editar Borrar</th>
+
                                             
                                             </tr>
                                             </thead>
@@ -489,15 +490,20 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                 {% csrf_token %}
                                 <input type="hidden" name="post_id" id="post_id">
                                </div>
+					  <input type="text" id="liquidacionDetalleId" name="liquidacionDetalleId" value="0" readonly>
+			
+			                 <input type="hidden" id="username_id2" name="username_id2" value="{{Username_id}}">
+
+
 
 				<div class="col">
-                                    Cantidad:
-                                    <input type="text" id="ldconsecutivo" name="ldconsecutivo" value="0"></input>
+                                    Consecutivo:
+                                    <input type="text" id="ldconsecutivo" name="ldconsecutivo" value="0" readonly></input>
                                 </div>
 
 
                                 <div class="col">
-                                    <label for="ldcups" class="col-sm-2 control-label">NombreExamen:</label>
+                                    <label for="ldcups" class="col-sm-2 control-label">Cups:</label>
                                     <select class="form-select  h-100 w-200" aria-label="" id="ldcups"
                                             name="ldcups">
                                         {% for cups in Cups %}
@@ -508,7 +514,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 
                                 <div class="col">
-                                    <label for="ldsuministros" class="col-sm-2 control-label">NombreExamen:</label>
+                                    <label for="ldsuministros" class="col-sm-2 control-label">Suministro:</label>
                                     <select class="form-select  h-100 w-200" aria-label="" id="ldsuministros"
                                             name="ldsuministros">
                                         {% for suministros in Suministros %}
@@ -530,11 +536,11 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                 </div>
                                 <div class="col">
                                     Observaciones:
-                                    <input type="text" id="observaciones" name="observaciones" value="0"></input>
+                                    <input type="text" id="ldobservaciones" name="ldobservaciones" value="0"></input>
                                 </div>
                                 <div class="col">
                                     TipoRegistro:
-                                    <input type="text" id="ldtipoRegistro" name="ldtiporegistro" value="MANUAL" readonly> </input>
+                                    <input type="text" id="ldtipoRegistro" name="ldtipoRegistro" value="MANUAL" readonly> </input>
                                 </div>
                                 <div class="col-sm-offset-2 col-sm-10 mt-2">
                                     <button type="submit" class="btn btn-primary" id="saveBtnCrearLiquidacionDetalle"
@@ -564,7 +570,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
   	        var data =  {}   ;
                 var sede = document.getElementById("sede").value;
                 data['sede'] = sede;
-                var ingresoId= document.getElementById("ingresoId4").value;
+                var ingresoId= document.getElementById("ingresoId").value;
                 data['ingresoId'] = ingresoId;
                 data = JSON.stringify(data);
 	            table = $("#tablaAbonosFacturacion").dataTable().fnDestroy();
@@ -572,28 +578,20 @@ div.dataTables_wrapper  div.dataTables_filter input {
             }
             </script>
 
-            <table class="table  " style="height: 50px; background-color:LightGray;  width:90%;">
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
+	 <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+
                         <!-- DESDE AQUIP DATATABLE  -->
 
-                        <table class="table"
-                               style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+                        <table class="table"  style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
                             <form class="form-inline" action="/crearAbonosFacturacionDef/" method="POST"
                                   id="FormaAbonosPaciente">
-                                <input type="hidden" id="sede4" name="sede4" value="{{Sede}}">
-                                <input type="hidden" id="ingresoId4" name="ingresoId4" value="">
 
 
                                 <!-- INICIO TABLE DE  EL DATATABLE  -->
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="card">
-                                            <div class="card-header">
+                                            <div class="card-header" style="height:10px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
                                                 <div class="row">
                                                     <div class="col-sm-3">
                                                         <input type="button" id="btn-rango" name="btn-rango"
@@ -604,28 +602,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
                                                     </div>
 
-                                                    <div class="col-sm-1">
-                                                        <input type="text" id="convTipoDocA" name="convTipoDocA"
-                                                               value="" readonly>
-                                                    </div>
-
-                                                    <div class="col-sm-1">
-                                                        <input type="text" id="convNumdocA" name="convNumdocA" value=""
-                                                               readonly>
-                                                    </div>
-
-                                                    <div class="col-sm-1">
-                                                        <input type="text" id="convPacienteA" name="convPacienteA"
-                                                               value="" readonly>
-                                                    </div>
-
-                                                    <div class="col-sm-1">
-                                                        <input type="text" id="convConsecA" name="convConsecA" value=""
-                                                               readonly>
-                                                    </div>
-
-
-                                                    <div class="col-sm-3 text-end">
+                                                       <div class="col-sm-3 text-end">
                                                         <span class="text-secondary">Crear Abono</span>
                                                         <a class="btn btn-success" href="javascript:void(0)"
                                                            id="createNewPostAbonosFacturacion"> <i class="fa fa-plus"></i></a>
@@ -636,8 +613,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                                 <div class="row">
                                                     <div class="col-sm-12">
 
-                                                        <table id=tablaAbonosFacturacion
-                                                               class="display nowrap table table table-bordered  tablaAbonosFacturacion table-hover table-sm dtr-inline" style="width:100%;">
+                                                        <table id=tablaAbonosFacturacion class="display nowrap table table table-bordered  tablaAbonosFacturacion table-hover table-sm dtr-inline" style="width:100%;">
 
                                                             <thead>
                                                             <tr>
@@ -665,14 +641,6 @@ div.dataTables_wrapper  div.dataTables_filter input {
                         </table>
 
                         <!-- HASTA AQUI DATATABLE -->
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-            </table>
-
             <!-- Espacio Modales  -->
 
             <div class="modal fade" id="crearAbonosModelFacturacion" aria-hidden="true">
@@ -689,8 +657,8 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                   novalidate>
                                 {% csrf_token %}
                                 <input type="hidden" name="post_id" id="post_id">
-                                <input type="hidden" id="sede22" name="sede22" value="{{Sede}}">
-                                <input type="hidden" id="ingresoId22" name="ingresoId22" value="">
+
+				 <input type="text" id="liquidacionId1" name="liquidacionId1" value="0" >
 
                                 <div class="col">
                                     <label for="tipoPago" class="col-sm-2 control-label">Tipo Pago:</label>
@@ -732,7 +700,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
 	  </div>
 
             <!-- Creo Fin Modales  -->
-
+	  </div>
         </article>
 
         <article id="Traslados">
