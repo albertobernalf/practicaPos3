@@ -13,21 +13,24 @@
 
 <div class="marco">
     <ul class="tabs">
-        <li><a href="#Liquidacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
-            Liquidacion Cuentas Clinica </a></li>
-        <li><a href="#LiquidacionDetalle"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Liquidacion DetallE Cuentas</a></li>
-
+        <li><a href="#Liquidacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Liquidacion Cuentas Clinica </a></li>
+        <li><a href="#LiquidacionDetalle"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Liquidacion Detalle Cuentas</a></li>
         <li><a href="#Abonos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Abonos Pacientes </a></li>
-	 <li><a href="#Traslados"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Traslados Convenios </a></li>
+        <li><a href="#Traslados"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span>Traslados pagador </a></li>
+
     </ul>
 </div>
 
 <style>
 div.dataTables_wrapper  div.dataTables_filter input {
-   height: 5px;
+   height: 2px;
    padding:10px;
    border-radius:8px;
 }
+
+div.dataTables_filter input {
+    width: 50px;
+  }
 </style>
 
 
@@ -44,6 +47,8 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 <div class="marco">
     <div class="secciones">
+	
+
         <article id="Liquidacion">
         <center><h3>Liquidacion Cuentas</h3></center>
 	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
@@ -121,22 +126,127 @@ div.dataTables_wrapper  div.dataTables_filter input {
 	   </div>
         </article>
 
+ <article id="Traslados">
+        	    <center><h3>Traslados Convenios</h3></center>
+		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+		 </div>
+	 </article>
+
+	  <article id="ReFac">
+			aqui toy
+	
+	  </article>
+
+ <article id="Facturacion">
+            <center><h3>Facturas Clinica</h3></center>
+	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+	 </div>
+        </article>
+
+
+        <article id="Anulacion">
+            <center><h3>Anulacion Facturas </h3></center>
+	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+			 <div class="row row-cols-8" style="height=1px;">
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="AliquidacionId" class="col-form-label col-sm-4">LiquidacionId:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="AliquidacionId" name="AliquidacionId" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+                                      </div>
+	<div class="col">
+			  		     <div class="form-group row">
+						 <label for="Afecha" class="col-form-label col-sm-4">Fecha:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="Afecha" name="Afecha" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="AtipoDoc_id" class="col-form-label col-sm-4">TipoDocumento:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="AtipoDoc_id" name="AtipoDoc_id" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="Adocumento_id" class="col-form-label col-sm-4">Documento:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="Adocumento_id" name="Adocumentoc_id" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+					<label for="paciente" class="col-form-label col-sm-4">Paciente:</label>
+
+						 <div class="col-sm-6">
+							  <input type="text" id="Apaciente" name="Apaciente" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="AconsecAdmision" class="col-form-label col-sm-4">ConsecutivoAdmision:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="AconsecAdmision" name="AconsecAdmision" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="AnombreConvenio" class="col-form-label col-sm-4">Convenio:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="AnombreConvenio" name="AnombreConvenio" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="Aobservaciones" class="col-form-label col-sm-4">Observaciones:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="Aobservaciones" name="Aobservaciones" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+
+	 </div>
+        </article>
+
+
  <article id="LiquidacionDetalle">
           <!--   <center><h3>Liquidacion detalle Cuentas</h3></center> -->
 	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 
 		
 			<div style="height: 50px;  width:100%; background-color:#EBEBEB;"> 
-			IngresoId
-			<input type="text" id="ingresoId" name="ingresoId" value="">
+
+			<input type="hidden" id="ingresoId" name="ingresoId" value="">
+			 <input type="hidden" id="tipoDoc_id" name="tipoDoc_id" value="0" readonly>
+			  <input type="hidden" id="documento_id" name="documentoc_id" value="0" readonly>
 
 
 	       <div class="row row-cols-8" style="height=1px;">
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="liquidacionId" class="col-form-label col-sm-4">LiquidacionId:</label>
-						 <div class="col-sm-6">
+						 <label for="liquidacionId" class="col-form-label col-sm-1">LiqId:</label>
+						 <div class="col-sm-1">
 							  <input type="text" id="liquidacionId" name="liquidacionId" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -153,26 +263,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="tipoDoc_id" class="col-form-label col-sm-4"></label>
-						 <div class="col-sm-6">
-							  <input type="hidden" id="tipoDoc_id" name="tipoDoc_id" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="documento_id" class="col-form-label col-sm-4"></label>
-						 <div class="col-sm-6">
-							  <input type="hidden" id="documento_id" name="documentoc_id" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="tipoDoc" class="col-form-label col-sm-4">TipoDocumento:</label>
+						 <label for="tipoDoc" class="col-form-label col-sm-4">TipoDoc:</label>
 						 <div class="col-sm-6">
 							  <input type="text" id="tipoDoc" name="tipoDoc" value="0" readonly>
 	                                        </div>
@@ -181,9 +272,9 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="documento" class="col-form-label col-sm-4">Documento:</label>
+						 <label for="documento" class="col-form-label col-sm-4">DocNo:</label>
 						 <div class="col-sm-6">
-							  <input type="text" id="documento" name="documento" value="0" readonly>
+							  <input type="text" id="pdocumento" name="pdocumento" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
@@ -191,7 +282,6 @@ div.dataTables_wrapper  div.dataTables_filter input {
 					<div class="col">
 			  		     <div class="form-group row">
 					<label for="paciente" class="col-form-label col-sm-4">Paciente:</label>
-
 						 <div class="col-sm-6">
 							  <input type="text" id="paciente" name="paciente" value="0" readonly>
 	                                        </div>
@@ -200,7 +290,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="consecAdmision" class="col-form-label col-sm-4">ConsecutivoAdmision:</label>
+						 <label for="consecAdmision" class="col-form-label col-sm-4">Consec:</label>
 						 <div class="col-sm-6">
 							  <input type="text" id="consecAdmision" name="consecAdmision" value="0" readonly>
 	                                        </div>
@@ -218,17 +308,26 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="observaciones" class="col-form-label col-sm-4">Observaciones:</label>
+						 <label for="observaciones" class="col-form-label col-sm-4"></label>
 						 <div class="col-sm-6">
-							  <input type="text" id="observaciones" name="observaciones" value="0" readonly>
+							  <input type="hidden" id="observaciones" name="observaciones" value="0" readonly>
 	                                        </div>
           	                            </div>
                                      </div>
-       </div>
+					<div class="col">
+			  		     <div class="form-group row">
+					<span style="padding-left:8px; padding-right:3px; padding-top: 3px; display:inline-block;">
+						Facturar: <img class="manImg" src={% static 'img/iloveimg-converted/Facturar.JPG' %} onclick="AFacturar()"></img> <span id="alta" name="alta" style='color:red'>Facturar </span>
+					</span>
+	                                        </div>
+          	                            </div>
+
+
+     		  </div> <!-- Cierra ro de 8 columnas -->
 
 
 
-	</div>
+	</div>  <!-- Cierra div divisiorio -->
 
 		 <!--  FIN Datos Liquidacion Cabecera READONLY (crear Div de Encabezados -->
 
@@ -239,13 +338,14 @@ div.dataTables_wrapper  div.dataTables_filter input {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header" style="height:70px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
-                            <div class="row">
-
+                           
+                         <!-- OJOO SOBRA   <div class="row"> -->   
 				 <!--  Campos y botones ADICIONAR para añadir valores  -->
 
+			      <div class="row row-cols-8" >
+				  <input type="hidden" id="tipoRegistro" name="tipoRegistro" value="MANUAL">
+				  <input type="hidden" id="valorTotal" name="valorTotal" value="0" >
 
-
-	       <div class="row row-cols-8" >
 
 				<div class="col">
 					<div class="form-group row">
@@ -258,7 +358,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                                             {% endfor %}
                                             </select>
 				              </div>
-				        </div>
+				           </div>
 					 </div>
 
 					<div class="col">
@@ -275,78 +375,59 @@ div.dataTables_wrapper  div.dataTables_filter input {
 				        </div>
 					 </div>
 
-
-
-
 					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="cantidad" class="col-form-label col-sm-4">Cantidad:</label>
-						 <div class="col-sm-3">
+
+						 <label for="cantidad" class="col-form-label col-sm-8">Cantidad:</label>
+						 <div class="col-sm-4">
 							  <input type="text" id="cantidad" name="cantidad" value="0" >
 	                                        </div>
-          	                            </div>
+
                                       </div>
 
 
 					
 					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="valorUnitario" class="col-form-label col-sm-4">ValorUnitario:</label>
-						 <div class="col-sm-3">
+
+						 <label for="valorUnitario" class="col-form-label col-sm-8">VrUnitario:</label>
+						 <div class="col-sm-4">
 							  <input type="text" id="valorUnitario" name="valorUnitario" value="0" >
 	                                        </div>
-          	                            </div>
+
                                       </div>
+
 
 
 
 					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="valorTotal" class="col-form-label col-sm-4">valorTotal:</label>
-						 <div class="col-sm-3">
-							  <input type="text" id="valorTotal" name="valorTotal" value="0" >
+
+						 <label for="lobservaciones" class="col-form-label col-sm-8">Observa:</label>
+						 <div class="col-sm-4">
+							  <input type="text" id="lobservaciones" name="lobservaciones" value="" >
 	                                        </div>
-          	                            </div>
+
                                       </div>
 
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="lobservaciones" class="col-form-label col-sm-4">Observa:</label>
-						 <div class="col-sm-3">
-							  <input type="text" id="lobservaciones" name="lobservaciones" value="0" >
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-					<label for="tipoRegistro" class="col-form-label col-sm-4"></label>
-
-						 <div class="col-sm-3">
-							  <input type="hidden" id="tipoRegistro" name="tipoRegistro" value="MANUAL">
-	                                        </div>
-          	                            </div>
-                                      </div>
-
+				
 				 <div class="col">
-
-					 <label for="BtnAdicionarLiquidacion" class="col-form-label col-sm-3"> +</label>
+					<div class="form-group row">
+					 <label for="BtnAdicionarLiquidacion" class="col-form-label col-sm-3"> + </label>
 
 					     <div class="col col-sm-7">
 			                        <input type="button" class="form-control form-control-sm" id="BtnAdicionarLiquidacion"  name="BtnAdicionarLiquidacion" value="Adicionar" onclick="AdicionarLiquidacion()">
 					</div>
 					</div>
+				</div>
 
 
-       </div>
+       </div>		<!- Cierra ro de 8 columnas -->
 
 
 
 			<!-- FIN campos a adicionar valors -->
 
 
-                            </div>
-                        </div>
+                            </div>  <!-- cIERRA HEADER -->
+                         <!-- OJOO SOBRA  </div> -->   
                             <div class="card-body" style="height:350px;">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -363,6 +444,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                                 <th>ValorTotal</th>
                                                 <th>Observaciones</th>
                                                 <th>TipoRegistro</th>
+						<th>Estado</th>
                                                 <th>Editar Borrar</th>
 
                                             
@@ -377,9 +459,10 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                 </div>
                             </div> <!-- cierra body -->
 
-                    </div>
-                </div>
-            </div>
+                    </div> <!-- cierra CARD -->
+                </div> <!-- cierra col  -->
+            </div> <!-- cierra row -->
+
 
 
 		 <!--  FIN Data Table LiquidacionDetalle  -->
@@ -466,12 +549,12 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                       </div>
 		
 
-		       </div>
-
-	 <!-	</div> -->
+		       </div>  <!-- Cierra el rop de 8 columnas -->
 
 		 <!--  Fin Totales  (Crear Div De Totales)-->
-	</div>
+
+	  <!--  Y ESTE DIV PARA QUE ES )   </div>  -->
+
 
 	            <!-- Espacio Modales  LiquidacionDetalle-->
 
@@ -489,18 +572,16 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                   novalidate>
                                 {% csrf_token %}
                                 <input type="hidden" name="post_id" id="post_id">
-                               </div>
-					  <input type="text" id="liquidacionDetalleId" name="liquidacionDetalleId" value="0" readonly>
-			
+
+                           <!--  Y ESTE DIV PARA QUE ES )   </div>  -->
+
+					  <input type="text" id="liquidacionDetalleId" name="liquidacionDetalleId" value="0" readonly>	
 			                 <input type="hidden" id="username_id2" name="username_id2" value="{{Username_id}}">
-
-
-
+				<div class="row row-cols-8" style="height=1px;">
 				<div class="col">
                                     Consecutivo:
                                     <input type="text" id="ldconsecutivo" name="ldconsecutivo" value="0" readonly></input>
                                 </div>
-
 
                                 <div class="col">
                                     <label for="ldcups" class="col-sm-2 control-label">Cups:</label>
@@ -511,7 +592,6 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                         {% endfor %}
                                     </select>
                                 </div>
-
 
                                 <div class="col">
                                     <label for="ldsuministros" class="col-sm-2 control-label">Suministro:</label>
@@ -547,20 +627,21 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                             value="create">Guardar
                                     </button>
                                 </div>
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
 
                             </form>
-                        </div>
-                    </div>
-                </div>
+                        </div> <!-- CIERRA BODY -->
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
 
      <!-- FIN Espacio Modales  -->
 
         </article>
 
-
         <article id="Abonos">
             <center><h3>Abonos</h3></center>
-		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+
             <script type="text/javascript">
 		    var $ = jQuery;
 		    function cargarTablaAbonosPacienteFacturacion()
@@ -583,46 +664,40 @@ div.dataTables_wrapper  div.dataTables_filter input {
                         <!-- DESDE AQUIP DATATABLE  -->
 
                         <table class="table"  style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
-                            <form class="form-inline" action="/crearAbonosFacturacionDef/" method="POST"
-                                  id="FormaAbonosPaciente">
+                            <form class="form-inline" action="/crearAbonosFacturacionDef/" method="POST"  id="FormaAbonosPaciente">
 
 
                                 <!-- INICIO TABLE DE  EL DATATABLE  -->
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="card">
-                                            <div class="card-header" style="height:10px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
+                                            <div class="card-header" style="height:50px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
                                                 <div class="row">
                                                     <div class="col-sm-3">
                                                         <input type="button" id="btn-rango" name="btn-rango"
-                                                               value="Generar consulta ¡"
+                                                               value="Refrescar ¡"
                                                                onClick="cargarTablaAbonosPacienteFacturacion()">
-                                                        <div class="alert alert-success success-msg"
-                                                             style="display:none"></div>
-
+                                                        <div class="alert alert-success success-msg" style="display:none">
+							</div>
                                                     </div>
-
-                                                       <div class="col-sm-3 text-end">
+                                                    <div class="col-sm-3 text-end">
                                                         <span class="text-secondary">Crear Abono</span>
-                                                        <a class="btn btn-success" href="javascript:void(0)"
-                                                           id="createNewPostAbonosFacturacion"> <i class="fa fa-plus"></i></a>
+                                                        <a class="btn btn-success" href="javascript:void(0)" id="createNewPostAbonosFacturacion"> <i class="fa fa-plus"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body">
+                                            <div class="card-body" >
                                                 <div class="row">
                                                     <div class="col-sm-12">
-
                                                         <table id=tablaAbonosFacturacion class="display nowrap table table table-bordered  tablaAbonosFacturacion table-hover table-sm dtr-inline" style="width:100%;">
-
                                                             <thead>
                                                             <tr>
-                                                                <th style="width:25;">Tipo Pago</th>
-                                                                <th style="width:25;">Forma Pago</th>
-                                                                <th style="width:25%;">Valor</th>
-                                                                <th style="width:12%;">Descripcion</th>
-                                                                <th style="width:3%;">Borrar</th>
-                                                                <!--  <th data-visible="true"></th>  -->
+                                                                <th>Tipo Pago</th>
+                                                                <th>Forma Pago</th>
+                                                                <th>Valor</th>
+                                                                <th>Descripcion</th>
+                                                                <th>Borrar</th>
+                                                         
                                                             </tr>
                                                             </thead>
                                                             <tbody style="vertical-align:bottom">
@@ -632,14 +707,14 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                                         </table>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>  <!-- termina el body -->
                                         </div>
                                     </div>
                                 </div>
                                 <!-- FIN TABLE DE  EL DATATABLE  -->
                             </form>
                         </table>
-
+		  </div>
                         <!-- HASTA AQUI DATATABLE -->
             <!-- Espacio Modales  -->
 
@@ -658,9 +733,10 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                 {% csrf_token %}
                                 <input type="hidden" name="post_id" id="post_id">
 
-				 <input type="text" id="liquidacionId1" name="liquidacionId1" value="0" >
+				 <input type="hidden" id="liquidacionId1" name="liquidacionId1" value="0" >
 
                                 <div class="col">
+				 <div class="form-group row">
                                     <label for="tipoPago" class="col-sm-2 control-label">Tipo Pago:</label>
                                     <select class="form-select  h-100 w-200" aria-label="" id="tipoPago"
                                             name="tipoPago">
@@ -668,8 +744,10 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                         <option value="{{tiposPagos.id}}"> {{tiposPagos.nombre}}</option>
                                         {% endfor %}
                                     </select>
+				  </div>
                                 </div>
                                 <div class="col">
+				  <div class="form-group row">
                                     <label for="formaPago" class="col-sm-2 control-label">Forma Pago:</label>
                                     <select class="form-select  h-100 w-200" aria-label="" id="formaPago"
                                             name="formaPago">
@@ -677,14 +755,19 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                         <option value="{{formasPagos.id}}"> {{formasPagos.nombre}}</option>
                                         {% endfor %}
                                     </select>
+				 </div>
                                 </div>
                                 <div class="col">
+					<div class="form-group row">
                                     Valor:
                                     <input type="text" id="valorAbono" name="valorAbono" value="0"></input>
+					</div>
                                 </div>
                                 <div class="col">
+					<div class="form-group row">
                                     Descripcion:
                                     <input type="text" id="descripcionAbono" name="descripcionAbono" value="0"> </input>
+					</div>
                                 </div>
                                 <div class="col-sm-offset-2 col-sm-10 mt-2">
                                     <button type="submit" class="btn btn-primary" id="saveBtnCrearAbonosFacturacion"
@@ -693,126 +776,17 @@ div.dataTables_wrapper  div.dataTables_filter input {
                                 </div>
 
                             </form>
-                        </div>
-                    </div>
+                        </div>  <!--  FIN body -->
+                    </div>               
                 </div>
-            </div>
-	  </div>
 
             <!-- Creo Fin Modales  -->
-	  </div>
-        </article>
-
-        <article id="Traslados">
-            <center><h3>Traslados Convenios</h3></center>
-	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
-	 </div>
-        </article>
-
-        <article id="Facturacion">
-            <center><h3>Facturas Clinica</h3></center>
-	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
-
-
-
-	 </div>
+	
         </article>
 
 
-        <article id="Anulacion">
-            <center><h3>Anulacion Facturas </h3></center>
-	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 
-	       <div class="row row-cols-8" style="height=1px;">
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="AliquidacionId" class="col-form-label col-sm-4">LiquidacionId:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="AliquidacionId" name="AliquidacionId" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-
-					
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="Afecha" class="col-form-label col-sm-4">Fecha:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="Afecha" name="Afecha" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="AtipoDoc_id" class="col-form-label col-sm-4">TipoDocumento:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="AtipoDoc_id" name="AtipoDoc_id" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="Adocumento_id" class="col-form-label col-sm-4">Documento:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="Adocumento_id" name="Adocumentoc_id" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-					<label for="paciente" class="col-form-label col-sm-4">Paciente:</label>
-
-						 <div class="col-sm-6">
-							  <input type="text" id="Apaciente" name="Apaciente" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="AconsecAdmision" class="col-form-label col-sm-4">ConsecutivoAdmision:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="AconsecAdmision" name="AconsecAdmision" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="AnombreConvenio" class="col-form-label col-sm-4">Convenio:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="AnombreConvenio" name="AnombreConvenio" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="Aobservaciones" class="col-form-label col-sm-4">Observaciones:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="Aobservaciones" name="Aobservaciones" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-	 </div>
-        </article>
-
-
-        <article id="Refacturacion">
-            <center><h3>Refacturacion </h3></center>
-	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
-
-		<!--  Aquip se debe capturar el numero de la Factura OPS ME DOY AQUI SON FACTURAS NOP LIQUIDACIONES  -->
-	 </div>
-        </article>
+       
 
     </div>
 </div>
@@ -821,7 +795,7 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 {% block mensajeria %}
 <div class="marco">
-<span> Avisos ... </span>
+<span> ... </span>
      <span id="mensajes" name="mensajes">xxxx </span>
 
 </div>
@@ -829,18 +803,22 @@ div.dataTables_wrapper  div.dataTables_filter input {
 
 {% block totales %}
 
-<div class="marco">
-    <ul class="tabs">
-	 <li><a href="#Facturacion"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Facturacion </a></li>
-	<li><a href="#Anulacion"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Anulacion Facturas </a></li>
-	 <li><a href="#Refacturacion"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Refacturacion </a></li>
-    </ul>
-</div>
+
 
 
 {% endblock %}
 
 {% block footer %}
+
+<div class="marco">
+    <ul class="tabs">
+        <li><a href="#Facturacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Facturacion </a></li>
+        <li><a href="#Anulacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Anulacion Facturas </a></li>
+        <li><a href="#ReFac"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Refacturacion </a></li>
+
+    </ul>
+</div>
+
 
 {% endblock %}
 

@@ -189,6 +189,7 @@ urlpatterns = [
     path('guardarLiquidacionDetalle/', viewsFacturacion.GuardarLiquidacionDetalle, name='guardarLiquidacionDetalle'),
     path('editarGuardarLiquidacionDetalle/', viewsFacturacion.EditarGuardarLiquidacionDetalle, name='editarGuardarLiquidacionDetalle'),
     path('load_dataAbonosFacturacion/<str:data>', viewsFacturacion.load_dataAbonosFacturacion, name='loaddataAbonosFacturacion'),
+    path('facturarCuenta/', viewsFacturacion.FacturarCuenta, name='facturarCuenta'),
 
     # Contratacion
     path('load_dataConvenios/<str:data>', viewsConvenios.load_dataConvenios, name='loaddataConvenios'),

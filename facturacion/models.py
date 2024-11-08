@@ -318,21 +318,27 @@ class Facturacion(models.Model):
         return str(self.documento)
 
 class FacturacionDetalle(models.Model):
+
+    M = 'MANUAL'
+    S = 'SISTEMA'
+    TIPO_REGISTRO = (
+        ('M', 'MANUAL'),
+        ('S', 'SISTEMA'),
+    )
     id = models.AutoField(primary_key=True)
     facturacion = models.ForeignKey('facturacion.facturacion', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Fact01')
     consecutivoFactura =  models.IntegerField(editable=True, null=True, blank=True)
     fecha = models.DateTimeField(editable=True, null=True, blank=True)
-    #tarifa =
+
     codigoCups = models.ForeignKey('clinico.Examenes', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TablaCups121')
     cums = models.ForeignKey('rips.RipsCums', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Cums101')
     cantidad =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
     valorUnitario =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
     valorTotal =  models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
     cirugia = models.CharField(max_length=1, blank=True,null= True, editable=True,)
-    #tipoHonorario =
-    #grupoQx = 
-    #grupoQxUvr =
     fechaCrea = models.DateTimeField(editable=True, null=True, blank=True)
+    tipoRegistro = models.CharField(max_length=20,  blank=True, null=True, editable=True, choices = TIPO_REGISTRO)
+    tipoHonorario =  models.ForeignKey('tarifas.TiposHonorarios', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='TipoHonorario099')
     usuarioCrea = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Planta105') 
     fechaModifica = models.DateTimeField(editable=True, null=True, blank=True)
     usuarioModifica = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Planta106') 

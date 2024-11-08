@@ -242,30 +242,24 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 	el window.reload() nop funciona cuando se graba y/o actualiza un coonvenio
 
         Mejorar la presicion de la presentacion de los convenios los datatables, titulos , etc
-  
-         
+       
 
 	-- Ojo arreglar conveniosHonorarios a base de if, else:
-	-- Ojo PARON no seguir probar todo el aplicativo
+	-- Ojo PARON 
 	-- ojo probar convenios liquidacionhonorariortarifas
-        -- hacer panelde liquidacion cuenta en facturacion
       	-- Ojo en contratacion panel creo en suministro,honorario no se si proced hay UN </DIV> volado falta
-	-- Ojo tngo un error cuando son dos convenios un poaciente mismo id de ingresos no ditingue siempre trae el meno como hacer??
 
-	-- ojo el dia martes 5-nov hacer porceso AdicionarLiquidacion
-		-- Hacert totales de facturacion en clinico
-		-- hacer proba medicamentos (Aunque es mejor cuando se dispensa o despacha deberan caer a la facturacion), noqx facturacion automatica
-		-- hacer edit, delete en datatable liquidaciondetalle
-		-- Verificar totales 
-
+	-- ojo el dia martes 12-nov 
+           -- Crear TAB de facturacion
+           -- Crear Anulacion de Facturas
+           -- Crear Refacturacion
+	-- hacer proba medicamentos (Aunque es mejor cuando se dispensa o despacha deberan caer a la facturacion), noqx facturacion automatica
        -- ojop ver facturacion automatico de No qx
-       -- Ver totales en clinico y en facturacion
-       -- ver edicion liquidacion
-       -- ver borrado de liquidacion
-       -- Ver facturacion
-       -- ver anulacion de facturas
-       -- ver refacturacion
-       -- que mas hicimos hoyp
+       -- El proceso de facturacion cuando crea la factura crtear boton de impresion de factura y que devuelva el numero de la factura a IMPRIMIR
+        -- OJO hay que refrescar los totales. Crear funcion totales javascript
+          -- datarablke de abonos esta muy grande arreglar
+         -- arreglar el delete de abosno/pagos marcarlos con 'N' de ANULADO como se hizpo con liquidacion
+         -- 
 		
 
 -----------------------------------------------------------------------------------------------------------------------

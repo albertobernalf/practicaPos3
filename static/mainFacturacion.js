@@ -19,6 +19,7 @@ $(document).ready(function () {
         data['username_id'] = username_id;
         valor=1
         data['valor'] = valor;
+	data['ingresoId'] = valor;
 
         data = JSON.stringify(data);
 
@@ -55,7 +56,7 @@ $(document).ready(function () {
 		$('#tipoDoc_id').val(data.tipoDoc_id);
 		$('#documento_id').val(data.documento_id);
 		$('#tipoDoc').val(data.tipoDocumento);
-		$('#documento').val(data.documento);
+		$('#pdocumento').val(data.documento);
 		$('#paciente').val(data.paciente);
 		$('#consecAdmision').val(data.consecAdmision);
 		$('#nombreConvenio').val(data.nombreConvenio);
@@ -69,8 +70,8 @@ $(document).ready(function () {
 		$('#totalProcedimientos').val(data.totalProcedimientos);
 		$('#totalSuministros').val(data.totalSuministros);
 		$('#totalLiquidacion').val(data.totalLiquidacion);
-		$('#valorApagar').val(data.valorApagar);
-		$('#anticipos').val(data.anticipos);
+		$('#valorApagar').val(data.totalAPagar);
+		$('#anticipos').val(data.totalAnticipos);
 		$('#totalAbonos').val(data.totalAbonos);
 
 
@@ -327,10 +328,11 @@ $(document).ready(function () {
                         printErrorMsg(data.error)
                     }
                     $('#postFormLiquidacionDetalle').trigger("reset");
-	 	  //var tableA = $('#tablaAbonosFacturacion').DataTable(); 
-	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable(); 
-	          //tableA.ajax.reload();
+	 	  // var tableA = $('#tablaAbonosFacturacion').DataTable(); 
+		  // tableA.ajax.reload();
+	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable(); 	          
 	          tableL.ajax.reload();
+
 		   $("#mensajes").html(data.message);
 
                 },
@@ -496,7 +498,7 @@ function initTableLiquidacionDetalle(data) {
                          btn = btn + " <button   class='btn btn-primary borrarLiquidacionDetalle' data-pk='" + row.pk + "'>" + "</button>";
                         return btn;
                     },
-                    "targets": 8
+                    "targets": 9
                }
             ],
             ajax: {
@@ -515,6 +517,7 @@ function initTableLiquidacionDetalle(data) {
                 { data: "fields.valorTotal"},
                 { data: "fields.observaciones"},
                 { data: "fields.tipoRegistro"},
+		{ data: "fields.estadoReg"},
         
             ]
 
@@ -531,7 +534,7 @@ function initTableFacAbonos(data) {
                     },
             processing: true,
             serverSide: false,
-            scrollY: '130px',
+            scrollY: '250px',
 	    scrollX: true,
 	    scrollCollapse: true,
             paging:false,
@@ -553,8 +556,8 @@ function initTableFacAbonos(data) {
 
             lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
             columns: [
-                { data: "fields.tipoPago"},
-		{ data: "fields.formaPago"},
+                { data: "fields.tipoPagoNombre"},
+		{ data: "fields.formaPagoNombre"},
                 { data: "fields.valor"},
                 { data: "fields.descripcion"},
             
@@ -588,19 +591,83 @@ function AdicionarLiquidacion()
 	           dataType : 'json',
 	  		success: function (data) {
 
+
             	        var data2 =  {}   ;
         		data2['username'] = username;
     		        data2['sedeSeleccionada'] = sedeSeleccionada;
 	    	        data2['nombreSede'] = nombreSede;
 		        data2['sede'] = sede;
-	            	var convenioId1 = document.getElementById("convenioId").value;
+	            	
 	                var username_id = document.getElementById("username_id").value;
   	                data2['username_id'] = username_id;
-		        data2['valor'] = convenioId1;
+                        alert("numero de la liquidacionId = " + liquidacionId);
+
+		        data2['valor'] = liquidacionId;
 		        data2 = JSON.stringify(data2);
 
-  	                tableL= $("#tablaLiquidacioDetalle").dataTable().fnDestroy();	   	     
-	                initTableLiquidacionDetalle(data2);
+		    tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
+			alert ("ya la destrui");
+
+	            initTableLiquidacionDetalle(data2);
+
+		 document.getElementById("lcups").value = '';
+	         document.getElementById("lsuministros").value = '';
+	         document.getElementById("cantidad").value = '';
+	         document.getElementById("valorUnitario").value = '';
+	         document.getElementById("valorTotal").value = '';
+	         document.getElementById("lobservaciones").value = '';
+
+
+
+			$("#mensajes").html(data.message);
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+}
+
+
+
+
+function AFacturar()
+{
+
+	alert ("Entre a facturar ");
+
+ 	var liquidacionId = document.getElementById("liquidacionId").value;
+
+		$.ajax({
+	           url: '/facturarCuenta/',
+	            data :
+	            {'liquidacionId':liquidacionId},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+
+
+            	        var data2 =  {}   ;
+        		data2['username'] = username;
+    		        data2['sedeSeleccionada'] = sedeSeleccionada;
+	    	        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+	            	
+	                var username_id = document.getElementById("username_id").value;
+  	                data2['username_id'] = username_id;
+                        alert("numero de la liquidacionId = " + liquidacionId);
+
+		        data2['valor'] = liquidacionId;
+		        data2 = JSON.stringify(data2);
+
+		    tableL= $("#tablaLiquidacion").dataTable().fnDestroy();	
+	            initTableLiquidacion(data2);
+
+
+		    // tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
+	            // initTableLiquidacionDetalle(data2);
+
+
 			$("#mensajes").html(data.message);
 
                   },
