@@ -245,21 +245,29 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
        
 
 	-- Ojo arreglar conveniosHonorarios a base de if, else:
-	-- Ojo PARON 
+	-- Ojo PARON , PACIENCI, Nueva sangre, nuevo aire y seguir
 	-- ojo probar convenios liquidacionhonorariortarifas
       	-- Ojo en contratacion panel creo en suministro,honorario no se si proced hay UN </DIV> volado falta
 
 	-- ojo el dia martes 12-nov 
+	   -- Ojo hay que seleccionar una fila de arrancada que no sea uno (1) QUE PASA CON ESTO????
+           -- Ops ya facture y aun en la grilla de facturacion aparece tobias. Grabe cosa, debe desaparecer, que pasa con el alta medica ???. PAILAS FALTA PAPABEROl, claro hayb que actualizar la fecha de salida
+              -- verificar fechas de elaboracion de factura, fechas de anulacion , etc.
+
+           -- Ojo hay que marcar los abonos utilizados y relacionarlos a una factura . Crear campo Factura_aplicada
            -- Crear TAB de facturacion
            -- Crear Anulacion de Facturas
            -- Crear Refacturacion
+	   -- Crear Traslados de convenios
 	-- hacer proba medicamentos (Aunque es mejor cuando se dispensa o despacha deberan caer a la facturacion), noqx facturacion automatica
        -- ojop ver facturacion automatico de No qx
        -- El proceso de facturacion cuando crea la factura crtear boton de impresion de factura y que devuelva el numero de la factura a IMPRIMIR
         -- OJO hay que refrescar los totales. Crear funcion totales javascript
           -- datarablke de abonos esta muy grande arreglar
          -- arreglar el delete de abosno/pagos marcarlos con 'N' de ANULADO como se hizpo con liquidacion
-         -- 
+         -- OJO NO TRAE LOS ABONOS DE MARIA PAULA / tampoco de maria camilita
+
+ 
 		
 
 -----------------------------------------------------------------------------------------------------------------------
