@@ -10,6 +10,7 @@ $(document).ready(function () {
     	var sede = document.getElementById("sede").value;
         var username_id = document.getElementById("username_id").value;
 
+
         var data =  {}   ;
 
         data['username'] = username;
@@ -21,11 +22,32 @@ $(document).ready(function () {
         data['valor'] = valor;
 	data['ingresoId'] = valor;
 
+	// fecha actual
+	let date = new Date();
+
+	ano = date.getFullYear();
+	mes = date.getMonth();
+	dia = date.getDate();
+
+        desdeFecha = ano + '-' + mes + '-' + dia + ' 00:00:00'
+        hastaFecha = ano + '-' + mes + '-' + dia + ' 23:59:59'
+	alert("desdefecha = "+ desdeFecha);
+	alert("hastafecha = "+ hastaFecha);
+        desdeFactura=0;
+        hastaFactura=0;
+
+
+	data['desdeFecha'] = desdeFecha;
+	data['hastaFecha'] = hastaFecha;
+	data['desdeFactura'] = desdeFactura;
+	data['hastaFactura'] = hastaFactura;
+
         data = JSON.stringify(data);
 
 	initTableLiquidacion(data);
 	initTableLiquidacionDetalle(data);
         initTableFacAbonos(data);
+        initTableFacturacion(data);
 
 	/*--------------------------------------------
         Click to Edit Button
@@ -163,6 +185,63 @@ $(document).ready(function () {
 
         });
 
+	/*--------------------------------------------
+        Click to Edit Button PostFacturacon
+        --------------------------------------------
+        --------------------------------------------*/
+        $('body').on('click', '.editPostFacturacion', function () {
+	
+          var post_id = $(this).data('pk');
+          alert("pk1 = " + $(this).data('pk'));
+        var username_id = document.getElementById("username_id").value;
+
+	$.ajax({
+	           url: '/postConsultaFacturacion/',
+	            data : {post_id:post_id, username_id:username_id},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+                        alert("Regrese");
+                       alert("data="  + data);
+			// Colocar Encabezadao
+	  		// aqui debe llenar el dato parta posible ANULACION , REFACTURACION
+		//$('#liquidacionId').val(data.id);
+       
+
+			 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+
+			 var valor = document.getElementById("liquidacionId").value;
+			 var ingresoId = document.getElementById("ingresoId").value;
+
+		        data2['valor'] = valor;	
+		        data2['ingresoId'] = ingresoId;	
+
+		        data2 = JSON.stringify(data2);
+			   $("#mensajes").html(data.message);
+			
+		    tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
+	           initTableLiquidacionDetalle(data2);
+
+		    tableA= $("#tablaAbonosFacturacion").dataTable().fnDestroy();	
+	           initTableFacAbonos(data2);
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+
+        });
+
+
+
+
+
 
 	/*--------------------------------------------
         Click to Edit Button
@@ -288,6 +367,7 @@ $(document).ready(function () {
 	          tableA.ajax.reload();
 	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable(); 
 	          tableL.ajax.reload();
+			LeerTotales();
                 },
                 error: function (data) {
 			alert("VENGO CON ERRORES :" , printErrorMsg(data.error));
@@ -332,6 +412,7 @@ $(document).ready(function () {
 		  // tableA.ajax.reload();
 	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable(); 	          
 	          tableL.ajax.reload();
+			LeerTotales();
 
 		   $("#mensajes").html(data.message);
 
@@ -371,6 +452,7 @@ $(document).ready(function () {
                         $('.success-msg').text(data.message);
 			            var table = $('#tablaAbonosFacturacion').DataTable(); 
 		                table.ajax.reload();
+			LeerTotales();
 			   $("#mensajes").html(data.message);
                     },
 	   		    error: function (request, status, error) {
@@ -401,6 +483,7 @@ $(document).ready(function () {
                         $('.success-msg').text(data.message);
 			            var table = $('#tablaLiquidacionDetalle').DataTable(); // accede de nuevo a la DataTable.
 		                table.ajax.reload();
+			LeerTotales();
 			   $("#mensajes").html(data.message);
                     },
 	   		    error: function (request, status, error) {
@@ -610,6 +693,8 @@ function AdicionarLiquidacion()
 
 	            initTableLiquidacionDetalle(data2);
 
+			LeerTotales();
+
 		 document.getElementById("lcups").value = '';
 	         document.getElementById("lsuministros").value = '';
 	         document.getElementById("cantidad").value = '';
@@ -645,7 +730,7 @@ function AFacturar()
 	           type: 'POST',
 	           dataType : 'json',
 	  		success: function (data) {
-
+				$('#imprimir').val(data.Factura);
 
             	        var data2 =  {}   ;
         		data2['username'] = username;
@@ -676,4 +761,93 @@ function AFacturar()
 	   	    	}
 	     });
 }
+
+
+
+function LeerTotales()
+{
+
+	alert ("Entre a LeerTotales ");
+
+ 	var liquidacionId = document.getElementById("liquidacionId").value;
+
+		$.ajax({
+	           url: '/leerTotales/',
+	            data :
+	            {'liquidacionId':liquidacionId},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+
+		$('#totalCopagos').val(data.totalCopagos);
+		$('#totalCuotaModeradora').val(data.totalCuotaModeradora);
+		$('#totalProcedimientos').val(data.totalProcedimientos);
+		$('#totalSuministros').val(data.totalSuministros);
+		$('#totalLiquidacion').val(data.totalLiquidacion);
+		$('#valorApagar').val(data.totalAPagar);
+		$('#anticipos').val(data.totalAnticipos);
+		$('#totalAbonos').val(data.totalAbonos);
+
+			$("#mensajes").html(data.message);
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+}
+
+
+function initTableFacturacion(data) {
+
+	return new DataTable('.tablaFacturacion', {
+	 "language": {
+                  "lengthMenu": "Display _MENU_ registros",
+                   "search": "Filtrar registros:",
+                    },
+            processing: true,
+            serverSide: false,
+            scrollY: '300px',
+	    scrollX: true,
+	    scrollCollapse: true,
+            paging:false,
+            columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        var btn = '';
+                          btn = btn + " <input type='radio'  class='form-check-input editPostFacturacion' data-pk='"  + row.pk + "'>" + "</input>";
+                        return btn;
+                    },
+                    "targets": 12
+               }
+            ],
+            ajax: {
+                 url:"/load_dataFacturacion/" +  data,
+                 type: "POST",
+                dataSrc: ""
+            },
+
+            lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
+            columns: [
+                { data: "fields.tipoIng"},
+                { data: "fields.factura"},
+                { data: "fields.tipoDoc"},
+                { data: "fields.documento"},
+                { data: "fields.nombre"},
+                { data: "fields.consec"},
+                { data: "fields.fechaIngreso"},
+                { data: "fields.fechaEgreso"},
+  
+		{ data: "fields.servicioNombreIng"},
+                { data: "fields.camaNombreIng"},
+		 { data: "fields.convenio"},
+		 { data: "fields.estado"},
+        
+            ]
+
+ });
+}
+
+
+
 

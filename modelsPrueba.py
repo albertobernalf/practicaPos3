@@ -259,13 +259,17 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
            -- Crear Anulacion de Facturas
            -- Crear Refacturacion
 	   -- Crear Traslados de convenios
-	-- hacer proba medicamentos (Aunque es mejor cuando se dispensa o despacha deberan caer a la facturacion), noqx facturacion automatica
+       -- hacer proba medicamentos (Aunque es mejor cuando se dispensa o despacha deberan caer a la facturacion), noqx facturacion automatica
        -- ojop ver facturacion automatico de No qx
-       -- El proceso de facturacion cuando crea la factura crtear boton de impresion de factura y que devuelva el numero de la factura a IMPRIMIR
-        -- OJO hay que refrescar los totales. Crear funcion totales javascript
-          -- datarablke de abonos esta muy grande arreglar
-         -- arreglar el delete de abosno/pagos marcarlos con 'N' de ANULADO como se hizpo con liquidacion
-         -- OJO NO TRAE LOS ABONOS DE MARIA PAULA / tampoco de maria camilita
+
+       -- OJO hay que refrescar los totales. Crear funcion totales javascript
+       -- arreglar el delete de abonos/pagos marcarlos con 'N' de ANULADO como se hizpo con liquidacion    
+       -- Ojo colocar el numero de la factura en la tabla ingresos
+       -- colocar la fecha de egreso al momento de la salida.-
+       -- El proceso de facturacion cuando crea la factura crear boton de impresion de factura y que devuelva el numero de la factura a IMPRIMIR
+
+       -- datatable de abonos esta muy grande arreglar
+      -- OJO NO TRAE LOS ABONOS DE MARIA PAULA / tampoco de maria camilita
 
  
 		

@@ -140,6 +140,109 @@ div.dataTables_filter input {
  <article id="Facturacion">
             <center><h3>Facturas Clinica</h3></center>
 	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header" style="height:10px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
+                            <div class="row">
+
+				   <!--   Aqui vienen lof Filtros  -->
+
+			 <div class="row row-cols-8" style="height=1px;">
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="fFechaDesde" class="col-form-label col-sm-4">FechaDesde:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="fFechaDesde" name="fFechaDesde" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="fFechaHasta" class="col-form-label col-sm-4">FechaHasta:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="fFechaHasta" name="fFechaHasta" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="desdeFactura" class="col-form-label col-sm-4">FacturaDesde:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="desdeFactura" name="desdeFactura" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="hastaFactura" class="col-form-label col-sm-4">FacturaHasta:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="hastaFactura" name="hastaFactura" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+				   <div class="col">
+					<div class="form-group row">
+					 <label for="BtnConsultarFacturas" class="col-form-label col-sm-3"> + </label>
+
+					     <div class="col col-sm-7">
+			                        <input type="button" class="form-control form-control-sm" id="BtnConsultarFacturas"  name="BtnConsultarFacturas" value="Consultar" onclick="ConsultarFacturas()">
+					</div>
+					</div>
+				</div>
+
+
+		      </div>
+
+					   <!--   FIN filtros de busqueda -->
+					
+
+                            </div>
+                        </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="alert alert-success success-msg" style="display:none"></div>
+                                        <table  id= "tablaFacturacion" class="display nowrap table table table-bordered  tablaFacturacion table-hover table-sm dtr-inline" style="width:100%;">
+                                           <thead>
+                                            <tr>
+                                                <th>Tipo</th>
+                                                <th>Factura</th>
+                                              <!--   <th>id</th>  -->
+                                                <th>TipoDoc</th>
+                                                <th>Documento</th>
+                                                <th>Paciente</th>
+                                                <th>#</th>
+                                                <th>FecIngreso</th>
+                                                <th>FecEgreso</th>
+                                                <th>Servicio</th>
+                                                <th>Cama</th>
+						 <th>Convenio</th>
+						 <th>Estado</th>
+
+                                                <th>Action</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom">
+                                            <tr style="height:10%">
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> <!-- cierra body -->
+
+                    </div>
+                </div>
+            </div>
+
 	 </div>
         </article>
 
@@ -241,7 +344,7 @@ div.dataTables_filter input {
 			  <input type="hidden" id="documento_id" name="documentoc_id" value="0" readonly>
 
 
-	       <div class="row row-cols-8" style="height=1px;">
+	       <div class="row row-cols-10" style="height=1px;">
 
 					<div class="col">
 			  		     <div class="form-group row">
@@ -318,6 +421,14 @@ div.dataTables_filter input {
 			  		     <div class="form-group row">
 					<span style="padding-left:8px; padding-right:3px; padding-top: 3px; display:inline-block;">
 						Facturar: <img class="manImg" src={% static 'img/iloveimg-converted/Facturar.JPG' %} onclick="AFacturar()"></img> <span id="alta" name="alta" style='color:red'>Facturar </span>
+					</span>
+	                                        </div>
+          	                            </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+					<span style="padding-left:8px; padding-right:3px; padding-top: 3px; display:inline-block;">
+						Imprimir: <img class="manImg" src={% static 'img/iloveimg-converted/impresora.JPG' %} onclick="ImprimirFactura()"></img> <span id="imprimir" name="imprimir" style='color:red'>Imprimir</span>
 					</span>
 	                                        </div>
           	                            </div>

@@ -596,11 +596,17 @@ def PostDeleteAbonosFacturacion(request):
     id = request.POST["id"]
     print ("el id es = ", id)
 
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
 
-    post = Pagos.objects.get(id=id)
-    post.delete()
-    #return HttpResponseRedirect(reverse('index'))
+    comando = 'UPDATE carteraPagosSET "estadoReg" = ' + "'" + str('N') + "' WHERE id =  " + id
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
+    miConexion3.close()
+
     return JsonResponse({'success': True, 'message': 'Abono Cancelado!'})
+	
 
 
 def GuardarLiquidacionDetalle(request):
@@ -796,6 +802,11 @@ def FacturarCuenta(request):
     liquidacionId = request.POST["liquidacionId"]
     print ("liquidacionId = ", liquidacionId)
 
+    usuarioId = Liquidacion.objects.all().filter(id=liquidacionId)
+    print ("Usuario", usuarioId.documento_id)
+    print ("TipoDoc", usuarioId.tipoDoc_id)
+    print ("Consec", usuarioId.consec)
+
     # PRIMERO EL CABEZOTE	
 
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
@@ -810,12 +821,29 @@ def FacturarCuenta(request):
     # AQUI CONSEGUIR EL ID DE LA FACTURA RECIEN CREADA
     # LO MEJOR ES conseguir el id en el mismo insert
 
-    facturacionIdU = Facturacion.objects.all().aggregate(maximo=Coalesce(Max('id'), 0))
-    facturacionId = (facturacionIdU['maximo']) + 0
-    facturacionId = str(facturacionId)
-    facturacionId = facturacionId.replace("(", ' ')
-    facturacionId = facturacionId.replace(")", ' ')
-    facturacionId = facturacionId.replace(",", ' ')
+    facturacionId = Facturacion.objects.all().filter(tipoDoc_id=usuarioId.documento_id).filter(documento_id=usuarioId.tipoDoc_id).filter(consec=usuarioId.consec)
+
+    #facturacionIdU = Facturacion.objects.all().aggregate(maximo=Coalesce(Max('id'), 0))
+    #facturacionId = (facturacionIdU['maximo']) + 0
+    #facturacionId = str(facturacionId)
+    #facturacionId = facturacionId.replace("(", ' ')
+    #facturacionId = facturacionId.replace(")", ' ')
+    #facturacionId = facturacionId.replace(",", ' ')
+
+    ## COLOCAR EN LA TABLA INGRESOS , LA FECHA DE EGRESO Y EL NUMERO DE LA FACTURA GENERADO
+
+    now = datetime.datetime.now()
+    print("NOW  = ", now)
+    fechaRegistro = now
+
+    ingresoId = Ingresos.objects.all().filter(tipoDoc_id=usuarioId.documento_id).filter(documento_id=usuarioId.tipoDoc_id).filter(consec=usuarioId.consec)
+
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
+    curt = miConexiont.cursor()
+    comando = 'UPDATE admisiones_ingresos SET "fechaSalida" = ' + str(fechaRegistro) + ', factura = " + str(facturacionId)  + ' WHERE id =' + str(ingresoId)
+    curt.execute(comando)
+    miConexiont.commit()
+    miConexiont.close()
 
     # AHORA EL DETALLE
 
@@ -840,9 +868,6 @@ def FacturarCuenta(request):
     miConexion3.commit()
     miConexion3.close()
 
-
-
-
     ## AQUI BORRAMOS EL CABEZOTE DE LA LIQUIDACION
 
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
@@ -856,4 +881,105 @@ def FacturarCuenta(request):
     miConexion3.commit()
     miConexion3.close()
 
-    return JsonResponse({'success': True, 'message': 'Factura Elaborada!'})
+    return JsonResponse({'success': True, 'message': 'Factura Elaborada!'. 'Factura' : facturacionId })
+
+
+
+def LeerTotales(request):
+
+    print ("Entre Leer Totales" )
+    liquidacionId = request.POST["liquidacionId"]
+    print ("liquidacionId = ", liquidacionId)
+
+    totalSuministros = LiquidacionDetalle.objects.all().filter(liquidacion_id=liquidacionId).filter(codigoCups_id = None).exclude(estadoRegistro='N').aggregate(totalS=Coalesce(Sum('valorTotal'), 0))
+    totalSuministros = (totalSuministros['totalS']) + 0
+    print("totalSuministros", totalSuministros)
+    totalProcedimientos = LiquidacionDetalle.objects.all().filter(liquidacion_id=liquidacionId).filter(cums_id = None).exclude(estadoRegistro='N').aggregate(totalP=Coalesce(Sum('valorTotal'), 0))
+    totalProcedimientos = (totalProcedimientos['totalP']) + 0
+    print("totalProcedimientos", totalProcedimientos)
+    totalCopagos = Pagos.objects.all().filter(tipoDoc_id=ingresoId.tipoDoc_id).filter(documento_id=ingresoId.documento_id).filter(consec=ingresoId.consec).exclude(estadoReg='N').filter(formaPago_id=4).aggregate(totalC=Coalesce(Sum('valor'), 0))
+    totalCopagos = (totalCopagos['totalC']) + 0
+    print("totalCopagos", totalCopagos)
+    totalCuotaModeradora = Pagos.objects.all().filter(tipoDoc_id=ingresoId.tipoDoc_id).filter(documento_id=ingresoId.documento_id).filter(consec=ingresoId.consec).exclude(estadoReg='N').filter(formaPago_id=3).aggregate(
+            totalM=Coalesce(Sum('valor'), 0))
+    totalCuotaModeradora = (totalCuotaModeradora['totalM']) + 0
+    print("totalCuotaModeradora", totalCuotaModeradora)
+    totalAnticipos = Pagos.objects.all().filter(tipoDoc_id=ingresoId.tipoDoc_id).filter(documento_id=ingresoId.documento_id).filter(consec=ingresoId.consec).exclude(estadoReg='N').filter(formaPago_id=1).aggregate(Anticipos=Coalesce(Sum('valor'), 0))
+    totalAnticipos = (totalAnticipos['Anticipos']) + 0
+    print("totalAnticipos", totalAnticipos)
+    totalAbonos = Pagos.objects.all().filter(tipoDoc_id=ingresoId.tipoDoc_id).filter(documento_id=ingresoId.documento_id).filter( consec=ingresoId.consec).exclude(estadoReg='N').filter(formaPago_id=2).aggregate(totalAb=Coalesce(Sum('valor'), 0))
+    totalAbonos = (totalAbonos['totalAb']) + 0
+    # totalAbonos = totalCopagos + totalAnticipos + totalCuotaModeradora
+    print("totalAbonos", totalAbonos)
+    totalLiquidacion = totalSuministros + totalProcedimientos - totalAbonos
+    print("totalLiquidacion", totalLiquidacion)
+    totalAPagar = totalLiquidacion - totalAbonos
+    print("totalAPagar", totalAPagar)
+
+    return JsonResponse({'totalSuministros':totalSuministros,'totalProcedimientos':totalProcedimientos,'totalCopagos':totalCopagos,
+			     'totalCuotaModeradora':totalCuotaModeradora,'totalAnticipos':totalAnticipos, 'totalAbonos':totalAbonos,'totalLiquidacion':totalLiquidacion, 'totalAPagar':totalAPagar})
+
+
+
+# Create your views here.
+def load_dataFacturacion(request, data):
+    print ("Entre load_data Facturacion")
+
+    context = {}
+    d = json.loads(data)
+
+    username = d['username']
+    sede = d['sede']
+    username_id = d['username_id']
+
+    nombreSede = d['nombreSede']
+    print ("sede:", sede)
+    print ("username:", username)
+    print ("username_id:", username_id)
+
+
+    desdeFecha = d['desdeFecha']
+    hastaFecha = d['hastaFecha']
+    desdeFactura = d['desdeFactura']
+    hastaFactura = d['hastafactura']
+    bandera = d['bandera']
+
+
+    # Combo Indicadores
+
+    # Fin combo Indicadores
+
+
+    facturacion = []
+
+    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",     password="pass123")
+    curx = miConexionx.cursor()
+   
+    if bandera == 'Por Fecha':
+
+        detalle = 'SELECT ' + "'" + str("INGRESO") + "'" +  ' tipoIng, i.id'  + "||" +"'" + "-'||conv.id" + ' id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" , i."fechaSalida", ser.nombre servicioNombreIng, dep.nombre camaNombreIng , diag.nombre dxActual , conv.nombre convenio, conv.id convenioId FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd , facturacion_conveniospacienteingresos fac,contratacion_convenios conv WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + 'O' + "'" + ' AND i."salidaDefinitiva" = ' + "'" + 'N' + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id"  AND fac.documento_id = i.documento_id and fac."tipoDoc_id" = i."tipoDoc_id" and fac."consecAdmision" = i.consec and fac.convenio_id = conv.id UNION SELECT ' + "'"  + str("TRIAGE") + "'" + ' tipoIng, t.id'  + "||" +"'" + "-'||conv.id" + ' id, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,t.consec consec , t."fechaSolicita" , cast(' + "'" + str('0001-01-01 00:00:00') + "'" + ' as timestamp) fechaSalida,ser.nombre servicioNombreIng, dep.nombre camaNombreIng , ' + "''" + ' dxActual , conv.nombre convenio, conv.id convenioId   FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  ,sitios_serviciosSedes sd, clinico_servicios ser , facturacion_conveniospacienteingresos fac,contratacion_convenios conv WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND t."sedesClinica_id" = ' "'" + str(sede) + "'" + ' AND dep."sedesClinica_id" =  sd."sedesClinica_id" AND dep.id = t.dependencias_id AND t."serviciosSedes_id" = sd.id  AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and t."tipoDoc_id" = u."tipoDoc_id" and u.id = t."documento_id"  and ser.id = sd.servicios_id and dep."serviciosSedes_id" = sd.id and t."serviciosSedes_id" = sd.id and dep."tipoDoc_id" = t."tipoDoc_id" and t."consecAdmision" = 0 and dep."documento_id" = t."documento_id" and ser.nombre = ' + "'" + str('TRIAGE') + "'" + ' AND fac.documento_id = t.documento_id and fac."tipoDoc_id" = t."tipoDoc_id" and fac."consecAdmision" = t.consec and fac.convenio_id = conv.id'
+
+    else:
+	detalle = ''
+
+
+    print(detalle)
+
+    curx.execute(detalle)
+
+    for tipoIng, id, tipoDoc, documento, nombre, consec, fechaIngreso, fechaSalida, servicioNombreIng, camaNombreIng, dxActual , convenio, convenioId in curx.fetchall():
+        facturacion.append(
+		{"model":"ingresos.ingresos","pk":id,"fields":
+			{'tipoIng':tipoIng, 'id':id, 'factura' : factura,  'tipoDoc': tipoDoc, 'documento': documento, 'nombre': nombre, 'consec': consec,
+                         'fechaIngreso': fechaIngreso, 'fechaSalida': fechaSalida,
+                         'servicioNombreIng': servicioNombreIng, 'camaNombreIng': camaNombreIng,
+                         'dxActual': dxActual,'convenio':convenio, 'convenioId':convenioId}})
+
+    miConexionx.close()
+    print(facturacion)
+
+
+    serialized1 = json.dumps(facturacion, default=serialize_datetime)
+
+    return HttpResponse(serialized1, content_type='application/json')
+

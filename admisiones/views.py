@@ -5111,12 +5111,16 @@ def PostDeleteAbonosAdmision(request):
     id = request.POST["id"]
     print ("el id es = ", id)
 
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
 
-    post = Pagos.objects.get(id=id)
-    post.delete()
-    #return HttpResponseRedirect(reverse('index'))
+    comando = 'UPDATE carteraPagosSET "estadoReg" = ' + "'" + str('N') + "' WHERE id =  " + id
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
+    miConexion3.close()
+
     return JsonResponse({'success': True, 'message': 'Abono Cancelado!'})
-
 
 
 def GuardarResponsableAdmision(request):

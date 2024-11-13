@@ -31,6 +31,7 @@ class Pagos(models.Model):
     formaPago = models.ForeignKey('cartera.FormasPagos', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     valor = models.DecimalField( max_digits=20, decimal_places=2)
     descripcion = models.CharField(max_length=200, null=False)
+    facturaAplicada  =  models.ForeignKey('facturacion.facturacion',blank=True,null= True, editable=True, on_delete=models.PROTECT)
     fechaRegistro = models.DateTimeField(default=now, blank=True, null=True, editable=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
