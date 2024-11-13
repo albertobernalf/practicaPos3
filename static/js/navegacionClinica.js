@@ -1256,9 +1256,11 @@ formHistoriaClinica.addEventListener('submit', e=>{
  	// Fin Formulacion
 
 
-
-
-
+	 var salidaClinica = $('input[name="salClinica"]:checked').val();
+	 alert ("salidaClinica = " + salidaClinica);
+	 var salidaClinicax    =  document.getElementById("salClinica").value
+	 alert ("salidaClinicax = " + salidaClinicax);
+      
          var tipoDocPaciente    =  document.getElementById("tipoDocPaciente1").value
          var documentoPaciente  =  document.getElementById("documentoPaciente1").value;
          var folio      = "0";
@@ -1388,7 +1390,8 @@ formHistoriaClinica.addEventListener('submit', e=>{
                         'justificacion':justificacion,
                         'leucopenia':leucopenia,
                         'manejoQx':manejoQx,
-        			'formulacion':formulacion
+        			'formulacion':formulacion,
+                                'salidaClinica':salidaClinica
 				   },
  	      		success: function (respuesta2) {
  	      		       var data = JSON.parse(respuesta2);

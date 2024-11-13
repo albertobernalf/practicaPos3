@@ -270,6 +270,9 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 
        -- datatable de abonos esta muy grande arreglar
       -- OJO NO TRAE LOS ABONOS DE MARIA PAULA / tampoco de maria camilita
+      -- Probar anulacion de facturas
+      -- Probar refacturacion
+      -- Probar salida clinica
 
  
 		

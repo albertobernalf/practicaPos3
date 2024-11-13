@@ -334,6 +334,11 @@ def crearHistoriaClinica(request):
             #ultimofolio = Historia.objects.all().filter(tipoDoc_id=tipoDoc).filter(documento_id=idPacienteFinal['id']).aggregate(maximo=Coalesce(Max('folio'), 0))
             ultimofolio = Historia.objects.all().filter(tipoDoc_id=tipoDocId.id).filter(documento_id=documentoId.id).aggregate(maximo=Coalesce(Max('folio'), 0 ))
 
+            salidaClinica = request.POST["salidaClinica"]
+
+            print("salidaClinica =", salidaClinica)
+
+
 
             ## Camio lo anteriro por lo que sigue
 
@@ -1248,6 +1253,22 @@ def crearHistoriaClinica(request):
                 curt.execute(comando)
                 miConexiont.commit()
                 miConexiont.close()
+
+
+                ## SALIDA CLINICA
+
+                miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",    password="pass123")
+
+                cur3 = miConexion3.cursor()
+
+                comando = 'UPDATE admisiones_ingresos SET "salidaClinica" = ' + "'" + str(salidaClinica) + "'" + ' WHERE "tipoDoc_id" =  ' + "'" + str(tipoDocId) + "' and documento_id = " + "'" + str(documento) + "' AND consec = " + "'" + str(ingresoPaciente) + "'"
+
+                print(comando)
+                cur3.execute(comando)
+                miConexion3.commit()
+                miConexion3.close()
+
+
 
                 print("Ya grabe el cabezote")
 

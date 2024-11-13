@@ -41,6 +41,7 @@ $(document).ready(function () {
 	data['hastaFecha'] = hastaFecha;
 	data['desdeFactura'] = desdeFactura;
 	data['hastaFactura'] = hastaFactura;
+	data['bandera'] = 'Por Fecha';
 
         data = JSON.stringify(data);
 
@@ -205,7 +206,22 @@ $(document).ready(function () {
                        alert("data="  + data);
 			// Colocar Encabezadao
 	  		// aqui debe llenar el dato parta posible ANULACION , REFACTURACION
-		//$('#liquidacionId').val(data.id);
+		$('#Afactura').val(data.factura);
+		$('#AfechaFactura').val(data.fechaFactura);
+		$('#AtipoDoc_id').val(data.tipoDoc);
+		$('#Adocumento_id').val(data.documento);
+		$('#Apaciente').val(data.paciente);
+		$('#AconsecAdmision').val(data.consecAdmision);
+		$('#AnombreConvenio').val(data.AnombreConvenio);
+
+		$('#Rfactura').val(data.factura);
+		$('#RfechaFactura').val(data.fechaFactura);
+		$('#RtipoDoc_id').val(data.tipoDoc);
+		$('#Rdocumento_id').val(data.documento);
+		$('#Rpaciente').val(data.paciente);
+		$('#RconsecAdmision').val(data.consecAdmision);
+		$('#RnombreConvenio').val(data.AnombreConvenio);
+
        
 
 			 var data2 =  {}   ;
@@ -818,7 +834,7 @@ function initTableFacturacion(data) {
                           btn = btn + " <input type='radio'  class='form-check-input editPostFacturacion' data-pk='"  + row.pk + "'>" + "</input>";
                         return btn;
                     },
-                    "targets": 12
+                    "targets": 14
                }
             ],
             ajax: {
@@ -829,19 +845,20 @@ function initTableFacturacion(data) {
 
             lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
             columns: [
-                { data: "fields.tipoIng"},
-                { data: "fields.factura"},
+                { data: "fields.id"},
+                { data: "fields.fechaFactura"},
                 { data: "fields.tipoDoc"},
                 { data: "fields.documento"},
                 { data: "fields.nombre"},
                 { data: "fields.consec"},
                 { data: "fields.fechaIngreso"},
-                { data: "fields.fechaEgreso"},
-  
-		{ data: "fields.servicioNombreIng"},
-                { data: "fields.camaNombreIng"},
+                { data: "fields.fechaSalida"},
+  		{ data: "fields.servicioNombreSalida"},
+                { data: "fields.camaNombreSalida"},
+		 { data: "fields.dxSalida"},
 		 { data: "fields.convenio"},
-		 { data: "fields.estado"},
+		 { data: "fields.salidaClinica"},
+		 { data: "fields.estadoSalida"},
         
             ]
 
@@ -850,4 +867,95 @@ function initTableFacturacion(data) {
 
 
 
+function AnularFactura()
+{
 
+	alert ("Entre Anular factura ");
+
+ 	var facturacionId = document.getElementById("facturacionId").value;
+
+		$.ajax({
+	           url: '/anularFactura/',
+	            data :
+	            {'facturacionId':facturacionId},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+				$('#imprimir').val(data.Factura);
+
+            	        var data2 =  {}   ;
+        		data2['username'] = username;
+    		        data2['sedeSeleccionada'] = sedeSeleccionada;
+	    	        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+	            	
+	                var username_id = document.getElementById("username_id").value;
+  	                data2['username_id'] = username_id;
+                        alert("numero de la liquidacionId = " + liquidacionId);
+
+		        data2['valor'] = liquidacionId;
+		        data2 = JSON.stringify(data2);
+
+		    tableL= $("#tablaLiquidacion").dataTable().fnDestroy();	
+	            initTableLiquidacion(data2);
+
+
+		    // tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
+	            // initTableLiquidacionDetalle(data2);
+
+
+			$("#mensajes").html(data.message);
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+}
+
+
+function reFacturar()
+{
+
+	alert ("Entre Refacturar ");
+
+ 	var facturacionId = document.getElementById("facturacionId").value;
+
+		$.ajax({
+	           url: '/reFacturar/',
+	            data :
+	            {'facturacionId':facturacionId},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+				$('#imprimir').val(data.Factura);
+
+            	        var data2 =  {}   ;
+        		data2['username'] = username;
+    		        data2['sedeSeleccionada'] = sedeSeleccionada;
+	    	        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+	            	
+	                var username_id = document.getElementById("username_id").value;
+  	                data2['username_id'] = username_id;
+                        alert("numero de la liquidacionId = " + liquidacionId);
+
+		        data2['valor'] = liquidacionId;
+		        data2 = JSON.stringify(data2);
+
+		    tableL= $("#tablaLiquidacion").dataTable().fnDestroy();	
+	            initTableLiquidacion(data2);
+
+
+		    // tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
+	            // initTableLiquidacionDetalle(data2);
+
+
+			$("#mensajes").html(data.message);
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
+}
