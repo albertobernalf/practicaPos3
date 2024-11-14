@@ -338,8 +338,13 @@ def crearHistoriaClinica(request):
 
             print("salidaClinica =", salidaClinica)
 
+            if salidaClinica=='on':
+                salidaClinica='S'
+            else:
+                salidaClinica='N'
 
-
+            print("salidaClinicaFinal =", salidaClinica)
+	
             ## Camio lo anteriro por lo que sigue
 
             #miConexiont = pyodbc.connect(
@@ -1261,7 +1266,7 @@ def crearHistoriaClinica(request):
 
                 cur3 = miConexion3.cursor()
 
-                comando = 'UPDATE admisiones_ingresos SET "salidaClinica" = ' + "'" + str(salidaClinica) + "'" + ' WHERE "tipoDoc_id" =  ' + "'" + str(tipoDocId) + "' and documento_id = " + "'" + str(documento) + "' AND consec = " + "'" + str(ingresoPaciente) + "'"
+                comando = 'UPDATE admisiones_ingresos SET "salidaClinica" = ' + "'" + str(salidaClinica) + "'" + ' WHERE "tipoDoc_id" =  ' + "'" + str(tipoDocId.id) + "' and documento_id = " + "'" + str(documentoId.id) + "' AND consec = " + "'" + str(ingresoPaciente) + "'"
 
                 print(comando)
                 cur3.execute(comando)

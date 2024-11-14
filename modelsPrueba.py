@@ -269,12 +269,13 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
        -- El proceso de facturacion cuando crea la factura crear boton de impresion de factura y que devuelva el numero de la factura a IMPRIMIR
 
        -- datatable de abonos esta muy grande arreglar
-      -- OJO NO TRAE LOS ABONOS DE MARIA PAULA / tampoco de maria camilita
-      -- Probar anulacion de facturas
-      -- Probar refacturacion
-      -- Probar salida clinica
-
- 
+       -- OJO NO TRAE LOS ABONOS DE MARIA PAULA / tampoco de maria camilita
+       -- Probar anulacion de facturas
+       -- Probar refacturacion
+       -- cOLOCAR Anular en anularfacturas
+       --el tab de refacturacon no muestra nada ppoor cua?
+      -- error en liquidaciondetalle ,, ops falkta el consecutivo
+ 	
 		
 
 -----------------------------------------------------------------------------------------------------------------------
