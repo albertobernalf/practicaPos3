@@ -16,8 +16,8 @@
         <li><a href="#Liquidacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Liquidacion Cuentas Clinica </a></li>
         <li><a href="#LiquidacionDetalle"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Liquidacion Detalle Cuentas</a></li>
         <li><a href="#Abonos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Abonos Pacientes </a></li>
+
         <li><a href="#Traslados"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span>Traslados pagador </a></li>
-        <li><a href="#ReFac"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Refacturacion </a></li>
 
     </ul>
 </div>
@@ -48,8 +48,6 @@ div.dataTables_filter input {
 
 <div class="marco">
     <div class="secciones">
-	
-
         <article id="Liquidacion">
         <center><h3>Liquidacion Cuentas</h3></center>
 	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
@@ -127,11 +125,16 @@ div.dataTables_filter input {
 	   </div>
         </article>
 
+
+
  <article id="Traslados">
         	    <center><h3>Traslados Convenios</h3></center>
 		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 		 </div>
-	 </article>
+</article>
+
+
+
 
  <article id="Facturacion">
             <center><h3>Facturas Clinica</h3></center>
@@ -221,7 +224,7 @@ div.dataTables_filter input {
                                                 <th>Dx</th>
 						 <th>Convenio</th>
 						 <th>SalidaClinica</th>
-						 <th>Estado</th>
+
                                                 <th>Action</th>
 
                                             </tr>
@@ -316,7 +319,7 @@ div.dataTables_filter input {
 					<div class="form-group row">
 					 <label for="BtnAnularFactura" class="col-form-label col-sm-3"> + </label>
 					     <div class="col col-sm-7">
-			                        <input type="button" class="form-control form-control-sm" id="BtnAnularFactura"  name="BtnAnularFactura" value="Adicionar" onclick="AnularFactura()">
+			                        <input type="button" class="form-control form-control-sm" id="BtnAnularFactura"  name="BtnAnularFactura" value="Anular Factura" onclick="AnularFactura()">
 					</div>
 					</div>
 				</div>
@@ -324,92 +327,6 @@ div.dataTables_filter input {
 
 	 </div>
         </article>
-
-
-
-        <article id="Refac">
-            <center><h3>Refacturacion </h3></center>
-	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
-			 <div class="row row-cols-8" style="height=1px;">
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="Rfactura" class="col-form-label col-sm-4">LiquidacionId:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="Rfactura" name="Rfactura" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-                                      </div>
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="RfechaFactura" class="col-form-label col-sm-4">Fecha:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="RfechaFactura" name="RfechaFactura" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="RtipoDoc_id" class="col-form-label col-sm-4">TipoDocumento:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="RtipoDoc_id" name="RtipoDoc_id" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="Rdocumento_id" class="col-form-label col-sm-4">Documento:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="Rdocumento_id" name="Rdocumentoc_id" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-					<label for="Rpaciente" class="col-form-label col-sm-4">Paciente:</label>
-
-						 <div class="col-sm-6">
-							  <input type="text" id="Rpaciente" name="Rpaciente" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="RconsecAdmision" class="col-form-label col-sm-4">ConsecutivoAdmision:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="RconsecAdmision" name="RconsecAdmision" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="RnombreConvenio" class="col-form-label col-sm-4">Convenio:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="RnombreConvenio" name="RnombreConvenio" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-				 <div class="col">
-					<div class="form-group row">
-					 <label for="BtnReFactura" class="col-form-label col-sm-3"> + </label>
-					     <div class="col col-sm-7">
-			                        <input type="button" class="form-control form-control-sm" id="BtnReFactura"  name="BtnReFactura" value="Adicionar" onclick="Refacturar()">
-					</div>
-					</div>
-				</div>
-	
-
-	 </div>
-        </article>
-
-
 
  <article id="LiquidacionDetalle">
           <!--   <center><h3>Liquidacion detalle Cuentas</h3></center> -->
@@ -974,10 +891,87 @@ div.dataTables_filter input {
 	
         </article>
 
+<article id="ReFacturar">
+        	   Refacturacion
+		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+ <div class="row row-cols-8" style="height=1px;">
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="Rfactura" class="col-form-label col-sm-4">LiquidacionId:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="Rfactura" name="Rfactura" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                    </div>
+                             
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="RfechaFactura" class="col-form-label col-sm-4">Fecha:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="RfechaFactura" name="RfechaFactura" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="RtipoDoc_id" class="col-form-label col-sm-4">TipoDocumento:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="RtipoDoc_id" name="RtipoDoc_id" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="Rdocumento_id" class="col-form-label col-sm-4">Documento:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="Rdocumento_id" name="Rdocumentoc_id" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
 
+					<div class="col">
+			  		     <div class="form-group row">
+					<label for="Rpaciente" class="col-form-label col-sm-4">Paciente:</label>
 
-       
+						 <div class="col-sm-6">
+							  <input type="text" id="Rpaciente" name="Rpaciente" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
 
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="RconsecAdmision" class="col-form-label col-sm-4">ConsecutivoAdmision:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="RconsecAdmision" name="RconsecAdmision" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="RnombreConvenio" class="col-form-label col-sm-4">Convenio:</label>
+						 <div class="col-sm-6">
+							  <input type="text" id="RnombreConvenio" name="RnombreConvenio" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+				 <div class="col">
+					<div class="form-group row">
+					 <label for="BtnReFactura" class="col-form-label col-sm-3"> + </label>
+					     <div class="col col-sm-7">
+			                        <input type="button" class="form-control form-control-sm" id="BtnReFactura"  name="BtnReFactura" value="Adicionar" onclick="Refacturar()">
+					</div>
+					</div>
+				</div>
+	
+
+	 </div>
+		 </div>
+</article>
+
+      
     </div>
 </div>
 
@@ -994,9 +988,8 @@ div.dataTables_filter input {
 {% block totales %}
 
 
-
-
 {% endblock %}
+
 
 {% block footer %}
 
@@ -1004,10 +997,9 @@ div.dataTables_filter input {
     <ul class="tabs">
         <li><a href="#Facturacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Facturacion </a></li>
         <li><a href="#Anulacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Anulacion Facturas </a></li>
-
+        <li><a href="#Refacturar"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Refacturar </a></li>      
     </ul>
 </div>
-
 
 {% endblock %}
 

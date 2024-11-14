@@ -283,10 +283,13 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
         -- verificar en facturacion gustrde dependencias historico, dependencias libera cama
         -- verifcar en clinico , salida clinica , el servico y demas
         -- verificar elas columnas datatable facturacion
-        -- verificar anulacion facturtsa
+        -- verificar anulacion facturas
         -- verificar refacturacion
         -- crear una lkiquidacio y facturarla como prueba como le parece ...
-
+        -- ojo como aplicar los abonos en las facturas ???-???-???
+        -- Ops le dio salida teniendo mas convenios, ?? esos no estaban dentro de la liquidacion ????
+         -- Nop pailas caos con EUMELIA SOCORRO ME ESTOY ASUSTANDOp, mop tranquis el unico problema es el load_datañioquidaciondetalle
+           cpnm el campo liquidacionId
 
 
 

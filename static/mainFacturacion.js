@@ -169,14 +169,14 @@ $(document).ready(function () {
 		        data2['username_id'] = username_id;
 
 			 var valor = document.getElementById("liquidacionId").value;
-			 var liquidacionId = document.getElementById("liquidacionId").value;
+			// var liquidacionId = document.getElementById("liquidacionId").value;
 			 var ingresoId = document.getElementById("ingresoId").value;
 
 			alert("Esta es la liquidacion  que traigo para el loaddata_liquidacionDetalle " + data.id);
 			alert("Este es el ingreso que traigo para el loaddata_liquidacionDetalle " + data.ingresoId1);
 
 		        data2['valor'] = valor;	
-		        data2['liquidacionId'] = liquidacionId;	
+		        data2['liquidacionId'] = data.id;	
 
 		        data2['ingresoId'] = ingresoId;	
 
@@ -226,7 +226,7 @@ $(document).ready(function () {
 		$('#Adocumento_id').val(data.documento);
 		$('#Apaciente').val(data.paciente);
 		$('#AconsecAdmision').val(data.consecAdmision);
-		$('#AnombreConvenio').val(data.AnombreConvenio);
+		$('#AnombreConvenio').val(data.nombreConvenio);
 
 		$('#Rfactura').val(data.factura);
 		$('#RfechaFactura').val(data.fechaFactura);
@@ -234,9 +234,8 @@ $(document).ready(function () {
 		$('#Rdocumento_id').val(data.documento);
 		$('#Rpaciente').val(data.paciente);
 		$('#RconsecAdmision').val(data.consecAdmision);
-		$('#RnombreConvenio').val(data.AnombreConvenio);
-
-       
+		$('#RnombreConvenio').val(data.nombreConvenio);
+      
 
 			 var data2 =  {}   ;
 			data2['username'] = username;
@@ -254,11 +253,7 @@ $(document).ready(function () {
 		        data2 = JSON.stringify(data2);
 			   $("#mensajes").html(data.message);
 			
-		    tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
-	           initTableLiquidacionDetalle(data2);
-
-		    tableA= $("#tablaAbonosFacturacion").dataTable().fnDestroy();	
-	           initTableFacAbonos(data2);
+	
 
                   },
 	   		    error: function (request, status, error) {
@@ -716,6 +711,7 @@ function AdicionarLiquidacion()
                         alert("numero de la liquidacionId = " + liquidacionId);
 
 		        data2['valor'] = liquidacionId;
+			data2['liquidacionId'] = liquidacionId;
 		        data2 = JSON.stringify(data2);
 
 		    tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
@@ -777,12 +773,13 @@ function AFacturar()
 		        data2['valor'] = liquidacionId;
 		        data2 = JSON.stringify(data2);
 
-		    tableL= $("#tablaLiquidacion").dataTable().fnDestroy();	
-	            initTableLiquidacion(data2);
+                     if (data.message != 'Paciente NO tiene Salida Clinica. Consultar medico tratante !')
+			{
+				
+			    tableL= $("#tablaLiquidacion").dataTable().fnDestroy();	
+	        	    initTableLiquidacion(data2);
 
-
-		    // tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
-	            // initTableLiquidacionDetalle(data2);
+			}
 
 
 			$("#mensajes").html(data.message);
@@ -850,7 +847,7 @@ function initTableFacturacion(data) {
                           btn = btn + " <input type='radio'  class='form-check-input editPostFacturacion' data-pk='"  + row.pk + "'>" + "</input>";
                         return btn;
                     },
-                    "targets": 14
+                    "targets": 13
                }
             ],
             ajax: {
@@ -874,9 +871,7 @@ function initTableFacturacion(data) {
 		 { data: "fields.dxSalida"},
 		 { data: "fields.convenio"},
 		 { data: "fields.salidaClinica"},
-		 { data: "fields.estadoSalida"},
-        
-            ]
+               ]
 
  });
 }

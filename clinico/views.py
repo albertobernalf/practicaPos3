@@ -1261,17 +1261,16 @@ def crearHistoriaClinica(request):
 
 
                 ## SALIDA CLINICA
+                #
+                if (salidaClinica=='S'):
 
-                miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",    password="pass123")
-
-                cur3 = miConexion3.cursor()
-
-                comando = 'UPDATE admisiones_ingresos SET "salidaClinica" = ' + "'" + str(salidaClinica) + "'" + ', "dxSalida_id" = ' + "'" + str(diagnosticos) + "'" + ', "medicoSalida_id" = ' + "'" + str(plantaId.id) + "'" + ', "especialidadesMedicosSalida_id" = ' + "'" + str(espMedico) + "'" + ' WHERE "tipoDoc_id" =  ' + "'" + str(tipoDocId.id) + "' and documento_id = " + "'" + str(documentoId.id) + "' AND consec = " + "'" + str(ingresoPaciente) + "'"
-
-                print(comando)
-                cur3.execute(comando)
-                miConexion3.commit()
-                miConexion3.close()
+                    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",    password="pass123")
+                    cur3 = miConexion3.cursor()
+                    comando = 'UPDATE admisiones_ingresos SET "salidaClinica" = ' + "'" + str(salidaClinica) + "'" + ', "dxSalida_id" = ' + "'" + str(diagnosticoId) + "'" + ', "medicoSalida_id" = ' + "'" + str(plantaId.id) + "'" + ', "especialidadesMedicosSalida_id" = ' + "'" + str(espMedico) + "'" +  ',"serviciosSalida_id" = "serviciosActual_id"  WHERE "tipoDoc_id" =  ' + "'" + str(tipoDocId.id) + "' and documento_id = " + "'" + str(documentoId.id) + "' AND consec = " + "'" + str(ingresoPaciente) + "'"
+                    print(comando)
+                    cur3.execute(comando)
+                    miConexion3.commit()
+                    miConexion3.close()
 
 
 
