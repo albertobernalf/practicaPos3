@@ -248,8 +248,8 @@ def PostConsultaLiquidacion(request):
     print("NOW  = ", now)
     fechaRegistro = now
     usuarioRegistro = ''
-    convenioIdU = ConveniosPacienteIngresos.objects.all().filter(tipoDoc_id=ingresoId.tipoDoc_id).filter(documento_id=ingresoId.documento_id).filter(consecAdmision=ingresoId.consec).aggregate(minimo=Coalesce(Min('consecAdmision'), 0))
-    convenioId = (convenioIdU['minimo']) + 0
+    #convenioIdU = ConveniosPacienteIngresos.objects.all().filter(tipoDoc_id=ingresoId.tipoDoc_id).filter(documento_id=ingresoId.documento_id).filter(consecAdmision=ingresoId.consec).aggregate(minimo=Coalesce(Min('consecAdmision'), 0))
+    #convenioId = (convenioIdU['minimo']) + 0
 
     # Validacion si existe o No existe CABEZOTE
 
@@ -257,7 +257,7 @@ def PostConsultaLiquidacion(request):
                                    password="pass123")
 
     curt = miConexiont.cursor()
-    comando = 'SELECT id FROM facturacion_liquidacion WHERE "tipoDoc_id" = ' + str(ingresoId.tipoDoc_id) + ' AND documento_id = ' + str(ingresoId.documento_id) + ' AND "consecAdmision" = ' + str(ingresoId.consec)
+    comando = 'SELECT id FROM facturacion_liquidacion WHERE "tipoDoc_id" = ' + str(ingresoId.tipoDoc_id) + ' AND documento_id = ' + str(ingresoId.documento_id) + ' AND "consecAdmision" = ' + str(ingresoId.consec) + ' and convenio_id = ' + str(convenioId)
     curt.execute(comando)
 
     cabezoteLiquidacion = []
@@ -286,6 +286,8 @@ def PostConsultaLiquidacion(request):
     liquidacionId = liquidacionId.replace("(", ' ')
     liquidacionId = liquidacionId.replace(")", ' ')
     liquidacionId = liquidacionId.replace(",", ' ')
+
+    print ("liquidacionId FINAL = ", liquidacionId  )
 
     # Fin validacion de Liquidacion cabezote
 
@@ -390,6 +392,7 @@ def load_dataLiquidacionDetalle(request, data):
     sede = d['sede']
     username_id = d['username_id']
     valor = d['valor']
+    liquidacionId = d['liquidacionId']
 
     nombreSede = d['nombreSede']
     print("sede:", sede)
@@ -405,7 +408,7 @@ def load_dataLiquidacionDetalle(request, data):
                                    password="pass123")
     cur = miConexionx.cursor()
 
-    comando = 'select liq.id id,consecutivo ,  cast(date(fecha)||\' \'||to_char(fecha, \'HH:MI:SS\') as text) fecha  ,  liq.cantidad ,  "valorUnitario" ,  "valorTotal" ,  cirugia ,  cast(date("fechaCrea")||\' \'||to_char("fechaCrea", \'HH:MI:SS\') as text)  fechaCrea , liq.observaciones ,  "estadoRegistro" ,  "codigoCups_id" ,  cums_id , exa.nombre  nombreExamen  ,  liquidacion_id ,  liq."tipoHonorario_id" ,  "tipoRegistro" , liq."estadoRegistro" estadoReg FROM facturacion_liquidaciondetalle liq inner join clinico_examenes exa on (exa.id = liq."codigoCups_id")  where liquidacion_id= ' + "'" +  str(valor) + "'" +  ' UNION select liq.id id,consecutivo , cast(date(fecha)||\' \'||to_char(fecha, \'HH:MI:SS\') as text) fecha  ,  liq.cantidad ,  "valorUnitario" ,  "valorTotal" ,  cirugia ,  cast(date("fechaCrea")||\' \'||to_char("fechaCrea", \'HH:MI:SS\') as text)  fechaCrea , liq.observaciones ,  "estadoRegistro" ,  "codigoCups_id" ,  cums_id , sum.nombre  nombreExamen  ,  liquidacion_id ,  liq."tipoHonorario_id" ,  "tipoRegistro" , liq."estadoRegistro" estadoReg FROM facturacion_liquidaciondetalle liq inner join facturacion_suministros sum on (sum.id = liq.cums_id)  where liquidacion_id= '  + "'" +  str(valor) + "'" + ' order by consecutivo'
+    comando = 'select liq.id id,consecutivo ,  cast(date(fecha)||\' \'||to_char(fecha, \'HH:MI:SS\') as text) fecha  ,  liq.cantidad ,  "valorUnitario" ,  "valorTotal" ,  cirugia ,  cast(date("fechaCrea")||\' \'||to_char("fechaCrea", \'HH:MI:SS\') as text)  fechaCrea , liq.observaciones ,  "estadoRegistro" ,  "codigoCups_id" ,  cums_id , exa.nombre  nombreExamen  ,  liquidacion_id ,  liq."tipoHonorario_id" ,  "tipoRegistro" , liq."estadoRegistro" estadoReg FROM facturacion_liquidaciondetalle liq inner join clinico_examenes exa on (exa.id = liq."codigoCups_id")  where liquidacion_id= ' + "'" +  str(valor) + "'" +  ' UNION select liq.id id,consecutivo , cast(date(fecha)||\' \'||to_char(fecha, \'HH:MI:SS\') as text) fecha  ,  liq.cantidad ,  "valorUnitario" ,  "valorTotal" ,  cirugia ,  cast(date("fechaCrea")||\' \'||to_char("fechaCrea", \'HH:MI:SS\') as text)  fechaCrea , liq.observaciones ,  "estadoRegistro" ,  "codigoCups_id" ,  cums_id , sum.nombre  nombreExamen  ,  liquidacion_id ,  liq."tipoHonorario_id" ,  "tipoRegistro" , liq."estadoRegistro" estadoReg FROM facturacion_liquidaciondetalle liq inner join facturacion_suministros sum on (sum.id = liq.cums_id)  where liquidacion_id= '  + "'" +  str(liquidacionId) + "'" + ' order by consecutivo'
 
     print(comando)
 
@@ -618,7 +621,6 @@ def GuardarLiquidacionDetalle(request):
     suministros = request.POST["suministros"]
     cantidad = request.POST["cantidad"]
     valorUnitario = request.POST['valorUnitario']
-    #valorTotal = request.POST['valorTotal']
     valorTotal =  float(cantidad)  * float(valorUnitario)
     observaciones = request.POST['observaciones']
     username_id = request.POST['username_id']
@@ -679,7 +681,49 @@ def GuardarLiquidacionDetalle(request):
     miConexion3.commit()
     miConexion3.close()
 
-    #return HttpResponse("Convenio Adicionado", content_type='application/json')
+    # Falta la RUTINA que actualica los cabezotes de la liquidacion
+
+
+    totalSuministros = LiquidacionDetalle.objects.all().filter(liquidacion_id=liquidacionId).aggregate(totalS=Coalesce(Sum('valorTotal'), 0))
+    totalSuministros = (totalSuministros['totalS']) + 0
+    print("totalSuministros",totalSuministros )
+    totalProcedimientos = LiquidacionDetalle.objects.all().filter(liquidacion_id=liquidacionId).aggregate(totalP=Coalesce(Sum('valorTotal'), 0))
+    totalProcedimientos = (totalProcedimientos['totalP']) + 0
+    print("totalProcedimientos", totalProcedimientos)
+    totalCopagos = Pagos.objects.all().filter(tipoDoc_id=registroId.tipoDoc_id).filter(documento_id=registroId.documento_id).filter(consec=registroId.consecAdmision).filter(formaPago_id=4).aggregate(totalC=Coalesce(Sum('valor'), 0))
+    totalCopagos = (totalCopagos['totalC']) + 0
+    print("totalCopagos", totalCopagos)
+    totalCuotaModeradora = Pagos.objects.all().filter(tipoDoc_id=registroId.tipoDoc_id).filter(documento_id=registroId.documento_id).filter(consec=registroId.consecAdmision).filter(formaPago_id=3).aggregate(totalM=Coalesce(Sum('valor'), 0))
+    totalCuotaModeradora = (totalCuotaModeradora['totalM']) + 0
+    print("totalCuotaModeradora", totalCuotaModeradora)
+    totalAnticipos = Pagos.objects.all().filter(tipoDoc_id=registroId.tipoDoc_id).filter(documento_id=registroId.documento_id).filter(consec=registroId.consecAdmision).filter(formaPago_id=1).aggregate(Anticipos=Coalesce(Sum('valor'), 0))
+    totalAnticipos = (totalAnticipos['Anticipos']) + 0
+    print("totalAnticipos", totalAnticipos)
+    totalAbonos = Pagos.objects.all().filter(tipoDoc_id=registroId.tipoDoc_id).filter(documento_id=registroId.documento_id).filter(consec=registroId.consecAdmision).filter(formaPago_id=2).aggregate(totalAb=Coalesce(Sum('valor'), 0))
+    totalAbonos = (totalAbonos['totalAb']) + 0
+    #totalAbonos = totalCopagos + totalAnticipos + totalCuotaModeradora
+    print("totalAbonos", totalAbonos)
+    totalLiquidacion =  totalSuministros + totalProcedimientos - totalAbonos
+    print("totalLiquidacion", totalLiquidacion)
+    totalAPagar = totalLiquidacion - totalAbonos
+    print("totalAPagar", totalAPagar)
+
+    # Rutina Guarda en cabezote los totales
+
+    print ("Voy a grabar el cabezote")
+
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
+    curt = miConexiont.cursor()
+    comando = 'UPDATE facturacion_liquidacion SET "totalSuministros" = ' + str(totalSuministros) + ',"totalProcedimientos" = ' + str(totalProcedimientos) + ', "totalCopagos" = ' + str(totalCopagos) + ' , "totalCuotaModeradora" = ' + str(totalCuotaModeradora) + ', anticipos = ' +  str(totalAnticipos) + ' ,"totalAbonos" = ' + str(totalAbonos) + ', "totalLiquidacion" = ' + str(totalLiquidacion) + ', "valorApagar" = ' + str(totalAPagar) + ' WHERE id =' + str(liquidacionId)
+    curt.execute(comando)
+    miConexiont.commit()
+    miConexiont.close()
+
+
+
+    ## Fin rutina actualiza cabezotes
+
+	
 
     return JsonResponse({'success': True, 'message': 'Abono Actualizado satisfactoriamente!'})
 
@@ -799,18 +843,25 @@ def FacturarCuenta(request):
 
     liquidacionId = request.POST["liquidacionId"]
     print ("liquidacionId = ", liquidacionId)
+    username_id = request.POST["username_id"]
 
-    usuarioId = Liquidacion.objects.all().filter(id=liquidacionId)
+
+
+    usuarioId = Liquidacion.objects.get(id=liquidacionId)
     print ("Usuario", usuarioId.documento_id)
     print ("TipoDoc", usuarioId.tipoDoc_id)
-    print ("Consec", usuarioId.consec)
+    print ("Consec", usuarioId.consecAdmision)
+
+    now = datetime.datetime.now()
+    print("NOW  = ", now)
+    fechaRegistro = now
 
     # PRIMERO EL CABEZOTE	
 
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
     cur3 = miConexion3.cursor()
 
-    comando = 'INSERT INTO facturacion_facturacion (documento_id, "consecAdmision", "fechaFactura", "totalCopagos", "totalCuotaModeradora", "totalSuministros", "totalFactura", "valorApagar", anulado, anticipos, "fechaRegistro", "estadoReg", "fechaAnulacion", observaciones, "fechaCorte",convenio_id, "tipoDoc_id","usuarioAnula_id","usuarioRegistro_id") SELECT documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalSuministros", "totalLiquidacion", "valorApagar", anulado, anticipos, "fechaRegistro", "estadoRegistro", "fechaAnulacion", observaciones, "fechaCorte",convenio_id, "tipoDoc_id","usuarioAnula_id","usuarioRegistro_id" FROM facturacion_liquidacion WHERE id =  ' + liquidacionId
+    comando = 'INSERT INTO facturacion_facturacion (documento_id, "consecAdmision", "fechaFactura", "totalCopagos", "totalCuotaModeradora", "totalSuministros", "totalFactura", "valorApagar", anulado, anticipos, "fechaRegistro", "estadoReg", "fechaAnulacion", observaciones, "fechaCorte",convenio_id, "tipoDoc_id","usuarioAnula_id","usuarioRegistro_id") SELECT documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalSuministros", "totalLiquidacion", "valorApagar", anulado, anticipos, ' + "'" + str(fechaRegistro) + "'" + ' ,  ' + "'" + str('A') + "'" + ' , "fechaAnulacion", observaciones, "fechaCorte",convenio_id, "tipoDoc_id","usuarioAnula_id", ' + "'" + str(username_id) + "'" + ' FROM facturacion_liquidacion WHERE id =  ' + liquidacionId
     print(comando)
     cur3.execute(comando)
     miConexion3.commit()
@@ -819,26 +870,22 @@ def FacturarCuenta(request):
     # AQUI CONSEGUIR EL ID DE LA FACTURA RECIEN CREADA
     # LO MEJOR ES conseguir el id en el mismo insert
 
-    facturacionId = Facturacion.objects.all().filter(tipoDoc_id=usuarioId.documento_id).filter(documento_id=usuarioId.tipoDoc_id).filter(consec=usuarioId.consec)
+    #facturacionId = Facturacion.objects.all().filter(tipoDoc_id=usuarioId.documento_id).filter(documento_id=usuarioId.tipoDoc_id).filter(consecAdmision=usuarioId.consecAdmision)
+    facturacionId = Facturacion.objects.get(tipoDoc_id=usuarioId.tipoDoc_id , documento_id=usuarioId.documento_id, consecAdmision=usuarioId.consecAdmision, convenio_id=usuarioId.convenio_id)
 
-    #facturacionIdU = Facturacion.objects.all().aggregate(maximo=Coalesce(Max('id'), 0))
-    #facturacionId = (facturacionIdU['maximo']) + 0
-    #facturacionId = str(facturacionId)
-    #facturacionId = facturacionId.replace("(", ' ')
-    #facturacionId = facturacionId.replace(")", ' ')
-    #facturacionId = facturacionId.replace(",", ' ')
+    print ("facturacionId = ", facturacionId.id)
 
     ## COLOCAR EN LA TABLA INGRESOS , LA FECHA DE EGRESO Y EL NUMERO DE LA FACTURA GENERADO
 
-    now = datetime.datetime.now()
-    print("NOW  = ", now)
-    fechaRegistro = now
 
-    ingresoId = Ingresos.objects.all().filter(tipoDoc_id=usuarioId.documento_id).filter(documento_id=usuarioId.tipoDoc_id).filter(consec=usuarioId.consec)
+
+    #ingresoId = Ingresos.objects.all().filter(tipoDoc_id=usuarioId.documento_id).filter(documento_id=usuarioId.tipoDoc_id).filter(consec=usuarioId.consecAdmision)
+    ingresoId = Ingresos.objects.get(tipoDoc_id=usuarioId.tipoDoc_id , documento_id=usuarioId.documento_id ,consec=usuarioId.consecAdmision)
+    print ("ingresoId = ", ingresoId.id)
 
     miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
     curt = miConexiont.cursor()
-    comando = 'UPDATE admisiones_ingresos SET "fechaSalida" = ' + str(fechaRegistro) + ', factura = ' + str(facturacionId)  + ' WHERE id =' + str(ingresoId)
+    comando = 'UPDATE admisiones_ingresos SET "fechaSalida" = ' + "'" +  str(fechaRegistro) + "'" + ', factura = ' + str(facturacionId.id)  +  ', "dependenciasSalida_id" = dependenciasActual_id ' +  ' WHERE id =' + str(ingresoId.id)
     curt.execute(comando)
     miConexiont.commit()
     miConexiont.close()
@@ -848,7 +895,7 @@ def FacturarCuenta(request):
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
     cur3 = miConexion3.cursor()
 
-    comando = 'INSERT INTO facturacion_facturaciondetalle ("consecutivoFactura", fecha, cantidad, "valorUnitario", "valorTotal",  cirugia, "fechaCrea", "fechaModifica", observaciones, "fechaRegistro", "estadoRegistro", "codigoCups_id", cums_id, "usuarioModifica_id", "usuarioRegistro_id", facturacion_id, "tipoHonorario_id", "tipoRegistro") SELECT  consecutivo, fecha, cantidad, "valorUnitario", "valorTotal",  cirUgia, "fechaCrea", "fechaModifica", observaciones, "fechaRegistro", "estadoRegistro", "codigoCups_id", cums_id, "usuarioModifica_id", "usuarioRegistro_id", ' + str(facturacionId) + ', "tipoHonorario_id", "tipoRegistro" FROM facturacion_liquidaciondetalle WHERE liquidacion_id =  ' + liquidacionId
+    comando = 'INSERT INTO facturacion_facturaciondetalle ("consecutivoFactura", fecha, cantidad, "valorUnitario", "valorTotal",  cirugia, "fechaCrea", "fechaModifica", observaciones, "fechaRegistro", "estadoRegistro", "codigoCups_id", cums_id, "usuarioModifica_id", "usuarioRegistro_id", facturacion_id, "tipoHonorario_id", "tipoRegistro") SELECT  consecutivo, fecha, cantidad, "valorUnitario", "valorTotal",  cirUgia, "fechaCrea", "fechaModifica", observaciones, "fechaRegistro", "estadoRegistro", "codigoCups_id", cums_id, "usuarioModifica_id", "usuarioRegistro_id", ' + str(facturacionId.id) + ', "tipoHonorario_id", "tipoRegistro" FROM facturacion_liquidaciondetalle WHERE liquidacion_id =  ' + liquidacionId
     print(comando)
     cur3.execute(comando)
     miConexion3.commit()
@@ -879,7 +926,37 @@ def FacturarCuenta(request):
     miConexion3.commit()
     miConexion3.close()
 
-    return JsonResponse({'success': True, 'message': 'Factura Elaborada!', 'Factura' : facturacionId })
+
+    ## AQUI RUTINA HISATORICO CAMA-DEPENDENCIA 
+
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
+
+    comando = 'INSERT INTO sitios_historialdependencias  (consec,"fechaOcupacion" , "fechaLiberacion" , "fechaRegistro" , "estadoReg" , dependencias_id, documento_id, "tipoDoc_id", "usuarioRegistro_id" ) VALUES (' + ingresoId.CONSEC + ',' + str('') + ',' + "'" + str(fechaRegistro) + "'" + ',' + "'" + str('A') + "'" + str(ingresoId.dependenciasActual_id) + "'" + ',' + "'" + str(ingresoId.documento_id) + "'" + ',' + "'" + str(ingresoId.tipoDoc_id) + "'" + ',' + str(username_id) + "'"
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
+    miConexion3.close()
+
+
+    ## FIN HISTORICO CAMAA-DEPENDENCIA
+
+
+    ## AQUI RUTINA DESOCUPAR CAMA-DEPENDENCIA 
+
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
+
+    comando = 'UPDATE sitios_dependencias SET disponibilidad = ' +"'" + str('L') + "'," + ' "tipoDoc_id" = ' +  str('') + ' , documento_id = '  + str('')  + ', consec= ' + str('') + ' WHERE "tipoDoc_id" = ' + "'" + str(ingresoId.tipoDoc_id) + "'" + ' AND documento_id = ' + "'" + str(ingresoId.documento_id) + "'" + ' AND consec = ' + str('')
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
+    miConexion3.close()
+
+
+    ## FIN DESOCUPAR CAMA-DEPENDENCIA
+
+    return JsonResponse({'success': True, 'message': 'Factura Elaborada!', 'Factura' : facturacionId.id })
 
 
 
@@ -955,22 +1032,22 @@ def load_dataFacturacion(request, data):
    
     if bandera == "Por Fecha":
 
-       detalle = 'SELECT i.id id , facturas."fechaFactura" fechaFactura, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" fechaIngreso , i."fechaSalida" fechaSalida, ser.nombre servicioNombreSalida, dep.nombre camaNombreSalida , diag.nombre dxSalida , conv.nombre convenio, conv.id convenioId , i."salidaClinica" salidaClinica, estadosalida.nombre estadoSalida FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd , contratacion_convenios conv , facturacion_facturacion facturas, clinico_estadossalida estadoSalida WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND  i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosSalida_id" = ser.id AND i."salidaClinica" = ' + "'" + str('S') + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and  u.id = i."documento_id" and diag.id = i."dxSalida_id" and i."fechaSalida" is not null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasSalida_id" AND facturas.documento_id = i.documento_id and facturas."tipoDoc_id" = i."tipoDoc_id" and facturas."consecAdmision" = i.consec and facturas.convenio_id = conv.id and estadosalida.id = i."salidaMotivo_id" and i."fechaSalida" between ' + "'" + str(desdeFecha) + "'" + '  and ' + "'" + str(hastaFecha) + "'"
+       detalle = 'SELECT facturas.id id , facturas."fechaFactura" fechaFactura, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" fechaIngreso , i."fechaSalida" fechaSalida, ser.nombre servicioNombreSalida, dep.nombre camaNombreSalida , diag.nombre dxSalida , conv.nombre convenio, conv.id convenioId , i."salidaClinica" salidaClinica FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd , contratacion_convenios conv , facturacion_facturacion facturas WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND  i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosSalida_id" = ser.id AND i."salidaClinica" = ' + "'" + str('S') + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and  u.id = i."documento_id" and diag.id = i."dxSalida_id" and i."fechaSalida" is not null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasSalida_id" AND facturas.documento_id = i.documento_id and facturas."tipoDoc_id" = i."tipoDoc_id" and facturas."consecAdmision" = i.consec and facturas.convenio_id = conv.id  and i."fechaSalida" between ' + "'" + str(desdeFecha) + "'" + '  and ' + "'" + str(hastaFecha) + "'"
 
     else:
-       detalle = 'SELECT i.id id , facturas."fechaFactura" fechaFactura, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" fechaIngreso , i."fechaSalida" fechaSalida, ser.nombre servicioNombreSalida, dep.nombre camaNombreSalida , diag.nombre dxSalida , conv.nombre convenio, conv.id convenioId , i."salidaClinica" salidaClinica, estadosalida.nombre estadoSalida FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd , contratacion_convenios conv , facturacion_facturacion facturas, clinico_estadossalida estadoSalida WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND  i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosSalida_id" = ser.id AND i."salidaClinica" = ' + "'" + str('S') + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and  u.id = i."documento_id" and diag.id = i."dxSalida_id" and i."fechaSalida" is not null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasSalida_id" AND facturas.documento_id = i.documento_id and facturas."tipoDoc_id" = i."tipoDoc_id" and facturas."consecAdmision" = i.consec and facturas.convenio_id = conv.id and estadosalida.id = i."salidaMotivo_id" and i."fechaSalida" between ' + "'" + str(desdeFactura) + "'" + ' and ' + str(hastaFactura) + "'"
+       detalle = 'SELECT facturas.id id , facturas."fechaFactura" fechaFactura, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,i.consec consec , i."fechaIngreso" fechaIngreso , i."fechaSalida" fechaSalida, ser.nombre servicioNombreSalida, dep.nombre camaNombreSalida , diag.nombre dxSalida , conv.nombre convenio, conv.id convenioId , i."salidaClinica" salidaClinica FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd , contratacion_convenios conv , facturacion_facturacion facturas WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and  i."sedesClinica_id" = dep."sedesClinica_id" AND  i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosSalida_id" = ser.id AND i."salidaClinica" = ' + "'" + str('S') + "'" + ' and tp.id = u."tipoDoc_id" and i."tipoDoc_id" = u."tipoDoc_id" and  u.id = i."documento_id" and diag.id = i."dxSalida_id" and i."fechaSalida" is not null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasSalida_id" AND facturas.documento_id = i.documento_id and facturas."tipoDoc_id" = i."tipoDoc_id" and facturas."consecAdmision" = i.consec and facturas.convenio_id = conv.id  and i."fechaSalida" between ' + "'" + str(desdeFactura) + "'" + ' and ' + str(hastaFactura) + "'"
 
     print(detalle)
 
     curx.execute(detalle)
 
-    for id ,fechaFactura, tipoDoc, documento, nombre, consec , fechaIngreso , fechaSalida, servicioNombreSalida, camaNombreSalida , dxSalida , convenio, convenioId , salidaClinica, estadoSalida in curx.fetchall():
+    for id ,fechaFactura, tipoDoc, documento, nombre, consec , fechaIngreso , fechaSalida, servicioNombreSalida, camaNombreSalida , dxSalida , convenio, convenioId , salidaClinica in curx.fetchall():
         facturacion.append(
-		{"model":"ingresos.ingresos","pk":id,"fields":
-			{'id':id, 'fechaFactura':fechafactura, 'tipoDoc': tipoDoc, 'documento': documento, 'nombre': nombre, 'consec': consec,
+		{"model":"facturacion.facturacion","pk":id,"fields":
+			{'id':id, 'fechaFactura':fechaFactura, 'tipoDoc': tipoDoc, 'documento': documento, 'nombre': nombre, 'consec': consec,
                          'fechaIngreso': fechaIngreso, 'fechaSalida': fechaSalida,
                          'servicioNombreSalida': servicioNombreSalida, 'camaNombreSalida': camaNombreSalida,
-                         'dxSalida': dxSalida,'convenio':convenio, 'convenioId':convenioId, 'salidaClinica':salidaClinica, 'estadoSalida':estadoSalida}})
+                         'dxSalida': dxSalida,'convenio':convenio, 'convenioId':convenioId, 'salidaClinica':salidaClinica}})
 
     miConexionx.close()
     print(facturacion)

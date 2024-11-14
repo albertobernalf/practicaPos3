@@ -275,8 +275,20 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
        -- cOLOCAR Anular en anularfacturas
        --el tab de refacturacon no muestra nada ppoor cua?
       -- error en liquidaciondetalle ,, ops falkta el consecutivo
- 	
-		
+ 	-- hay que capturar el servicio de salida desde la historia clinica y guardarlo para la facturacion en salida clinica
+       -- Tengo un rollo. Probar la liberacion de cama el historico de las dependecias crear otro facturable
+
+	-- ojo verificar diagnosticos
+        -- verificar grabar dx de salida desde hc
+        -- verificar en facturacion gustrde dependencias historico, dependencias libera cama
+        -- verifcar en clinico , salida clinica , el servico y demas
+        -- verificar elas columnas datatable facturacion
+        -- verificar anulacion facturtsa
+        -- verificar refacturacion
+        -- crear una lkiquidacio y facturarla como prueba como le parece ...
+
+
+
 
 -----------------------------------------------------------------------------------------------------------------------
 --  GLOSAS

@@ -19,15 +19,17 @@ $(document).ready(function () {
         data['sede'] = sede;
         data['username_id'] = username_id;
         valor=1
+        liquidacionId = 1
         data['valor'] = valor;
+        data['liquidacionId'] = liquidacionId;
 	data['ingresoId'] = valor;
 
 	// fecha actual
-	let date = new Date();
+	let fecha = new Date();
 
-	ano = date.getFullYear();
-	mes = date.getMonth();
-	dia = date.getDate();
+	ano = fecha.getFullYear();
+	mes = fecha.getMonth() + 1;
+	dia = fecha.getDate();
 
         desdeFecha = ano + '-' + mes + '-' + dia + ' 00:00:00'
         hastaFecha = ano + '-' + mes + '-' + dia + ' 23:59:59'
@@ -59,6 +61,9 @@ $(document).ready(function () {
           var post_id = $(this).data('pk');
           alert("pk1 = " + $(this).data('pk'));
         var username_id = document.getElementById("username_id").value;
+	document.getElementById("liquidacionId").value = '';
+	document.getElementById("liquidacionId1").value = '';
+	document.getElementById("ingresoId").value = '';
 
 	$.ajax({
 	           url: '/postConsultaLiquidacion/',
@@ -164,13 +169,22 @@ $(document).ready(function () {
 		        data2['username_id'] = username_id;
 
 			 var valor = document.getElementById("liquidacionId").value;
+			 var liquidacionId = document.getElementById("liquidacionId").value;
 			 var ingresoId = document.getElementById("ingresoId").value;
 
+			alert("Esta es la liquidacion  que traigo para el loaddata_liquidacionDetalle " + data.id);
+			alert("Este es el ingreso que traigo para el loaddata_liquidacionDetalle " + data.ingresoId1);
+
 		        data2['valor'] = valor;	
+		        data2['liquidacionId'] = liquidacionId;	
+
 		        data2['ingresoId'] = ingresoId;	
 
 		        data2 = JSON.stringify(data2);
 			   $("#mensajes").html(data.message);
+
+		  alert( "voy a borrar loaddataliquidaciondetalle");
+
 			
 		    tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
 	           initTableLiquidacionDetalle(data2);
@@ -738,11 +752,13 @@ function AFacturar()
 	alert ("Entre a facturar ");
 
  	var liquidacionId = document.getElementById("liquidacionId").value;
+ 	var username_id = document.getElementById("username_id").value;
+
 
 		$.ajax({
 	           url: '/facturarCuenta/',
 	            data :
-	            {'liquidacionId':liquidacionId},
+	            {'liquidacionId':liquidacionId, 'username_id':username_id},
 	           type: 'POST',
 	           dataType : 'json',
 	  		success: function (data) {
