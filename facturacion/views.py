@@ -724,7 +724,7 @@ def GuardarLiquidacionDetalle(request):
 
 	
 
-    return JsonResponse({'success': True, 'message': 'Abono Actualizado satisfactoriamente!'})
+    return JsonResponse({'success': True, 'message': 'Registro Guardado satisfactoriamente!'})
 
 def PostDeleteLiquidacionDetalle(request):
 
@@ -855,12 +855,49 @@ def FacturarCuenta(request):
     print("NOW  = ", now)
     fechaRegistro = now
 
+    #ingresoId = Ingresos.objects.all().filter(tipoDoc_id=usuarioId.documento_id).filter(documento_id=usuarioId.tipoDoc_id).filter(consec=usuarioId.consecAdmision)
+    ingresoId = Ingresos.objects.get(tipoDoc_id=usuarioId.tipoDoc_id , documento_id=usuarioId.documento_id ,consec=usuarioId.consecAdmision)
+    print ("ingresoId = ", ingresoId.id)
+
+
+    ## AQUI RUTINA HISATORICO CAMA-DEPENDENCIA 
+
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
+
+    #comando = 'INSERT INTO sitios_historialdependencias  (consec, "fechaLiberacion" , "fechaRegistro" , "estadoReg" , dependencias_id, documento_id, "tipoDoc_id", "usuarioRegistro_id", disponibilidad ) VALUES (' + str(ingresoId.consec) + ','  + "'" + str(fechaRegistro) + "','" +    str(fechaRegistro) + "',"  +  "'" + str('A') + "'," + "'" +  str(ingresoId.dependenciasActual_id) + "'," + "'" + str(ingresoId.documento_id) + "'," + "'" + str(ingresoId.tipoDoc_id) + "'," + "'" +  str(username_id) + "',''" + ")"
+    comando = 'INSERT INTO sitios_historialdependencias SELECT consec,' + "'" + str(fechaRegistro) + "'," + "'" + str(fechaRegistro) + "'," + 'A' + ", id" + ",'" + str(ingresoId.documento_id) + "'," + "'" + str(ingresoId.tipoDoc_id) + "'," + "'" + str(username_id) + "'," + "'" + str('L') + "'" +  ' from sitios_dependencias where "tipoDoc_id" = ' + "'" + str(ingresoId.tipoDoc_id) + "' AND documento_id = "  + "'" + str(ingresoId.documento_id) + "' AND consec = " + "'" + str(ingresoId.consec) + "'"
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
+    miConexion3.close()
+
+
+    ## FIN HISTORICO CAMAA-DEPENDENCIA
+
+
+    ## AQUI RUTINA DESOCUPAR CAMA-DEPENDENCIA 
+
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
+
+    comando = 'UPDATE sitios_dependencias SET disponibilidad = ' + "'" + str('L') + "'," + ' "tipoDoc_id" = ' +  str('') + ' , documento_id = '  + str('')  + ', consec= ' + str('') + ' WHERE "tipoDoc_id" = ' + "'" + str(ingresoId.tipoDoc_id) + "'" + ' AND documento_id = ' + "'" + str(ingresoId.documento_id) + "'" + ' AND consec = ' + str('')
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
+    miConexion3.close()
+
+
+    ## FIN DESOCUPAR CAMA-DEPENDENCIA
+
+
+
     # PRIMERO EL CABEZOTE	
 
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
     cur3 = miConexion3.cursor()
 
-    comando = 'INSERT INTO facturacion_facturacion (documento_id, "consecAdmision", "fechaFactura", "totalCopagos", "totalCuotaModeradora", "totalSuministros", "totalFactura", "valorApagar", anulado, anticipos, "fechaRegistro", "estadoReg", "fechaAnulacion", observaciones, "fechaCorte",convenio_id, "tipoDoc_id","usuarioAnula_id","usuarioRegistro_id") SELECT documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalSuministros", "totalLiquidacion", "valorApagar", anulado, anticipos, ' + "'" + str(fechaRegistro) + "'" + ' ,  ' + "'" + str('A') + "'" + ' , "fechaAnulacion", observaciones, "fechaCorte",convenio_id, "tipoDoc_id","usuarioAnula_id", ' + "'" + str(username_id) + "'" + ' FROM facturacion_liquidacion WHERE id =  ' + liquidacionId
+    comando = 'INSERT INTO facturacion_facturacion (documento_id, "consecAdmision", "fechaFactura", "totalCopagos", "totalCuotaModeradora", "totalSuministros", "totalFactura", "valorApagar", anulado, anticipos, "fechaRegistro", "estadoReg", "fechaAnulacion", observaciones, "fechaCorte",convenio_id, "tipoDoc_id","usuarioAnula_id","usuarioRegistro_id") SELECT documento_id, "consecAdmision", ' + "'" + str(fechaRegistro) + "'" + ' , "totalCopagos", "totalCuotaModeradora", "totalSuministros", "totalLiquidacion", "valorApagar", anulado, anticipos, ' + "'" + str(fechaRegistro) + "'" + ' ,  ' + "'" + str('A') + "'" + ' , "fechaAnulacion", observaciones, "fechaCorte",convenio_id, "tipoDoc_id","usuarioAnula_id", ' + "'" + str(username_id) + "'" + ' FROM facturacion_liquidacion WHERE id =  ' + liquidacionId
     print(comando)
     cur3.execute(comando)
     miConexion3.commit()
@@ -876,11 +913,6 @@ def FacturarCuenta(request):
 
     ## COLOCAR EN LA TABLA INGRESOS , LA FECHA DE EGRESO Y EL NUMERO DE LA FACTURA GENERADO
 
-
-
-    #ingresoId = Ingresos.objects.all().filter(tipoDoc_id=usuarioId.documento_id).filter(documento_id=usuarioId.tipoDoc_id).filter(consec=usuarioId.consecAdmision)
-    ingresoId = Ingresos.objects.get(tipoDoc_id=usuarioId.tipoDoc_id , documento_id=usuarioId.documento_id ,consec=usuarioId.consecAdmision)
-    print ("ingresoId = ", ingresoId.id)
 
     if (ingresoId.salidaClinica=='N'):
 	    return JsonResponse({'success': True, 'message': 'Paciente NO tiene Salida Clinica. Consultar medico tratante !', 'Factura' : 0 })
@@ -929,36 +961,6 @@ def FacturarCuenta(request):
     cur3.execute(comando)
     miConexion3.commit()
     miConexion3.close()
-
-
-    ## AQUI RUTINA HISATORICO CAMA-DEPENDENCIA 
-
-    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
-    cur3 = miConexion3.cursor()
-
-    comando = 'INSERT INTO sitios_historialdependencias  (consec,"fechaOcupacion" , "fechaLiberacion" , "fechaRegistro" , "estadoReg" , dependencias_id, documento_id, "tipoDoc_id", "usuarioRegistro_id" ) VALUES (' + ingresoId.consec + ',' + str('') + ',' + "'" + str(fechaRegistro) + "'" + ',' + "'" + str('A') + "'" + str(ingresoId.dependenciasActual_id) + "'" + ',' + "'" + str(ingresoId.documento_id) + "'" + ',' + "'" + str(ingresoId.tipoDoc_id) + "'" + ',' + str(username_id) + "'"
-    print(comando)
-    cur3.execute(comando)
-    miConexion3.commit()
-    miConexion3.close()
-
-
-    ## FIN HISTORICO CAMAA-DEPENDENCIA
-
-
-    ## AQUI RUTINA DESOCUPAR CAMA-DEPENDENCIA 
-
-    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
-    cur3 = miConexion3.cursor()
-
-    comando = 'UPDATE sitios_dependencias SET disponibilidad = ' +"'" + str('L') + "'," + ' "tipoDoc_id" = ' +  str('') + ' , documento_id = '  + str('')  + ', consec= ' + str('') + ' WHERE "tipoDoc_id" = ' + "'" + str(ingresoId.tipoDoc_id) + "'" + ' AND documento_id = ' + "'" + str(ingresoId.documento_id) + "'" + ' AND consec = ' + str('')
-    print(comando)
-    cur3.execute(comando)
-    miConexion3.commit()
-    miConexion3.close()
-
-
-    ## FIN DESOCUPAR CAMA-DEPENDENCIA
 
     return JsonResponse({'success': True, 'message': 'Factura Elaborada!', 'Factura' : facturacionId.id })
 

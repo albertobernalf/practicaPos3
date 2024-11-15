@@ -334,7 +334,7 @@ def crearHistoriaClinica(request):
             #ultimofolio = Historia.objects.all().filter(tipoDoc_id=tipoDoc).filter(documento_id=idPacienteFinal['id']).aggregate(maximo=Coalesce(Max('folio'), 0))
             ultimofolio = Historia.objects.all().filter(tipoDoc_id=tipoDocId.id).filter(documento_id=documentoId.id).aggregate(maximo=Coalesce(Max('folio'), 0 ))
 
-            salidaClinica = request.POST["salidaClinica"]
+            salidaClinica = request.POST['salidaClinica']
 
             print("salidaClinica =", salidaClinica)
 
@@ -390,16 +390,32 @@ def crearHistoriaClinica(request):
 
             print("diagnosticos = ", diagnosticos)
 
-            if (causasExterna == ''  or diagnosticos == ''):
+            if (causasExterna == ''):
 
                 print("Entre GRAVES campos vacios")
-                data1 = {'Mensaje': 'Favor suministrar Causa externa y/o diagnostico Obligatorios'}
+                data1 = {'Mensaje': 'Favor suministrar Causa externa Obligatorio'}
                 data2 = json.dumps(data1)
 
                 data2 = data2.replace("\'", "\"")
                 data = json.loads(str(data2))
 
                 return JsonResponse(data)
+
+            jsonDDiagnosticos = json.loads(diagnosticos)
+            elementosDiagnosticos = len (jsonDDiagnosticos)
+            print ("elementosDiagnosticos = ", elementosDiagnosticos ) 
+
+            if (elementosDiagnosticos== 1):
+
+                print("Entre GRAVES campos vacios")
+                data1 = {'Mensaje': 'Favor suministrar diagnostico Obligatorios'}
+                data2 = json.dumps(data1)
+
+                data2 = data2.replace("\'", "\"")
+                data = json.loads(str(data2))
+
+                return JsonResponse({'success': True,'Mensaje':'NO', 'message': 'Favor suministrar diagnostico Obligatorios!'})
+
 
             else:
 
@@ -978,7 +994,7 @@ def crearHistoriaClinica(request):
                 diagnosticos = request.POST["diagnosticos"]
                 print("diagnosticos =", diagnosticos)
 
-                ## Rutina leer el JSON de laboratorios en python primero
+                ## Rutina leer el JSON de Diagnosticos en python primero
                 consecutivo=0
                 jsonDiagnosticos = json.loads(diagnosticos)
 
@@ -992,6 +1008,10 @@ def crearHistoriaClinica(request):
                    tiposDiagnosticoId = key5["tiposDiagnosticos"]
                    print("tiposDiagnosticoId", tiposDiagnosticoId)
                    observa = key5["observa"]
+
+                   if salidaClinica=='S':
+                       diagnosticoIdSalida = diagnosticoId
+
 
                    if diagnosticoId != "":
                           consecutivo = consecutivo + 1
@@ -1266,7 +1286,7 @@ def crearHistoriaClinica(request):
 
                     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",    password="pass123")
                     cur3 = miConexion3.cursor()
-                    comando = 'UPDATE admisiones_ingresos SET "salidaClinica" = ' + "'" + str(salidaClinica) + "'" + ', "dxSalida_id" = ' + "'" + str(diagnosticoId) + "'" + ', "medicoSalida_id" = ' + "'" + str(plantaId.id) + "'" + ', "especialidadesMedicosSalida_id" = ' + "'" + str(espMedico) + "'" +  ',"serviciosSalida_id" = "serviciosActual_id"  WHERE "tipoDoc_id" =  ' + "'" + str(tipoDocId.id) + "' and documento_id = " + "'" + str(documentoId.id) + "' AND consec = " + "'" + str(ingresoPaciente) + "'"
+                    comando = 'UPDATE admisiones_ingresos SET "salidaClinica" = ' + "'" + str(salidaClinica) + "'" + ', "dxSalida_id" = ' + "'" + str(diagnosticoIdSalida) + "'" + ', "medicoSalida_id" = ' + "'" + str(plantaId.id) + "'" + ', "especialidadesMedicosSalida_id" = ' + "'" + str(espMedico) + "'" +  ',"serviciosSalida_id" = "serviciosActual_id"  WHERE "tipoDoc_id" =  ' + "'" + str(tipoDocId.id) + "' and documento_id = " + "'" + str(documentoId.id) + "' AND consec = " + "'" + str(ingresoPaciente) + "'"
                     print(comando)
                     cur3.execute(comando)
                     miConexion3.commit()
@@ -1279,7 +1299,8 @@ def crearHistoriaClinica(request):
                     #data = {'Mensaje': 'Folio exitoso : ' + str(ultimofolio2)}
                 data = {'Mensaje': 'OK'}
 
-                return HttpResponse(json.dumps(data))
+                #return HttpResponse(json.dumps(data))
+                return HttpResponse(data)
                 #return HttpResponse('Folio Creado')
 
 

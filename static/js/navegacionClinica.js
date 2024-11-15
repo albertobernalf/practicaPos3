@@ -1143,7 +1143,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
             "numDias" :numDias,
             "descripcion" :descripcion   });
 
-	alert("incapacidades = final  = " + inca);
+
 	inca  = JSON.stringify(inca);
 
  	// Fin Incapacidades
@@ -1192,8 +1192,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
             "glasgowVerbal" :glasgowVerbal,
             "glasgowMotora" :glasgowMotora});
 
-	alert("signos = final  = " + signos[0]);
-	alert("signos = final  = " + signos[0]['temperatura']);
+
 	alert("signos = final  = " + JSON.stringify(signos));
 	signos  = JSON.stringify(signos);
 
@@ -1222,7 +1221,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	   };
 
 	    revisionSistemas  = JSON.stringify(revisionSistemas);
-        alert("y por que no llegamos aqui");
+     
 
  	// Fin Revision Sistemas
 
@@ -1251,13 +1250,20 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	   };
 
 	    formulacion  = JSON.stringify(formulacion);
-        alert("envio formulacion =" + formulacion);
-
+    
  	// Fin Formulacion
 
 
 	 var salidaClinica = $('input[name="salClinica"]:checked').val();
 	 alert ("salidaClinica = " + salidaClinica);
+	 if (salidaClinica != 'on')
+		{
+	alert ("ENTRE salidaClinica DE SEGUNDA VEZ = " + salidaClinica);
+
+		salidaClinica='off'
+		}
+	 alert ("salidaClinica DE SEGUNDA VEZ = " + salidaClinica);
+
 	 var salidaClinicax    =  document.getElementById("salClinica").value
 	 alert ("salidaClinicax = " + salidaClinicax);
       
@@ -1269,7 +1275,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
          var subjetivo  =  document.getElementById("id_subjetivo").value;
          var objetivo   =  document.getElementById("id_objetivo").value;
          var analisis   =  document.getElementById("id_analisis").value;
-         var plan =           document.getElementById("id_plann").value;
+         var plan 	=  document.getElementById("id_plann").value;
 
 
           var apache2 =  document.getElementById("id_apache2").value;
@@ -1326,8 +1332,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
             var form_valido;
 
             alert("VOY AJASX A GUARDAR HC");
-            alert("envio revisionSistemas " + revisionSistemas)
-
+      
                $.ajax({
             	   type: 'POST',
  	               url: '/crearHistoriaClinica/',
@@ -1394,26 +1399,20 @@ formHistoriaClinica.addEventListener('submit', e=>{
                                 'salidaClinica':salidaClinica
 				   },
  	      		success: function (respuesta2) {
- 	      		       var data = JSON.parse(respuesta2);
- 	      		       alert("data=" + data);
+ 	      		      // var data = JSON.parse(respuesta2);
+				var data  = respuesta2;
  	      		       alert("data2=" + data['Mensaje']);
-
- 	      		       alert("Esto llega1 :  " + respuesta2);
- 	      		       alert("Esto llega1 :  " + respuesta2['Mensaje']);
- 	      		        alert("Esto llega2 con strngy :  " + JSON.stringify(respuesta2));
-
- 	      		        var mensaje1 = JSON.stringify(respuesta2);
- 	      		        alert("Esto llega el Mensaje :  " + mensaje1);
+     			    $("#mensajes").html(data.message);
 
 				        if ( data['Mensaje'] == 'OK')
 				            {
-                            alert("Entre por respuesta positiva a refrecar pagina");
+						alert("Lo logre voy a hacer submiit");
 				            $("#formHistoriaClinicaT").submit();
 				            }
 				        else
 				            {
 
-				            $("#mensajeria").html(mensaje1);
+				           $("#mensajes").html(data.message);
 				            }
 
  	      		        //return true;

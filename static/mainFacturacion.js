@@ -30,8 +30,9 @@ $(document).ready(function () {
 	ano = fecha.getFullYear();
 	mes = fecha.getMonth() + 1;
 	dia = fecha.getDate();
+        diaDesde = '01'
 
-        desdeFecha = ano + '-' + mes + '-' + dia + ' 00:00:00'
+        desdeFecha = ano + '-' + mes + '-' + diaDesde + ' 00:00:00'
         hastaFecha = ano + '-' + mes + '-' + dia + ' 23:59:59'
 	alert("desdefecha = "+ desdeFecha);
 	alert("hastafecha = "+ hastaFecha);

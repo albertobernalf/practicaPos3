@@ -183,7 +183,7 @@ class HistorialDependencias(models.Model):
     documento = models.ForeignKey('usuarios.Usuarios', blank=True,null= True, editable=True, on_delete=models.PROTECT,
                                   related_name='DocumentohistorialDep')
     consec	= models.IntegerField()
-    fechaOcupacion = models.DateTimeField(default=now, editable=True)
+    fechaOcupacion = models.DateTimeField(default=now,blank=True,null= True, editable=True)
     fechaLiberacion = models.DateTimeField(default=now,blank=True,null= True, editable=True)
     disponibilidad = models.CharField(max_length=1, default='L', choices=TIPO_CHOICES, )
     fechaRegistro = models.DateTimeField(default=now, editable=True)

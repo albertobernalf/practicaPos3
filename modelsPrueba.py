@@ -285,12 +285,13 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
         -- verificar elas columnas datatable facturacion
         -- verificar anulacion facturas
         -- verificar refacturacion
-        -- crear una lkiquidacio y facturarla como prueba como le parece ...
+        -- crear una liquidacion y facturarla como prueba como le parece ...
         -- ojo como aplicar los abonos en las facturas ???-???-???
         -- Ops le dio salida teniendo mas convenios, ?? esos no estaban dentro de la liquidacion ????
          -- Nop pailas caos con EUMELIA SOCORRO ME ESTOY ASUSTANDOp, mop tranquis el unico problema es el load_datañioquidaciondetalle
-           cpnm el campo liquidacionId
-
+           cpnm el campo liquidacionId// probar mañana creo ya esta solucuoinado PROBAR
+	  -- Ojop la fecha de la factura no la esta actualizando se queda con la fecha
+            en la que se crea el cabezote. mejor colocar null en esete campo cunado se crea el cabezote
 
 
 -----------------------------------------------------------------------------------------------------------------------
