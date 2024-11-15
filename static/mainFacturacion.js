@@ -772,6 +772,7 @@ function AFacturar()
                         alert("numero de la liquidacionId = " + liquidacionId);
 
 		        data2['valor'] = liquidacionId;
+			data2['liquidacionId'] = liquidacionId;
 		        data2 = JSON.stringify(data2);
 
                      if (data.message != 'Paciente NO tiene Salida Clinica. Consultar medico tratante !')

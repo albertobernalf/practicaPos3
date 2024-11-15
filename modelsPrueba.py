@@ -255,14 +255,11 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
               -- verificar fechas de elaboracion de factura, fechas de anulacion , etc.
 
            -- Ojo hay que marcar los abonos utilizados y relacionarlos a una factura . Crear campo Factura_aplicada
-           -- Crear TAB de facturacion
-           -- Crear Anulacion de Facturas
-           -- Crear Refacturacion
-	   -- Crear Traslados de convenios
+
        -- hacer proba medicamentos (Aunque es mejor cuando se dispensa o despacha deberan caer a la facturacion), noqx facturacion automatica
        -- ojop ver facturacion automatico de No qx
 
-       -- OJO hay que refrescar los totales. Crear funcion totales javascript
+
        -- arreglar el delete de abonos/pagos marcarlos con 'N' de ANULADO como se hizpo con liquidacion    
        -- Ojo colocar el numero de la factura en la tabla ingresos
        -- colocar la fecha de egreso al momento de la salida.-
@@ -270,28 +267,25 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 
        -- datatable de abonos esta muy grande arreglar
        -- OJO NO TRAE LOS ABONOS DE MARIA PAULA / tampoco de maria camilita
-       -- Probar anulacion de facturas
-       -- Probar refacturacion
-       -- cOLOCAR Anular en anularfacturas
        --el tab de refacturacon no muestra nada ppoor cua?
       -- error en liquidaciondetalle ,, ops falkta el consecutivo
- 	-- hay que capturar el servicio de salida desde la historia clinica y guardarlo para la facturacion en salida clinica
-       -- Tengo un rollo. Probar la liberacion de cama el historico de las dependecias crear otro facturable
-
 	-- ojo verificar diagnosticos
-        -- verificar grabar dx de salida desde hc
-        -- verificar en facturacion gustrde dependencias historico, dependencias libera cama
-        -- verifcar en clinico , salida clinica , el servico y demas
         -- verificar elas columnas datatable facturacion
         -- verificar anulacion facturas
         -- verificar refacturacion
-        -- crear una liquidacion y facturarla como prueba como le parece ...
+	-- CREAR VERIFICAR traslados convenios
         -- ojo como aplicar los abonos en las facturas ???-???-???
         -- Ops le dio salida teniendo mas convenios, ?? esos no estaban dentro de la liquidacion ????
          -- Nop pailas caos con EUMELIA SOCORRO ME ESTOY ASUSTANDOp, mop tranquis el unico problema es el load_datañioquidaciondetalle
            cpnm el campo liquidacionId// probar mañana creo ya esta solucuoinado PROBAR
-	  -- Ojop la fecha de la factura no la esta actualizando se queda con la fecha
-            en la que se crea el cabezote. mejor colocar null en esete campo cunado se crea el cabezote
+          -- POPS HAY UN PROBLEMA al crear un folio, cuando no tiene convenio sale error en la HC. Que podemos hacer ??. De pronto como solucion parcial creartla tarifas PARTICULAR que le parece
+	
+	-- Tengo dos problemitas:
+		Al guardar la HC, no me submita o si submita pero  o me carga la pagina de nuevo. esto estaba funcionando antes. NO ENTIENDO POR QUE 
+                Al Facturar, se queda trabahdo no refresca la liquidacion ni la liquidacionETALLE
+                Al cxargar desde la HC, a un paciente sin convenio, crea el cabezote facturtacion:liquidacion pero con convenio_id=nuul, ANTON no sale enb la pantallade facturacion
+                por obvias razones.( MEJORAR PROCESO O COMO HACER')
+                Ojo el lunes 18-noviembre ver que las pantalllas carguen bien (HC y FACTURACION LIQUIDACION) y que coloquen el numero de la factura genrerado para poder imprimir
 
 
 -----------------------------------------------------------------------------------------------------------------------

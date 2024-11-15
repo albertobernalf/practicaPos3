@@ -859,6 +859,9 @@ def FacturarCuenta(request):
     ingresoId = Ingresos.objects.get(tipoDoc_id=usuarioId.tipoDoc_id , documento_id=usuarioId.documento_id ,consec=usuarioId.consecAdmision)
     print ("ingresoId = ", ingresoId.id)
 
+    if (ingresoId.salidaClinica=='N'):
+	    return JsonResponse({'success': True, 'message': 'Paciente NO tiene Salida Clinica. Consultar medico tratante !', 'Factura' : 0 })
+
 
     ## AQUI RUTINA HISATORICO CAMA-DEPENDENCIA 
 
@@ -866,7 +869,7 @@ def FacturarCuenta(request):
     cur3 = miConexion3.cursor()
 
     #comando = 'INSERT INTO sitios_historialdependencias  (consec, "fechaLiberacion" , "fechaRegistro" , "estadoReg" , dependencias_id, documento_id, "tipoDoc_id", "usuarioRegistro_id", disponibilidad ) VALUES (' + str(ingresoId.consec) + ','  + "'" + str(fechaRegistro) + "','" +    str(fechaRegistro) + "',"  +  "'" + str('A') + "'," + "'" +  str(ingresoId.dependenciasActual_id) + "'," + "'" + str(ingresoId.documento_id) + "'," + "'" + str(ingresoId.tipoDoc_id) + "'," + "'" +  str(username_id) + "',''" + ")"
-    comando = 'INSERT INTO sitios_historialdependencias SELECT consec,' + "'" + str(fechaRegistro) + "'," + "'" + str(fechaRegistro) + "'," + 'A' + ", id" + ",'" + str(ingresoId.documento_id) + "'," + "'" + str(ingresoId.tipoDoc_id) + "'," + "'" + str(username_id) + "'," + "'" + str('L') + "'" +  ' from sitios_dependencias where "tipoDoc_id" = ' + "'" + str(ingresoId.tipoDoc_id) + "' AND documento_id = "  + "'" + str(ingresoId.documento_id) + "' AND consec = " + "'" + str(ingresoId.consec) + "'"
+    comando = 'INSERT INTO sitios_historialdependencias (consec,"fechaLiberacion","fechaRegistro","estadoReg", dependencias_id,documento_id,"tipoDoc_id","usuarioRegistro_id",disponibilidad)  SELECT consec,' + "'" + str(fechaRegistro) + "'," + "'" + str(fechaRegistro) + "'," + "'" + str('A') + "'" + ", id" + ",'" + str(ingresoId.documento_id) + "'," + "'" + str(ingresoId.tipoDoc_id) + "'," + "'" + str(username_id) + "'," + "'" + str('L') + "'" +  ' from sitios_dependencias where "tipoDoc_id" = ' + "'" + str(ingresoId.tipoDoc_id) + "' AND documento_id = "  + "'" + str(ingresoId.documento_id) + "' AND consec = " + "'" + str(ingresoId.consec) + "'"
     print(comando)
     cur3.execute(comando)
     miConexion3.commit()
@@ -881,7 +884,7 @@ def FacturarCuenta(request):
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
     cur3 = miConexion3.cursor()
 
-    comando = 'UPDATE sitios_dependencias SET disponibilidad = ' + "'" + str('L') + "'," + ' "tipoDoc_id" = ' +  str('') + ' , documento_id = '  + str('')  + ', consec= ' + str('') + ' WHERE "tipoDoc_id" = ' + "'" + str(ingresoId.tipoDoc_id) + "'" + ' AND documento_id = ' + "'" + str(ingresoId.documento_id) + "'" + ' AND consec = ' + str('')
+    comando = 'UPDATE sitios_dependencias SET disponibilidad = ' + "'" + str('L') + "'," + ' "tipoDoc_id" = null , documento_id = null,  consec= null, "fechaLiberacion" = ' + "'" + str(fechaRegistro) + "'"  + ' WHERE "tipoDoc_id" = ' + "'" + str(ingresoId.tipoDoc_id) + "'" + ' AND documento_id = ' + "'" + str(ingresoId.documento_id) + "'" + ' AND consec = ' + str(ingresoId.consec)
     print(comando)
     cur3.execute(comando)
     miConexion3.commit()
@@ -912,12 +915,6 @@ def FacturarCuenta(request):
     print ("facturacionId = ", facturacionId.id)
 
     ## COLOCAR EN LA TABLA INGRESOS , LA FECHA DE EGRESO Y EL NUMERO DE LA FACTURA GENERADO
-
-
-    if (ingresoId.salidaClinica=='N'):
-	    return JsonResponse({'success': True, 'message': 'Paciente NO tiene Salida Clinica. Consultar medico tratante !', 'Factura' : 0 })
-
-
 
     miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
     curt = miConexiont.cursor()

@@ -493,7 +493,17 @@ def crearHistoriaClinica(request):
                 convenioId = convenioId.replace(")", ' ')
                 convenioId = convenioId.replace(",", ' ')
                 print("convenioId = ", convenioId)
+                print("Tamalo de convenioId =", len(convenioId))
+                
+                convenioId = convenioId.strip()
 
+                print("sin espacioos convenioId =", convenioId)
+	        
+                if convenioId=='None':
+                   convenioId="null"
+                   print ("Entre a MODIFICAR convenioID") 
+
+                print("ULTIMO valor de convenioId= ", convenioId)
 
 
 	        # Fin Rutina busca convenio del paciente
@@ -522,7 +532,7 @@ def crearHistoriaClinica(request):
                     comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + "'" + str(
                         tipoDocId.id) + "','" + str(documentoId.id) + "','" + str(ingresoPaciente) + "','" + str(
                         fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(
-                        estadoReg) + "'," + convenioId + ',' + "'" + str(usuarioRegistro) + "',0)"
+                        estadoReg) + "'," + str(convenioId) + ',' + "'" + str(usuarioRegistro) + "',0)"
                     curt.execute(comando)
                     miConexiont.commit()
                     miConexiont.close()

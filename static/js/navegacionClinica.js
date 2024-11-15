@@ -1414,8 +1414,9 @@ formHistoriaClinica.addEventListener('submit', e=>{
 
 				           $("#mensajes").html(data.message);
 				            }
-
- 	      		        //return true;
+				
+				windows.reload();
+ 	      		        return true;
  	      		}, // cierra function sucess
  	      		error: function (request, status, error) {
  	      			alert(request.responseText);
