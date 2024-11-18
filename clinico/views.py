@@ -583,6 +583,10 @@ def crearHistoriaClinica(request):
                 consecLiquidacion = consecLiquidacion.replace(")", ' ')
                 consecLiquidacion = consecLiquidacion.replace(",", ' ')
 
+                if consecLiquidacion.strip()=='None':
+                    print ("consecLiquidacion = ",  consecLiquidacion)
+                    consecLiquidacion=1
+
 	        # Fin RUTINA busca consecutivo de liquidacion
 
 
@@ -620,9 +624,7 @@ def crearHistoriaClinica(request):
                         #
                         codigoCupsId = Examenes.objects.filter(codigoCups=cups)
                         print ("codigoCupsId", codigoCupsId[0].id)
-
-                        
-
+                     
                         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432",
                                                        user="postgres", password="pass123")
 
@@ -1253,6 +1255,61 @@ def crearHistoriaClinica(request):
                         # Fin Grabacion Formulacion
 
                         # Aqui rutina Actualizar totales de CABEZOTE de liquidacion. Primero por ORM calcula totales
+			# OJOOO ESTA RUTINA se debe hacer desde DISPENSACION NDE FARMAICA.
+			# POR EL MOMNETO DESDE AQUIP
+
+                        ## Desde Aqui rutina de Facturacion
+                        #
+                     
+                        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432",
+                                                       user="postgres", password="pass123")
+
+                        curt = miConexiont.cursor()
+                        comando = 'SELECT conv.convenio_id convenio ,sum.suministro_id sum, sum.valor tarifaValor FROM facturacion_conveniospacienteingresos conv, contratacion_conveniossuministros sum WHERE conv."tipoDoc_id" = ' + "'" +  str(tipoDocId.id) + "' AND conv.documento_id = " + "'" + str(documentoId.id) + "'" + ' AND conv."consecAdmision" = ' + "'" + str(ingresoPaciente) + "' AND conv.convenio_id = sum.convenio_id AND sum.suministro_id = " + "'" +  str(medicamentos) + "'"
+                        curt.execute(comando)
+                        convenioValor = []
+
+                        for id, sum,tarifaValor   in curt.fetchall():
+                            convenioValor.append({'convenio': convenio, 'sum':sum, 'valor':tarifaValor})
+
+                        miConexiont.close()
+
+                        if convenioValor != []:
+
+                            print ("Sum = "  , convenioValor[0]['sum'])
+                            tarifaValor = convenioValor[0]['valor']
+                            tarifaValor = str(tarifaValor)
+                            print("tarifaValor = ", tarifaValor)
+                            tarifaValor = tarifaValor.replace("(", ' ')
+                            tarifaValor = tarifaValor.replace(")", ' ')
+                            tarifaValor = tarifaValor.replace(",", ' ')
+                            print ("tarifaValor = ", tarifaValor)
+
+                        else:
+                            tarifaValor=0
+
+                        TotalTarifa = float(tarifaValor) * float(cantidadMedicamento)
+                        print("consecLiquidacion LISTO= ", consecLiquidacion)
+
+                    # Aqui Rutina FACTURACION crea en liquidaciondetalle el registro con la tarifa, con campo cups y convenio
+                    #
+                        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
+                        curt = miConexiont.cursor()
+                        comando = 'INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorUnitario", "valorTotal",cirugia,"fechaCrea", "fechaRegistro", "estadoRegistro", "cums_id",  "usuarioRegistro_id", liquidacion_id, "tipoRegistro") VALUES (' + "'" +  str(consecLiquidacion)  + "','" + str(fechaRegistro) + "','" + str(cantidadMedicamento) + "','"  + str(tarifaValor) + "','" + str(TotalTarifa)  + "','" + str('N') + "','" +  str(fechaRegistro) + "','" +  str(fechaRegistro) + "','" + str(estadoReg) + "','" + str(medicamentos) + "','" + str(usuarioRegistro) + "'," + liquidacionId + ",'SISTEMA')"
+                        curt.execute(comando)
+                        miConexiont.commit()
+                        miConexiont.close()
+
+                        consecLiquidacion = int(consecLiquidacion) + 1
+
+
+	            # Fin rutina Facturacion
+
+
+
+
+			# Deberia ser hasta Aqui
+
 
                 totalSuministros = LiquidacionDetalle.objects.all().filter(liquidacion_id=liquidacionId).aggregate(totalS=Coalesce(Sum('valorTotal'), 0))
                 totalSuministros = (totalSuministros['totalS']) + 0

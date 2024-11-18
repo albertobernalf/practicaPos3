@@ -283,7 +283,7 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 	-- Tengo dos problemitas:
 		Al guardar la HC, no me submita o si submita pero  o me carga la pagina de nuevo. esto estaba funcionando antes. NO ENTIENDO POR QUE 
                 Al Facturar, se queda trabahdo no refresca la liquidacion ni la liquidacionETALLE
-                Al cxargar desde la HC, a un paciente sin convenio, crea el cabezote facturtacion:liquidacion pero con convenio_id=nuul, ANTON no sale enb la pantallade facturacion
+                Al cargar desde la HC, a un paciente sin convenio, crea el cabezote facturacion:liquidacion pero con convenio_id=nuul, ANTON no sale enb la pantallade facturacion
                 por obvias razones.( MEJORAR PROCESO O COMO HACER')
                 Ojo el lunes 18-noviembre ver que las pantalllas carguen bien (HC y FACTURACION LIQUIDACION) y que coloquen el numero de la factura genrerado para poder imprimir
 

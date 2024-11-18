@@ -62,6 +62,8 @@ $(document).ready(function () {
           var post_id = $(this).data('pk');
           alert("pk1 = " + $(this).data('pk'));
         var username_id = document.getElementById("username_id").value;
+	// var username_id = document.getElementById("username_id").value;
+
 	document.getElementById("liquidacionId").value = '';
 	document.getElementById("liquidacionId1").value = '';
 	document.getElementById("ingresoId").value = '';
@@ -557,7 +559,7 @@ function initTableLiquidacion(data) {
                           btn = btn + " <input type='radio'  class='form-check-input editPostLiquidacion' data-pk='"  + row.pk + "'>" + "</input>";
                         return btn;
                     },
-                    "targets": 10
+                    "targets": 9
                }
             ],
             ajax: {
@@ -568,7 +570,7 @@ function initTableLiquidacion(data) {
 
             lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
             columns: [
-                { data: "fields.tipoIng"},
+
                 { data: "fields.id"},
                 { data: "fields.tipoDoc"},
                 { data: "fields.documento"},
@@ -775,12 +777,38 @@ function AFacturar()
 			data2['liquidacionId'] = liquidacionId;
 		        data2 = JSON.stringify(data2);
 
+			// fecha actual
+			let fecha = new Date();
+
+			ano = fecha.getFullYear();
+			mes = fecha.getMonth() + 1;
+			dia = fecha.getDate();
+		        diaDesde = '01'
+
+		        desdeFecha = ano + '-' + mes + '-' + diaDesde + ' 00:00:00'
+		        hastaFecha = ano + '-' + mes + '-' + dia + ' 23:59:59'
+			alert("desdefecha = "+ desdeFecha);
+			alert("hastafecha = "+ hastaFecha);
+		        desdeFactura=0;
+		        hastaFactura=0;
+
+
+			data2['desdeFecha'] = desdeFecha;
+			data2['hastaFecha'] = hastaFecha;
+			data2['desdeFactura'] = desdeFactura;
+			data2['hastaFactura'] = hastaFactura;
+			data2['bandera'] = 'Por Fecha';
+
+
                      if (data.message != 'Paciente NO tiene Salida Clinica. Consultar medico tratante !')
 			{
 				
 			    tableL= $("#tablaLiquidacion").dataTable().fnDestroy();	
 	        	    initTableLiquidacion(data2);
 
+				
+			    tableL= $("#tablaFacturacion").dataTable().fnDestroy();	
+	        	    initTableFacturacion(data2);
 			}
 
 

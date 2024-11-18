@@ -1404,19 +1404,18 @@ formHistoriaClinica.addEventListener('submit', e=>{
  	      		       alert("data2=" + data['Mensaje']);
      			    $("#mensajes").html(data.message);
 
-				        if ( data['Mensaje'] == 'OK')
-				            {
-						alert("Lo logre voy a hacer submiit");
-				            $("#formHistoriaClinicaT").submit();
-				            }
-				        else
-				            {
-
-				           $("#mensajes").html(data.message);
-				            }
+		        if ( data['Mensaje'] == 'OK')
+		            {
+				alert("Lo logre voy a hacer submiit");
+		            $("#formHistoriaClinicaT").submit();
+		            }
+		        else
+		            {
+		           $("#mensajes").html(data.message);
+		            }
 				
-				windows.reload();
- 	      		        return true;
+			windows.reload();
+      		        return true;
  	      		}, // cierra function sucess
  	      		error: function (request, status, error) {
  	      			alert(request.responseText);
