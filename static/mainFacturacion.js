@@ -81,7 +81,15 @@ $(document).ready(function () {
 	  		// aqui debe activar un dataTale para liquidacionDetalle
 		$('#liquidacionId').val(data.id);
 		$('#liquidacionId1').val(data.id);
-		$('#ingresoId').val(data.ingresoId1);
+		if (data.tipo == 'INGRESO')
+		{
+			$('#ingresoId').val(data.ingresoId1);
+		}
+		else
+		{
+			$('#triageId').val(data.triageId1);
+		}
+
 
 		$('#fecha').val(data.fecha);
 		$('#tipoDoc_id').val(data.tipoDoc_id);
@@ -181,14 +189,24 @@ $(document).ready(function () {
 		        data2['valor'] = valor;	
 		        data2['liquidacionId'] = data.id;	
 
+			if (data.tipo == 'INGRESO')
+			{
+
 		        data2['ingresoId'] = ingresoId;	
+			}
+			else
+			{
+		        data2['triageId'] = triageId;	
+			}
 
 		        data2 = JSON.stringify(data2);
 			   $("#mensajes").html(data.message);
 
+
+
 		  alert( "voy a borrar loaddataliquidaciondetalle");
 
-			
+	
 		    tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
 	           initTableLiquidacionDetalle(data2);
 

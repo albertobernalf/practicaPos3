@@ -287,7 +287,12 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
                 por obvias razones.( MEJORAR PROCESO O COMO HACER')
                 Ojo el lunes 18-noviembre ver que las pantalllas carguen bien (HC y FACTURACION LIQUIDACION) y que coloquen el numero de la factura genrerado para poder imprimir
 
-
+	-- Ojo crea el apcinte nuevo pero la ventana modal se bloquea no vuelve
+        -- OJO en admisiones perdi el nombre del modulo en la navegacion
+        -- ojo en admisiones validar la gfrabacion de rips y no salen todos los campos en pantalla
+        -- ojo definir el tema de los abonos, va el conceto abono ? o nop. yo creo que si., ANTON
+       -- en liquidacionDetale no muestra  la cama y el servicio
+ 
 -----------------------------------------------------------------------------------------------------------------------
 --  GLOSAS
 -----------------------------------------------------------------------------------------------------------------------

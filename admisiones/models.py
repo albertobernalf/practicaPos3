@@ -64,7 +64,7 @@ class Ingresos(models.Model):
     ripsEdadGestacional = models.CharField(max_length=10,default='')
     ripsNumConsultasCPrenatal = models.CharField(max_length=10,default='')
     ripsPesoRecienNacido = models.CharField(max_length=10,default='')
-    #ripsDestinoUsuarioEgresoRecienNacido = models.ForeignKey('rips.RipsDestinoEgreso', blank=True,null= True, editable=True, on_delete=models.PROTECT ,   related_name='ripssDestino10')
+    ripsDestinoUsuarioEgresoRecienNacido = models.ForeignKey('rips.RipsDestinoEgreso', blank=True,null= True, editable=True, on_delete=models.PROTECT ,   related_name='ripssDestino12')
     ripsViaIngresoServicioSalud = models.ForeignKey('rips.RipsViasIngresoSalud', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     ripsmodalidadGrupoServicioTecSal = models.ForeignKey('rips.RipsModalidadAtencion', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     ripsGrupoServicios =  models.ForeignKey('rips.RipsGrupoServicios', blank=True,null= True, editable=True, on_delete=models.PROTECT)

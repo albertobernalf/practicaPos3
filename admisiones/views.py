@@ -25,6 +25,7 @@ from sitios.models import  HistorialDependencias, Dependencias, ServiciosSedes, 
 from usuarios.models import Usuarios, TiposDocumento
 from planta.models import Planta
 from facturacion.models import ConveniosPacienteIngresos
+from rips.models import  RipsDestinoEgreso
 import datetime
 
 # Create your views here.
@@ -3533,7 +3534,7 @@ def crearAdmisionDef(request):
         ripsEdadGestacional = request.POST["ripsEdadGestacional"]
         ripsDestinoUsuarioEgresoRecienNacido = request.POST['ripsDestinoUsuarioEgresoRecienNacido']
 
-
+        ripsDestinoUsu1 = RipsDestinoEgreso.objects.get(id= ripsDestinoUsuarioEgresoRecienNacido)
 
         grabo = Ingresos(
                          sedesClinica_id=Sede,
@@ -3582,7 +3583,7 @@ def crearAdmisionDef(request):
                          ripsPesoRecienNacido = ripsPesoRecienNacido,
                          ripsNumConsultasCPrenatal = ripsNumConsultasCPrenatal,
                          ripsEdadGestacional = ripsEdadGestacional,
-                         ripsDestinoUsuarioEgresoRecienNacido =ripsDestinoUsuarioEgresoRecienNacido,
+                         ripsDestinoUsuarioEgresoRecienNacido =ripsDestinoUsu1,
                          fechaRegistro=fechaRegistro,
                          usuarioRegistro_id=usernameId.id,
                          estadoReg=estadoReg,

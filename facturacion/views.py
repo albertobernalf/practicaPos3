@@ -126,15 +126,8 @@ def PostConsultaLiquidacion(request):
     print ("llave = " ,llave)
     print ("primero=" ,llave[0])
     print("segundo = " ,llave[1])
+    print("tercero o convenio  = " ,llave[2])
 
-    convenioId = llave[2]
-    print ("Convenio = " , convenioId)
-   
-    if (convenioId=='0'):
-       print ("convenioId = ", convenioId)
-       convenioId="null"
-
-    print ("convenioId FINAL= ", convenioId)
 
     # Combo TiposPagos
 
@@ -242,7 +235,19 @@ def PostConsultaLiquidacion(request):
 
     # Fin combo suministros
 
-    if llave[0] == 'INGRESO':	
+    convenioId = llave[2]
+    convenioId = convenioId.strip()
+
+    print("Convenio despues de strip = ", convenioId)
+
+    #if (convenioId == '0'):
+    #    print("convenioId = ", convenioId)
+    #    convenioId = ""
+
+    print("convenioId FINAL= ", convenioId)
+
+
+    if llave[0] == 'INGRESO':
         ingresoId = Ingresos.objects.get(id=llave[1])
         print ("ingresoId = ", ingresoId)
         print ("tipodDoc_id =" ,ingresoId.tipoDoc_id)
@@ -270,12 +275,16 @@ def PostConsultaLiquidacion(request):
 
     curt = miConexiont.cursor()
 
-    if llave[0] == 'INGRESO':	
-
-       comando = 'SELECT id FROM facturacion_liquidacion WHERE "tipoDoc_id" = ' + str(ingresoId.tipoDoc_id) + ' AND documento_id = ' + str(ingresoId.documento_id) + ' AND "consecAdmision" = ' + str(ingresoId.consec) + ' and convenio_id = ' + str(convenioId)
-
+    if llave[0] == 'INGRESO':
+        if (convenioId == '0'):
+            comando = 'SELECT id FROM facturacion_liquidacion WHERE "tipoDoc_id" = ' + str(ingresoId.tipoDoc_id) + ' AND documento_id = ' + str(ingresoId.documento_id) + ' AND "consecAdmision" = ' + str(ingresoId.consec) + ' and convenio_id is null'
+        else:
+            comando = 'SELECT id FROM facturacion_liquidacion WHERE "tipoDoc_id" = ' + str(ingresoId.tipoDoc_id) + ' AND documento_id = ' + str(ingresoId.documento_id) + ' AND "consecAdmision" = ' + str(ingresoId.consec) + ' and convenio_id = ' + "'" + str(convenioId) + "'"
     else:
-       comando = 'SELECT id FROM facturacion_liquidacion WHERE "tipoDoc_id" = ' + str(triageId.tipoDoc_id) + ' AND documento_id = ' + str(triageId.documento_id) + ' AND "consecAdmision" = ' + str('0') + ' and convenio_id = ' + str(convenioId)
+        if (convenioId == '0'):
+            comando = 'SELECT id FROM facturacion_liquidacion WHERE "tipoDoc_id" = ' + str(triageId.tipoDoc_id) + ' AND documento_id = ' + str(triageId.documento_id) + ' AND "consecAdmision" = ' + str(triageId.consec) + ' and convenio_id is null'
+        else:
+            comando = 'SELECT id FROM facturacion_liquidacion WHERE "tipoDoc_id" = ' + str(triageId.tipoDoc_id) + ' AND documento_id = ' + str(triageId.documento_id) + ' AND "consecAdmision" = ' + str(triageId.consec) + ' and convenio_id = ' + "'" + str(convenioId) + "'"
 
     curt.execute(comando)
 
@@ -291,10 +300,17 @@ def PostConsultaLiquidacion(request):
         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432",       user="postgres", password="pass123")
         curt = miConexiont.cursor()
 
-        if llave[0] == 'INGRESO':	
-           comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + str(ingresoId.tipoDoc_id)  + ',' +  str(ingresoId.documento_id) + ',' + str(ingresoId.consec) + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "'," + str(convenioId) + ',' + "'" + str(username_id) + "',0)"
+        if llave[0] == 'INGRESO':
+            if (convenioId == '0'):
+                comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + str(ingresoId.tipoDoc_id)  + ',' +  str(ingresoId.documento_id) + ',' + str(ingresoId.consec) + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "', null"  + ',' + "'" + str(username_id) + "',0)"
+            else:
+                comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + str(ingresoId.tipoDoc_id)  + ',' +  str(ingresoId.documento_id) + ',' + str(ingresoId.consec) + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "'," + str(convenioId) + ',' + "'" + str(username_id) + "',0)"
+
         else:
-           comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + str(triageId.tipoDoc_id)  + ',' +  str(triageId.documento_id) + ',' + str('0') + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "'," + str(convenioId) + ',' + "'" + str(username_id) + "',0)"
+            if (convenioId == '0'):
+                comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + str(triageId.tipoDoc_id)  + ',' +  str(triageId.documento_id) + ',' + str('0') + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "', null" + ',' + "'" + str(username_id) + "',0)"
+            else:
+                comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + str(triageId.tipoDoc_id)  + ',' +  str(triageId.documento_id) + ',' + str('0') + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "'," + str(convenioId) + ',' + "'" + str(username_id) + "',0)"
 
         curt.execute(comando)
         miConexiont.commit()
@@ -324,13 +340,13 @@ def PostConsultaLiquidacion(request):
 
         if llave[0] == 'INGRESO':	
 
-            comando = 'select liq.id id,  "consecAdmision",  fecha ,  "totalCopagos" ,  "totalCuotaModeradora" ,  "totalProcedimientos" ,"totalSuministros", "totalLiquidacion", "valorApagar", "fechaCorte", anticipos, "detalleAnulacion", "fechaAnulacion", observaciones, liq."fechaRegistro", "estadoRegistro", convenio_id, liq."tipoDoc_id" , liq.documento_id, liq."usuarioRegistro_id", "totalAbonos", conv.nombre nombreConvenio, usu.nombre paciente, adm.id ingresoId1, usu.documento documento, tip.nombre tipoDocumento FROM facturacion_liquidacion liq, contratacion_convenios conv, usuarios_usuarios usu, admisiones_ingresos adm, usuarios_tiposdocumento  tip where adm.id = ' + "'" + str(llave[1]) + "'" + '  AND  liq.convenio_id = conv.id and usu.id = liq.documento_id  and adm."tipoDoc_id" = liq."tipoDoc_id"   AND tip.id = adm."tipoDoc_id" AND adm.documento_id = liq.documento_id  AND adm.consec = liq."consecAdmision" AND conv.id = ' + str(convenioId)
-
+            #comando = 'select ' + "'"  + str('INGRESO') + "'" + '  tipo, liq.id id,  "consecAdmision",  fecha ,  "totalCopagos" ,  "totalCuotaModeradora" ,  "totalProcedimientos" ,"totalSuministros", "totalLiquidacion", "valorApagar", "fechaCorte", anticipos, "detalleAnulacion", "fechaAnulacion", observaciones, liq."fechaRegistro", "estadoRegistro", convenio_id, liq."tipoDoc_id" , liq.documento_id, liq."usuarioRegistro_id", "totalAbonos", conv.nombre nombreConvenio, usu.nombre paciente, adm.id ingresoId1, usu.documento documento, tip.nombre tipoDocumento FROM facturacion_liquidacion liq, contratacion_convenios conv, usuarios_usuarios usu, admisiones_ingresos adm, usuarios_tiposdocumento  tip where adm.id = ' + "'" + str(llave[1]) + "'" + '  AND  liq.convenio_id = conv.id and usu.id = liq.documento_id  and adm."tipoDoc_id" = liq."tipoDoc_id"   AND tip.id = adm."tipoDoc_id" AND adm.documento_id = liq.documento_id  AND adm.consec = liq."consecAdmision" AND conv.id = ' + str(convenioId)
+            comando =  'select ' + "'"  + str('INGRESO') + "'" + '  tipo, liq.id id,  "consecAdmision",  fecha ,  "totalCopagos" ,  "totalCuotaModeradora" ,  "totalProcedimientos" ,"totalSuministros", "totalLiquidacion", "valorApagar", "fechaCorte", anticipos, "detalleAnulacion", "fechaAnulacion", observaciones,  liq."fechaRegistro", "estadoRegistro", convenio_id, liq."tipoDoc_id" , liq.documento_id, liq."usuarioRegistro_id", "totalAbonos",  conv.nombre nombreConvenio, usu.nombre paciente, adm.id ingresoId1, usu.documento documento, tip.nombre tipoDocumento FROM facturacion_liquidacion liq INNER JOIN usuarios_usuarios usu ON (usu."tipoDoc_id" = liq."tipoDoc_id" AND usu.id = liq.documento_id) INNER JOIN admisiones_ingresos adm ON (adm."tipoDoc_id" = liq."tipoDoc_id"  AND adm.documento_id = liq.documento_id  AND adm.consec = liq."consecAdmision"  ) INNER JOIN usuarios_tiposdocumento  tip ON (tip.id = adm."tipoDoc_id") LEFT JOIN  contratacion_convenios conv ON (conv.id = liq.convenio_id) where adm.id = ' + "'" + str(llave[1]) + "'"
         else:
 
-            comando = 'select liq.id id,  tri."consecAdmision" consecAdmision,  fecha ,  "totalCopagos" ,  "totalCuotaModeradora" ,  "totalProcedimientos" ,"totalSuministros", "totalLiquidacion", "valorApagar", "fechaCorte", anticipos, "detalleAnulacion", "fechaAnulacion", tri.observaciones, liq."fechaRegistro", "estadoRegistro", convenio_id, liq."tipoDoc_id" , liq.documento_id, liq."usuarioRegistro_id", "totalAbonos", conv.nombre nombreConvenio, usu.nombre paciente, tri.id triageId1, usu.documento documento, tip.nombre tipoDocumento FROM facturacion_liquidacion liq, contratacion_convenios conv, usuarios_usuarios usu, triage_triage tri, usuarios_tiposdocumento  tip where tri.id = ' + "'" + str(llave[1]) + "'" + '  AND  liq.convenio_id = conv.id and usu.id = liq.documento_id  and tri."tipoDoc_id" = liq."tipoDoc_id"   AND tip.id = tri."tipoDoc_id" AND tri.documento_id = liq.documento_id  AND tri.consec = liq."consecAdmision" AND conv.id = ' + str(convenioId)
-
-        print(comando)
+            #comando = 'select ' + "'"  + str('TRIAGE') + "'" + ' tipo, liq.id id,  tri."consecAdmision" consecAdmision,  fecha ,  "totalCopagos" ,  "totalCuotaModeradora" ,  "totalProcedimientos" ,"totalSuministros", "totalLiquidacion", "valorApagar", "fechaCorte", anticipos, "detalleAnulacion", "fechaAnulacion", tri.observaciones, liq."fechaRegistro", "estadoRegistro", convenio_id, liq."tipoDoc_id" , liq.documento_id, liq."usuarioRegistro_id", "totalAbonos", conv.nombre nombreConvenio, usu.nombre paciente, tri.id triageId1, usu.documento documento, tip.nombre tipoDocumento FROM facturacion_liquidacion liq, contratacion_convenios conv, usuarios_usuarios usu, triage_triage tri, usuarios_tiposdocumento  tip where tri.id = ' + "'" + str(llave[1]) + "'" + '  AND  liq.convenio_id = conv.id and usu.id = liq.documento_id  and tri."tipoDoc_id" = liq."tipoDoc_id"   AND tip.id = tri."tipoDoc_id" AND tri.documento_id = liq.documento_id  AND tri.consec = liq."consecAdmision" AND conv.id = ' + str(convenioId)
+            comando =  'select ' + "'"  + str('TRIAGE') + "'" + ' tipo, liq.id id,  tri."consecAdmision",  fecha ,  "totalCopagos" ,  "totalCuotaModeradora" ,  "totalProcedimientos" ,"totalSuministros", "totalLiquidacion", "valorApagar", "fechaCorte", anticipos, "detalleAnulacion", "fechaAnulacion", tri.observaciones, liq."fechaRegistro", "estadoRegistro", convenio_id, liq."tipoDoc_id" , liq.documento_id, liq."usuarioRegistro_id", "totalAbonos", conv.nombre nombreConvenio, usu.nombre paciente, tri.id triageId1, usu.documento documento, tip.nombre tipoDocumento FROM facturacion_liquidacion liq inner join  triage_triage tri on (tri."tipoDoc_id" = liq."tipoDoc_id"  and tri.documento_id = liq.documento_id  AND tri.consec = liq."consecAdmision" ) left join  contratacion_convenios conv on (conv.id = liq.convenio_id) inner join  usuarios_usuarios usu on (usu."tipoDoc_id" = liq."tipoDoc_id" AND usu.id = liq.documento_id) inner join usuarios_tiposdocumento  tip on (tip.id = usu."tipoDoc_id") where tri.id = ' + "'" + str(llave[1]) + "'"
+            print(comando)
 
         cur.execute(comando)
 
@@ -338,8 +354,8 @@ def PostConsultaLiquidacion(request):
 
         if llave[0] == 'INGRESO':
 
-          for id,consecAdmision,fecha ,totalCopagos,totalCuotaModeradora,totalProcedimientos ,totalSuministros, totalLiquidacion, valorApagar, fechaCorte, anticipos, detalleAnulacion, fechaAnulacion, observaciones, fechaRegistro, estadoRegistro, convenio_id, tipoDoc_id , documento_id, usuarioRegistro_id, totalAbonos, nombreConvenio , paciente, ingresoId1 , documento, tipoDocumento in cur.fetchall():
-            liquidacion.append( {"id": id,
+          for tipo, id,consecAdmision,fecha ,totalCopagos,totalCuotaModeradora,totalProcedimientos ,totalSuministros, totalLiquidacion, valorApagar, fechaCorte, anticipos, detalleAnulacion, fechaAnulacion, observaciones, fechaRegistro, estadoRegistro, convenio_id, tipoDoc_id , documento_id, usuarioRegistro_id, totalAbonos, nombreConvenio , paciente, ingresoId1 , documento, tipoDocumento in cur.fetchall():
+            liquidacion.append( {"tipo":tipo, "id": id,
                      "consecAdmision": consecAdmision,
                      "fecha": fecha,
                      "totalCopagos": totalCopagos, "totalCuotaModeradora": totalCuotaModeradora,
@@ -354,8 +370,8 @@ def PostConsultaLiquidacion(request):
             "ingresoId1": ingresoId1, "documento": documento, "tipoDocumento": tipoDocumento
                                  })
         else:
-          for id,consecAdmision,fecha ,totalCopagos,totalCuotaModeradora,totalProcedimientos ,totalSuministros, totalLiquidacion, valorApagar, fechaCorte, anticipos, detalleAnulacion, fechaAnulacion, observaciones, fechaRegistro, estadoRegistro, convenio_id, tipoDoc_id , documento_id, usuarioRegistro_id, totalAbonos, nombreConvenio , paciente, ingresoId1 , documento, tipoDocumento in cur.fetchall():
-            liquidacion.append( {"id": id,
+          for tipo, id,consecAdmision,fecha ,totalCopagos,totalCuotaModeradora,totalProcedimientos ,totalSuministros, totalLiquidacion, valorApagar, fechaCorte, anticipos, detalleAnulacion, fechaAnulacion, observaciones, fechaRegistro, estadoRegistro, convenio_id, tipoDoc_id , documento_id, usuarioRegistro_id, totalAbonos, nombreConvenio , paciente, triageId1 , documento, tipoDocumento in cur.fetchall():
+            liquidacion.append( { "tipo":tipo, "id": id,
                      "consecAdmision": consecAdmision,
                      "fecha": fecha,
                      "totalCopagos": totalCopagos, "totalCuotaModeradora": totalCuotaModeradora,
@@ -430,9 +446,9 @@ def PostConsultaLiquidacion(request):
            totalAPagar = totalLiquidacion - totalAbonos
            print("totalAPagar", totalAPagar)
 
+        if llave[0] == 'INGRESO':
 
-
-        return JsonResponse({'pk':liquidacion[0]['id'],'id':id, 'consecAdmision':liquidacion[0]['consecAdmision'],'fecha':liquidacion[0]['fecha'],
+            return JsonResponse({'pk':liquidacion[0]['id'],'tipo':tipo, 'id':id, 'consecAdmision':liquidacion[0]['consecAdmision'],'fecha':liquidacion[0]['fecha'],
                              'totalCopagos':liquidacion[0]['totalCopagos'],  'totalCuotaModeradora': liquidacion[0]['totalCuotaModeradora'],
                              'totalProcedimientos': liquidacion[0]['totalProcedimientos'],
                              'totalSuministros': liquidacion[0]['totalSuministros'],
@@ -456,7 +472,41 @@ def PostConsultaLiquidacion(request):
 			     'totalCuotaModeradora':totalCuotaModeradora,'totalAnticipos':totalAnticipos, 'totalAbonos':totalAbonos,
 			     'totalLiquidacion':totalLiquidacion, 'totalAPagar':totalAPagar, 'TiposPagos':tiposPagos, 'FormasPagos':formasPagos,
 			     'ingresoId1': ingresoId1, 'documento': documento, 'tipoDocumento': tipoDocumento
-                                                        })
+
+            })
+        else:
+            return JsonResponse(
+                {'pk': liquidacion[0]['id'], 'tipo': tipo, 'id': id, 'consecAdmision': liquidacion[0]['consecAdmision'],
+                 'fecha': liquidacion[0]['fecha'],
+                 'totalCopagos': liquidacion[0]['totalCopagos'],
+                 'totalCuotaModeradora': liquidacion[0]['totalCuotaModeradora'],
+                 'totalProcedimientos': liquidacion[0]['totalProcedimientos'],
+                 'totalSuministros': liquidacion[0]['totalSuministros'],
+                 'totalLiquidacion': liquidacion[0]['totalLiquidacion'],
+                 'fechaCorte': liquidacion[0]['fechaCorte'],
+                 'valorApagar': liquidacion[0]['valorApagar'],
+                 'anticipos': liquidacion[0]['anticipos'],
+                 'detalleAnulacion': liquidacion[0]['detalleAnulacion'],
+                 'fechaAnulacion': liquidacion[0]['fechaAnulacion'],
+                 'observaciones': liquidacion[0]['observaciones'],
+                 'fechaRegistro': liquidacion[0]['fechaRegistro'],
+                 'estadoRegistro': liquidacion[0]['estadoRegistro'],
+                 'convenio_id': liquidacion[0]['convenio_id'],
+                 'tipoDoc_id': liquidacion[0]['tipoDoc_id'],
+                 'documento_id': liquidacion[0]['documento_id'],
+                 'usuarioRegistro_id': liquidacion[0]['usuarioRegistro_id'],
+                 'totalAbonos': liquidacion[0]['totalAbonos'],
+                 'nombreConvenio': liquidacion[0]['nombreConvenio'],
+                 'paciente': liquidacion[0]['paciente'], 'Suministros': suministros, 'Cups': cups,
+                 'totalSuministros': totalSuministros, 'totalProcedimientos': totalProcedimientos,
+                 'totalCopagos': totalCopagos,
+                 'totalCuotaModeradora': totalCuotaModeradora, 'totalAnticipos': totalAnticipos,
+                 'totalAbonos': totalAbonos,
+                 'totalLiquidacion': totalLiquidacion, 'totalAPagar': totalAPagar, 'TiposPagos': tiposPagos,
+                 'FormasPagos': formasPagos,
+                 'triageId1': triageId1, 'documento': documento, 'tipoDocumento': tipoDocumento
+
+                 })
 
     else:
         return JsonResponse({'errors':'Something went wrong!'})

@@ -498,8 +498,8 @@ def crearHistoriaClinica(request):
                 convenioId = convenioId.strip()
 
                 print("sin espacioos convenioId =", convenioId)
-	        
-                if convenioId=='None':
+
+                if convenioId.strip()=='None':
                    convenioId="null"
                    print ("Entre a MODIFICAR convenioID") 
 

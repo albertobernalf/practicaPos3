@@ -145,5 +145,20 @@ inner join usuarios_tiposdocumento  tip on (tip.id = usu."tipoDoc_id")
 where tri.id = '33'  
 
 select * from usuarios_usuarios;
-delete from facturacion_liquidacion where id >= 35;
+select * from admisiones_ingresos WHERE documento_id=13;
+select *  from facturacion_liquidacion where id >= 35;
+select *  from facturacion_liquidaciondetalle
+select *  from facturacion_liquidacion where id=73;
 
+UPDATE facturacion_liquidaciondetalle set "valorUnitario"=10000, "valorTotal" = cantidad*"valorUnitario" where id = 98
+UPDATE facturacion_liquidaciondetalle set "valorUnitario"=20000, "valorTotal" = cantidad*"valorUnitario" where id = 99
+
+
+UPDATE facturacion_liquidaciondetalle set  "valorTotal" = cantidad*"valorUnitario" where id = 98
+UPDATE facturacion_liquidaciondetalle set "valorTotal" = cantidad*"valorUnitario" where id = 99
+select * from cartera_pagos;
+SELECT * FROM CARTERA_TIPOSPAGOS;
+SELECT * FROM CARTERA_FORMASPAGOS;
+
+select * from admisiones_ingresos; -- ripsDestinoUsuarioEgresoRecienNacido
+select * from usuarios_usuarios;
