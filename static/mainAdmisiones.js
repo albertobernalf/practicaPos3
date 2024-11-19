@@ -1015,14 +1015,11 @@ $('#tablaDatos tbody td').click(function(){
       	       'consec':consec,
       	       'sede':sede},
 		success: function (Usuarios) {
-
 			 alert("entre DATOS MODAL de Triage y el  nombre es = " + Usuarios.tipoDoc + " " +  Usuarios.documento);
-
 		            $('#tipoDoc').val(Usuarios.tipoDoc);
-    			    $('#busDocumentoSel').val(Usuarios.documento);
-    			    $('#dependenciasIngreso').val(Usuarios.dependenciasIngreso);
 
-
+       			    $('#busDocumentoSel').val(Usuarios.documento);
+   			    $('#dependenciasIngreso').val(Usuarios.dependenciasIngreso);
     			    $('#busEspecialidad').val(Usuarios.espMedico);
     			    $('#dxIngreso').val(Usuarios.dxIngreso);
     			    $('#medicoIngreso').val(Usuarios.medicoIngreso);
@@ -1032,10 +1029,9 @@ $('#tablaDatos tbody td').click(function(){
     			    $('#tiposCotizante').val(Usuarios.cotizante);
     			    $('#remitido').val(Usuarios.remitido);
     			    $('#numManilla').val(Usuarios.numManilla);
-                       alert("antes de abrir ventanaoy");
+ 
+  		   $('#modalActualizaAdmision').modal({show:true});	
 
-                            //$('#modalActualizaAdmision').modal({show:true});
-                            $('#modalActualizaAdmision').modal().show();
                             alert("ya abri  ventanaoy");
 
                     },
@@ -1599,13 +1595,6 @@ $(document).on('change', '#busSubServicio22', function(event) {
 // FUnciones para Modales
 
 
-
-
-
-
-function encuentraAdmisionModal()
-{
-}
 
 function abrir_modal(url)
         {

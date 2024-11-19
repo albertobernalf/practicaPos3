@@ -4,6 +4,8 @@ console.log('Hola Alberto Hi!')
 
 $(document).ready(function () {
 
+	// setInterval("location.reload()",60000);
+
    var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
         var username = document.getElementById("username").value;
         var nombreSede = document.getElementById("nombreSede").value;
@@ -90,7 +92,6 @@ $(document).ready(function () {
 			$('#triageId').val(data.triageId1);
 		}
 
-
 		$('#fecha').val(data.fecha);
 		$('#tipoDoc_id').val(data.tipoDoc_id);
 		$('#documento_id').val(data.documento_id);
@@ -101,6 +102,9 @@ $(document).ready(function () {
 		$('#nombreConvenio').val(data.nombreConvenio);
 		$('#convenioId').val(data.convenioId);
 		$('#observaciones').val(data.observaciones);
+		$('#cama').val(data.dependenciaNombre);				
+		$('#servicio').val(data.servicioNombre);
+
        
 			// Colocar Totales
 
@@ -827,9 +831,11 @@ function AFacturar()
 				
 			    tableL= $("#tablaFacturacion").dataTable().fnDestroy();	
 	        	    initTableFacturacion(data2);
+
+			    location.reload();
 			}
 
-
+			
 			$("#mensajes").html(data.message);
 
                   },
@@ -1017,4 +1023,31 @@ function reFacturar()
 	   			    $("#mensajes").html(" !  Reproduccion  con error !");
 	   	    	}
 	     });
+}
+
+function RefrescarLiquidacionDetalle()
+{
+	alert( "EntreRefrescarLiquidacionDetalle");
+
+			 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+
+			 var valor = document.getElementById("liquidacionId").value;
+
+		        data2['valor'] = valor;	
+		        data2['liquidacionId'] = valor;	
+
+		        data2 = JSON.stringify(data2);
+
+
+	
+		    tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
+	           initTableLiquidacionDetalle(data2);
+
+
+
 }

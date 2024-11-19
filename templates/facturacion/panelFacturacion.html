@@ -360,7 +360,7 @@ div.dataTables_filter input {
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="tipoDoc" class="col-form-label col-sm-4">TipoDoc:</label>
-						 <div class="col-sm-6">
+						 <div class="col-sm-4">
 							  <input type="text" id="tipoDoc" name="tipoDoc" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -369,7 +369,7 @@ div.dataTables_filter input {
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="documento" class="col-form-label col-sm-4">DocNo:</label>
-						 <div class="col-sm-6">
+						 <div class="col-sm-4">
 							  <input type="text" id="pdocumento" name="pdocumento" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -378,7 +378,7 @@ div.dataTables_filter input {
 					<div class="col">
 			  		     <div class="form-group row">
 					<label for="paciente" class="col-form-label col-sm-4">Paciente:</label>
-						 <div class="col-sm-6">
+						 <div class="col-sm-4">
 							  <input type="text" id="paciente" name="paciente" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -387,7 +387,7 @@ div.dataTables_filter input {
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="consecAdmision" class="col-form-label col-sm-4">Consec:</label>
-						 <div class="col-sm-6">
+						 <div class="col-sm-4">
 							  <input type="text" id="consecAdmision" name="consecAdmision" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -396,8 +396,28 @@ div.dataTables_filter input {
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="nombreConvenio" class="col-form-label col-sm-4">Convenio:</label>
-						 <div class="col-sm-6">
+						 <div class="col-sm-4">
 							  <input type="text" id="nombreConvenio" name="nombreConvenio" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="cama" class="col-form-label col-sm-4">Cama:</label>
+						 <div class="col-sm-4">
+							  <input type="text" id="cama" name="cama" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="servicio" class="col-form-label col-sm-4">Servicio:</label>
+						 <div class="col-sm-4">
+							  <input type="text" id="servicio" name="servicio" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
@@ -405,7 +425,7 @@ div.dataTables_filter input {
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="observaciones" class="col-form-label col-sm-4"></label>
-						 <div class="col-sm-6">
+						 <div class="col-sm-4">
 							  <input type="hidden" id="observaciones" name="observaciones" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -516,8 +536,19 @@ div.dataTables_filter input {
 					<div class="form-group row">
 					 <label for="BtnAdicionarLiquidacion" class="col-form-label col-sm-3"> + </label>
 
-					     <div class="col col-sm-7">
+					     <div class="col col-sm-3">
 			                        <input type="button" class="form-control form-control-sm" id="BtnAdicionarLiquidacion"  name="BtnAdicionarLiquidacion" value="Adicionar" onclick="AdicionarLiquidacion()">
+					</div>
+					</div>
+				</div>
+
+				
+				 <div class="col">
+					<div class="form-group row">
+					 <label for="BtnRefrescarLiquidacionDetalle" class="col-form-label col-sm-3">  </label>
+
+					     <div class="col col-sm-3">
+			                        <input type="button" class="form-control form-control-sm" id="BtnRefrescarLiquidacionDetalle"  name="BtnRefrescarLiquidacionDetalle" value="Refrescar" onclick="RefrescarLiquidacionDetalle()">
 					</div>
 					</div>
 				</div>
