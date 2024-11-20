@@ -526,10 +526,7 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
                     <td>
                     </td>
                     <td>
-
-                        <table class="table" style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:60%;">
-
-
+                        <table class="table" style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:80%;">
                             <form class="form-inline" action="/crearAdmisionDef/" method="POST" id="grabacionForma">
 
                                 <input type="hidden" id="Sede" name="Sede" value="{{Sede}}">
@@ -549,7 +546,7 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
 
                                 {% endif %}
 
-                                <div class="row row-cols-8 mt-3">
+                                <div class="row row-cols-10 mt-3">
 
                                     <div class="col">
                                         <label for="busServicio22"
@@ -677,7 +674,6 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
 
                                 <div class="row row-cols-8 mt-3">
                                     <div class="col">
-
                                         <label for="causasExterna" class="col-sm-1 control-label">CausaExterna:
                                         </label>
 
@@ -746,10 +742,14 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
                                                    name="numManilla" value="">
                                         </div>
 
-                                    </div> I N F O R M A C I O N  RIPS:
+                                    </div>
+                                </div> <!-- ops cierra un rows-cols -->
+
+				<div>	RIPS: </div>
+                                <div class="row row-cols-8 mt-3">
                                     <div class="col">
 
-                                                                <label for="ripsDestinoUsuarioEgresoRecienNacido" class="col-sm-1 col-form-label col-form-label-sm">IPS:
+                                                                <label for="ripsDestinoUsuarioEgresoRecienNacido" class="col-sm-1 col-form-label col-form-label-sm">DestEgreso:
                                             &nbsp;&nbsp;&nbsp;</label>
                                         <div class="col-sm-1">
                                             <select class="form-select  h-40 w-20" aria-label="" id="ripsDestinoUsuarioEgresoRecienNacido" name="ripsDestinoUsuarioEgresoRecienNacido"
@@ -771,9 +771,9 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
                                         </div>
                                     </div>
 
-                                </div>
 
-                                <div class="row row-cols-8 mt-3">
+
+
                                     <div class="col">
                                           <label for="ripsNumConsultasCPrenatal" class="col-sm-2 col-form-label col-form-label-sm">NumeroConsultaPrenatal:&nbsp;&nbsp;</label>
                                         <div class="col-sm-8">
@@ -865,10 +865,10 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
                                     </div>
 
 
-                                </div>
+                          
 
 
-                                <div class="row row-cols-8 mt-3">
+                               <!--  <div class="row row-cols-8 mt-3">   ya no es necesario--> 
                                     <div class="col">
                                                          <label for="ripsServiciosIng" class="col-sm-1 col-form-label col-form-label-sm">ServicioIngreso:
                                             &nbsp;&nbsp;&nbsp;</label>
@@ -884,8 +884,7 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
 
                                         <div class="col">
                                             <input type="submit" id="guardarAdmision" name="guardarAdmision"
-                                               value="GUARDAR"></input>
-
+                                               value="Guardar Admision"></input>
                                         <input type="hidden" id="Sede" name="Sede" value="{{Sede}}">
                                         <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
                                         <input type="hidden" id="Perfil" name="Perfil" value="{{Perfil}}">
@@ -901,8 +900,8 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
 
                                         <div class="col">
                                     </div>
-
-                                </div>
+			</div>
+                             <!--    </div>  ya no es necesario--> 
 
 
                             </form>
@@ -933,11 +932,11 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
                         <div class="modal fade" id="usuariosModal" tabindex="-1"
                              role="dialog" aria-labelledby="exampleModalLabel"
                              aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Actualiza
-                                            Usuario</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Crea y/o actualiza
+                                            usuario</h5>
                                         <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -945,12 +944,9 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
                                     </div>
                                     <div class="modal-body">
 
-
                                         <div class="form-row">
                                             <div class="col">
                                                 <label for="tipoDoc1" class="col-sm-6 control-label">Tipo Doc:</label>
-
-
                                                 <select class="form-select  h-40 w-10" aria-label="" id="tipoDoc1"
                                                         name="tipoDoc1" disabled>
                                                     {% for tiposDocumento in TiposDocumento %}
@@ -958,63 +954,66 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
                                                     </option>
                                                     {% endfor %}
                                                 </select>
-
                                             </div>
-                                        </div>
-
-
+                                      
                                         <div class="col">
                                             <label for="documento1" class="col-sm-6 control-label">Documento:</label>
                                             <input type="text" class="form-control form-control-sm" id="documento1"
                                                    name="documento1" value="" readonly>
-                                        </div>
+                                       </div>
 
                                         <div class="col">
                                             <label for="nombre1" class="col-sm-6 control-label"> Paciente :</label>
 
                                             <input type="text" class="form-control form-control-sm" id="nombre1"
-                                                   name="nombre1"
-                                                   value="">
-                                        </div>
+                                                   name="nombre1"  value="" required>
+                                       </div>
 
                                         <div class="col">
                                             <label for="genero" class="col-sm-6 control-label">Genero:</label>
-                                            <select class="form-select  h-40 w-10" id="genero" name="genero">
+                                            <select id="genero" name="genero">
                                                 <option value="M"> Masculino</option>
                                                 <option value="F"> Femenino</option>
-                                            </select>
-
-
+                                           </select>
                                         </div>
 
+					  </div>  <!-- Cierra El form-row -->
+                                      <div class="form-row">
                                         <div class="col">
                                             <label for="fechaNacio" class="col-sm-6 control-label">Fec.Nacio:</label>
                                             <input type="datetime-local" class="form-control form-control-sm"
-                                                   id="fechaNacio" name="fechaNacio" value="">
+                                                   id="fechaNacio" name="fechaNacio" value="" required>
                                         </div>
 
+					 <div class="col">
+                                            <label for="pais"
+                                                   class="col-sm-10 control-label">Pais:</label>
+                                            <select class="form-select  h-40 w-10" id="pais"
+                                                    name="pais" required>
+                                                {% for pais in Pais %}
+                                                <option value="{{pais.id}}"> {{pais.nombre}}
+                                                </option>
+                                                {% endfor %}
+                                           </select>
+                                        </div>
 
                                         <div class="col">
-                                            <label for="departamentos"
-                                                   class="col-sm-6 control-label">Departamento:</label>
-
-
+                                            <label for="departamentos" class="col-sm-10 control-label">Depto:</label>
                                             <select class="form-select  h-40 w-10" id="departamentos"
-                                                    name="departamentos">
+                                                    name="departamentos" required>
                                                 {% for departamentos in Departamentos %}
                                                 <option value="{{departamentos.id}}"> {{departamentos.nombre}}
                                                 </option>
                                                 {% endfor %}
-                                            </select>
-
+                                           </select>
                                         </div>
 
 
                                         <div class="col">
-                                            <label for="municipios" class="col-sm-6 control-label">Municipio:</label>
+                                            <label for="municipios" class="col-sm-10 control-label">Munic:</label>
 
 
-                                            <select class="form-select  h-40 w-10" id="municipios" name="municipios">
+                                            <select class="form-select  h-40 w-10" id="municipios" name="municipios" required>
                                                 {% for municipios in Municipios %}
                                                 <option value="{{municipios.id}}"> {{municipios.nombre}}
                                                 </option>
@@ -1024,10 +1023,10 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
                                         </div>
 
                                         <div class="col">
-                                            <label for="localidades" class="col-sm-6 control-label">Localidad:</label>
+                                            <label for="localidades" class="col-sm-10 control-label">Locali:</label>
 
 
-                                            <select class="form-select  h-40 w-10" id="localidades" name="localidades">
+                                            <select class="form-select  h-40 w-10" id="localidades" name="localidades" required>
                                                 {% for localidades in Localidades %}
                                                 <option value="{{localidades.id}}"> {{localidades.nombre}}
                                                 </option>
@@ -1038,10 +1037,10 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
 
 
                                         <div class="col">
-                                            <label for="ciudades" class="col-sm-6 control-label">Ciudad:</label>
+                                            <label for="ciudades" class="col-sm-10 control-label">Ciud:</label>
 
 
-                                            <select class="form-select  h-40 w-10" id="ciudades" name="ciudades">
+                                            <select class="form-select  h-40 w-10" id="ciudades" name="ciudades" required>
                                                 {% for ciudades in Ciudades %}
                                                 <option value="{{ciudades.id}}"> {{ciudades.nombre}}
                                                 </option>
@@ -1084,7 +1083,7 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
                                         </div>
 
                                         <div class="col">
-                                            <label for="ocupaciones" class="col-sm-6 control-label">Ocupacion:</label>
+                                            <label for="ocupaciones" class="col-sm-6 control-label">Ocupa:</label>
 
 
                                             <select class="form-select  h-40 w-10" id="ocupaciones" name="ocupaciones">

@@ -62,7 +62,7 @@ $(document).ready(function () {
         $('body').on('click', '.editPostLiquidacion', function () {
 	
           var post_id = $(this).data('pk');
-          alert("pk1 = " + $(this).data('pk'));
+        //  alert("pk1 = " + $(this).data('pk'));
         var username_id = document.getElementById("username_id").value;
 	// var username_id = document.getElementById("username_id").value;
 
@@ -76,8 +76,8 @@ $(document).ready(function () {
 	           type: 'POST',
 	           dataType : 'json',
 	  		success: function (data) {
-                        alert("Regrese");
-                       alert("data="  + data);
+                //        alert("Regrese");
+                 //      alert("data="  + data);
 
 			// Colocar Encabezadao
 	  		// aqui debe activar un dataTale para liquidacionDetalle
@@ -187,8 +187,8 @@ $(document).ready(function () {
 			// var liquidacionId = document.getElementById("liquidacionId").value;
 			 var ingresoId = document.getElementById("ingresoId").value;
 
-			alert("Esta es la liquidacion  que traigo para el loaddata_liquidacionDetalle " + data.id);
-			alert("Este es el ingreso que traigo para el loaddata_liquidacionDetalle " + data.ingresoId1);
+			// alert("Esta es la liquidacion  que traigo para el loaddata_liquidacionDetalle " + data.id);
+			// alert("Este es el ingreso que traigo para el loaddata_liquidacionDetalle " + data.ingresoId1);
 
 		        data2['valor'] = valor;	
 		        data2['liquidacionId'] = data.id;	
@@ -208,7 +208,7 @@ $(document).ready(function () {
 
 
 
-		  alert( "voy a borrar loaddataliquidaciondetalle");
+		 // alert( "voy a borrar loaddataliquidaciondetalle");
 
 	
 		    tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
@@ -232,7 +232,7 @@ $(document).ready(function () {
         $('body').on('click', '.editPostFacturacion', function () {
 	
           var post_id = $(this).data('pk');
-          alert("pk1 = " + $(this).data('pk'));
+      //    alert("pk1 = " + $(this).data('pk'));
         var username_id = document.getElementById("username_id").value;
 
 	$.ajax({
@@ -241,8 +241,8 @@ $(document).ready(function () {
 	           type: 'POST',
 	           dataType : 'json',
 	  		success: function (data) {
-                        alert("Regrese");
-                       alert("data="  + data);
+                     //   alert("Regrese");
+                    //   alert("data="  + data);
 			// Colocar Encabezadao
 	  		// aqui debe llenar el dato parta posible ANULACION , REFACTURACION
 		$('#Afactura').val(data.factura);
@@ -300,7 +300,7 @@ $(document).ready(function () {
         $('body').on('click', '.editPostLiquidacionDetalle', function () {
 	
           var post_id = $(this).data('pk');
-          alert("pk1 = " + $(this).data('pk'));
+       //   alert("pk1 = " + $(this).data('pk'));
 
 	$.ajax({
 	           url: '/postConsultaLiquidacionDetalle/',
@@ -309,7 +309,7 @@ $(document).ready(function () {
 	           dataType : 'json',
 	  		success: function (data) {
                       
-                       alert("data="  + data);
+                     //  alert("data="  + data);
 
 			 $('#pk').val(data.pk);
 	       	        $('#ldconsecutivo').val(data.consecutivo);
@@ -420,7 +420,7 @@ $(document).ready(function () {
 			LeerTotales();
                 },
                 error: function (data) {
-			alert("VENGO CON ERRORES :" , printErrorMsg(data.error));
+		//	alert("VENGO CON ERRORES :" , printErrorMsg(data.error));
                    // $('#saveBtnCrearAbonos').html('NOT Save Changes');
                         $('.success-msg').css('display','block');
                         $('.success-msg').text(data.error);
@@ -468,7 +468,7 @@ $(document).ready(function () {
 
                 },
                 error: function (data) {
-			alert("VENGO CON ERRORES :" , printErrorMsg(data.error));
+			// alert("VENGO CON ERRORES :" , printErrorMsg(data.error));
                    // $('#saveBtnCrearAbonos').html('NOT Save Changes');
                         $('.success-msg').css('display','block');
                         $('.success-msg').text(data.error);
@@ -733,14 +733,14 @@ function AdicionarLiquidacion()
 	            	
 	                var username_id = document.getElementById("username_id").value;
   	                data2['username_id'] = username_id;
-                        alert("numero de la liquidacionId = " + liquidacionId);
+                //        alert("numero de la liquidacionId = " + liquidacionId);
 
 		        data2['valor'] = liquidacionId;
 			data2['liquidacionId'] = liquidacionId;
 		        data2 = JSON.stringify(data2);
 
 		    tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
-			alert ("ya la destrui");
+		//	alert ("ya la destrui");
 
 	            initTableLiquidacionDetalle(data2);
 
@@ -793,7 +793,7 @@ function AFacturar()
 	            	
 	                var username_id = document.getElementById("username_id").value;
   	                data2['username_id'] = username_id;
-                        alert("numero de la liquidacionId = " + liquidacionId);
+                    //    alert("numero de la liquidacionId = " + liquidacionId);
 
 		        data2['valor'] = liquidacionId;
 			data2['liquidacionId'] = liquidacionId;
@@ -809,8 +809,8 @@ function AFacturar()
 
 		        desdeFecha = ano + '-' + mes + '-' + diaDesde + ' 00:00:00'
 		        hastaFecha = ano + '-' + mes + '-' + dia + ' 23:59:59'
-			alert("desdefecha = "+ desdeFecha);
-			alert("hastafecha = "+ hastaFecha);
+		//	alert("desdefecha = "+ desdeFecha);
+		//	alert("hastafecha = "+ hastaFecha);
 		        desdeFactura=0;
 		        hastaFactura=0;
 
@@ -850,7 +850,7 @@ function AFacturar()
 function LeerTotales()
 {
 
-	alert ("Entre a LeerTotales ");
+	// alert ("Entre a LeerTotales ");
 
  	var liquidacionId = document.getElementById("liquidacionId").value;
 
@@ -956,7 +956,7 @@ function AnularFactura()
 	            	
 	                var username_id = document.getElementById("username_id").value;
   	                data2['username_id'] = username_id;
-                        alert("numero de la liquidacionId = " + liquidacionId);
+                     //   alert("numero de la liquidacionId = " + liquidacionId);
 
 		        data2['valor'] = liquidacionId;
 		        data2 = JSON.stringify(data2);
@@ -1003,7 +1003,7 @@ function reFacturar()
 	            	
 	                var username_id = document.getElementById("username_id").value;
   	                data2['username_id'] = username_id;
-                        alert("numero de la liquidacionId = " + liquidacionId);
+                     //   alert("numero de la liquidacionId = " + liquidacionId);
 
 		        data2['valor'] = liquidacionId;
 		        data2 = JSON.stringify(data2);
@@ -1027,7 +1027,7 @@ function reFacturar()
 
 function RefrescarLiquidacionDetalle()
 {
-	alert( "EntreRefrescarLiquidacionDetalle");
+
 
 			 var data2 =  {}   ;
 			data2['username'] = username;

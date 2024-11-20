@@ -625,6 +625,32 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
 
     # Fin combo Diagnosticos
 
+    # Combo Pais
+
+    # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",
+                                   password="pass123")
+    curt = miConexiont.cursor()
+
+    comando = "SELECT d.id id, d.nombre  nombre FROM sitios_paises d"
+
+    curt.execute(comando)
+    print(comando)
+
+    pais = []
+
+    for id, nombre in curt.fetchall():
+        pais.append({'id': id, 'nombre': nombre})
+
+    miConexiont.close()
+    print(pais)
+
+    context['Pais'] = pais
+
+    # Fin combo Pais
+
+
+
     # Combo Departamentos
 
     # miConexiont = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
@@ -638,7 +664,6 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
     print(comando)
 
     departamentos = []
-    # tiposDocumento.append({'id': '', 'nombre': ''})
 
     for id, nombre in curt.fetchall():
         departamentos.append({'id': id, 'nombre': nombre})
@@ -4376,14 +4401,14 @@ def UsuariosModal(request):
 
         miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
         curt = miConexiont.cursor()
-        comando = 'SELECT usu.nombre, usu.documento, usu.genero, usu."fechaNacio" fechaNacio,  usu.departamentos_id, usu.ciudades_id, usu.direccion, usu.telefono, usu.contacto, usu."centrosC_id", usu."tipoDoc_id", usu."tiposUsuario_id", usu.municipio_id municipio, usu.localidad_id localidad, usu."estadoCivil_id" estadoCivil , usu.ocupacion_id ocupacion, correo correo  FROM usuarios_usuarios usu WHERE usu."tipoDoc_id" = ' + "'"  + str(tipoDoc) + "'" + ' AND usu.documento = ' + "'" + str(documento) + "'"
+        comando = 'SELECT usu.nombre, usu.documento, usu.genero, usu."fechaNacio" fechaNacio, usu.pais_id,  usu.departamentos_id, usu.ciudades_id, usu.direccion, usu.telefono, usu.contacto, usu."centrosC_id", usu."tipoDoc_id", usu."tiposUsuario_id", usu.municipio_id municipio, usu.localidad_id localidad, usu."estadoCivil_id" estadoCivil , usu.ocupacion_id ocupacion, correo correo  FROM usuarios_usuarios usu WHERE usu."tipoDoc_id" = ' + "'"  + str(tipoDoc) + "'" + ' AND usu.documento = ' + "'" + str(documento) + "'"
         print(comando)
         curt.execute(comando)
 
         Usuarios = {}
 
-        for nombre, documento, genero, fechaNacio, departamentos_id, ciudades_id, direccion, telefono, contacto, centrosc_id, tipoDoc_id, tiposUsuario_id, municipio, localidad, estadoCivil, ocupacion, correo  in curt.fetchall():
-            Usuarios = {'nombre': nombre, 'documento': documento, 'genero': genero, 'fechaNacio': fechaNacio , 'departamento' : departamentos_id, 'ciudad': ciudades_id,  'direccion':  direccion, 'telefono' :telefono, 'contacto': contacto, 'centrosc_id':centrosc_id, 'tipoDoc_id':tipoDoc_id,'tiposUsuario_id':tiposUsuario_id,
+        for nombre, documento, genero, fechaNacio, pais_id,  departamentos_id, ciudades_id, direccion, telefono, contacto, centrosc_id, tipoDoc_id, tiposUsuario_id, municipio, localidad, estadoCivil, ocupacion, correo  in curt.fetchall():
+            Usuarios = {'nombre': nombre, 'documento': documento, 'genero': genero, 'fechaNacio': fechaNacio , 'pais' : pais,  'departamento' : departamentos_id, 'ciudad': ciudades_id,  'direccion':  direccion, 'telefono' :telefono, 'contacto': contacto, 'centrosc_id':centrosc_id, 'tipoDoc_id':tipoDoc_id,'tiposUsuario_id':tiposUsuario_id,
                         'municipio':municipio, 'localidad':localidad, 'estadoCivil':estadoCivil, 'ocupacion':ocupacion,'correo':correo}
 
         miConexiont.close()
@@ -4407,13 +4432,16 @@ def guardarUsuariosModal(request):
     print("DOCUMENTO = " ,documento)
     print(nombre)
     genero = request.POST["genero"]
+    pais = request.POST["pais"]
     departamento = request.POST["departamentos"]
     ciudad = request.POST["ciudades"]
     fechaNacio = request.POST["fechaNacio"]
-    print("fechaNacio = ", fechaNacio)
+
     print ("departamento = ", departamento)
     print("ciudad = ", ciudad)
-
+    if (fechaNacio == ''):
+         fechaNacio='0001-01-01 00:00:01'
+    print("fechaNacio = ", fechaNacio)
     direccion = request.POST["direccion"]
     telefono = request.POST["telefono"]
     contacto = request.POST["contacto"]
@@ -4461,7 +4489,7 @@ def guardarUsuariosModal(request):
          #miConexion3 = MySQLdb.connect(host='CMKSISTEPC07', user='sa', passwd='75AAbb??', db='vulnerable')
          miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres", password="pass123")
          cur3 = miConexion3.cursor()
-         comando = 'insert into usuarios_usuarios (nombre, documento, genero, "fechaNacio",  departamentos_id, ciudades_id, direccion, telefono, contacto, "centrosC_id", "tipoDoc_id", "tiposUsuario_id", municipio_id, localidad_id, "estadoCivil_id", ocupacion_id, correo ,"fechaRegistro", "estadoReg") values (' + "'" + str(nombre) + "'" + ' , ' + "'" + str(documento) + "'" + ', ' + "'" + str(genero) + "'" + '  , ' + "'" + str(fechaNacio) + "'" +  ', '  + "'" + str(departamento) + "'" +  '  , ' + "'" +  str(ciudad) + "'" + '  , ' + "'" +  str(direccion) + "'" + ', ' + "'" + str(telefono) + "'" + ', ' + "'" + str(contacto) + "'" + ', ' + "'" + str(centrosc_id) + "'" +  ', ' + "'" + str(tipoDoc_id) + "'" + ', ' + "'" + str(tiposUsuario_id) + "' , " + "'" + str(municipio) + "'" +   ', ' + "'" + str(localidad) + "'" + ", " + "'" + str(estadoCivil) + "'" + ", " + "'" + str(ocupacion) + "'" + ", " + "'" + str(correo) + "', " +  "'"  + str(fechaRegistro) + "'"  +  ", 'A'"  +      ')'
+         comando = 'insert into usuarios_usuarios (nombre, documento, genero, "fechaNacio", pais_id,  departamentos_id, ciudades_id, direccion, telefono, contacto, "centrosC_id", "tipoDoc_id", "tiposUsuario_id", municipio_id, localidad_id, "estadoCivil_id", ocupacion_id, correo ,"fechaRegistro", "estadoReg") values (' + "'" + str(nombre) + "'" + ' , ' + "'" + str(documento) + "'" + ', ' + "'" + str(genero) + "'" + '  , ' + "'" + str(fechaNacio) + "'" +  ', ' + "'" + str(pais) + "'" + ', ' + "'" + str(departamento) + "'" +  '  , ' + "'" +  str(ciudad) + "'" + '  , ' + "'" +  str(direccion) + "'" + ', ' + "'" + str(telefono) + "'" + ', ' + "'" + str(contacto) + "'" + ', ' + "'" + str(centrosc_id) + "'" +  ', ' + "'" + str(tipoDoc_id) + "'" + ', ' + "'" + str(tiposUsuario_id) + "' , " + "'" + str(municipio) + "'" +   ', ' + "'" + str(localidad) + "'" + ", " + "'" + str(estadoCivil) + "'" + ", " + "'" + str(ocupacion) + "'" + ", " + "'" + str(correo) + "', " +  "'"  + str(fechaRegistro) + "'"  +  ", 'A'"  +      ')'
          print(comando)
          cur3.execute(comando)
          miConexion3.commit()

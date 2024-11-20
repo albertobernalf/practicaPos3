@@ -28,6 +28,13 @@ tablaClinico tr {
 
 }
 </style>
+<script>
+function RefrescarPantalla() {
+	alert ("Entre RferescarPantallaa");
+ 	 location.reload();
+}
+</script>
+
 {% endblock %}
 
 
@@ -111,6 +118,10 @@ Ambulatorios: <img class="manImg" src={% static 'img/iloveimg-converted/poste-in
                             </td>
                             <td>
                                <input type="submit" id="btnCargaHc1" name="btnCargaHc1" value="Registrar Folio"></input>
+                            </td>
+			    <td>
+                               <!-- <input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()"></input> -->
+			       <input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">
                             </td>
                         </tr>
                     </table>

@@ -42,7 +42,7 @@ class Usuarios(models.Model):
     #documento =  models.IntegerField(unique=True)
     documento = models.CharField(unique=True,max_length=30)
     nombre = models.CharField(max_length=50)
-    genero = models.CharField(max_length=1, default ='L',choices=TIPO_CHOICES,)
+    genero = models.CharField(max_length=1, default ='M',choices=TIPO_CHOICES,)
     centrosC = models.ForeignKey('sitios.Centros', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     tiposUsuario = models.ForeignKey('usuarios.TiposUsuario', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     correo = models.EmailField(blank=True,null= True)
@@ -59,7 +59,7 @@ class Usuarios(models.Model):
     contacto  = models.CharField(max_length=50 ,blank=True,null= True, editable=True,)
     estadoCivil = models.ForeignKey('basicas.EstadoCivil', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     ocupacion = models.ForeignKey('basicas.Ocupaciones', blank=True, null=True, editable=True,   on_delete=models.PROTECT)
-    imagen = models.ImageField(upload_to="fotos", null=True)
+    imagen = models.ImageField(upload_to="fotos",blank=True,null= True, editable=True,)
 
     fechaRegistro = models.DateTimeField(default=now, editable=False)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)

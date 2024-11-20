@@ -283,15 +283,14 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 	-- Tengo dos problemitas:
 		Al guardar la HC, no me submita o si submita pero  o me carga la pagina de nuevo. esto estaba funcionando antes. NO ENTIENDO POR QUE 
                 Al Facturar, se queda trabahdo no refresca la liquidacion ni la liquidacionETALLE
-                Al cargar desde la HC, a un paciente sin convenio, crea el cabezote facturacion:liquidacion pero con convenio_id=nuul, ANTON no sale enb la pantallade facturacion
-                por obvias razones.( MEJORAR PROCESO O COMO HACER')
-                Ojo el lunes 18-noviembre ver que las pantalllas carguen bien (HC y FACTURACION LIQUIDACION) y que coloquen el numero de la factura genrerado para poder imprimir
-
-	-- Ojo crea el apcinte nuevo pero la ventana modal se bloquea no vuelve
-        -- OJO en admisiones perdi el nombre del modulo en la navegacion
-        -- ojo en admisiones validar la gfrabacion de rips y no salen todos los campos en pantalla
+                   Ojo el lunes 18-noviembre ver que las pantalllas carguen bien (HC y FACTURACION LIQUIDACION) y que coloquen el numero de la factura genrerado para poder imprimir
         -- ojo definir el tema de los abonos, va el conceto abono ? o nop. yo creo que si., ANTON
-       -- en liquidacionDetale no muestra  la cama y el servicio
+        -- oJO LA CAMA aMBULATORIOS NO SE DEBE oCUPAR PARA PERMITOR INGRESAR SIEMPORE
+       -- CUANDO CREA UNA ADMISION SE PIERDE EL NOMBRE DEL MODULO
+        -- ojo verifiar la fecha cde ingreso cuando crea la admision
+         -- que pasa con el diagnostico de salida, meico de salida, servicio d esalida  para un ambulatorio (CLARO POR LO QUE NO TEN SALIDA CLINICA)
+         -- hay un lo con la cama ambulatorio la libera error y ???
+            -- problema con el query de HC, no me tral el ambulatorio con cama Libre L
  
 -----------------------------------------------------------------------------------------------------------------------
 --  GLOSAS

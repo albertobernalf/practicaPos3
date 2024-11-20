@@ -544,6 +544,7 @@ function AUsuario()
    alert("OtorDocumento = " +  busDocumentoSel);
 
 	var genero = document.getElementById("genero").value;
+	var pais = document.getElementById("pais").value;
 	var departamentos = document.getElementById("departamentos").value;
 	var ciudades = document.getElementById("ciudades").value;
 
@@ -570,16 +571,16 @@ function AUsuario()
 	$.ajax({
 		type: 'POST',
     	url: '/guardarUsuariosModal/',
-		data: {'tipoDoc':tipoDoc,'documento':documento,'nombre':nombre,'genero':genero,'fechaNacio':fechaNacio, 'departamentos':departamentos, 'ciudades':ciudades,'direccion':direccion,'telefono':telefono, 'contacto':contacto, "centrosC_id":centrosC_id, 'tiposUsuario':tiposUsuario, 'municipios':municipio,'localidades':localidad, 'estadoCivil':estadoCivil,'ocupaciones':ocupacion, 'correo':correo},
+		data: {'tipoDoc':tipoDoc,'documento':documento,'nombre':nombre,'genero':genero,'fechaNacio':fechaNacio, 'pais':pais, 'departamentos':departamentos, 'ciudades':ciudades,'direccion':direccion,'telefono':telefono, 'contacto':contacto, "centrosC_id":centrosC_id, 'tiposUsuario':tiposUsuario, 'municipios':municipio,'localidades':localidad, 'estadoCivil':estadoCivil,'ocupaciones':ocupacion, 'correo':correo},
 
 		success: function (respuesta) {
 
 			$('#usuariosModal').modal().hide();
  
                 $('#mensajes').html('<span> respuesta</span>');
-	                $('#usuariosModal').modal().hide();
+	               // $('#usuariosModal').modal().hide();
 
-			   
+			$('#usuariosModal').modal('hide');   
 
 
                     },
@@ -891,6 +892,7 @@ $(document).on('change', '#busDocumentoSel22', function(event) {
 
 				$('#nombre1').val(Usuarios.nombre);
 				$('#genero').val(Usuarios.genero);
+				$('#pais').val(Usuarios.pais);	
 				$('#departamentos').val(Usuarios.departamento);
 				$('#municipios').val(Usuarios.municipio);
 				$('#localidades').val(Usuarios.localidad);
@@ -904,7 +906,7 @@ $(document).on('change', '#busDocumentoSel22', function(event) {
 				$('#centrosc').val(Usuarios.centrosc_id);
 				$('#tiposUsuario').val(Usuarios.tiposUsuario_id);
 			
-					$('#usuariosModal').modal('show');
+				$('#usuariosModal').modal('show');
 				 //  $('#usuariosModal').modal({show:true});
 
 

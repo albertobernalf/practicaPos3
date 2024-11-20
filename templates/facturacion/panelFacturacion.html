@@ -34,7 +34,12 @@ div.dataTables_filter input {
     width: 50px;
   }
 </style>
-
+<script>
+function RefrescarPantalla() {
+	alert ("Entre RferescarPantallaa");
+ 	 location.reload();
+}
+</script>
 
 {% endblock %}
 
@@ -79,13 +84,14 @@ div.dataTables_filter input {
 		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
 	
             </form>
-
+	<input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">	
             <!-- INICIO TABLE DE  EL DATATABLE  -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header" style="height:10px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
                             <div class="row">
+							    
                             </div>
                         </div>
                             <div class="card-body">
@@ -335,23 +341,16 @@ div.dataTables_filter input {
 			<input type="hidden" id="triageId" name="triageId" value="">
 			 <input type="hidden" id="tipoDoc_id" name="tipoDoc_id" value="0" readonly>
 			  <input type="hidden" id="documento_id" name="documentoc_id" value="0" readonly>
+			  <input type="hidden" id="liquidacionId" name="liquidacionId" value="0" readonly>
 
 
-	       <div class="row row-cols-10" style="height=1px;">
+	       <div class="row row-cols-8" style="height=25px;">
 
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="liquidacionId" class="col-form-label col-sm-1">LiqId:</label>
-						 <div class="col-sm-1">
-							  <input type="text" id="liquidacionId" name="liquidacionId" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-					
+						
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="fecha" class="col-form-label col-sm-4">Fecha:</label>
-						 <div class="col-sm-6">
+						 <div class="col-sm-5">
 							  <input type="text" id="fecha" name="fecha" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -534,9 +533,9 @@ div.dataTables_filter input {
 				
 				 <div class="col">
 					<div class="form-group row">
-					 <label for="BtnAdicionarLiquidacion" class="col-form-label col-sm-3"> + </label>
+					 <label for="BtnAdicionarLiquidacion" class="col-form-label col-sm-6"> + </label>
 
-					     <div class="col col-sm-3">
+					     <div class="col col-sm-6">
 			                        <input type="button" class="form-control form-control-sm" id="BtnAdicionarLiquidacion"  name="BtnAdicionarLiquidacion" value="Adicionar" onclick="AdicionarLiquidacion()">
 					</div>
 					</div>
@@ -545,9 +544,9 @@ div.dataTables_filter input {
 				
 				 <div class="col">
 					<div class="form-group row">
-					 <label for="BtnRefrescarLiquidacionDetalle" class="col-form-label col-sm-3">  </label>
+					 <label for="BtnRefrescarLiquidacionDetalle" class="col-form-label col-sm-6">  </label>
 
-					     <div class="col col-sm-3">
+					     <div class="col col-sm-6">
 			                        <input type="button" class="form-control form-control-sm" id="BtnRefrescarLiquidacionDetalle"  name="BtnRefrescarLiquidacionDetalle" value="Refrescar" onclick="RefrescarLiquidacionDetalle()">
 					</div>
 					</div>

@@ -937,6 +937,7 @@ function tableActionsFormulacion() {
 }
 
 
+
 // FIN MEDICAMENTOS
 
 formHistoriaClinica.addEventListener('submit', e=>{
@@ -1413,9 +1414,9 @@ formHistoriaClinica.addEventListener('submit', e=>{
 		            {
 		           $("#mensajes").html(data.message);
 		            }
-				
-			windows.reload();
-      		        return true;
+	
+			location.reload();
+
  	      		}, // cierra function sucess
  	      		error: function (request, status, error) {
  	      			alert(request.responseText);
