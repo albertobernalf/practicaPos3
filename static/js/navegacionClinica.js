@@ -1256,14 +1256,13 @@ formHistoriaClinica.addEventListener('submit', e=>{
 
 
 	 var salidaClinica = $('input[name="salClinica"]:checked').val();
-	 alert ("salidaClinica = " + salidaClinica);
+
 	 if (salidaClinica != 'on')
 		{
-	alert ("ENTRE salidaClinica DE SEGUNDA VEZ = " + salidaClinica);
 
 		salidaClinica='off'
 		}
-	 alert ("salidaClinica DE SEGUNDA VEZ = " + salidaClinica);
+
 
 	 var salidaClinicax    =  document.getElementById("salClinica").value
 	 alert ("salidaClinicax = " + salidaClinicax);
@@ -1325,14 +1324,14 @@ formHistoriaClinica.addEventListener('submit', e=>{
    	    var espMedico  =  document.getElementById("espMedico").value;
 
          var planta = document.getElementById("username").value;
-         alert("planta =" + planta);
+
          var fechaRegistro = document.getElementById("fechaRegistro").value;
          var estadoReg = "A"
          var tipoIng = document.getElementById("tipoIng").value;
 
             var form_valido;
 
-            alert("VOY AJASX A GUARDAR HC");
+     
       
                $.ajax({
             	   type: 'POST',
@@ -1400,14 +1399,16 @@ formHistoriaClinica.addEventListener('submit', e=>{
                                 'salidaClinica':salidaClinica
 				   },
  	      		success: function (respuesta2) {
- 	      		      // var data = JSON.parse(respuesta2);
-				var data  = respuesta2;
- 	      		       alert("data2=" + data['Mensaje']);
+ 	      		        var data = JSON.parse(respuesta2);
+				// var data  = respuesta2;
+ 	      		      
      			    $("#mensajes").html(data.message);
+
+		
 
 		        if ( data['Mensaje'] == 'OK')
 		            {
-				alert("Lo logre voy a hacer submiit");
+				
 		            $("#formHistoriaClinicaT").submit();
 		            }
 		        else
@@ -1415,12 +1416,12 @@ formHistoriaClinica.addEventListener('submit', e=>{
 		           $("#mensajes").html(data.message);
 		            }
 	
-			location.reload();
+			// location.reload();  Con el submit ya no seria necesariorecargar la pagina
 
  	      		}, // cierra function sucess
  	      		error: function (request, status, error) {
  	      			alert(request.responseText);
- 	      			alert (error);
+ 	      			
 
  	      		}, // cierra error function
   	        });  // cierra ajax

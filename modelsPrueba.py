@@ -290,7 +290,19 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
         -- ojo verifiar la fecha cde ingreso cuando crea la admision
          -- que pasa con el diagnostico de salida, meico de salida, servicio d esalida  para un ambulatorio (CLARO POR LO QUE NO TEN SALIDA CLINICA)
          -- hay un lo con la cama ambulatorio la libera error y ???
-            -- problema con el query de HC, no me tral el ambulatorio con cama Libre L
+       -- ojo me dejo facturar sin convenio
+
+       -- MAÑANA YO PENSARIA DESDE AQUIP ...
+
+       -- OJO CUANDO COLOQUE UN ABONO PARA ASTRID  DESDE ADMISIONES NO ME ACTUALIZA EL VALOPR DE LA CUOTA MOPDERADORA Y CLARO NI SIQUIERA TIEN CABEZOTE DE LIQUIDACION PAPABEROLÑ
+             -- COMO RESOLVER ??. Sera que hay que crear cabezote cuando llega el primer abono.
+               -- yo creo que sio debe ser asi mañana hacer eso // aunque el tema esta relaionado con cuales va a aplicar ves 
+     -- ojo ops en la liqudqcion no esta escribiendo la fecha ojoooo, verificar IMOPORTANTE mañana
+      --  que pasa con el valor a pagar ah clafro por que no esta escrito el valor modeadora , como manejar esto ? hasta que apilicqui??
+      -- La pantalla facturacion_facturacion necesita boton refrescar
+       -- ojo la pantalla de factyutracion los filtro busqueda porfecha y nro factura no funciona,nose pouede escribir ARRREGLAR
+       -- ojo colocar indicador de salida clinica apaciente en HC con color
+    
  
 -----------------------------------------------------------------------------------------------------------------------
 --  GLOSAS

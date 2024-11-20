@@ -1366,8 +1366,8 @@ def crearHistoriaClinica(request):
                     #data = {'Mensaje': 'Folio exitoso : ' + str(ultimofolio2)}
                 data = {'Mensaje': 'OK'}
 
-                #return HttpResponse(json.dumps(data))
-                return HttpResponse(data)
+                return HttpResponse(json.dumps(data))
+                #return HttpResponse(data)
                 #return HttpResponse('Folio Creado')
 
 

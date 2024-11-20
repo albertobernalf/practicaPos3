@@ -24,7 +24,7 @@ from admisiones.forms import furipsForm
 from sitios.models import  HistorialDependencias, Dependencias, ServiciosSedes, SubServiciosSedes
 from usuarios.models import Usuarios, TiposDocumento
 from planta.models import Planta
-from facturacion.models import ConveniosPacienteIngresos
+from facturacion.models import ConveniosPacienteIngresos, Liquidacion
 from rips.models import  RipsDestinoEgreso
 import datetime
 
@@ -5078,6 +5078,26 @@ def GuardaConvenioAdmision(request):
     miConexion3.close()
 
     #return HttpResponse("Convenio Adicionado", content_type='application/json')
+
+    ## Aqui rutina para actualizar el cabezote de facturacion_liquidacion el convenio_id
+
+    liquidacionId =  Liquidacion.objects.get(tipoDoc_id=registroId.tipoDoc_id, documento_id=registroId.documento_id, consecAdmision = registroId.consec , convenio_id=None)
+
+    print ("liquidacionId = ", liquidacionId)
+
+    if (liquidacionId.id > 0):
+
+        miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+        cur3 = miConexion3.cursor()
+        comando = 'UPDATE facturacion_liquidacion SET convenio_id = ' + str(convenio) + ' WHERE id = ' + str(liquidacionId.id)
+        print(comando)
+        cur3.execute(comando)
+        miConexion3.commit()
+        miConexion3.close()
+
+    ## Fin RUTINA
+
+
 
     return JsonResponse({'success': True, 'message': 'Convenio Actualizado satisfactoriamente!'})
 

@@ -62,11 +62,47 @@ t."serviciosSedes_id" = sd.id  AND deptip.id = dep."dependenciasTipo_id" and  tp
 
 select * from clinico_historia order by id; -- 526
 select * from usuarios_usuarios; -- 24 lui erne
-select * from clinico_historiaexamenes order by id; -- historia = 526
+select * from clinico_historiaexamenes order by id; -- historia = 526 cups=876222
 
 select * from facturacion_liquidacion order by id; -- ops hay dos que paso papaberol
 select * from facturacion_liquidaciondetalle order by id
 
 select * from clinico_examenes where "codigoCups" ='908201' -- id = 76
 
-select * from clinico_examenes where  id = 2083
+select * from clinico_examenes where  id = 2250  -- "876222" / "882307"
+select * from facturacion_liquidaciondetalle where liquidacion_id  =77
+select * from facturacion_liquidaciondetalle order by id
+select * from facturacion_liquidacion order by id
+
+
+delete from facturacion_liquidacion where id in ( 80,81) 
+select * from facturacion_facturaciondetalle order by id
+select * from facturacion_facturacion order by id
+select * from admisiones_ingresos order by id
+select * from facturacion_conveniospacienteingresos;
+insert into facturacion_conveniospacienteingresos ("consecAdmision","fechaRegistro","estadoReg", convenio_id,documento_id,"tipoDoc_id","usuarioRegistro_id")
+ values (1,'2024-11-20 14:00:00','A',3,24,1,1)
+update facturacion_facturacion set convenio_id=3 where id=36
+delete from facturacion_conveniospacienteingresos where id=63;
+--------
+------------
+
+SELECT facturas.id id , facturas."fechaFactura" fechaFactura, tp.nombre tipoDoc,u.documento documento,u.nombre nombre,
+i.consec consec , i."fechaIngreso" fechaIngreso , i."fechaSalida" fechaSalida, ser.nombre servicioNombreSalida, 
+dep.nombre camaNombreSalida , diag.nombre dxSalida , conv.nombre convenio, conv.id convenioId , i."salidaClinica" salidaClinica 
+FROM admisiones_ingresos i 
+INNER JOIN sitios_serviciosSedes sd ON (sd."sedesClinica_id" = i."sedesClinica_id")
+ INNER JOIN sitios_dependencias dep ON (dep."sedesClinica_id" = i."sedesClinica_id" AND dep."serviciosSedes_id" = sd.id AND
+ dep.id = i."dependenciasSalida_id")  INNER JOIN sitios_dependenciastipo deptip  ON (deptip.id = dep."dependenciasTipo_id") 
+INNER JOIN usuarios_usuarios u ON (u."tipoDoc_id" =  i."tipoDoc_id" AND u.id = i."documento_id" ) 
+INNER JOIN usuarios_tiposDocumento tp ON (tp.id = u."tipoDoc_id") 
+INNER JOIN clinico_servicios ser  ON ( ser.id  = i."serviciosSalida_id")  
+INNER JOIN clinico_Diagnosticos diag ON (diag.id = i."dxSalida_id") 
+INNER JOIN facturacion_facturacion facturas ON (facturas.documento_id = i.documento_id and facturas."tipoDoc_id" = i."tipoDoc_id" and
+ facturas."consecAdmision" = i.consec ) 
+LEFT JOIN contratacion_convenios conv  ON (conv.id = facturas.convenio_id ) 
+WHERE i."fechaSalida" between '2024-11-01 00:00:00'  and '2024-12-01 00:00:00' AND i."sedesClinica_id" = '1' AND 
+--i."salidaClinica" = ' + "'" + str('S') + "'" + ' AND 
+i."fechaSalida" is not null 
+  
+
