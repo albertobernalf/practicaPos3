@@ -293,16 +293,23 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
        -- OJO CUANDO COLOQUE UN ABONO PARA ASTRID  DESDE ADMISIONES NO ME ACTUALIZA EL VALOPR DE LA CUOTA MOPDERADORA Y CLARO NI SIQUIERA TIEN CABEZOTE DE LIQUIDACION PAPABEROLÑ
              -- COMO RESOLVER ??. Sera que hay que crear cabezote cuando llega el primer abono.
                -- yo creo que sio debe ser asi mañana hacer eso // aunque el tema esta relaionado con cuales va a aplicar ves 
-     -- ojo ops en la liqudacion no esta escribiendo la fecha ojoooo, verificar IMOPORTANTE mañana
+
       --  que pasa con el valor a pagar ah claro por que no esta escrito el valor modeadora , como manejar esto ? hasta que apilicqui??
       -- ops ojo al borrar un abono si esta apñcado pailas no debe dejar borrar
 
       -- La pantalla facturacion_facturacion necesita boton refrescar
        -- ojo la pantalla de factyutracion los filtro busqueda porfecha y nro factura no funciona,nose pouede escribir ARRREGLAR
-       -- ojo colocar indicador de salida clinica paciente en HC con color
-       -- cuando facture a ernesto se desaparecieron lo terapeuticos ???
-
+          -- ops nuevo4Modificado en la pantalla liquidacoion no me trae nada no refresca al seleccionarlo
+      -- ops cuando creo un abono me crea dos anbonos ??
+     -- ojo cuando borre un abono me saco del abono y volvio a liquidacion no hay que dejarlo queito
+    -- ops el boton adisionar liquidacion no ADICION opois ALGO LE PASO, ADICIONO un registro y pailas ... VERIFICAR BIEN EL DIA LUNES 25-Nov (AH DFOINDE CARAJO CAYERON LOS REGISTROS QUE ADICIONE) (gravee lo de NUEVO99 LO METIO A TOBIAS) QUE PASO ??
       -- en la tarne ver ANULAR FACTURAS Y REFACTURAR
+   
+     
+
+      -- OJO EL LUNES VER TODAS LASA ANTERUIORES NO SE ALCANZARON A VER
+
+
     
  
 -----------------------------------------------------------------------------------------------------------------------

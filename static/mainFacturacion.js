@@ -36,8 +36,8 @@ $(document).ready(function () {
 
         desdeFecha = ano + '-' + mes + '-' + diaDesde + ' 00:00:00'
         hastaFecha = ano + '-' + mes + '-' + dia + ' 23:59:59'
-	alert("desdefecha = "+ desdeFecha);
-	alert("hastafecha = "+ hastaFecha);
+	//alert("desdefecha1 = "+ desdeFecha);
+	// alert("hastafecha1 = "+ hastaFecha);
         desdeFactura=0;
         hastaFactura=0;
 
@@ -50,10 +50,9 @@ $(document).ready(function () {
 
         data = JSON.stringify(data);
 
-	initTableLiquidacion(data);
-	initTableLiquidacionDetalle(data);
-        initTableFacAbonos(data);
-        initTableFacturacion(data);
+
+
+
 
 	/*--------------------------------------------
         Click to Edit Button
@@ -225,6 +224,8 @@ $(document).ready(function () {
 
         });
 
+
+
 	/*--------------------------------------------
         Click to Edit Button PostFacturacon
         --------------------------------------------
@@ -287,9 +288,6 @@ $(document).ready(function () {
 	     });
 
         });
-
-
-
 
 
 
@@ -549,6 +547,8 @@ $(document).ready(function () {
 	           });
 	});
 
+
+
 	/*------------------------------------------
         --------------------------------------------
         Delete Post Liquidacion Detalle
@@ -594,11 +594,6 @@ $(document).ready(function () {
             });
         }
 
-
-
-});  //// AQUI cierra el document.ready
-
-
 function initTableLiquidacion(data) {
 
 	return new DataTable('.tablaLiquidacion', {
@@ -619,6 +614,7 @@ function initTableLiquidacion(data) {
                           btn = btn + " <input type='radio'  class='form-check-input editPostLiquidacion' data-pk='"  + row.pk + "'>" + "</input>";
                         return btn;
                     },
+                   /* width: '80%',target:[3], */
                     "targets": 9
                }
             ],
@@ -741,6 +737,88 @@ function initTableFacAbonos(data) {
 
 }
 
+function initTableFacturacion(data) {
+
+	return new DataTable('.tablaFacturacion', {
+	 "language": {
+                  "lengthMenu": "Display _MENU_ registros",
+                   "search": "Filtrar registros:",
+                    },
+            processing: true,
+            serverSide: false,
+            scrollY: '300px',
+	    scrollX: true,
+	    scrollCollapse: true,
+            paging:false,
+            columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        var btn = '';
+                          btn = btn + " <input type='radio'  class='form-check-input editPostFacturacion' data-pk='"  + row.pk + "'>" + "</input>";
+                        return btn;
+                    },
+                    "targets": 13
+               }
+            ],
+            ajax: {
+                 url:"/load_dataFacturacion/" +  data,
+                 type: "POST",
+                dataSrc: ""
+            },
+
+            lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
+            columns: [
+                { data: "fields.id"},
+                { data: "fields.fechaFactura"},
+                { data: "fields.tipoDoc"},
+                { data: "fields.documento"},
+                { data: "fields.nombre"},
+                { data: "fields.consec"},
+                { data: "fields.fechaIngreso"},
+                { data: "fields.fechaSalida"},
+  		{ data: "fields.servicioNombreSalida"},
+                { data: "fields.camaNombreSalida"},
+		 { data: "fields.dxSalida"},
+		 { data: "fields.convenio"},
+		 { data: "fields.salidaClinica"},
+               ]
+
+ });
+}
+
+	if ( $.fn.dataTable.isDataTable( '#tablaLiquidacion' ) ) {
+		    table = $('#tablaLiquidacion').DataTable();
+		table.ajax.reload();
+  tableA = $('#tablaLiquidacionDetalle').DataTable();
+		tableA.ajax.reload();
+  tableB = $('#tablaFacturacionAbonos').DataTable();
+		tableB.ajax.reload();
+  tableC = $('#tablaFacturacion').DataTable();
+		tableC.ajax.reload();
+
+			
+		}
+		else {
+
+ 		initTableLiquidacion(data); 
+		 initTableLiquidacionDetalle(data);
+        	 initTableFacAbonos(data);
+	          initTableFacturacion(data);
+	
+		}
+
+
+
+
+
+});  //// AQUI cierra el document.ready
+
+ function tableActionsLiquidacion(data) {
+   var table = initTableLiquidacion(data);
+
+    // perform API operations with `table`
+    // ...
+}
 
 function AdicionarLiquidacion()
 {
@@ -922,55 +1000,6 @@ function LeerTotales()
 	     });
 }
 
-
-function initTableFacturacion(data) {
-
-	return new DataTable('.tablaFacturacion', {
-	 "language": {
-                  "lengthMenu": "Display _MENU_ registros",
-                   "search": "Filtrar registros:",
-                    },
-            processing: true,
-            serverSide: false,
-            scrollY: '300px',
-	    scrollX: true,
-	    scrollCollapse: true,
-            paging:false,
-            columnDefs: [
-                {
-                    "render": function ( data, type, row ) {
-                        var btn = '';
-                          btn = btn + " <input type='radio'  class='form-check-input editPostFacturacion' data-pk='"  + row.pk + "'>" + "</input>";
-                        return btn;
-                    },
-                    "targets": 13
-               }
-            ],
-            ajax: {
-                 url:"/load_dataFacturacion/" +  data,
-                 type: "POST",
-                dataSrc: ""
-            },
-
-            lengthMenu: [2,3, 5, 10, 20, 30, 40, 50],
-            columns: [
-                { data: "fields.id"},
-                { data: "fields.fechaFactura"},
-                { data: "fields.tipoDoc"},
-                { data: "fields.documento"},
-                { data: "fields.nombre"},
-                { data: "fields.consec"},
-                { data: "fields.fechaIngreso"},
-                { data: "fields.fechaSalida"},
-  		{ data: "fields.servicioNombreSalida"},
-                { data: "fields.camaNombreSalida"},
-		 { data: "fields.dxSalida"},
-		 { data: "fields.convenio"},
-		 { data: "fields.salidaClinica"},
-               ]
-
- });
-}
 
 
 

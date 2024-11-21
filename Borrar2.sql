@@ -107,3 +107,44 @@ i."fechaSalida" is not null
   
 select * from clinico_historialincapacidades;
 
+
+function RefrescarPantalla() {
+	
+		 var data2 =  {}   ;
+   	          	data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+		        var valor = document.getElementById("liquidacionId").value;
+		        data2['valor'] = valor;	
+		        data2['liquidacionId'] = valor;	
+		        data2 = JSON.stringify(data2);
+			let fecha = new Date();
+
+	ano = fecha.getFullYear();
+	mes = fecha.getMonth() + 1;
+	dia = fecha.getDate();
+        diaDesde = '01'
+
+        desdeFecha = ano + '-' + mes + '-' + diaDesde + ' 00:00:00'
+        hastaFecha = ano + '-' + mes + '-' + dia + ' 23:59:59'
+
+        desdeFactura=0;
+        hastaFactura=0;
+
+
+	data2['desdeFecha'] = desdeFecha;
+	data2['hastaFecha'] = hastaFecha;
+	data2['desdeFactura'] = desdeFactura;
+	data2['hastaFactura'] = hastaFactura;
+	data2['bandera'] = 'Por Fecha';
+
+        data2 = JSON.stringify(data2);
+
+  tableF= $("#tablaFacturacion").dataTable().fnDestroy();	
+	          initTableFacturacion(data2);
+		 
+
+}
+
