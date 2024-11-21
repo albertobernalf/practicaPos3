@@ -437,6 +437,44 @@ $(document).ready(function () {
         Create Post Code Abonos
         --------------------------------------------
         --------------------------------------------*/
+        $('#createApliqueParcial').click(function (e) {
+            e.preventDefault();
+            $(this).html('Sending..');
+         var nuevo =  document.getElementById("nuevo").value;
+	alert("nuevo = ", nuevo);
+
+
+		alert(JSON.stringify($('#tablaAbonosFacturacion').DataTable().rows().data().toArray()));
+             alert ("Me voy AJAX");
+            $.ajax({
+		 url: "/apliqueAbonos/",
+                data: {'datos':JSON.stringify($('#tablaAbonosFacturacion').DataTable().rows().data().toArray())},
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+			printErrorMsg(data.error)
+                    if ($.isEmptyObject(data.error)) {
+		                        $('.success-msg').css('display','block');
+                		        $('.success-msg').text(data.message);
+                    }else{
+                        printErrorMsg(data.error)
+                    }	
+                },
+                error: function (data) {
+
+                        $('.success-msg').css('display','block');
+                        $('.success-msg').text(data.error);
+                }
+            });
+        });
+
+
+
+       /*------------------------------------------
+        --------------------------------------------
+        Create Post Code Abonos
+        --------------------------------------------
+        --------------------------------------------*/
         $('#saveBtnCrearLiquidacionDetalle').click(function (e) {
             e.preventDefault();
             $(this).html('Sending..');
@@ -675,10 +713,11 @@ function initTableFacAbonos(data) {
                 {
                     "render": function ( data, type, row ) {
                         var btn = '';
+			  btn = btn + " <input type 'text' id='nuevo' name='nuevo'></input>";
 			  btn = btn + " <button class='btn btn-danger deletePostAbonosFacturacion' data-action='post/" + row.pk + "/delete' data-pk='" + row.pk + "'>" + '<i class="fa fa-trash"></i>' + "</button>";
                         return btn;
                     },
-                    "targets": 4
+                    "targets": 7
                }
             ],
             ajax: {
@@ -693,6 +732,9 @@ function initTableFacAbonos(data) {
 		{ data: "fields.formaPagoNombre"},
                 { data: "fields.valor"},
                 { data: "fields.descripcion"},
+               { data: "fields.totalAplicado"},
+               { data: "fields.saldo"},
+		 { data: "fields.estadoReg"},
             
             ]
     });

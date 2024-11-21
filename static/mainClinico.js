@@ -117,7 +117,7 @@ function initTableClinico(data) {
                           btn = btn + " <input type='radio'  class='form-check-input editPostClinico' data-pk='" + row.pk + "'>" + "</input>";
                         return btn;
                     },
-                    "targets": 11
+                    "targets": 12
                }
             ],
             ajax: {
@@ -139,6 +139,7 @@ function initTableClinico(data) {
 		{ data: "fields.servicioNombreIng"},
                 { data: "fields.camaNombreIng"},
                 { data: "fields.dxActual"},
+		{ data: "fields.salidaClinica"},
         
             ]
  });

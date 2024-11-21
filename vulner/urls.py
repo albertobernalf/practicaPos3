@@ -195,6 +195,7 @@ urlpatterns = [
     path('anularFactura/', viewsFacturacion.AnularFactura , name='anularFactura'),
     path('reFacturar/', viewsFacturacion.ReFacturar , name='reFacturar'),
     path('load_dataFacturacion/<str:data>', viewsFacturacion.load_dataFacturacion, name='loaddataFacturacion'),
+    path('apliqueAbonos/', viewsFacturacion.ApliqueParcialAbonos, name='apliqueParcialAbonos'),
 
     # Contratacion
     path('load_dataConvenios/<str:data>', viewsConvenios.load_dataConvenios, name='loaddataConvenios'),

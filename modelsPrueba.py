@@ -276,32 +276,33 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 	-- CREAR VERIFICAR traslados convenios
         -- ojo como aplicar los abonos en las facturas ???-???-???
         -- Ops le dio salida teniendo mas convenios, ?? esos no estaban dentro de la liquidacion ????
-         -- Nop pailas caos con EUMELIA SOCORRO ME ESTOY ASUSTANDOp, mop tranquis el unico problema es el load_datañioquidaciondetalle
-           cpnm el campo liquidacionId// probar mañana creo ya esta solucuoinado PROBAR
-          -- POPS HAY UN PROBLEMA al crear un folio, cuando no tiene convenio sale error en la HC. Que podemos hacer ??. De pronto como solucion parcial creartla tarifas PARTICULAR que le parece
+
 	
 	-- Tengo dos problemitas:
-		Al guardar la HC, no me submita o si submita pero  o me carga la pagina de nuevo. esto estaba funcionando antes. NO ENTIENDO POR QUE 
-                Al Facturar, se queda trabahdo no refresca la liquidacion ni la liquidacionETALLE
                    Ojo el lunes 18-noviembre ver que las pantalllas carguen bien (HC y FACTURACION LIQUIDACION) y que coloquen el numero de la factura genrerado para poder imprimir
-        -- ojo definir el tema de los abonos, va el conceto abono ? o nop. yo creo que si., ANTON
         -- oJO LA CAMA aMBULATORIOS NO SE DEBE oCUPAR PARA PERMITOR INGRESAR SIEMPORE
        -- CUANDO CREA UNA ADMISION SE PIERDE EL NOMBRE DEL MODULO
         -- ojo verifiar la fecha cde ingreso cuando crea la admision
-         -- que pasa con el diagnostico de salida, meico de salida, servicio d esalida  para un ambulatorio (CLARO POR LO QUE NO TEN SALIDA CLINICA)
          -- hay un lo con la cama ambulatorio la libera error y ???
        -- ojo me dejo facturar sin convenio
 
        -- MAÑANA YO PENSARIA DESDE AQUIP ...
+	-- EN LA MAÑANA:
 
+       -- ojo crear y probar la trutina de click cada 30 segundos en todas alas pantalla es el reemplazo de refresh a ver como funciona
        -- OJO CUANDO COLOQUE UN ABONO PARA ASTRID  DESDE ADMISIONES NO ME ACTUALIZA EL VALOPR DE LA CUOTA MOPDERADORA Y CLARO NI SIQUIERA TIEN CABEZOTE DE LIQUIDACION PAPABEROLÑ
              -- COMO RESOLVER ??. Sera que hay que crear cabezote cuando llega el primer abono.
                -- yo creo que sio debe ser asi mañana hacer eso // aunque el tema esta relaionado con cuales va a aplicar ves 
-     -- ojo ops en la liqudqcion no esta escribiendo la fecha ojoooo, verificar IMOPORTANTE mañana
-      --  que pasa con el valor a pagar ah clafro por que no esta escrito el valor modeadora , como manejar esto ? hasta que apilicqui??
+     -- ojo ops en la liqudacion no esta escribiendo la fecha ojoooo, verificar IMOPORTANTE mañana
+      --  que pasa con el valor a pagar ah claro por que no esta escrito el valor modeadora , como manejar esto ? hasta que apilicqui??
+      -- ops ojo al borrar un abono si esta apñcado pailas no debe dejar borrar
+
       -- La pantalla facturacion_facturacion necesita boton refrescar
        -- ojo la pantalla de factyutracion los filtro busqueda porfecha y nro factura no funciona,nose pouede escribir ARRREGLAR
-       -- ojo colocar indicador de salida clinica apaciente en HC con color
+       -- ojo colocar indicador de salida clinica paciente en HC con color
+       -- cuando facture a ernesto se desaparecieron lo terapeuticos ???
+
+      -- en la tarne ver ANULAR FACTURAS Y REFACTURAR
     
  
 -----------------------------------------------------------------------------------------------------------------------

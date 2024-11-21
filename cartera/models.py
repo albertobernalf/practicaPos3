@@ -31,12 +31,27 @@ class Pagos(models.Model):
     formaPago = models.ForeignKey('cartera.FormasPagos', blank=True,null= True, editable=True, on_delete=models.PROTECT)
     valor = models.DecimalField( max_digits=20, decimal_places=2)
     descripcion = models.CharField(max_length=200, null=False)
-    facturaAplicada  =  models.ForeignKey('facturacion.facturacion',blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    totalAplicado = models.DecimalField( max_digits=20, decimal_places=2 , blank=True, null=True, editable=True , default=0.0)
+    saldo = models.DecimalField( max_digits=20, decimal_places=2, default=0.0)
+    #facturaAplicada  =  models.ForeignKey('facturacion.facturacion',blank=True,null= True, editable=True, on_delete=models.PROTECT)
     fechaRegistro = models.DateTimeField(default=now, blank=True, null=True, editable=True)
     estadoReg = models.CharField(max_length=1, default='A', editable=False)
 
     def __integer__(self):
         return self.nombre
+
+class PagosFacturas(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    pago = models.ForeignKey('cartera.Pagos', blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    facturaAplicada  =  models.ForeignKey('facturacion.facturacion',blank=True,null= True, editable=True, on_delete=models.PROTECT)
+    valorAplicado = models.DecimalField( max_digits=20, decimal_places=2)
+    fechaRegistro = models.DateTimeField(default=now, blank=True, null=True, editable=True)
+    estadoReg = models.CharField(max_length=1, default='A', editable=False)
+
+    def __integer__(self):
+        return self.nombre
+
 
 class TiposGlosas(models.Model):
     id = models.AutoField(primary_key=True)

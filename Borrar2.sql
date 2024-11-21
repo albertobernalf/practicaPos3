@@ -105,4 +105,5 @@ WHERE i."fechaSalida" between '2024-11-01 00:00:00'  and '2024-12-01 00:00:00' A
 --i."salidaClinica" = ' + "'" + str('S') + "'" + ' AND 
 i."fechaSalida" is not null 
   
+select * from clinico_historialincapacidades;
 

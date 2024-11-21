@@ -35,10 +35,58 @@ div.dataTables_filter input {
   }
 </style>
 <script>
+
 function RefrescarPantalla() {
-	alert ("Entre RferescarPantallaa");
- 	 location.reload();
+	
+		 var data2 =  {}   ;
+			data2['username'] = username;
+		        data2['sedeSeleccionada'] = sedeSeleccionada;
+		        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+		        data2['username_id'] = username_id;
+			 var valor = document.getElementById("liquidacionId").value;
+		        data2['valor'] = valor;	
+		        data2['liquidacionId'] = valor;	
+		        data2 = JSON.stringify(data2);
+		let fecha = new Date();
+
+	ano = fecha.getFullYear();
+	mes = fecha.getMonth() + 1;
+	dia = fecha.getDate();
+        diaDesde = '01'
+
+        desdeFecha = ano + '-' + mes + '-' + diaDesde + ' 00:00:00'
+        hastaFecha = ano + '-' + mes + '-' + dia + ' 23:59:59'
+
+        desdeFactura=0;
+        hastaFactura=0;
+
+
+	data2['desdeFecha'] = desdeFecha;
+	data2['hastaFecha'] = hastaFecha;
+	data2['desdeFactura'] = desdeFactura;
+	data2['hastaFactura'] = hastaFactura;
+	data2['bandera'] = 'Por Fecha';
+
+        data2 = JSON.stringify(data2);
+
+
+		 //   tableF= $("#tablaFacturacion").dataTable().fnDestroy();	
+	         //  initTableFacturacion(data2);
+
 }
+
+var tiempo = 30000;
+
+var interval = setInterval(function() {
+  $('#btnRefrescar').trigger('click');
+}, tiempo);
+
+// eventos click de las etiquetas <a>
+$('#btnRefrescar').click(function() {
+  	 location.reload();
+});
+
 </script>
 
 {% endblock %}
@@ -150,7 +198,7 @@ function RefrescarPantalla() {
 
 				   <!--   Aqui vienen lof Filtros  -->
 
-			 <div class="row row-cols-8" style="height=1px;">
+			 <div class="row row-cols-8" style="height=8px;">
 
 					<div class="col">
 			  		     <div class="form-group row">
@@ -197,7 +245,14 @@ function RefrescarPantalla() {
 					</div>
 					</div>
 				</div>
-
+				   <div class="col">
+					<div class="form-group row">
+					      <label for="btnRefrescar" class="col-form-label col-sm-3"> + </label>
+						<div class="col col-sm-7">
+						<input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">
+					</div>
+				   </div>
+				</div>
 
 		      </div>
 
@@ -776,32 +831,14 @@ function RefrescarPantalla() {
         <article id="Abonos">
             <center><h3>Abonos</h3></center>
 
-            <script type="text/javascript">
-		    var $ = jQuery;
-		    function cargarTablaAbonosPacienteFacturacion()
-	        {
-
-
-  	        var data =  {}   ;
-                var sede = document.getElementById("sede").value;
-                data['sede'] = sede;
-                var ingresoId= document.getElementById("ingresoId").value;
-                data['ingresoId'] = ingresoId;
-                data = JSON.stringify(data);
-	            table = $("#tablaAbonosFacturacion").dataTable().fnDestroy();
-                initTableAbonosFacturacion(data);
-            }
-            </script>
-
+        
 	 <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 
                         <!-- DESDE AQUIP DATATABLE  -->
-
+  <form id="FormaAbonosPaciente" name="FormaAbonosPaciente" class="form-horizontal"  novalidate>
                         <table class="table"  style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
-                            <form class="form-inline" action="/crearAbonosFacturacionDef/" method="POST"  id="FormaAbonosPaciente">
-
-
-                                <!-- INICIO TABLE DE  EL DATATABLE  -->
+                          
+                               <!-- INICIO TABLE DE  EL DATATABLE  -->
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="card">
@@ -818,20 +855,27 @@ function RefrescarPantalla() {
                                                         <span class="text-secondary">Crear Abono</span>
                                                         <a class="btn btn-success" href="javascript:void(0)" id="createNewPostAbonosFacturacion"> <i class="fa fa-plus"></i></a>
                                                     </div>
+						    <div class="col-sm-3 text-end">
+                                                        <span class="text-secondary">Aplique Parcial</span>
+                                                        <a class="btn btn-success" href="javascript:void(0)" id="createApliqueParcial"> </a>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="card-body" >
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <table id=tablaAbonosFacturacion class="display nowrap table table table-bordered  tablaAbonosFacturacion table-hover table-sm dtr-inline" style="width:100%;">
-                                                            <thead>
+                                                            <thead style="height:15px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
                                                             <tr>
-                                                                <th>Tipo Pago</th>
-                                                                <th>Forma Pago</th>
-                                                                <th>Valor</th>
-                                                                <th>Descripcion</th>
-                                                                <th>Borrar</th>
-                                                         
+                                                                <th>Tipo Pago                </th>
+                                                                <th>Forma Pago               </th>
+                                                                <th>Valor                    </th>
+                                                                <th>Descripcion              </th>
+                                                                <th>totalAplicado            </th>
+                                                                <th>Saldo                    </th>
+                                                                <th>Estado</th>
+                                                                <th>Borrar</th>                                                         
                                                             </tr>
                                                             </thead>
                                                             <tbody style="vertical-align:bottom">
@@ -846,8 +890,9 @@ function RefrescarPantalla() {
                                     </div>
                                 </div>
                                 <!-- FIN TABLE DE  EL DATATABLE  -->
-                            </form>
+                         
                         </table>
+   </form>
 		  </div>
                         <!-- HASTA AQUI DATATABLE -->
             <!-- Espacio Modales  -->
@@ -862,8 +907,7 @@ function RefrescarPantalla() {
                             <div class="alert alert-danger error-msg" style="display:none">
                                 <ul class="mb-0"></ul>
                             </div>
-                            <form id="postFormCrearAbonosFacturacion" name="postFormCrearAbonosFacturacion" class="form-horizontal"
-                                  novalidate>
+                            <form id="postFormCrearAbonosFacturacion" name="postFormCrearAbonosFacturacion" class="form-horizontal"  novalidate>
                                 {% csrf_token %}
                                 <input type="hidden" name="post_id" id="post_id">
 
