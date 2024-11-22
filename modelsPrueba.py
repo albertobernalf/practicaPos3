@@ -299,15 +299,16 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 
       -- La pantalla facturacion_facturacion necesita boton refrescar
        -- ojo la pantalla de factyutracion los filtro busqueda porfecha y nro factura no funciona,nose pouede escribir ARRREGLAR
-          -- ops nuevo4Modificado en la pantalla liquidacoion no me trae nada no refresca al seleccionarlo
+
       -- ops cuando creo un abono me crea dos anbonos ??
      -- ojo cuando borre un abono me saco del abono y volvio a liquidacion no hay que dejarlo queito
-    -- ops el boton adisionar liquidacion no ADICION opois ALGO LE PASO, ADICIONO un registro y pailas ... VERIFICAR BIEN EL DIA LUNES 25-Nov (AH DFOINDE CARAJO CAYERON LOS REGISTROS QUE ADICIONE) (gravee lo de NUEVO99 LO METIO A TOBIAS) QUE PASO ??
-            MIERCOLES SE ENLOQUECIO QUE PASO ????????????????????????????????????? PAILANDER
-      --OJO VERIFICAR EL EDITARLIQUIDACION
-      -- en la tarne ver ANULAR FACTURAS Y REFACTURAR
-   
-     
+
+     -- ojo al crear convenio en admsiones no me actualiza el convenio_id en liquidacion por el None No funciona
+     -- Ojo no me saca en liquidacion elusuaro nuevo4modificado el convenio_id=null, solo me muestra los que tienen empresa
+    -- op al crear un abono lo hace (2) veces y no cerro la modal ops
+     -- ops al anular una liquidaciondetalle no me actualizar totalLiquidacion, nip ValorApagar
+     -- ME muestra en la parte de abajop refacturar en panelfacturacion los articles hay problema
+     -- ops no refresca el filtro de facturacion en liquidacion ops por factura / por fecha
 
       -- OJO EL LUNES VER TODAS LASA ANTERUIORES NO SE ALCANZARON A VER
 

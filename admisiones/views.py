@@ -5081,7 +5081,7 @@ def GuardaConvenioAdmision(request):
 
     ## Aqui rutina para actualizar el cabezote de facturacion_liquidacion el convenio_id
 
-    liquidacionId =  Liquidacion.objects.get(tipoDoc_id=registroId.tipoDoc_id, documento_id=registroId.documento_id, consecAdmision = registroId.consec , convenio_id=None)
+    liquidacionId =  Liquidacion.objects.get(tipoDoc_id=registroId.tipoDoc_id, documento_id=registroId.documento_id, consecAdmision = registroId.consec ,convenio_id='' )
 
     print ("liquidacionId = ", liquidacionId)
 

@@ -22,7 +22,8 @@ from planta.models import Planta
 from triage.models import Triage
 from django.db.models.functions import Cast, Coalesce
 
-import datetime 
+import datetime
+from rips.models import  RipsDestinoEgreso
 
 
 # Create your views here.
@@ -2084,7 +2085,8 @@ def guardarAdmisionTriage(request):
         ripsNumConsultasCPrenatal = request.POST["ripsNumConsultasCPrenatal"]
         ripsEdadGestacional = request.POST["ripsEdadGestacional"]
         ripsDestinoUsuarioEgresoRecienNacido = request.POST["ripsDestinoUsuarioEgresoRecienNacido"]
-        ripsCondicionDestinoUsuarioEgreso = request.POST["ripsCondicionDestinoUsuarioEgreso"]
+
+        ripsDestinoUsu1 = RipsDestinoEgreso.objects.get(id=ripsDestinoUsuarioEgresoRecienNacido)
         ripsCondicionDestinoUsuarioEgreso = request.POST["ripsCondicionDestinoUsuarioEgreso"]
 
         grabo = Ingresos(
@@ -2134,7 +2136,7 @@ def guardarAdmisionTriage(request):
                          ripsPesoRecienNacido=ripsPesoRecienNacido,
                          ripsNumConsultasCPrenatal=ripsNumConsultasCPrenatal,
                          ripsEdadGestacional=ripsEdadGestacional,
-                         ripsDestinoUsuarioEgresoRecienNacido=ripsDestinoUsuarioEgresoRecienNacido,
+                         ripsDestinoUsuarioEgresoRecienNacido=ripsDestinoUsu1,
                          fechaRegistro=fechaRegistro,
                          usuarioRegistro_id=usernameId.id,
                          estadoReg=estadoReg,

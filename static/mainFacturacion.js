@@ -63,6 +63,7 @@ $(document).ready(function () {
 	
           var post_id = $(this).data('pk');
        //   alert("pk1 = " + $(this).data('pk'));
+  alert("edito  editPostLiquidacion por aqui la liquid Una VEZ pk1 = " + $(this).data('pk'));
         var username_id = document.getElementById("username_id").value;
 	// var username_id = document.getElementById("username_id").value;
 
@@ -307,7 +308,7 @@ $(document).ready(function () {
         $('body').on('click', '.editPostLiquidacionDetalle', function () {
 	
           var post_id = $(this).data('pk');
-       //   alert("pk1 = " + $(this).data('pk'));
+       alert("edito por aqui la liquid Una VEZ pk1 = " + $(this).data('pk'));
 
 	$.ajax({
 	           url: '/postConsultaLiquidacionDetalle/',
@@ -1126,6 +1127,70 @@ function RefrescarLiquidacionDetalle()
 		    tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();	
 	           initTableLiquidacionDetalle(data2);
 
+
+
+}
+
+
+function ConsultarFacturas()
+{
+	alert("Entre Consultar Facturas");
+
+
+  	var desdeFactura = document.getElementById("fdesdeFactura").value;
+        var hastaFactura = document.getElementById("fhastaFactura").value;
+
+	alert ("desdeFactura = " + desdeFactura )
+	alert ("hastaFactura  = " + hastaFactura  )
+
+    	var fFechaDesde = document.getElementById("fFechaDesde").value;
+        var fFechaHasta = document.getElementById("fFechaHasta").value;
+
+        var data =  {}   ;
+
+	data['desdeFecha'] = desdeFecha;
+	data['hastaFecha'] = hastaFecha;
+	data['desdeFactura'] = desdeFactura;
+	data['hastaFactura'] = hastaFactura;
+
+
+
+
+	if (desdeFactura > 0)
+	{
+
+		data['bandera'] = 'Factura';
+		alert("Entre Bandera Por Factura");
+		
+	}
+	else
+	{
+		data['bandera'] = 'Por Fecha';
+		alert("Entre BanderaPor Fecha");
+	}
+
+
+
+        data = JSON.stringify(data);
+
+
+		    tableF= $("#tablaFacturacion").dataTable().fnDestroy();	
+	           initTableFacturacion(data2);
+
+
+
+
+
+
+if ( $.fn.dataTable.isDataTable( '#tablaFacturacion' ) ) {
+		    table = $('#tablaFacturacion').DataTable();
+		table.ajax.reload();
+		
+		}
+		else {
+	          initTableFacturacion(data);
+
+		}
 
 
 }
