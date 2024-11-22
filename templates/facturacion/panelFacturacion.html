@@ -74,53 +74,11 @@ function RefrescarPantalla() {
 
         data = JSON.stringify(data2);
 
-  //  tableF= $("#tablaFacturacion").dataTable().fnDestroy();	
-	          initTableFacturacion(data);
-		 
 
+	  var tableL = $('#tablaFacturacion').DataTable(); 
+	          tableL.ajax.reload();
+ 
 }
-
-var tiempo = 30000;
-
-var interval = setInterval(function() {
-  $('#btnRefrescar').trigger('click');
-		alert("Entre click");
-	
-		 var data2 =  {}   ;
-		data2['username'] = username;
-	        data2['sedeSeleccionada'] = sedeSeleccionada;
-	        data2['nombreSede'] = nombreSede;
-	        data2['sede'] = sede;
-	        data2['username_id'] = username_id;
-		 var valor = document.getElementById("liquidacionId").value;
-	        data2['valor'] = valor;	
-	        data2['liquidacionId'] = valor;	
-		     
-		let fecha = new Date();
-		ano = fecha.getFullYear();
-		mes = fecha.getMonth() + 1;
-		dia = fecha.getDate();
-	        diaDesde = '01'
-	        desdeFecha = ano + '-' + mes + '-' + diaDesde + ' 00:00:00'
-	        hastaFecha = ano + '-' + mes + '-' + dia + ' 23:59:59'
-	        desdeFactura=0;
-	        hastaFactura=0;
-		data2['desdeFecha'] = desdeFecha;
-		data2['hastaFecha'] = hastaFecha;
-		data2['desdeFactura'] = desdeFactura;
-		data2['hastaFactura'] = hastaFactura;
-		data2['bandera'] = 'Por Fecha';
-	        data = JSON.stringify(data2);
-	
-	          initTableFacturacion(data);
-
-}, tiempo);
-
-// eventos click de las etiquetas <a>
-$('#btnRefrescar').click(function() {
-
-
-});
 
 </script>
 
@@ -695,23 +653,21 @@ $('#btnRefrescar').click(function() {
 
 		 <!--	<div style="height: 30px;  width:100%;  background-color:#EBEBEB;">  -->
 
-	       <div class="row row-cols-8" style="height=1px;">
+	       <div class="row row-cols-9" style="height=1px;">
 					
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="totalCopagos" class="col-form-label col-sm-3">Copagos:</label>
-						 <div class="col-sm-3">
+						 <div class="col-sm-2">
 							  <input type="text" id="totalCopagos" name="totalCopagos" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
 
-
-
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="totalCuotaModeradora" class="col-form-label col-sm-4">CuotaModeradora:</label>
-						 <div class="col-sm-3">
+						 <label for="totalCuotaModeradora" class="col-form-label col-sm-4">Moderadora:</label>
+						 <div class="col-sm-2">
 							  <input type="text" id="totalCuotaModeradora" name="totalCuotaModeradora" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -719,27 +675,26 @@ $('#btnRefrescar').click(function() {
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="totalProcedimientos" class="col-form-label col-sm-4">Procedimientos:</label>
-						 <div class="col-sm-3">
-							  <input type="text" id="totalProcedimientos" name="totalProcedimientos" value="0" readonly>
+						 <label for="totalProcedimientos" class="col-form-label col-sm-4">Proced:</label>
+						 <div class="col-sm-2">
+							  <input type="text" id="totalProcedimientos" name="Procedimientos" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
 
 					<div class="col">
 			  		     <div class="form-group row">
-					<label for="totalSuministros" class="col-form-label col-sm-4">Suministros:</label>
-
-						 <div class="col-sm-3">
-							  <input type="text" id="totalSuministros" name="totalSuministros" value="0" readonly>
+					<label for="totalSuministros" class="col-form-label col-sm-4">Suminis:</label>
+						 <div class="col-sm-2">
+							  <input type="text" id="totalSuministros" name="Suministros" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="totalLiquidacion" class="col-form-label col-sm-4">Liquidacion:</label>
-						 <div class="col-sm-3">
+						 <label for="totalLiquidacion" class="col-form-label col-sm-4">Liquid:</label>
+						 <div class="col-sm-2">
 							  <input type="text" id="totalLiquidacion" name="totalLiquidacion" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -747,8 +702,8 @@ $('#btnRefrescar').click(function() {
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="valorApagar" class="col-form-label col-sm-4">ValorApagar:</label>
-						 <div class="col-sm-3">
+						 <label for="valorApagar" class="col-form-label col-sm-4">Apagar:</label>
+						 <div class="col-sm-2">
 							  <input type="text" id="valorApagar" name="valorApagar" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -756,8 +711,8 @@ $('#btnRefrescar').click(function() {
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="anticipos" class="col-form-label col-sm-4">Anticipos:</label>
-						 <div class="col-sm-3">
+						 <label for="anticipos" class="col-form-label col-sm-4">Antic:</label>
+						 <div class="col-sm-2">
 							  <input type="text" id="anticipos" name="anticipos" value="0" readonly>
 	                                        </div>
           	                            </div>
@@ -766,12 +721,21 @@ $('#btnRefrescar').click(function() {
 				<div class="col">
 			  		     <div class="form-group row">
 						 <label for="totalAbonos" class="col-form-label col-sm-3">Abonos:</label>
-						 <div class="col-sm-3">
+						 <div class="col-sm-2">
 							  <input type="text" id="totalAbonos" name="totalAbonos" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
 		
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="totalRecibido" class="col-form-label col-sm-3">Recibido:</label>
+						 <div class="col-sm-2">
+							  <input type="text" id="totalRecibido" name="totalRecibido" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
 
 		       </div>  <!-- Cierra el rop de 8 columnas -->
 
@@ -866,71 +830,8 @@ $('#btnRefrescar').click(function() {
         <article id="Abonos">
             <center><h3>Abonos</h3></center>
 
-        
-	 <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+	<!-- MODAL INICIALES  -->
 
-                        <!-- DESDE AQUIP DATATABLE  -->
-  <form id="FormaAbonosPaciente" name="FormaAbonosPaciente" class="form-horizontal"  novalidate>
-                        <table class="table"  style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
-                          
-                               <!-- INICIO TABLE DE  EL DATATABLE  -->
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="card">
-                                            <div class="card-header" style="height:50px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
-                                                <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <input type="button" id="btn-rango" name="btn-rango"
-                                                               value="Refrescar ¡"
-                                                               onClick="cargarTablaAbonosPacienteFacturacion()">
-                                                        <div class="alert alert-success success-msg" style="display:none">
-							</div>
-                                                    </div>
-                                                    <div class="col-sm-3 text-end">
-                                                        <span class="text-secondary">Crear Abono</span>
-                                                        <a class="btn btn-success" href="javascript:void(0)" id="createNewPostAbonosFacturacion"> <i class="fa fa-plus"></i></a>
-                                                    </div>
-						    <div class="col-sm-3 text-end">
-                                                        <span class="text-secondary">Aplique Parcial</span>
-                                                        <a class="btn btn-success" href="javascript:void(0)" id="createApliqueParcial"> </a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="card-body" >
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <table id=tablaAbonosFacturacion class="display nowrap table table table-bordered  tablaAbonosFacturacion table-hover table-sm dtr-inline" style="width:100%;">
-                                                            <thead style="height:15px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
-                                                            <tr>
-                                                                <th>Tipo Pago                </th>
-                                                                <th>Forma Pago               </th>
-                                                                <th>Valor                    </th>
-                                                                <th>Descripcion              </th>
-                                                                <th>totalAplicado            </th>
-                                                                <th>Saldo                    </th>
-                                                                <th>Estado</th>
-                                                                <th>Borrar</th>                                                         
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody style="vertical-align:bottom">
-                                                            <tr style="height:10%">
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>  <!-- termina el body -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- FIN TABLE DE  EL DATATABLE  -->
-                         
-                        </table>
-   </form>
-		  </div>
-                        <!-- HASTA AQUI DATATABLE -->
-            <!-- Espacio Modales  -->
 
             <div class="modal fade" id="crearAbonosModelFacturacion" aria-hidden="true">
                 <div class="modal-dialog">
@@ -992,88 +893,167 @@ $('#btnRefrescar').click(function() {
                         </div>  <!--  FIN body -->
                     </div>               
                 </div>
+	   </div>
+
+		
+
+	<!-- FIN MODAL INICIAL  -->
+        
+	 <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+
+                        <!-- DESDE AQUIP DATATABLE  -->
+  <form id="FormaAbonosPaciente" name="FormaAbonosPaciente" class="form-horizontal"  novalidate>
+                        <table class="table"  style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+                          
+                               <!-- INICIO TABLE DE  EL DATATABLE  -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card">
+                                            <div class="card-header" style="height:50px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <input type="button" id="btn-rango" name="btn-rango"
+                                                               value="Refrescar ¡"
+                                                               onClick="cargarTablaAbonosPacienteFacturacion()">
+                                                        <div class="alert alert-success success-msg" style="display:none">
+							</div>
+                                                    </div>
+                                                    <div class="col-sm-3 text-end">
+                                                        <span class="text-secondary">Crear Abono</span>
+                                                        <a class="btn btn-success" href="javascript:void(0)" id="createNewPostAbonosFacturacion"> <i class="fa fa-plus"></i></a>
+                                                    </div>
+						
+
+                                                </div>
+                                            </div>
+                                            <div class="card-body" >
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <table id=tablaAbonosFacturacion class="display nowrap table table table-bordered  tablaAbonosFacturacion table-hover table-sm dtr-inline" style="width:100%;">
+                                                            <thead style="height:15px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
+                                                            <tr>
+                                                                <th>Tipo Pago                </th>
+                                                                <th>Forma Pago               </th>
+                                                                <th>Valor                    </th>
+                                                                <th>Descripcion              </th>
+                                                                <th>totalAplicado            </th>
+                                                                <th>Saldo                    </th>
+                                                                <th>Estado</th>
+							      <th>Editar Borrar</th>                                     
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody style="vertical-align:bottom">
+                                                            <tr style="height:10%">
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>  <!-- termina el body -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIN TABLE DE  EL DATATABLE  -->
+                         
+                        </table>
+   </form>
+		  </div>
+                        <!-- HASTA AQUI DATATABLE -->
+            <!-- Espacio Modales  -->
+
+          <!-- Otra Modal  -->
+
+         <div class="modal fade" id="crearModalApliqueParcial" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeadingAplique"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+                            <form id="postFormModalApliqueParcial" name="postFormModalApliqueParcial" class="form-horizontal"  novalidate>
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" id="post_id">
+				 <input type="hidden" id="liquidacionIdA" name="liquidacionIdA" value="0" >
+
+                                <div class="col">
+				 <div class="form-group row">
+                                    <label for="AtipoPago" class="col-sm-2 control-label">Tipo Pago:</label>
+                                    <select class="form-select  h-100 w-200" aria-label="" id="AtipoPago"
+                                            name="AtipoPago" readonly>
+                                        {% for tiposPagos in TiposPagos %}
+                                        <option value="{{tiposPagos.id}}"> {{tiposPagos.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
+				  </div>
+                                </div>
+
+                                <div class="col">
+				  <div class="form-group row">
+                                    <label for="aformaPago" class="col-sm-2 control-label">Forma Pago:</label>
+                                    <select class="form-select  h-100 w-200" aria-label="" id="aformaPago"
+                                            name="aformaPago" readonly >
+                                        {% for formasPagos in FormasPagos %}
+                                        <option value="{{formasPagos.id}}"> {{formasPagos.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
+				 </div>
+                                </div>
+
+                                <div class="col">
+					<div class="form-group row">
+                                    Valor:
+                                    <input type="text" id="avalorAbono" name="avalorAbono" value="0" readonly></input>
+					</div>
+                                </div>
+
+                                <div class="col">
+					<div class="form-group row">
+                                    Saldo:
+                                    <input type="text" id="aSaldo" name="aSaldo" value="0" readonly></input>
+					</div>
+                                </div>
+
+
+                                <div class="col">
+					<div class="form-group row">
+                                    Descripcion:
+                                    <input type="text" id="adescripcionAbono" name="adescripcionAbono" value="0" readonly> </input>
+					</div>
+                                </div>
+
+				<div class="col">
+					<div class="form-group row">
+                                    ValorEnCurso:
+                                    <input type="text" id="avalorEnCurso" name="avalorEnCurso" value="0" > </input>
+					</div>
+                                </div>
+
+
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary" id="saveBtnApliqueAbonosFacturacion"
+                                            value="create">Guardar
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>  <!--  FIN body -->
+                    </div>       <!--  FIN modal-content -->        
+                </div> <!--  FIN modal-dialog -->        
+                </div> <!--  FIN modal fade -->        
+	
+          <!-- Fin otra modal -->
 
             <!-- Creo Fin Modales  -->
 	
         </article>
 
-
 	<article id="ReFacturar">
-        	   Refacturacion
-		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
-			 <div class="row row-cols-8" style="height=1px;">
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="Rfactura" class="col-form-label col-sm-4">LiquidacionId:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="Rfactura" name="Rfactura" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                    </div>
-                            
-				<div class="col">
-			  		     <div class="form-group row">
-						 <label for="RfechaFactura" class="col-form-label col-sm-4">Fecha:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="RfechaFactura" name="RfechaFactura" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="RtipoDoc_id" class="col-form-label col-sm-4">TipoDocumento:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="RtipoDoc_id" name="RtipoDoc_id" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="Rdocumento_id" class="col-form-label col-sm-4">Documento:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="Rdocumento_id" name="Rdocumentoc_id" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-					<label for="Rpaciente" class="col-form-label col-sm-4">Paciente:</label>
-
-						 <div class="col-sm-6">
-							  <input type="text" id="Rpaciente" name="Rpaciente" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="RconsecAdmision" class="col-form-label col-sm-4">ConsecutivoAdmision:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="RconsecAdmision" name="RconsecAdmision" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="RnombreConvenio" class="col-form-label col-sm-4">Convenio:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="RnombreConvenio" name="RnombreConvenio" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-				 <div class="col">
-					<div class="form-group row">
-					 <label for="BtnReFactura" class="col-form-label col-sm-3"> Refacturar </label>
-					     <div class="col col-sm-7">
-			                        <input type="button" class="form-control form-control-sm" id="BtnReFactura"  name="BtnReFactura" value="Adicionar" onclick="Refacturar()">
-					</div>
-					</div>
-				</div>
-	 </div>
-		 </div>
-</article>
+      	   
+	   <center><h3>Refacturacion</h3></center>
+		</article>
      
     </div>
 </div>
@@ -1083,15 +1063,11 @@ $('#btnRefrescar').click(function() {
 {% block mensajeria %}
 <div class="marco">
 <span> ... </span>
-     <span id="mensajes" name="mensajes">xxxx </span>
+     <span id="mensajes" name="mensajes">. </span>
 
 </div>
 {% endblock %}
 
-{% block totales %}
-
-
-{% endblock %}
 
 
 {% block footer %}

@@ -303,6 +303,8 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
       -- ops cuando creo un abono me crea dos anbonos ??
      -- ojo cuando borre un abono me saco del abono y volvio a liquidacion no hay que dejarlo queito
     -- ops el boton adisionar liquidacion no ADICION opois ALGO LE PASO, ADICIONO un registro y pailas ... VERIFICAR BIEN EL DIA LUNES 25-Nov (AH DFOINDE CARAJO CAYERON LOS REGISTROS QUE ADICIONE) (gravee lo de NUEVO99 LO METIO A TOBIAS) QUE PASO ??
+            MIERCOLES SE ENLOQUECIO QUE PASO ????????????????????????????????????? PAILANDER
+      --OJO VERIFICAR EL EDITARLIQUIDACION
       -- en la tarne ver ANULAR FACTURAS Y REFACTURAR
    
      

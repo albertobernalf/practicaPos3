@@ -23,7 +23,7 @@ import datetime
 from decimal import Decimal
 from admisiones.models import Ingresos
 from facturacion.models import ConveniosPacienteIngresos, Liquidacion, LiquidacionDetalle, Facturacion, FacturacionDetalle
-from cartera.models import TiposPagos, FormasPagos, Pagos
+from cartera.models import TiposPagos, FormasPagos, Pagos, PagosFacturas
 from triage.models import Triage
 from clinico.models import Servicios
 
@@ -303,15 +303,15 @@ def PostConsultaLiquidacion(request):
 
         if llave[0] == 'INGRESO':
             if (convenioId == '0'):
-                comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + str(ingresoId.tipoDoc_id)  + ',' +  str(ingresoId.documento_id) + ',' + str(ingresoId.consec) + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "', null"  + ',' + "'" + str(username_id) + "',0)"
+                comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos" , "totalRecibido" ) VALUES (' + str(ingresoId.tipoDoc_id)  + ',' +  str(ingresoId.documento_id) + ',' + str(ingresoId.consec) + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "', null"  + ',' + "'" + str(username_id) + "',0,0)"
             else:
-                comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + str(ingresoId.tipoDoc_id)  + ',' +  str(ingresoId.documento_id) + ',' + str(ingresoId.consec) + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "'," + str(convenioId) + ',' + "'" + str(username_id) + "',0)"
+                comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos" , "totalRecibido") VALUES (' + str(ingresoId.tipoDoc_id)  + ',' +  str(ingresoId.documento_id) + ',' + str(ingresoId.consec) + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "'," + str(convenioId) + ',' + "'" + str(username_id) + "',0,0)"
 
         else:
             if (convenioId == '0'):
-                comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + str(triageId.tipoDoc_id)  + ',' +  str(triageId.documento_id) + ',' + str('0') + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "', null" + ',' + "'" + str(username_id) + "',0)"
+                comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos" , "totalRecibido") VALUES (' + str(triageId.tipoDoc_id)  + ',' +  str(triageId.documento_id) + ',' + str('0') + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "', null" + ',' + "'" + str(username_id) + "',0,0)"
             else:
-                comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + str(triageId.tipoDoc_id)  + ',' +  str(triageId.documento_id) + ',' + str('0') + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "'," + str(convenioId) + ',' + "'" + str(username_id) + "',0)"
+                comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos" , "totalRecibido") VALUES (' + str(triageId.tipoDoc_id)  + ',' +  str(triageId.documento_id) + ',' + str('0') + ',' +  "'" +  str(fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(estadoReg) + "'," + str(convenioId) + ',' + "'" + str(username_id) + "',0,0)"
 
         curt.execute(comando)
         miConexiont.commit()
@@ -401,23 +401,16 @@ def PostConsultaLiquidacion(request):
            totalProcedimientos = LiquidacionDetalle.objects.all().filter(liquidacion_id=liquidacionId).filter(cums_id = None).exclude(estadoRegistro='N').aggregate(totalP=Coalesce(Sum('valorTotal'), 0))
            totalProcedimientos = (totalProcedimientos['totalP']) + 0
            print("totalProcedimientos", totalProcedimientos)
-           totalCopagos = Pagos.objects.all().filter(tipoDoc_id=ingresoId.tipoDoc_id).filter(documento_id=ingresoId.documento_id).filter(consec=ingresoId.consec).exclude(estadoReg='N').filter(formaPago_id=4).aggregate(totalC=Coalesce(Sum('valor'), 0))
-           totalCopagos = (totalCopagos['totalC']) + 0
-           print("totalCopagos", totalCopagos)
-           totalCopagos1 = Liquidacion.objects.get(id=liquidacionId)
-           totalCopagos = totalCopagos1.totalCopagos
-           totalCuotaModeradora1 = Liquidacion.objects.get(id=liquidacionId)
-           totalCuotaModeradora = totalCuotaModeradora1.totalCuotaModeradora
-           totalAnticipos1 = Liquidacion.objects.get(id=liquidacionId)
-           totalAnticipos = totalAnticipos1.anticipos
-           totalAbonos1 = Liquidacion.objects.get(id=liquidacionId)
-           totalAbonos = totalAbonos1.totalAbonos
-           totalRecibido1 = Liquidacion.objects.get(id=liquidacionId)
-           totalRecibido = totalRecibido1.totalRecibido
-           anticipos1 = Liquidacion.objects.get(id=liquidacionId)
-           totalAnticipos = anticipos1.anticipos
-           valorApagar1 = Liquidacion.objects.get(id=liquidacionId)
-           valorApagar = valorApagar1.valorApagar
+           registroPago = Liquidacion.objects.get(id=liquidacionId)
+           totalCopagos = registroPago.totalCopagos
+           totalCuotaModeradora = registroPago.totalCuotaModeradora
+           totalAnticipos = registroPago.anticipos
+           totalAbonos = registroPago.totalAbonos
+           totalRecibido = registroPago.totalRecibido
+           totalAnticipos = registroPago.anticipos
+           valorApagar = registroPago.valorApagar
+           totalLiquidacion = registroPago.totalLiquidacion
+
 
         else:
 
@@ -426,21 +419,15 @@ def PostConsultaLiquidacion(request):
            print("totalSuministros", totalSuministros)
            totalProcedimientos = LiquidacionDetalle.objects.all().filter(liquidacion_id=liquidacionId).filter(cums_id = None).exclude(estadoRegistro='N').aggregate(totalP=Coalesce(Sum('valorTotal'), 0))
            totalProcedimientos = (totalProcedimientos['totalP']) + 0
-
-           totalCopagos1 = Liquidacion.objects.get(id=liquidacionId)
-           totalCopagos = totalCopagos1.totalCopagos
-           totalCuotaModeradora1 = Liquidacion.objects.get(id=liquidacionId)
-           totalCuotaModeradora = totalCuotaModeradora1.totalCuotaModeradora
-           totalAnticipos1 = Liquidacion.objects.get(id=liquidacionId)
-           totalAnticipos = totalAnticipos1.anticipos
-           totalAbonos1 = Liquidacion.objects.get(id=liquidacionId)
-           totalAbonos = totalAbonos1.totalAbonos
-           totalRecibido1 = Liquidacion.objects.get(id=liquidacionId)
-           totalRecibido = totalRecibido1.totalRecibido
-           anticipos1 = Liquidacion.objects.get(id=liquidacionId)
-           totalAnticipos = anticipos1.anticipos1
-           valorApagar1 = Liquidacion.objects.get(id=liquidacionId)
-           valorApagar = valorApagar1.valorApagar
+           registroPago = Liquidacion.objects.get(id=liquidacionId)
+           totalCopagos = registroPago.totalCopagos
+           totalCuotaModeradora = registroPago.totalCuotaModeradora
+           totalAnticipos = registroPago.anticipos
+           totalAbonos = registroPago.totalAbonos
+           totalRecibido = registroPago.totalRecibido
+           totalAnticipos = registroPago.anticipos
+           valorApagar = registroPago.valorApagar
+           totalLiquidacion = registroPago.totalLiquidacion
 
 
         if llave[0] == 'INGRESO':
@@ -466,8 +453,8 @@ def PostConsultaLiquidacion(request):
                              'nombreConvenio': liquidacion[0]['nombreConvenio'],
                              'paciente': liquidacion[0]['paciente'], 'Suministros':suministros, 'Cups':cups,
 			     'totalSuministros':totalSuministros,'totalProcedimientos':totalProcedimientos,'totalCopagos':totalCopagos,
-			     'totalCuotaModeradora':totalCuotaModeradora,'totalAnticipos':anticipos, 'totalAbonos':totalAbonos,
-			     'totalLiquidacion':totalLiquidacion, 'totalAPagar':valorApagar, 'TiposPagos':tiposPagos, 'FormasPagos':formasPagos,
+			     'totalCuotaModeradora':totalCuotaModeradora,'totalAnticipos':totalAnticipos, 'totalAbonos':totalAbonos,
+			     'totalLiquidacion':totalLiquidacion, 'totalRecibido':totalRecibido , 'totalAPagar':valorApagar, 'TiposPagos':tiposPagos, 'FormasPagos':formasPagos,
 			     'ingresoId1': ingresoId1, 'documento': documento, 'tipoDocumento': tipoDocumento
 
             })
@@ -499,7 +486,7 @@ def PostConsultaLiquidacion(request):
                  'totalCopagos': totalCopagos,
                  'totalCuotaModeradora': totalCuotaModeradora, 'totalAnticipos': totalAnticipos,
                  'totalAbonos': totalAbonos,
-                 'totalLiquidacion': totalLiquidacion, 'totalAPagar': valorApagar, 'TiposPagos': tiposPagos,
+                 'totalLiquidacion': totalLiquidacion, 'totalRecibido':totalRecibido , 'totalAPagar': valorApagar, 'TiposPagos': tiposPagos,
                  'FormasPagos': formasPagos,
                  'triageId1': triageId1, 'documento': documento, 'tipoDocumento': tipoDocumento
 
@@ -712,7 +699,7 @@ def GuardaAbonosFacturacion(request):
     ## falta usuarioRegistro_id
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
     cur3 = miConexion3.cursor()
-    comando = 'insert into cartera_Pagos ("fecha", "tipoDoc_id" , documento_id, consec,  "tipoPago_id" , "formaPago_id", valor, descripcion ,"fechaRegistro","estadoReg", saldo, "totalAplicado") values ('  + "'" + str(fechaRegistro) + "'," +  "'" + str(registroId.tipoDoc_id) + "'" + ' , ' + "'" + str(registroId.documento_id) + "'" + ', ' + "'" + str(registroId.consecAdmision) + "'" + '  , ' + "'" + str(tipoPago) + "'" + '  , ' + "'" + str(formaPago) + "'" + ', ' + "'" + str(valor) + "',"   + "'" + str(descripcion) + "','"   + str(fechaRegistro) + "'," + "'" +  str("A") + "',0,0);"
+    comando = 'insert into cartera_Pagos ("fecha", "tipoDoc_id" , documento_id, consec,  "tipoPago_id" , "formaPago_id", valor, descripcion ,"fechaRegistro","estadoReg", saldo, "totalAplicado", "valorEnCurso") values ('  + "'" + str(fechaRegistro) + "'," +  "'" + str(registroId.tipoDoc_id) + "'" + ' , ' + "'" + str(registroId.documento_id) + "'" + ', ' + "'" + str(registroId.consecAdmision) + "'" + '  , ' + "'" + str(tipoPago) + "'" + '  , ' + "'" + str(formaPago) + "'" + ', ' + "'" + str(valor) + "',"   + "'" + str(descripcion) + "','"   + str(fechaRegistro) + "'," + "'" +  str("A") + "',0,0,0);"
     print(comando)
     cur3.execute(comando)
     miConexion3.commit()
@@ -729,9 +716,10 @@ def PostDeleteAbonosFacturacion(request):
 
     ## Se debe verificar antes que no haya valor aplicado en PagosFacturas
 
-    #verAplicado = PagosFacturas.objects.get(id=pago_id,estadoReg='A')
+    #verAplicado = PagosFacturas.objects.get(id=id)
+
     #if verAplicado.id != '':
-    #    return JsonResponse({'success': True, 'message': 'No se puede cancelar Abono. Esta relacionado con la Factura No' + verAplicado.facturaAplicada})
+    #    return JsonResponse({'success': True, 'message': 'No se puede cancelar Abono. Esta relacionado con la Factura No' + verAplicado. facturaAplicada})
 
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
     cur3 = miConexion3.cursor()
@@ -822,23 +810,16 @@ def GuardarLiquidacionDetalle(request):
     totalProcedimientos = LiquidacionDetalle.objects.all().filter(liquidacion_id=liquidacionId).filter(cums_id = None).exclude(estadoRegistro='N').aggregate(totalP=Coalesce(Sum('valorTotal'), 0))
     totalProcedimientos = (totalProcedimientos['totalP']) + 0
     print("totalProcedimientos", totalProcedimientos)
-    totalCopagos = Pagos.objects.all().filter(tipoDoc_id=registroId.tipoDoc_id).filter(documento_id=registroId.documento_id).filter(consec=registroId.consecAdmision).filter(formaPago_id=4).aggregate(totalC=Coalesce(Sum('valor'), 0))
-    totalCopagos = (totalCopagos['totalC']) + 0
-    print("totalCopagos", totalCopagos)
-    totalCuotaModeradora = Pagos.objects.all().filter(tipoDoc_id=registroId.tipoDoc_id).filter(documento_id=registroId.documento_id).filter(consec=registroId.consecAdmision).filter(formaPago_id=3).aggregate(totalM=Coalesce(Sum('valor'), 0))
-    totalCuotaModeradora = (totalCuotaModeradora['totalM']) + 0
-    print("totalCuotaModeradora", totalCuotaModeradora)
-    totalAnticipos = Pagos.objects.all().filter(tipoDoc_id=registroId.tipoDoc_id).filter(documento_id=registroId.documento_id).filter(consec=registroId.consecAdmision).filter(formaPago_id=1).aggregate(Anticipos=Coalesce(Sum('valor'), 0))
-    totalAnticipos = (totalAnticipos['Anticipos']) + 0
-    print("totalAnticipos", totalAnticipos)
-    totalAbonos = Pagos.objects.all().filter(tipoDoc_id=registroId.tipoDoc_id).filter(documento_id=registroId.documento_id).filter(consec=registroId.consecAdmision).filter(formaPago_id=2).aggregate(totalAb=Coalesce(Sum('valor'), 0))
-    totalAbonos = (totalAbonos['totalAb']) + 0
-    totalAbonos = totalCopagos + totalAnticipos + totalCuotaModeradora
-    print("totalAbonos", totalAbonos)
-    totalLiquidacion =  totalSuministros + totalProcedimientos - totalAbonos
-    print("totalLiquidacion", totalLiquidacion)
-    totalAPagar = totalLiquidacion - totalAbonos
-    print("totalAPagar", totalAPagar)
+    registroPago = Liquidacion.objects.get(id=liquidacionId)
+    totalCopagos = registroPago.totalCopagos
+    totalCuotaModeradora = registroPago.totalCuotaModeradora
+    totalAnticipos = registroPago.anticipos
+    totalAbonos = registroPago.totalAbonos
+    totalRecibido = registroPago.totalRecibido
+    totalAnticipos = registroPago.anticipos
+    totalLiquidacion = totalSuministros + totalProcedimientos
+    valorApagar = totalLiquidacion -  totalRecibido
+    
 
     # Rutina Guarda en cabezote los totales
 
@@ -846,7 +827,7 @@ def GuardarLiquidacionDetalle(request):
 
     miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
     curt = miConexiont.cursor()
-    comando = 'UPDATE facturacion_liquidacion SET "totalSuministros" = ' + str(totalSuministros) + ',"totalProcedimientos" = ' + str(totalProcedimientos) + ', "totalCopagos" = ' + str(totalCopagos) + ' , "totalCuotaModeradora" = ' + str(totalCuotaModeradora) + ', anticipos = ' +  str(totalAnticipos) + ' ,"totalAbonos" = ' + str(totalAbonos) + ', "totalLiquidacion" = ' + str(totalLiquidacion) + ', "valorApagar" = ' + str(totalAPagar) + ' WHERE id =' + str(liquidacionId)
+    comando = 'UPDATE facturacion_liquidacion SET "totalSuministros" = ' + str(totalSuministros) + ',"totalProcedimientos" = ' + str(totalProcedimientos) + ', "totalCopagos" = ' + str(totalCopagos) + ' , "totalCuotaModeradora" = ' + str(totalCuotaModeradora) + ', anticipos = ' +  str(totalAnticipos) + ' ,"totalAbonos" = ' + str(totalAbonos) + ', "totalLiquidacion" = ' + str(totalLiquidacion) + ', "valorApagar" = ' + str(valorApagar) +  ', "totalRecibido" = ' + str(totalRecibido) + ' WHERE id =' + str(liquidacionId)
     curt.execute(comando)
     miConexiont.commit()
     miConexiont.close()
@@ -920,7 +901,35 @@ def EditarGuardarLiquidacionDetalle(request):
     miConexion3.commit()
     miConexion3.close()
 
-    #return HttpResponse("Convenio Adicionado", content_type='application/json')
+  # Falta la RUTINA que actualica los cabezotes de la liquidacion
+
+    totalSuministros = LiquidacionDetalle.objects.all().filter(liquidacion_id=registroId.liquidacion_id).filter(codigoCups_id = None).exclude(estadoRegistro='N').aggregate(totalS=Coalesce(Sum('valorTotal'), 0))
+    totalSuministros = (totalSuministros['totalS']) + 0
+    print("totalSuministros", totalSuministros)
+    totalProcedimientos = LiquidacionDetalle.objects.all().filter(liquidacion_id=registroId.liquidacion_id).filter(cums_id = None).exclude(estadoRegistro='N').aggregate(totalP=Coalesce(Sum('valorTotal'), 0))
+    totalProcedimientos = (totalProcedimientos['totalP']) + 0
+    print("totalProcedimientos", totalProcedimientos)
+    registroPago = Liquidacion.objects.get(id=registroId.liquidacion_id)
+    totalCopagos = registroPago.totalCopagos
+    totalCuotaModeradora = registroPago.totalCuotaModeradora
+    totalAnticipos = registroPago.anticipos
+    totalAbonos = registroPago.totalAbonos
+    totalRecibido = registroPago.totalRecibido
+    totalAnticipos = registroPago.anticipos
+    totalLiquidacion = totalSuministros + totalProcedimientos
+    valorApagar = totalLiquidacion -  totalRecibido
+    
+
+    # Rutina Guarda en cabezote los totales
+
+    print ("Voy a grabar el cabezote")
+
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",                                       password="pass123")
+    curt = miConexiont.cursor()
+    comando = 'UPDATE facturacion_liquidacion SET "totalSuministros" = ' + str(totalSuministros) + ',"totalProcedimientos" = ' + str(totalProcedimientos) + ', "totalCopagos" = ' + str(totalCopagos) + ' , "totalCuotaModeradora" = ' + str(totalCuotaModeradora) + ', anticipos = ' +  str(totalAnticipos) + ' ,"totalAbonos" = ' + str(totalAbonos) + ', "totalLiquidacion" = ' + str(totalLiquidacion) + ', "valorApagar" = ' + str(valorApagar) +  ', "totalRecibido" = ' + str(totalRecibido) + ' WHERE id =' + str(registroId.liquidacion_id)
+    curt.execute(comando)
+    miConexiont.commit()
+    miConexiont.close()
 
     return JsonResponse({'success': True, 'message': 'Registro Actualizado satisfactoriamente!'})
 
@@ -930,12 +939,21 @@ def load_dataAbonosFacturacion(request, data):
 
     context = {}
     d = json.loads(data)
+    
+    tipoIngreso = d['tipoIngreso']
 
-    ingresoId = d['ingresoId']
+
+    if tipoIngreso == 'INGRESO':
+       ingresoId = d['ingresoId']
+       print("ingresoId:", ingresoId)
+    else:
+       triageId = d['triageId']
+       print("triageId:", triageId)
+
     sede = d['sede']
 
     print("sede:", sede)
-    print("ingresoId:", ingresoId)
+
 
     # print("data = ", request.GET('data'))
 
@@ -946,7 +964,11 @@ def load_dataAbonosFacturacion(request, data):
                                    password="pass123")
     curx = miConexionx.cursor()
 
-    detalle = 'SELECT pag.id id , i."tipoDoc_id" tipoDoc , i.documento_id documentoId ,u.documento documento,u.nombre nombre,i.consec consec , tipdoc.nombre nombreDocumento , cast(date(pag.fecha) as text)  fecha, pag."tipoPago_id" tipoPago , pag."formaPago_id" formaPago, pag.valor valor, pag.descripcion descripcion ,tip.nombre tipoPagoNombre,forma.nombre formaPagoNombre, pag."totalAplicado" totalAplicado, pag.saldo saldo , pag."estadoReg" estadoReg FROM admisiones_ingresos i, cartera_pagos pag ,usuarios_usuarios u ,usuarios_tiposdocumento tipdoc, cartera_tiposPagos tip, cartera_formasPagos forma WHERE i.id = ' + "'" + str(ingresoId) + "'" + ' and i.documento_id = u.id and i."tipoDoc_id" = pag."tipoDoc_id" and i.documento_id  = pag.documento_id and  i.consec = pag.consec AND tipdoc.id = i."tipoDoc_id" and pag."tipoPago_id" = tip.id and pag."formaPago_id" = forma.id'
+    if tipoIngreso == 'INGRESO':
+      detalle = 'SELECT pag.id id , i."tipoDoc_id" tipoDoc , i.documento_id documentoId ,u.documento documento,u.nombre nombre,i.consec consec , tipdoc.nombre nombreDocumento , cast(date(pag.fecha) as text)  fecha, pag."tipoPago_id" tipoPago , pag."formaPago_id" formaPago, pag.valor valor, pag.descripcion descripcion ,tip.nombre tipoPagoNombre,forma.nombre formaPagoNombre, pag."totalAplicado" totalAplicado, pag.saldo saldo , pag."estadoReg" estadoReg FROM admisiones_ingresos i, cartera_pagos pag ,usuarios_usuarios u ,usuarios_tiposdocumento tipdoc, cartera_tiposPagos tip, cartera_formasPagos forma WHERE i.id = ' + "'" + str(ingresoId) + "'" + ' and i.documento_id = u.id and i."tipoDoc_id" = pag."tipoDoc_id" and i.documento_id  = pag.documento_id and  i.consec = pag.consec AND tipdoc.id = i."tipoDoc_id" and pag."tipoPago_id" = tip.id and pag."formaPago_id" = forma.id'
+    else:
+      detalle = 'SELECT pag.id id , t."tipoDoc_id" tipoDoc , t.documento_id documentoId ,u.documento documento,u.nombre nombre,t.consec consec , tipdoc.nombre nombreDocumento , cast(date(pag.fecha) as text)  fecha, pag."tipoPago_id" tipoPago , pag."formaPago_id" formaPago, pag.valor valor, pag.descripcion descripcion ,tip.nombre tipoPagoNombre,forma.nombre formaPagoNombre, pag."totalAplicado" totalAplicado, pag.saldo saldo , pag."estadoReg" estadoReg FROM triage_triage t, cartera_pagos pag ,usuarios_usuarios u ,usuarios_tiposdocumento tipdoc, cartera_tiposPagos tip, cartera_formasPagos forma WHERE t.id = ' + "'" + str(triageId) + "'" + ' and t.documento_id = u.id and t."tipoDoc_id" = pag."tipoDoc_id" and t.documento_id  = pag.documento_id and  t.consec = pag.consec AND tipdoc.id = t."tipoDoc_id" and pag."tipoPago_id" = tip.id and pag."formaPago_id" = forma.id'
+
     print(detalle)
 
     curx.execute(detalle)
@@ -1138,25 +1160,19 @@ def LeerTotales(request):
     totalProcedimientos = LiquidacionDetalle.objects.all().filter(liquidacion_id=liquidacionId).filter(cums_id = None).exclude(estadoRegistro='N').aggregate(totalP=Coalesce(Sum('valorTotal'), 0))
     totalProcedimientos = (totalProcedimientos['totalP']) + 0
     print("totalProcedimientos", totalProcedimientos)
-
-    totalCopagos1 = Liquidacion.objects.get(id=liquidacionId)
-    totalCopagos = totalCopagos1.totalCopagos
-    totalCuotaModeradora1 = Liquidacion.objects.get(id=liquidacionId)
-    totalCuotaModeradora = totalCuotaModeradora1.totalCuotaModeradora
-    totalAnticipos1 = Liquidacion.objects.get(id=liquidacionId)
-    totalAnticipos = totalAnticipos1.anticipos
-    totalAbonos1 = Liquidacion.objects.get(id=liquidacionId)
-    totalAbonos = totalAbonos1.totalAbonos
-    totalRecibido1 = Liquidacion.objects.get(id=liquidacionId)
-    totalRecibido = totalRecibido1.totalRecibido
-    anticipos1 = Liquidacion.objects.get(id=liquidacionId)
-    totalAnticipos = anticipos1.anticipos
-    valorApagar1 = Liquidacion.objects.get(id=liquidacionId)
-    valorApagar = valorApagar1.valorApagar
+    registroPago = Liquidacion.objects.get(id=liquidacionId)
+    totalCopagos = registroPago.totalCopagos
+    totalCuotaModeradora = registroPago.totalCuotaModeradora
+    totalAnticipos = registroPago.anticipos
+    totalAbonos = registroPago.totalAbonos
+    totalRecibido = registroPago.totalRecibido
+    totalAnticipos = registroPago.anticipos
+    valorApagar = registroPago.valorApagar
+    totalLiquidacion = registroPago.totalLiquidacion
 
 
     return JsonResponse({'totalSuministros':totalSuministros,'totalProcedimientos':totalProcedimientos,'totalCopagos':totalCopagos,
-			     'totalCuotaModeradora':totalCuotaModeradora,'totalAnticipos':totalAnticipos, 'totalAbonos':totalAbonos, 'totalRecibido':totalRecibido, 'totalLiquidacion':totalLiquidacion, 'totalAPagar':totalAPagar})
+			     'totalCuotaModeradora':totalCuotaModeradora,'totalAnticipos':totalAnticipos, 'totalAbonos':totalAbonos, 'totalRecibido':totalRecibido, 'totalLiquidacion':totalLiquidacion, 'totalAPagar':valorApagar})
 
 
 
@@ -1330,19 +1346,33 @@ def ReFacturar(request):
 
 
 def ApliqueParcialAbonos(request):
-    print ("Entre ApliqueParcialAbonos")
+    print ("Entre ApliqueParcialAbonos" )
 
-    datos = request.POST['datos']
-    data = json.loads(datos)
-
-    print("valor = ", data)
-
-    print("valor = ", data[0])
-    print("valor = ", data[0]['pk'])
-    print("valor2 = ", data[0]['fields'])
-
+    liquidacionId = request.POST['liquidacionIdA']
+    tipoPago = request.POST['AtipoPago']
+    formaPago = request.POST['AformaPago']
+    valor = request.POST['AvalorAbono']  
+    valorEnCurso = request.POST['AvalorEnCurso']  
+    print ("liquidacionId  = ", liquidacionId )
+    abonoId = request.POST['post_id']
 
 
-    pass
+    fechaRegistro = datetime.datetime.now()
+
+    registroId = Liquidacion.objects.get(id=liquidacionId)
+    print  ("registroId documento =" , registroId.documento_id)
+    print  ("registroId tipoDoc =" , registroId.tipoDoc_id)
+    print  ("registroId consec =" , registroId.consecAdmision)
+
+    ## falta usuarioRegistro_id
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
+    comando = 'UPDATE cartera_Pagos SET "valorEnCurso" = ' + str(valorEnCurso) + ' WHERE id = ' + str(abonoId)
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
+    miConexion3.close()
+
+    return JsonResponse({'success': True, 'message': 'Valor abono en curso guardado satisfactoriamente!'})
 
 
