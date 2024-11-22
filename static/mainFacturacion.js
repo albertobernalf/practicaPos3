@@ -383,7 +383,7 @@ $(document).ready(function () {
         --------------------------------------------*/
         $('#createNewPostAbonosFacturacion').click(function () {
 
-            $('#saveBtnCrearAbonosFacturacion').val("Create Post");
+
             $('#post_id').val('');
             $('#postFormCrearAbonosFacturacion').trigger("reset");
             $('#modelHeading').html("Creacion Abonos en admision");
@@ -410,22 +410,18 @@ $(document).ready(function () {
                 success: function (data) {
 			printErrorMsg(data.error)
 		   $("#mensajes").html(data.message);
-
-                    $('#postFormCrearAbonosFacturacion').trigger("reset");
+                  $('#postFormCrearAbonosFacturacion').trigger("reset");
 	 	  var tableA = $('#tablaAbonosFacturacion').DataTable(); 
 	          tableA.ajax.reload();
 	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable(); 
 	          tableL.ajax.reload();
-			LeerTotales();
+ 		  LeerTotales();
                 },
                 error: function (data) {
-		
-               
+		              
                         $('.success-msg').css('display','block');
                         $('.success-msg').text(data.error);
-
-		  var tableA = $('#tablaAbonosFacturacion').DataTable(); // accede de nuevo a la DataTable.
-	          tableA.ajax.reload();
+	
                 }
             });
         });
@@ -439,13 +435,12 @@ $(document).ready(function () {
 
 		alert("Entre Apolique");
 
-          //  $('#saveBtnApliqueAbonosFacturacion').val("Create Post");
             $('#post_id').val('');
             $('#postFormModalApliqueParcial').trigger("reset");
             $('#modelHeadingAplique').html("Aplikque Abonos a liquidacion");
-	  var liquidacionId = document.getElementById("liquidacionId").value;
-	document.getElementById("liquidacionIdA").value =liquidacionId;
-	alert("Voy a activar Ventana");
+    	    var liquidacionId = document.getElementById("liquidacionId").value;
+	    document.getElementById("liquidacionIdA").value =liquidacionId;
+	    alert("Voy a activar Ventana");
             $('#crearModalApliqueParcial').modal('show');
         });
 
@@ -468,12 +463,12 @@ $(document).ready(function () {
 	
             $("#mensajes").html(data.message);
 
-                    $('#postFormCrearAbonosFacturacion').trigger("reset");
+                  $('#postFormCrearAbonosFacturacion').trigger("reset");
 	 	  var tableA = $('#tablaAbonosFacturacion').DataTable(); 
 	          tableA.ajax.reload();
 	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable(); 
 	          tableL.ajax.reload();
-			LeerTotales();
+ 		  LeerTotales();
                 },
                 error: function (data) {
 

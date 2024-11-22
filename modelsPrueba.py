@@ -309,7 +309,11 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
      -- ops al anular una liquidaciondetalle no me actualizar totalLiquidacion, nip ValorApagar
      -- ME muestra en la parte de abajop refacturar en panelfacturacion los articles hay problema
      -- ops no refresca el filtro de facturacion en liquidacion ops por factura / por fecha
-
+    -- ops se puede crear un abono a alquuien que este facturado y sin ingreso . CONTROLAR PAPABEROL NO DEJAR ENTRAT ABONO. Aunque veo desabilitado abonos ops , bueno o nop bueno?
+   -- ops por que esta haciendo todo doble, me creo dos liquidaciones, sera que lo hice dos veces en HC ?? (quitar el lunes todos los comentarios de grabar folio a ver si es que se duplica de nuevo
+              o es que depronto yo mismo espicho el boton 2 veces ??
+           -- ops me duplico dos veces los totales parece ?? umm. SERA EL EVENTO click/doubleClick
+	-- ME preocupa lo de la duplicacion esta en muchas partes que habra pasado pero esto desde que utilizo interval o refrecar que pasasra ??
       -- OJO EL LUNES VER TODAS LASA ANTERUIORES NO SE ALCANZARON A VER
 
 
