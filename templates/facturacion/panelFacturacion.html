@@ -17,7 +17,7 @@
         <li><a href="#Liquidacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Liquidacion Cuentas Clinica </a></li>
         <li><a href="#LiquidacionDetalle"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Liquidacion Detalle Cuentas</a></li>
         <li><a href="#Abonos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Abonos Pacientes </a></li>
-        <li><a href="#Refacturar"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Refacturar </a></li>  
+
         <li><a href="#Traslados"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span>Traslados pagador </a></li>
     
     </ul>
@@ -187,9 +187,9 @@ function RefrescarPantalla() {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header" style="height:10px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
-                            <div class="row">
+                           <!--  <div class="row"> -->
  
-				   <!--   Aqui vienen lof Filtros  -->
+				   <!--   Aqui vienen lof filtros  -->
 
 			 <div class="row row-cols-8" style="height=8px;">
 
@@ -247,13 +247,12 @@ function RefrescarPantalla() {
 				   </div>
 				</div>
 
-		      </div>
+			    </div> <!-- Fin  row -->
+			   <!--   FIN filtros de busqueda -->
+			  </div> <!-- Fin card-header -->
 
-					   <!--   FIN filtros de busqueda -->
-					
+                       <!--   </div>    este creo no va -->
 
-                            </div>
-                        </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -284,15 +283,15 @@ function RefrescarPantalla() {
                                             </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-                                </div>
+                                    </div>  <!-- cierra el row -->
+                                </div>  <- cierra el col -->
                             </div> <!-- cierra body -->
+                    </div>  <!-- Cierra card -->
+                   <!--  </div>   Cierra el row-cols NO VA -->
+                </div> <!- Cierra col-md-12 -->
+            </div>   <!- Cierra row -->
 
-                    </div>
-                </div>
-            </div>
-
-	 </div>
+	 </div>  <! -- Cierra div principal -->
         </article>
 
 
@@ -391,6 +390,9 @@ function RefrescarPantalla() {
 			  <input type="hidden" id="documento_id" name="documentoc_id" value="0" readonly>
 			  <input type="hidden" id="liquidacionId" name="liquidacionId" value="0" readonly>
 
+			  <input type="hidden" id="liquidacionId1" name="liquidacionId1" value="0" readonly>
+
+
 
 	       <div class="row row-cols-8" style="height=25px;">
 
@@ -485,14 +487,7 @@ function RefrescarPantalla() {
 	                                        </div>
           	                            </div>
 
-					<div class="col">
-			  		     <div class="form-group row">
-					<span style="padding-left:8px; padding-right:3px; padding-top: 3px; display:inline-block;">
-						Imprimir: <img class="manImg" src={% static 'img/iloveimg-converted/impresora.JPG' %} onclick="ImprimirFactura()"></img> <span id="imprimir" name="imprimir" style='color:red'>Imprimir</span>
-					</span>
-	                                        </div>
-          	                            </div>
-
+				
 
      		  </div> <!-- Cierra ro de 8 columnas -->
 
@@ -811,7 +806,7 @@ function RefrescarPantalla() {
                                     <input type="text" id="ldtipoRegistro" name="ldtipoRegistro" value="MANUAL" readonly> </input>
                                 </div>
                                 <div class="col-sm-offset-2 col-sm-10 mt-2">
-                                    <button type="submit" class="btn btn-primary" id="saveBtnCrearLiquidacionDetalle"
+                                    <button type="submit" class="btn btn-primary" id="saveBtnCrearLiquidacionDetalle" 
                                             value="create">Guardar
                                     </button>
                                 </div>
@@ -829,81 +824,11 @@ function RefrescarPantalla() {
 
         <article id="Abonos">
             <center><h3>Abonos</h3></center>
-
-	<!-- MODAL INICIALES  -->
-
-
-            <div class="modal fade" id="crearAbonosModelFacturacion" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modelHeading"></h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="alert alert-danger error-msg" style="display:none">
-                                <ul class="mb-0"></ul>
-                            </div>
-                            <form id="postFormCrearAbonosFacturacion" name="postFormCrearAbonosFacturacion" class="form-horizontal"  novalidate>
-                                {% csrf_token %}
-                                <input type="hidden" name="post_id" id="post_id">
-
-				 <input type="hidden" id="liquidacionId1" name="liquidacionId1" value="0" >
-
-                                <div class="col">
-				 <div class="form-group row">
-                                    <label for="tipoPago" class="col-sm-2 control-label">Tipo Pago:</label>
-                                    <select class="form-select  h-100 w-200" aria-label="" id="tipoPago"
-                                            name="tipoPago">
-                                        {% for tiposPagos in TiposPagos %}
-                                        <option value="{{tiposPagos.id}}"> {{tiposPagos.nombre}}</option>
-                                        {% endfor %}
-                                    </select>
-				  </div>
-                                </div>
-                                <div class="col">
-				  <div class="form-group row">
-                                    <label for="formaPago" class="col-sm-2 control-label">Forma Pago:</label>
-                                    <select class="form-select  h-100 w-200" aria-label="" id="formaPago"
-                                            name="formaPago">
-                                        {% for formasPagos in FormasPagos %}
-                                        <option value="{{formasPagos.id}}"> {{formasPagos.nombre}}</option>
-                                        {% endfor %}
-                                    </select>
-				 </div>
-                                </div>
-                                <div class="col">
-					<div class="form-group row">
-                                    Valor:
-                                    <input type="text" id="valorAbono" name="valorAbono" value="0"></input>
-					</div>
-                                </div>
-                                <div class="col">
-					<div class="form-group row">
-                                    Descripcion:
-                                    <input type="text" id="descripcionAbono" name="descripcionAbono" value="0"> </input>
-					</div>
-                                </div>
-                                <div class="col-sm-offset-2 col-sm-10 mt-2">
-                                    <button type="submit" class="btn btn-primary" id="saveBtnCrearAbonosFacturacion"
-                                            value="create">Guardar
-                                    </button>
-                                </div>
-
-                            </form>
-                        </div>  <!--  FIN body -->
-                    </div>               
-                </div>
-	   </div>
-
-		
-
-	<!-- FIN MODAL INICIAL  -->
         
 	 <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 
                         <!-- DESDE AQUIP DATATABLE  -->
-  <form id="FormaAbonosPaciente" name="FormaAbonosPaciente" class="form-horizontal"  novalidate>
-                        <table class="table"  style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+ 		 <form id="FormaAbonosPaciente" name="FormaAbonosPaciente" class="form-horizontal">
                           
                                <!-- INICIO TABLE DE  EL DATATABLE  -->
                                 <div class="row">
@@ -911,20 +836,14 @@ function RefrescarPantalla() {
                                         <div class="card">
                                             <div class="card-header" style="height:50px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <input type="button" id="btn-rango" name="btn-rango"
-                                                               value="Refrescar ¡"
-                                                               onClick="cargarTablaAbonosPacienteFacturacion()">
-                                                        <div class="alert alert-success success-msg" style="display:none">
-							</div>
-                                                    </div>
+                                                   
                                                     <div class="col-sm-3 text-end">
                                                         <span class="text-secondary">Crear Abono</span>
-                                                        <a class="btn btn-success" href="javascript:void(0)" id="createNewPostAbonosFacturacion"> <i class="fa fa-plus"></i></a>
-                                                    </div>
-						
+                                    
+							 <button type="button" class="btn btn-primary" id="createAbonosFacturacion" value="crear abono"></button>
 
-                                                </div>
+                                                    </div>
+			                          </div>
                                             </div>
                                             <div class="card-body" >
                                                 <div class="row">
@@ -950,103 +869,20 @@ function RefrescarPantalla() {
                                                     </div>
                                                 </div>
                                             </div>  <!-- termina el body -->
-                                        </div>
-                                    </div>
-                                </div>
+                                        </div> <!-- termina el CARD -->
+                                    </div> <!-- termina el col-sm -->
+                                </div> <!-- termina el ROW -->
                                 <!-- FIN TABLE DE  EL DATATABLE  -->
-                         
-                        </table>
-   </form>
-		  </div>
+                   
+	   </form>
+
                         <!-- HASTA AQUI DATATABLE -->
             <!-- Espacio Modales  -->
 
-          <!-- Otra Modal  -->
-
-         <div class="modal fade" id="crearModalApliqueParcial" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modelHeadingAplique"></h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="alert alert-danger error-msg" style="display:none">
-                                <ul class="mb-0"></ul>
-                            </div>
-                            <form id="postFormModalApliqueParcial" name="postFormModalApliqueParcial" class="form-horizontal"  novalidate>
-                                {% csrf_token %}
-                                <input type="hidden" name="post_id" id="post_id">
-				 <input type="hidden" id="liquidacionIdA" name="liquidacionIdA" value="0" >
-
-                                <div class="col">
-				 <div class="form-group row">
-                                    <label for="AtipoPago" class="col-sm-2 control-label">Tipo Pago:</label>
-                                    <select class="form-select  h-100 w-200" aria-label="" id="AtipoPago"
-                                            name="AtipoPago" readonly>
-                                        {% for tiposPagos in TiposPagos %}
-                                        <option value="{{tiposPagos.id}}"> {{tiposPagos.nombre}}</option>
-                                        {% endfor %}
-                                    </select>
-				  </div>
-                                </div>
-
-                                <div class="col">
-				  <div class="form-group row">
-                                    <label for="aformaPago" class="col-sm-2 control-label">Forma Pago:</label>
-                                    <select class="form-select  h-100 w-200" aria-label="" id="aformaPago"
-                                            name="aformaPago" readonly >
-                                        {% for formasPagos in FormasPagos %}
-                                        <option value="{{formasPagos.id}}"> {{formasPagos.nombre}}</option>
-                                        {% endfor %}
-                                    </select>
-				 </div>
-                                </div>
-
-                                <div class="col">
-					<div class="form-group row">
-                                    Valor:
-                                    <input type="text" id="avalorAbono" name="avalorAbono" value="0" readonly></input>
-					</div>
-                                </div>
-
-                                <div class="col">
-					<div class="form-group row">
-                                    Saldo:
-                                    <input type="text" id="aSaldo" name="aSaldo" value="0" readonly></input>
-					</div>
-                                </div>
-
-
-                                <div class="col">
-					<div class="form-group row">
-                                    Descripcion:
-                                    <input type="text" id="adescripcionAbono" name="adescripcionAbono" value="0" readonly> </input>
-					</div>
-                                </div>
-
-				<div class="col">
-					<div class="form-group row">
-                                    ValorEnCurso:
-                                    <input type="text" id="avalorEnCurso" name="avalorEnCurso" value="0" > </input>
-					</div>
-                                </div>
-
-
-                                <div class="col">
-                                    <button type="submit" class="btn btn-primary" id="saveBtnApliqueAbonosFacturacion"
-                                            value="create">Guardar
-                                    </button>
-                                </div>
-
-                            </form>
-                        </div>  <!--  FIN body -->
-                    </div>       <!--  FIN modal-content -->        
-                </div> <!--  FIN modal-dialog -->        
-                </div> <!--  FIN modal fade -->        
-	
-          <!-- Fin otra modal -->
 
             <!-- Creo Fin Modales  -->
+
+		  </div>  <!- cIERRA EL DiV PRINCIPAL -->
 	
         </article>
 
@@ -1076,6 +912,7 @@ function RefrescarPantalla() {
     <ul class="tabs">
         <li><a href="#Facturacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Facturacion </a></li>
         <li><a href="#Anulacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Anulacion Facturas </a></li>
+        <li><a href="#Refacturar"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Refacturar </a></li>  
 
     </ul>
 </div>

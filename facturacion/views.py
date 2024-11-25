@@ -144,7 +144,7 @@ def PostConsultaLiquidacion(request):
 
     tiposPagos = []
 
-    tiposPagos.append({'id': '', 'nombre': ''})
+    #tiposPagos.append({'id': '', 'nombre': ''})
 
     for id, nombre in curt.fetchall():
         tiposPagos.append({'id': id,  'nombre': nombre})
@@ -171,7 +171,7 @@ def PostConsultaLiquidacion(request):
 
     formasPagos = []
 
-    formasPagos.append({'id': '', 'nombre': ''})
+    #formasPagos.append({'id': '', 'nombre': ''})
 
     for id, nombre in curt.fetchall():
         formasPagos.append({'id': id,  'nombre': nombre})

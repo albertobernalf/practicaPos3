@@ -1,12 +1,9 @@
 var $ = jQuery;
 console.log('Hola Alberto Hi!')
 
-
 $(document).ready(function () {
 
-
-
-   var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
+	var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
         var username = document.getElementById("username").value;
         var nombreSede = document.getElementById("nombreSede").value;
     	var sede = document.getElementById("sede").value;
@@ -378,19 +375,20 @@ $(document).ready(function () {
 
     	/*------------------------------------------
         --------------------------------------------
-        Click to Button
+        Click to Button Crear Abono
         --------------------------------------------
         --------------------------------------------*/
-        $('#createNewPostAbonosFacturacion').click(function () {
+    /*    $('#createAbonosFacturacion').click(function ()   { */
+          $("body").on("click","#createAbonosFacturacion",function(){
+         /*.click(function () { */
+
+		alert ("Entre");
 
 
-            $('#post_id').val('');
-            $('#postFormCrearAbonosFacturacion').trigger("reset");
-            $('#modelHeading').html("Creacion Abonos en admision");
-	  var liquidacionId = document.getElementById("liquidacionId").value;
-	document.getElementById("liquidacionId1").value =liquidacionId;
-            $('#crearAbonosModelFacturacion').modal('show');
         });
+          /* );  */
+
+
 
        /*------------------------------------------
         --------------------------------------------
@@ -401,14 +399,15 @@ $(document).ready(function () {
             e.preventDefault();
             $(this).html('Sending..');
 
+		alert (" Entre a Grabar el abono");
+
             $.ajax({
                 data: $('#postFormCrearAbonosFacturacion').serialize(),
-
-		  url: "/guardaAbonosFacturacion/",
+	        url: "/guardaAbonosFacturacion/",
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
-			printErrorMsg(data.error)
+			print ("Regrese e INSERTE cuantos ?? ");
 		   $("#mensajes").html(data.message);
                   $('#postFormCrearAbonosFacturacion').trigger("reset");
 	 	  var tableA = $('#tablaAbonosFacturacion').DataTable(); 
@@ -426,57 +425,8 @@ $(document).ready(function () {
             });
         });
 
-	/*------------------------------------------
-        --------------------------------------------
-        Create Aplique Abonos
-        --------------------------------------------
-        --------------------------------------------*/
-	  $('body').on('click', '.editAbonosFacturacion', function () {	
-
-		alert("Entre Apolique");
-
-            $('#post_id').val('');
-            $('#postFormModalApliqueParcial').trigger("reset");
-            $('#modelHeadingAplique').html("Aplikque Abonos a liquidacion");
-    	    var liquidacionId = document.getElementById("liquidacionId").value;
-	    document.getElementById("liquidacionIdA").value =liquidacionId;
-	    alert("Voy a activar Ventana");
-            $('#crearModalApliqueParcial').modal('show');
-        });
 
 
-       /*------------------------------------------
-        --------------------------------------------
-        Aplique Code Abonos
-        --------------------------------------------
-        --------------------------------------------*/
-        $('#saveBtnApliqueAbonosFacturacion').click(function (e) {
-            e.preventDefault();
-            $(this).html('Sending..');
-
-            $.ajax({
-		 url: "/apliqueAbonos/",
-                data: $('#postFormModalApliqueParcial').serialize(),
-                type: "POST",
-                dataType: 'json',
-                success: function (data) {
-	
-            $("#mensajes").html(data.message);
-
-                  $('#postFormCrearAbonosFacturacion').trigger("reset");
-	 	  var tableA = $('#tablaAbonosFacturacion').DataTable(); 
-	          tableA.ajax.reload();
-	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable(); 
-	          tableL.ajax.reload();
- 		  LeerTotales();
-                },
-                error: function (data) {
-
-                        $('.success-msg').css('display','block');
-                        $('.success-msg').text(data.error);
-                }
-            });
-        });
 
        /*------------------------------------------
         --------------------------------------------
@@ -515,7 +465,7 @@ $(document).ready(function () {
                 },
                 error: function (data) {
 			// alert("VENGO CON ERRORES :" , printErrorMsg(data.error));
-                   // $('#saveBtnCrearAbonos').html('NOT Save Changes');
+
                         $('.success-msg').css('display','block');
                         $('.success-msg').text(data.error);
 
@@ -712,7 +662,7 @@ function initTableFacAbonos(data) {
                 {
                     "render": function ( data, type, row ) {
                         var btn = '';
-			  btn = btn + " <button   class='btn btn-primary editAbonosFacturacion' data-pk='" + row.pk + "'>" + "</button>";
+			
 			  btn = btn + " <button class='btn btn-danger deletePostAbonosFacturacion' data-action='post/" + row.pk + "/delete' data-pk='" + row.pk + "'>" + '<i class="fa fa-trash"></i>' + "</button>";
                         return btn;
                     },
@@ -814,6 +764,10 @@ function initTableFacturacion(data) {
 
 
 });  //// AQUI cierra el document.ready
+
+
+
+
 
  function tableActionsLiquidacion(data) {
    var table = initTableLiquidacion(data);
