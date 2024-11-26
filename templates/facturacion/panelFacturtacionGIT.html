@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
 <script src={% static 'js/panelTabsFacturacion.js' %} defer >         </script>
 <script src="https://kit.fontawesome.com/5d0337a043.js" crossorigin="anonymous"></script>
- <script src={% static 'mainFacturacion2.js' %} defer > </script>
+ <script src={% static 'mainFacturacion.js' %} defer > </script>
 
 <div class="marco">
     <ul class="tabs">
@@ -17,8 +17,9 @@
         <li><a href="#Liquidacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Liquidacion Cuentas Clinica </a></li>
         <li><a href="#LiquidacionDetalle"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Liquidacion Detalle Cuentas</a></li>
         <li><a href="#Abonos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Abonos Pacientes </a></li>
-        <li><a href="#Traslados"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span>Traslados pagador </a></li>
 
+        <li><a href="#Traslados"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span>Traslados pagador </a></li>
+    
     </ul>
 </div>
 
@@ -141,7 +142,7 @@ function RefrescarPantalla() {
                                         <table  id= "tablaLiquidacion" class="display nowrap table table table-bordered  tablaLiquidacion table-hover table-sm dtr-inline" style="width:100%;">
                                            <thead>
                                             <tr>
-                                         
+                                           
                                                 <th>id</th>
                                                 <th>TipoDoc</th>
                                                 <th>Documento</th>
@@ -169,7 +170,7 @@ function RefrescarPantalla() {
         </article>
 
 
-<article id="Traslados">
+ <article id="Traslados">
         	    <center><h3>Traslados Convenios</h3></center>
 		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 		 </div>
@@ -178,7 +179,7 @@ function RefrescarPantalla() {
 
 
 
-<article id="Facturacion">
+ <article id="Facturacion">
             <center><h3>Facturas Clinica</h3></center>
 	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
             <!-- INICIO TABLE DE  EL DATATABLE  -->
@@ -272,7 +273,6 @@ function RefrescarPantalla() {
                                                 <th>Dx</th>
 						 <th>Convenio</th>
 						 <th>SalidaClinica</th>
-						<th>Estado</th>
 
                                                 <th>Action</th>
 
@@ -284,7 +284,7 @@ function RefrescarPantalla() {
                                             </tbody>
                                         </table>
                                     </div>  <!-- cierra el row -->
-                                </div>  <!-- cierra el col -->
+                                </div>  <- cierra el col -->
                             </div> <!-- cierra body -->
                     </div>  <!-- Cierra card -->
                    <!--  </div>   Cierra el row-cols NO VA -->
@@ -295,22 +295,20 @@ function RefrescarPantalla() {
         </article>
 
 
-<article id="Anulacion">
+        <article id="Anulacion">
             <center><h3>Anulacion Facturas </h3></center>
 	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
-			 <div class="row row-cols-1" style="height=1px;">
+			 <div class="row row-cols-8" style="height=1px;">
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="Afactura" class="col-form-label col-sm-4">Factura Id:</label>
+						 <label for="Afactura" class="col-form-label col-sm-4">LiquidacionId:</label>
 						 <div class="col-sm-6">
 							  <input type="text" id="Afactura" name="Afactura" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
-			  </div>
-			 <div class="row row-cols-1" style="height=1px;">
-
+                                      </div>
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="AfechaFactura" class="col-form-label col-sm-4">Fecha:</label>
@@ -319,8 +317,7 @@ function RefrescarPantalla() {
 	                                        </div>
           	                            </div>
                                       </div>
-				</div>
-			 <div class="row row-cols-1" style="height=1px;">
+
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="AtipoDoc_id" class="col-form-label col-sm-4">TipoDocumento:</label>
@@ -329,8 +326,7 @@ function RefrescarPantalla() {
 	                                        </div>
           	                            </div>
                                       </div>
-				</div>
-			 <div class="row row-cols-1" style="height=1px;">
+
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="Adocumento_id" class="col-form-label col-sm-4">Documento:</label>
@@ -339,8 +335,7 @@ function RefrescarPantalla() {
 	                                        </div>
           	                            </div>
                                       </div>
-			</div>
-			 <div class="row row-cols-1" style="height=1px;">
+
 					<div class="col">
 			  		     <div class="form-group row">
 					<label for="Apaciente" class="col-form-label col-sm-4">Paciente:</label>
@@ -350,8 +345,7 @@ function RefrescarPantalla() {
 	                                        </div>
           	                            </div>
                                       </div>
-			</div>
-			 <div class="row row-cols-1" style="height=1px;">
+
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="AconsecAdmision" class="col-form-label col-sm-4">ConsecutivoAdmision:</label>
@@ -360,8 +354,7 @@ function RefrescarPantalla() {
 	                                        </div>
           	                            </div>
                                       </div>
-			</div>
-			 <div class="row row-cols-1" style="height=1px;">
+
 					<div class="col">
 			  		     <div class="form-group row">
 						 <label for="AnombreConvenio" class="col-form-label col-sm-4">Convenio:</label>
@@ -369,9 +362,7 @@ function RefrescarPantalla() {
 							  <input type="text" id="AnombreConvenio" name="AnombreConvenio" value="0" readonly>
 	                                        </div>
           	                            </div>
-		                        </div>
-				</div>
-			 <div class="row row-cols-1" style="height=1px;">
+                                      </div>
 
 				 <div class="col">
 					<div class="form-group row">
@@ -379,27 +370,32 @@ function RefrescarPantalla() {
 					     <div class="col col-sm-7">
 			                        <input type="button" class="form-control form-control-sm" id="BtnAnularFactura"  name="BtnAnularFactura" value="Anular Factura" onclick="AnularFactura()">
 					</div>
-				   </div>
+					</div>
 				</div>
-                          
-			</div>
-	      </div>
-</article>
+	
 
-<article id="LiquidacionDetalle">
+	 </div>
+        </article>
+
+ <article id="LiquidacionDetalle">
           <!--   <center><h3>Liquidacion detalle Cuentas</h3></center> -->
 	  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
-	
+
+		
 			<div style="height: 50px;  width:100%; background-color:#EBEBEB;"> 
 
 			<input type="hidden" id="ingresoId" name="ingresoId" value="">
 			<input type="hidden" id="triageId" name="triageId" value="">
-			<input type="hidden" id="tipoDoc_id" name="tipoDoc_id" value="0" readonly>
-			<input type="hidden" id="documento_id" name="documentoc_id" value="0" readonly>
-			<input type="hidden" id="liquidacionId" name="liquidacionId" value="0" readonly>
-		        <input type="hidden" id="liquidacionId1" name="liquidacionId1" value="0" readonly>
+			 <input type="hidden" id="tipoDoc_id" name="tipoDoc_id" value="0" readonly>
+			  <input type="hidden" id="documento_id" name="documentoc_id" value="0" readonly>
+			  <input type="hidden" id="liquidacionId" name="liquidacionId" value="0" readonly>
+
+			  <input type="hidden" id="liquidacionId1" name="liquidacionId1" value="0" readonly>
+
+
 
 	       <div class="row row-cols-8" style="height=25px;">
+
 						
 					<div class="col">
 			  		     <div class="form-group row">
@@ -454,6 +450,7 @@ function RefrescarPantalla() {
 	                                        </div>
           	                            </div>
                                       </div>
+
 
 					<div class="col">
 			  		     <div class="form-group row">
@@ -552,6 +549,8 @@ function RefrescarPantalla() {
 	                                        </div>
 
                                       </div>
+
+
 					
 					<div class="col">
 
@@ -561,6 +560,9 @@ function RefrescarPantalla() {
 	                                        </div>
 
                                       </div>
+
+
+
 
 					<div class="col">
 
@@ -582,7 +584,7 @@ function RefrescarPantalla() {
 					</div>
 				</div>
 
-		
+				
 				 <div class="col">
 					<div class="form-group row">
 					 <label for="BtnRefrescarLiquidacionDetalle" class="col-form-label col-sm-6">  </label>
@@ -621,6 +623,7 @@ function RefrescarPantalla() {
                                                 <th>TipoRegistro</th>
 						<th>Estado</th>
                                                 <th>Editar Borrar</th>
+
                                             
                                             </tr>
                                             </thead>
@@ -637,6 +640,8 @@ function RefrescarPantalla() {
                 </div> <!-- cierra col  -->
             </div> <!-- cierra row -->
 
+
+
 		 <!--  FIN Data Table LiquidacionDetalle  -->
 
 		 <!--  Totales  (Crear Div De Totales)-->
@@ -645,47 +650,47 @@ function RefrescarPantalla() {
 
 	       <div class="row row-cols-9" style="height=1px;">
 					
- 				   <div class="col">
-			  		     <div class="form-group row">
-						 <label for="totalCopagos" class="col-form-label col-sm-1">Copagos:</label>
-						 <div class="col-sm-1">
-							  <input type="text" id="totalCopagos" name="totalCopagos" size=7 value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-         	                        
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="totalCuotaModeradora" class="col-form-label col-sm-1">Moderadora:</label>
-						 <div class="col-sm-1">
-							  <input type="text" id="totalCuotaModeradora" name="totalCuotaModeradora" size=7 value="0" readonly>
+						 <label for="totalCopagos" class="col-form-label col-sm-3">Copagos:</label>
+						 <div class="col-sm-2">
+							  <input type="text" id="totalCopagos" name="totalCopagos" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="totalProcedimientos" class="col-form-label col-sm-1">Proced:</label>
-						 <div class="col-sm-1">
-							  <input type="text" id="totalProcedimientos" name="Procedimientos" size=7 value="0" readonly>
+						 <label for="totalCuotaModeradora" class="col-form-label col-sm-4">Moderadora:</label>
+						 <div class="col-sm-2">
+							  <input type="text" id="totalCuotaModeradora" name="totalCuotaModeradora" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
 
 					<div class="col">
 			  		     <div class="form-group row">
-					<label for="totalSuministros" class="col-form-label col-sm-1">Suminis:</label>
-						 <div class="col-sm-1">
-							  <input type="text" id="totalSuministros" name="Suministros" size=7  value="0" readonly>
+						 <label for="totalProcedimientos" class="col-form-label col-sm-4">Proced:</label>
+						 <div class="col-sm-2">
+							  <input type="text" id="totalProcedimientos" name="Procedimientos" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
 
 					<div class="col">
 			  		     <div class="form-group row">
-						 <label for="totalLiquidacion" class="col-form-label col-sm-1">Liquid:</label>
-						 <div class="col-sm-1">
-							  <input type="text" id="totalLiquidacion" name="totalLiquidacion" size=7 value="0" readonly>
+					<label for="totalSuministros" class="col-form-label col-sm-4">Suminis:</label>
+						 <div class="col-sm-2">
+							  <input type="text" id="totalSuministros" name="Suministros" value="0" readonly>
+	                                        </div>
+          	                            </div>
+                                      </div>
+
+					<div class="col">
+			  		     <div class="form-group row">
+						 <label for="totalLiquidacion" class="col-form-label col-sm-4">Liquid:</label>
+						 <div class="col-sm-2">
+							  <input type="text" id="totalLiquidacion" name="totalLiquidacion" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
@@ -694,7 +699,7 @@ function RefrescarPantalla() {
 			  		     <div class="form-group row">
 						 <label for="valorApagar" class="col-form-label col-sm-4">Apagar:</label>
 						 <div class="col-sm-2">
-							  <input type="text" id="valorApagar" name="valorApagar" size=7 value="0" readonly>
+							  <input type="text" id="valorApagar" name="valorApagar" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
@@ -703,7 +708,7 @@ function RefrescarPantalla() {
 			  		     <div class="form-group row">
 						 <label for="anticipos" class="col-form-label col-sm-4">Antic:</label>
 						 <div class="col-sm-2">
-							  <input type="text" id="anticipos" name="anticipos" size=7 value="0" readonly>
+							  <input type="text" id="anticipos" name="anticipos" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
@@ -712,7 +717,7 @@ function RefrescarPantalla() {
 			  		     <div class="form-group row">
 						 <label for="totalAbonos" class="col-form-label col-sm-3">Abonos:</label>
 						 <div class="col-sm-2">
-							  <input type="text" id="totalAbonos" name="totalAbonos" size=7 value="0" readonly>
+							  <input type="text" id="totalAbonos" name="totalAbonos" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
@@ -721,7 +726,7 @@ function RefrescarPantalla() {
 			  		     <div class="form-group row">
 						 <label for="totalRecibido" class="col-form-label col-sm-3">Recibido:</label>
 						 <div class="col-sm-2">
-							  <input type="text" id="totalRecibido" name="totalRecibido" size=7 value="0" readonly>
+							  <input type="text" id="totalRecibido" name="totalRecibido" value="0" readonly>
 	                                        </div>
           	                            </div>
                                       </div>
@@ -815,108 +820,9 @@ function RefrescarPantalla() {
 
      <!-- FIN Espacio Modales  -->
 
-</article>
+        </article>
 
-<article id="Refacturar">
-     	   
-	   <center><h3>Refacturacion</h3></center>
-  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
-			 <div class="row row-cols-1" style="height=1px;">
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="Rfactura" class="col-form-label col-sm-4">LiquidacionId:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="Rfactura" name="Rfactura" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                    </div>
-			  </div>
-                             <div class="row row-cols-1" style="height=1px;">
-				<div class="col">
-			  		     <div class="form-group row">
-						 <label for="RfechaFactura" class="col-form-label col-sm-4">Fecha:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="RfechaFactura" name="RfechaFactura" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-				</div>
-
- <div class="row row-cols-1" style="height=1px;">
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="RtipoDoc_id" class="col-form-label col-sm-4">TipoDocumento:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="RtipoDoc_id" name="RtipoDoc_id" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-				</div>
-
- <div class="row row-cols-1" style="height=1px;">
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="Rdocumento_id" class="col-form-label col-sm-4">Documento:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="Rdocumento_id" name="Rdocumentoc_id" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-				</div>
-				 <div class="row row-cols-1" style="height=1px;">
-					<div class="col">
-			  		     <div class="form-group row">
-					<label for="Rpaciente" class="col-form-label col-sm-4">Paciente:</label>
-
-						 <div class="col-sm-6">
-							  <input type="text" id="Rpaciente" name="Rpaciente" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-
-				</div>
-		 <div class="row row-cols-1" style="height=1px;">
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="RconsecAdmision" class="col-form-label col-sm-4">ConsecutivoAdmision:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="RconsecAdmision" name="RconsecAdmision" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-				</div>
- <div class="row row-cols-1" style="height=1px;">
-
-					<div class="col">
-			  		     <div class="form-group row">
-						 <label for="RnombreConvenio" class="col-form-label col-sm-4">Convenio:</label>
-						 <div class="col-sm-6">
-							  <input type="text" id="RnombreConvenio" name="RnombreConvenio" value="0" readonly>
-	                                        </div>
-          	                            </div>
-                                      </div>
-				</div>
- <div class="row row-cols-1" style="height=1px;">
-
-				 <div class="col">
-					<div class="form-group row">
-					 <label for="BtnReFactura" class="col-form-label col-sm-3"> Refacturar </label>
-					     <div class="col col-sm-7">
-			                        <input type="button" class="form-control form-control-sm" id="BtnReFactura"  name="BtnReFactura" value="Refacturar" onclick="Refacturar()">
-					</div>
-					</div>
-				</div>
-	 </div>
-		 </div>
-
-
-</article>
-
-
-<article id="Abonos">
+        <article id="Abonos">
             <center><h3>Abonos</h3></center>
         
 	 <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
@@ -933,8 +839,9 @@ function RefrescarPantalla() {
                                                    
                                                     <div class="col-sm-3 text-end">
                                                         <span class="text-secondary">Crear Abono</span>
-                                 
-							 <button type="button" class="btn btn-primary" id="createNewPostAbonosFacturacion" value="crear abono"></button>
+                                    
+							 <button type="button" class="btn btn-primary" id="createAbonosFacturacion" value="crear abono"></button>
+
                                                     </div>
 			                          </div>
                                             </div>
@@ -944,7 +851,6 @@ function RefrescarPantalla() {
                                                         <table id=tablaAbonosFacturacion class="display nowrap table table table-bordered  tablaAbonosFacturacion table-hover table-sm dtr-inline" style="width:100%;">
                                                             <thead style="height:15px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
                                                             <tr>
-							
                                                                 <th>Tipo Pago                </th>
                                                                 <th>Forma Pago               </th>
                                                                 <th>Valor                    </th>
@@ -973,169 +879,17 @@ function RefrescarPantalla() {
                         <!-- HASTA AQUI DATATABLE -->
             <!-- Espacio Modales  -->
 
-	<!-- MODAL INICIALES  -->
-
-
-            <div class="modal fade" id="crearAbonosModelFacturacion" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modelHeadingCrearAbonosFacturacion"></h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="alert alert-danger error-msg" style="display:none">
-                                <ul class="mb-0"></ul>
-                            </div>
-                            <form id="postFormCrearAbonosFacturacion" name="postFormCrearAbonosFacturacion" class="form-horizontal"  novalidate>
-                                {% csrf_token %}
-                                <input type="hidden" name="post_id" id="post_id">
-				<input type="hidden" id="liquidacionId2" name="liquidacionId2" value="0" >
-
-                                <div class="col">
-				 <div class="form-group row">
-                                    <label for="tipoPago" class="col-sm-2 control-label">Tipo Pago:</label>
-                                    <select class="form-select  h-100 w-200" aria-label="" id="tipoPago"
-                                            name="tipoPago">
-                                        {% for tiposPagos in TiposPagos %}
-                                        <option value="{{tiposPagos.id}}"> {{tiposPagos.nombre}}</option>
-                                        {% endfor %}
-                                    </select>
-				  </div>
-                                </div>
-                                <div class="col">
-				  <div class="form-group row">
-                                    <label for="formaPago" class="col-sm-2 control-label">Forma Pago:</label>
-                                    <select class="form-select  h-100 w-200" aria-label="" id="formaPago"
-                                            name="formaPago">
-                                        {% for formasPagos in FormasPagos %}
-                                        <option value="{{formasPagos.id}}"> {{formasPagos.nombre}}</option>
-                                        {% endfor %}
-                                    </select>
-				 </div>
-                                </div>
-                                <div class="col">
-					<div class="form-group row">
-                                    Valor:
-                                    <input type="text" id="valorAbono" name="valorAbono" value="0"></input>
-					</div>
-                                </div>
-                                <div class="col">
-					<div class="form-group row">
-                                    Descripcion:
-                                    <input type="text" id="descripcionAbono" name="descripcionAbono" value="0"> </input>
-					</div>
-                                </div>
-                                <div class="col-sm-offset-2 col-sm-10 mt-2">
-                                    <button type="button" class="btn btn-primary" id="saveBtnCrearAbonosFacturacion" name = "saveBtnCrearAbonosFacturacion"
-                                            value="create">Guardar
-                                    </button>
-                                </div>
-
-                            </form>
-                        </div>  <!--  FIN body -->
-                    </div>               
-                </div>
-	   </div>
-
-	
-
-	<!-- FIN MODAL INICIAL  -->
-
-
-          <!-- Otra Modal  -->
-
-         <div class="modal fade" id="crearModalApliqueParcial" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modelHeadingAplique"></h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="alert alert-danger error-msg" style="display:none">
-                                <ul class="mb-0"></ul>
-                            </div>
-                            <form id="postFormModalApliqueParcial" name="postFormModalApliqueParcial" class="form-horizontal"  novalidate>
-                                {% csrf_token %}
-                                <input type="hidden" name="post_id" id="post_id">
-				 <input type="hidden" id="liquidacionIdA" name="liquidacionIdA" value="0" >
-
-                                <div class="col">
-				 <div class="form-group row">
-                                    <label for="AtipoPago" class="col-sm-2 control-label">Tipo Pago:</label>
-                                    <select class="form-select  h-100 w-200" aria-label="" id="AtipoPago"
-                                            name="AtipoPago" readonly>
-                                        {% for tiposPagos in TiposPagos %}
-                                        <option value="{{tiposPagos.id}}"> {{tiposPagos.nombre}}</option>
-                                        {% endfor %}
-                                    </select>
-				  </div>
-                                </div>
-
-                                <div class="col">
-				  <div class="form-group row">
-                                    <label for="aformaPago" class="col-sm-2 control-label">Forma Pago:</label>
-                                    <select class="form-select  h-100 w-200" aria-label="" id="aformaPago"
-                                            name="aformaPago" readonly >
-                                        {% for formasPagos in FormasPagos %}
-                                        <option value="{{formasPagos.id}}"> {{formasPagos.nombre}}</option>
-                                        {% endfor %}
-                                    </select>
-				 </div>
-                                </div>
-
-                                <div class="col">
-					<div class="form-group row">
-                                    Valor:
-                                    <input type="text" id="avalorAbono" name="avalorAbono" value="0" readonly></input>
-					</div>
-                                </div>
-
-                                <div class="col">
-					<div class="form-group row">
-                                    Saldo:
-                                    <input type="text" id="aSaldo" name="aSaldo" value="0" readonly></input>
-					</div>
-                                </div>
-
-
-                                <div class="col">
-					<div class="form-group row">
-                                    Descripcion:
-                                    <input type="text" id="adescripcionAbono" name="adescripcionAbono" value="0" readonly> </input>
-					</div>
-                                </div>
-
-				<div class="col">
-					<div class="form-group row">
-                                    ValorEnCurso:
-                                    <input type="text" id="avalorEnCurso" name="avalorEnCurso" value="0" > </input>
-					</div>
-                                </div>
-
-
-                                <div class="col">
-                                    <button type="button" class="btn btn-primary" id="saveBtnApliqueAbonosFacturacion"
-                                            value="create">Guardar
-                                    </button>
-                                </div>
-
-                            </form>
-                        </div>  <!--  FIN body -->
-                    </div>       <!--  FIN modal-content -->        
-                </div> <!--  FIN modal-dialog -->        
-                </div> <!--  FIN modal fade -->        
-	
-          <!-- Fin otra modal -->
-
-
 
             <!-- Creo Fin Modales  -->
 
 		  </div>  <!- cIERRA EL DiV PRINCIPAL -->
 	
-</article>
+        </article>
 
-
+	<article id="ReFacturar">
+      	   
+	   <center><h3>Refacturacion</h3></center>
+		</article>
      
     </div>
 </div>
@@ -1151,17 +905,16 @@ function RefrescarPantalla() {
 {% endblock %}
 
 
+
 {% block footer %}
 
 <div class="marco">
     <ul class="tabs">
         <li><a href="#Facturacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Facturacion </a></li>
-        <li><a href="#Anulacion"><span  class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Anulacion Facturas </a></li>
-        <li><a href="#Refacturar"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Refactura </a></li>      
+        <li><a href="#Anulacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Anulacion Facturas </a></li>
+        <li><a href="#Refacturar"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Refacturar </a></li>  
+
     </ul>
 </div>
 
 {% endblock %}
-
-
-
