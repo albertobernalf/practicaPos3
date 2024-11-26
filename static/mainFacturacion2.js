@@ -296,6 +296,25 @@ $(document).ready(function () {
 
         });
 
+/*------------------------------------------
+        --------------------------------------------
+        Click to Button Aplicar Abonos
+        --------------------------------------------
+        --------------------------------------------*/
+
+  $('body').on('click', '.createAplicarAbono', function () {
+//	$('#createAplicarAbono').click(function () {
+
+         alert("EntreAplicaque Abono");
+
+         $('#post_id').val('');
+         $('#postFormModalApliqueParcial').trigger("reset");
+         $('#modelHeadingAplique').html("Aplicar abono a Factura");
+	  alert("Voy a abrir modal");
+	 $('#crearModalApliqueParcial').modal('show');
+	});
+
+
 
        /*------------------------------------------
         --------------------------------------------
@@ -313,15 +332,13 @@ $(document).ready(function () {
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
-
-		   $("#mensajes").html(data.message);
+		  $("#mensajes").html(data.message);
                   $('#postFormModalApliqueParcial').trigger("reset");
-
+    		  $('#crearModalApliqueParcial').modal('hide');
 	 	  var tableA = $('#tablaAbonosFacturacion').DataTable();
 	          tableA.ajax.reload();
 	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable();
 	          tableL.ajax.reload();
- 		 $('#crearModalApliqueParcial').modal('hide');
                 },
                 error: function (data) {
                         $('.success-msg').css('display','block');

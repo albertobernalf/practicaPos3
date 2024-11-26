@@ -3,8 +3,8 @@
         Click to Button Aplicar Abonos
         --------------------------------------------
         --------------------------------------------*/
-
-	$('#createAplicarAbono').click(function () {
+  $('body').on('click', '.createAplicarAbono', function () {
+//	$('#createAplicarAbono').click(function () {
 
          alert("EntreAplicaque Abono");
 

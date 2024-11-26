@@ -917,11 +917,13 @@ function RefrescarPantalla() {
 
 
 <article id="Abonos">
+
             <center><h3>Abonos</h3></center>
         
 	 <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 
                         <!-- DESDE AQUIP DATATABLE  -->
+
  		 <form id="FormaAbonosPaciente" name="FormaAbonosPaciente" class="form-horizontal">
                           
                                <!-- INICIO TABLE DE  EL DATATABLE  -->
@@ -930,11 +932,10 @@ function RefrescarPantalla() {
                                         <div class="card">
                                             <div class="card-header" style="height:50px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
                                                 <div class="row">
-                                                   
+                                               
                                                     <div class="col-sm-3 text-end">
                                                         <span class="text-secondary">Crear Abono</span>
-                                 
-							 <button type="button" class="btn btn-primary" id="createNewPostAbonosFacturacion" value="crear abono"></button>
+                                			 <button type="button" class="btn btn-primary" id="createNewPostAbonosFacturacion" value="crear abono"></button>
                                                     </div>
 			                          </div>
                                             </div>
@@ -944,8 +945,7 @@ function RefrescarPantalla() {
                                                         <table id=tablaAbonosFacturacion class="display nowrap table table table-bordered  tablaAbonosFacturacion table-hover table-sm dtr-inline" style="width:100%;">
                                                             <thead style="height:15px; margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;">
                                                             <tr>
-							
-                                                                <th>Tipo Pago                </th>
+				                                <th>Tipo Pago                </th>
                                                                 <th>Forma Pago               </th>
                                                                 <th>Valor                    </th>
                                                                 <th>Descripcion              </th>
@@ -972,9 +972,6 @@ function RefrescarPantalla() {
 
                         <!-- HASTA AQUI DATATABLE -->
             <!-- Espacio Modales  -->
-
-	<!-- MODAL INICIALES  -->
-
 
             <div class="modal fade" id="crearAbonosModelFacturacion" aria-hidden="true">
                 <div class="modal-dialog">
@@ -1037,10 +1034,6 @@ function RefrescarPantalla() {
                 </div>
 	   </div>
 
-	
-
-	<!-- FIN MODAL INICIAL  -->
-
 
           <!-- Otra Modal  -->
 
@@ -1055,7 +1048,7 @@ function RefrescarPantalla() {
                                 <ul class="mb-0"></ul>
                             </div>
                             <form id="postFormModalApliqueParcial" name="postFormModalApliqueParcial" class="form-horizontal"  novalidate>
-                                {% csrf_token %}
+                              
                                 <input type="hidden" name="post_id" id="post_id">
 				 <input type="hidden" id="liquidacionIdA" name="liquidacionIdA" value="0" >
 
@@ -1114,8 +1107,7 @@ function RefrescarPantalla() {
 
 
                                 <div class="col">
-                                    <button type="button" class="btn btn-primary" id="saveBtnApliqueAbonosFacturacion"
-                                            value="create">Guardar
+                                    <button type="button" class="btn btn-primary" id="saveBtnApliqueAbonosFacturacion" name="saveBtnApliqueAbonosFacturacion"  value="create">Guardar
                                     </button>
                                 </div>
 
@@ -1124,14 +1116,12 @@ function RefrescarPantalla() {
                     </div>       <!--  FIN modal-content -->        
                 </div> <!--  FIN modal-dialog -->        
                 </div> <!--  FIN modal fade -->        
-	
-          <!-- Fin otra modal -->
 
 
 
             <!-- Creo Fin Modales  -->
 
-		  </div>  <!- cIERRA EL DiV PRINCIPAL -->
+  </div>  
 	
 </article>
 
