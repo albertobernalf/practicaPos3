@@ -296,21 +296,6 @@ $(document).ready(function () {
 
         });
 
-	/*------------------------------------------
-        --------------------------------------------
-        Click to Button Aplicar Abonos
-        --------------------------------------------
-        --------------------------------------------*/
-
-	$('#createAplicarAbono').click(function () {
-
-         alert("EntreAplicaque Abono");
-
-         $('#post_id').val('');
-         $('#postFormModalApliqueParcial').trigger("reset");
-         $('#modelHeadingApliqu').html("Aplicar abono a Factura");
-	 $('#crearModalApliqueParcial').modal.show();
-	});
 
        /*------------------------------------------
         --------------------------------------------
@@ -1062,17 +1047,19 @@ function AnularFactura()
 }
 
 
-function reFacturar()
+function ReFacturar()
 {
-
 	alert ("Entre Refacturar ");
 
- 	var facturacionId = document.getElementById("facturacionId").value;
+ 	var facturacionId = document.getElementById("Rfactura").value;
+	alert("Factura No " + facturacionId);
+	var username_id = document.getElementById("username_id").value;
+
 
 		$.ajax({
 	           url: '/reFacturar/',
 	            data :
-	            {'facturacionId':facturacionId},
+	            {'facturacionId':facturacionId, 'username_id':username_id},
 	           type: 'POST',
 	           dataType : 'json',
 	  		success: function (data) {
@@ -1091,14 +1078,10 @@ function reFacturar()
 		        data2['valor'] = liquidacionId;
 		        data2 = JSON.stringify(data2);
 
-		    tableL= $("#tablaLiquidacion").dataTable().fnDestroy();
-	            initTableLiquidacion(data2);
-
-
-		    // tableF= $("#tablaLiquidacionDetalle").dataTable().fnDestroy();
-	            // initTableLiquidacionDetalle(data2);
-
 			$("#mensajes").html(data.message);
+
+		    tableL= $("#tablaFacturacion").dataTable().fnDestroy();
+	            initTableFacturacion(data2);
 
                   },
 	   		    error: function (request, status, error) {
@@ -1109,8 +1092,6 @@ function reFacturar()
 
 function RefrescarLiquidacionDetalle()
 {
-
-
 			 var data2 =  {}   ;
 			data2['username'] = username;
 		        data2['sedeSeleccionada'] = sedeSeleccionada;

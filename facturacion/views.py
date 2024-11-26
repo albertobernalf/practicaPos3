@@ -1308,7 +1308,7 @@ def ReFacturar(request):
     facturacionId = request.POST["facturacionId"]
     print ("el id es = ", facturacionId)
 
-    facturacionId2 = Facturacion.objects.all().filter(id=facturacionId)
+    facturacionId2 = Facturacion.objects.get(id=facturacionId)
 
     now = datetime.datetime.now()
     print("NOW  = ", now)
@@ -1316,18 +1316,35 @@ def ReFacturar(request):
 
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
     cur3 = miConexion3.cursor()
-    comando = 'UPDATE facturacion_facturacion SET "estadoRegistro" = ' + "'" + str('R') + "'" + ', "usuarioAnula_id" = ' + "'" + str(usuarioRegistro) + "'" +  ', "usuarioRegistro_id" = ' + "'" + str(usuarioRegistro) + "'" +  ', "fechaRegistro" = ' + "'" + str(fechaRegistro) + "'" +  "'" + ' , "fechaAnulacion" = ' + "'" + str(fechaRegistro) + "'" +  ' WHERE id =  ' + facturacionId
+    comando = 'UPDATE facturacion_facturacion SET "estadoReg" = ' + "'" + str('R') + "'" + ', "usuarioAnula_id" = ' + "'" + str(usuarioRegistro) + "'" +  ', "usuarioRegistro_id" = ' + "'" + str(usuarioRegistro) + "'" +  ', "fechaRegistro" = ' + "'" + str(fechaRegistro) + "'" + ' , "fechaAnulacion" = ' + "'" + str(fechaRegistro) + "'" +  ' WHERE id =  ' + facturacionId
     print (comando)
     cur3.execute(comando)
     miConexion3.commit()
     miConexion3.close()
+	
+    # OPs yo tengo que crear primero un CABEZOTE de liquidacion y luego si hacer inserts
+
+    # Validacion si existe o No existe CABEZOTE
+
+
+    liquidacionU = Liquidacion.objects.all().aggregate(maximo=Coalesce(Max('id'), 0))
+    liquidacionId = (liquidacionU['maximo']) + 1
+ 
+    liquidacionId = str(liquidacionId)
+    liquidacionId = liquidacionId.replace("(", ' ')
+    liquidacionId = liquidacionId.replace(")", ' ')
+    liquidacionId = liquidacionId.replace(",", ' ')
+    print ("liquidacionid = ", liquidacionId)
+
+
+    # Fin validacion de Liquidacion cabezote
 
 
     # Aquip hacer los INSERT A LIQUIDACION a partir de facturacion
 
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
     cur3 = miConexion3.cursor()
-    comando = 'INSERT INTO facturacion_liquidacion SELECT * FROM facturacion_facturaccion WHERE id =  ' + facturacionId
+    comando = 'INSERT INTO facturacion_liquidacion (id, documento_id ,  "consecAdmision" ,  fecha ,  "totalCopagos" ,  "totalCuotaModeradora" ,  "totalProcedimientos" ,  "totalSuministros" ,  "totalLiquidacion" ,  "valorApagar" ,  anulado ,  "fechaCorte" ,  anticipos ,  "detalleAnulacion" ,  "fechaAnulacion" ,  observaciones ,  "fechaRegistro" ,  "estadoRegistro" ,  convenio_id ,  "tipoDoc_id" ,  "usuarioAnula_id" , "usuarioRegistro_id" ,  "totalAbonos" ,  "totalRecibido" ) SELECT ' + "'" + str(liquidacionId) + "'," + ' documento_id ,  "consecAdmision" ,  "fechaFactura" ,  "totalCopagos" ,  "totalCuotaModeradora" ,  "totalProcedimientos" ,  "totalSuministros" ,  "totalFactura" ,  "valorApagar" ,  anulado ,  "fechaCorte" ,  anticipos ,  "detalleAnulacion" ,  "fechaAnulacion" ,  observaciones ,  "fechaRegistro" ,  "estadoReg" ,  convenio_id ,  "tipoDoc_id" ,  "usuarioAnula_id" , "usuarioRegistro_id" ,  "totalAbonos" ,  "totalRecibido"  FROM facturacion_facturacion WHERE id =  ' + facturacionId
     print(comando)
     cur3.execute(comando)
     miConexion3.commit()
@@ -1337,7 +1354,7 @@ def ReFacturar(request):
 
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
     cur3 = miConexion3.cursor()
-    comando = 'INSERT INTO facturacion_liquidaciondetalle SELECT * FROM facturacion_facturacciondetalle WHERE facturacion_id =  ' + facturacionId
+    comando = 'INSERT INTO facturacion_liquidaciondetalle (consecutivo ,  fecha ,  cantidad ,  "valorUnitario" ,  "valorTotal" ,  cirugia ,  "fechaCrea" ,  "fechaModifica" ,  observaciones ,  "fechaRegistro" ,  "estadoRegistro" ,  "codigoCups_id" ,  cums_id ,  "usuarioModifica_id" ,  "usuarioRegistro_id" ,  liquidacion_id ,  "tipoHonorario_id" ,  "tipoRegistro" ) SELECT "consecutivoFactura" ,  fecha ,  cantidad ,  "valorUnitario" ,  "valorTotal" ,  cirugia ,  "fechaCrea" ,  "fechaModifica" ,  observaciones ,  "fechaRegistro" ,  "estadoRegistro" ,  "codigoCups_id" ,  cums_id ,  "usuarioModifica_id" ,  "usuarioRegistro_id" , ' + "'" + str(liquidacionId) + "'" + ' ,  "tipoHonorario_id" ,  "tipoRegistro"  FROM facturacion_facturaciondetalle WHERE facturacion_id =  ' + facturacionId
     print(comando)
     cur3.execute(comando)
     miConexion3.commit()
@@ -1349,7 +1366,7 @@ def ReFacturar(request):
     miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
     cur3 = miConexion3.cursor()
 
-    comando = 'INSERT INTO facturacion_refacturacion (documento_id,"consecAdmision" ,fecha ,  "facturaAnulada" ,  "facturaNueva" ,  "fechaRegistro" ,  "estadoRegistro" ,  "tipoDoc_id" ,  "usuarioRegistro_id" ) values (' + "'" + str(facturacionId2.documento_id) + "','" + str(facturacionId2.consecAdmision) + "',"  + str(facturacionid2.id) + ',,' + "'" + str(fechaRegistro) + "'," + "'" + str('A') + "'," +  "'" + str(facturacionId2.tipoDoc_id) + "','" +               str(usuarioRegistro) + "'"
+    comando = 'INSERT INTO facturacion_refacturacion (documento_id,"consecAdmision" ,fecha ,  "facturaAnulada" ,  "facturaNueva" ,  "fechaRegistro" ,  "estadoRegistro" ,  "tipoDoc_id" ,  "usuarioRegistro_id" ) values (' + str(facturacionId2.documento_id) + "," + str(facturacionId2.consecAdmision) + ","  + "'" + str(fechaRegistro) + "'," + str(facturacionId2.id) + ',0,' + "'" + str(fechaRegistro) + "'," + "'" + str('A') + "'," +  "'" + str(facturacionId2.tipoDoc_id) + "','" +  str(usuarioRegistro) + "')"
     print(comando)
     cur3.execute(comando)
     miConexion3.commit()
