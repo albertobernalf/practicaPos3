@@ -316,8 +316,10 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 	-- ME preocupa lo de la duplicacion esta en muchas partes que habra pasado pero esto desde que utilizo interval o refrecar que pasasra ??
       -- OJO EL LUNES VER TODAS LASA ANTERUIORES NO SE ALCANZARON A VER
 
-
-    
+	-- Ojo al seleccionar liquidacion de  paciente con mas de dos convenio no me trae sino para una sola empresa y las demas en el TAB de liquidaciondetalle
+	-- Ojo al Anular un registro de la liquidacion No actualiza totalLiquidacion , nu valorApagar
+	- Ojo clocar nombre y aplepllidos e ingresod e paciuenten la pantaalla abonos
+    	-- falta actualizar el liquidacion-id en Traslados d econvenios
  
 -----------------------------------------------------------------------------------------------------------------------
 --  GLOSAS

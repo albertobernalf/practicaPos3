@@ -176,6 +176,22 @@ $(document).ready(function () {
                                     $id437.appendChild(option);
  	      		      });
 
+
+                     const $id880 = document.querySelector("#conveniosPaciente");
+
+ 	      		     $("#conveniosPaciente").empty();
+
+	                 $.each(data['ConveniosPaciente'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id880.appendChild(option);
+ 	      		      });
+
+
+
+
 			var data2 =  {}   ;
 			data2['username'] = username;
 		        data2['sedeSeleccionada'] = sedeSeleccionada;
@@ -296,25 +312,20 @@ $(document).ready(function () {
 
         });
 
-/*------------------------------------------
+	/*------------------------------------------
         --------------------------------------------
         Click to Button Aplicar Abonos
         --------------------------------------------
         --------------------------------------------*/
 
   $('body').on('click', '.createAplicarAbono', function () {
-//	$('#createAplicarAbono').click(function () {
-
          alert("EntreAplicaque Abono");
-
          $('#post_id').val('');
          $('#postFormModalApliqueParcial').trigger("reset");
          $('#modelHeadingAplique').html("Aplicar abono a Factura");
 	  alert("Voy a abrir modal");
 	 $('#crearModalApliqueParcial').modal('show');
 	});
-
-
 
        /*------------------------------------------
         --------------------------------------------
@@ -1178,4 +1189,49 @@ function ConsultarFacturas()
 		}
 
 
+}
+
+function TrasladoConvenio()
+{
+	alert ("Entre a Trasladar Convenio ");
+
+ 	var liquidacionId = document.getElementById("liquidacionId").value;
+ 	var tipoIng = document.getElementById("tipoIng").value;
+	alert("liquidacionId " + liquidacionId);
+	alert("tipoIng " + tipoIng);
+	var username_id = document.getElementById("username_id").value;
+	var convenioId = document.getElementById("conveniosPaciente").value;
+	alert(" Nuevo convenio = " + convenioId ) 
+
+
+		$.ajax({
+	           url: '/trasladarConvenio/',
+	            data :
+	            {'liquidacionId':liquidacionId, 'tipoIng':tipoIng, 'username_id':username_id, 'convenioId':convenioId},
+	           type: 'POST',
+	           dataType : 'json',
+	  		success: function (data) {
+			
+
+            	        var data2 =  {}   ;
+        		data2['username'] = username;
+    		        data2['sedeSeleccionada'] = sedeSeleccionada;
+	    	        data2['nombreSede'] = nombreSede;
+		        data2['sede'] = sede;
+
+	                var username_id = document.getElementById("username_id").value;
+  	                data2['username_id'] = username_id;
+		        data2['valor'] = liquidacionId;
+		        data2 = JSON.stringify(data2);
+
+			$("#mensajes").html(data.message);
+
+		    tableL= $("#tablaLiquidacion").dataTable().fnDestroy();
+	            initTableLiquidacion(data2);
+
+                  },
+	   		    error: function (request, status, error) {
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+	     });
 }

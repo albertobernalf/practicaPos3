@@ -1777,7 +1777,7 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
 
         ## FIN CONTEXTO
 
-        return render(request, "facturacion/panelFacturacion.html", context)
+        return render(request, "facturacion/panelFacturacion2.html", context)
 
     if (escogeModulo == 'CONTRATACION'):
         print("WENTRE PERMSISO FACTURACION")

@@ -261,6 +261,54 @@ def PostConsultaLiquidacion(request):
         print("documento_id =", triageId.documento_id)
         print("consec =", triageId.consec)
 
+
+    if llave[0] == 'INGRESO':
+       # Combo Convenios Paciente
+       #
+       miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",   password="pass123")
+       curt = miConexiont.cursor()
+       comando = 'SELECT ing.convenio_id id, conv.nombre nombre FROM facturacion_conveniospacienteingresos ing,contratacion_convenios conv where ing.convenio_id = conv.id and ing."tipoDoc_id" = ' + "'" + str(ingresoId.tipoDoc_id) + "'" + ' and ing.documento_id = ' + "'" + str(ingresoId.documento_id) + "'" + ' AND ing."consecAdmision" = ' + "'" + str(ingresoId.consec) + "'" + ' ORDER BY ing."tipoDoc_id", ing.documento_id '
+       curt.execute(comando)
+       print(comando)
+
+       conveniosPaciente = []
+       conveniosPaciente.append({'id': '', 'nombre': ''})
+
+       for id,  nombre in curt.fetchall():
+           conveniosPaciente.append({'id': id,  'nombre': nombre})
+
+       miConexiont.close()
+       print(conveniosPaciente)
+
+	   #context['ConveniosPaciente'] = conveniosPaciente
+	   # Fin combo convenios Paciente
+	
+
+    else:
+
+	   # Combo Convenios Paciente
+       #
+       miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",   password="pass123")
+       curt = miConexiont.cursor()
+
+       comando = 'SELECT ing.convenio_id id, conv.nombre nombre FROM facturacion_conveniospacienteingresos ing,contratacion_convenios conv where ing.convenio_id = conv.id and ing."tipoDoc_id" = ' + "'" + str(triageId.tipoDoc_id) + "'" + ' and ing.documento_id = ' + "'" + str(triageId.documento_id) + "'" + ' AND ing."consecAdmision" = ' + "'" + str(triageId.consec) + "'" + ' ORDER BY ing."tipoDoc_id", ing.documento_id '
+       curt.execute(comando)
+       print(comando)
+
+       conveniosPaciente = []
+       conveniosPaciente.append({'id': '', 'nombre': ''})
+
+       for id,  nombre in curt.fetchall():
+
+           conveniosPaciente.append({'id': id,  'nombre': nombre})
+
+       miConexiont.close()
+       print(ConveniosPaciente)
+
+	   #context['ConveniosPaciente'] = conveniosPaciente
+	   # Fin combo convenios Paciente
+
+
     estadoReg= 'A'
     now = datetime.datetime.now()
     print("NOW  = ", now)
@@ -455,7 +503,7 @@ def PostConsultaLiquidacion(request):
 			     'totalSuministros':totalSuministros,'totalProcedimientos':totalProcedimientos,'totalCopagos':totalCopagos,
 			     'totalCuotaModeradora':totalCuotaModeradora,'totalAnticipos':totalAnticipos, 'totalAbonos':totalAbonos,
 			     'totalLiquidacion':totalLiquidacion, 'totalRecibido':totalRecibido , 'totalAPagar':valorApagar, 'TiposPagos':tiposPagos, 'FormasPagos':formasPagos,
-			     'ingresoId1': ingresoId1, 'documento': documento, 'tipoDocumento': tipoDocumento
+			     'ingresoId1': ingresoId1, 'documento': documento, 'tipoDocumento': tipoDocumento, 'ConveniosPaciente':conveniosPaciente
 
             })
         else:
@@ -488,7 +536,7 @@ def PostConsultaLiquidacion(request):
                  'totalAbonos': totalAbonos,
                  'totalLiquidacion': totalLiquidacion, 'totalRecibido':totalRecibido , 'totalAPagar': valorApagar, 'TiposPagos': tiposPagos,
                  'FormasPagos': formasPagos,
-                 'triageId1': triageId1, 'documento': documento, 'tipoDocumento': tipoDocumento
+                 'triageId1': triageId1, 'documento': documento, 'tipoDocumento': tipoDocumento , 'ConveniosPaciente':conveniosPaciente
 
                  })
 
@@ -1385,7 +1433,7 @@ def GuardaApliqueAbonosFacturacion(request):
     valorEnCurso = request.POST['AvalorEnCurso']  
     print ("liquidacionId  = ", liquidacionId )
     abonoId = request.POST['post_id']
-
+    print ("abonoId = ", abonoId)
 
     fechaRegistro = datetime.datetime.now()
 
@@ -1405,4 +1453,77 @@ def GuardaApliqueAbonosFacturacion(request):
 
     return JsonResponse({'success': True, 'message': 'Valor abono en curso guardado satisfactoriamente!'})
 
+
+def TrasladarConvenio(request):
+    print ("Entre a Trasladar Convenio" )
+
+    liquidacionId = request.POST['liquidacionId']
+    tipoIng = request.POST['tipoIng']
+    username_id =  request.POST['username_id']
+    convenioId = request.POST['convenioId']
+    print ("liquidacionId = ", liquidacionId)
+    print ("convenioId = ", convenioId)
+
+    fechaRegistro = datetime.datetime.now()
+    estadoReg= 'A'
+
+    registroId = Liquidacion.objects.get(id=liquidacionId)
+    print  ("registroId documento =" , registroId.documento_id)
+    print  ("registroId tipoDoc =" , registroId.tipoDoc_id)
+    print  ("registroId consec =" , registroId.consecAdmision)
+
+    ## Primero debo averiguar si existe cabezote para el nuevo convenio. So no existe se crea el cabezote
+
+    # Validacion si existe o No existe CABEZOTE
+
+    miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",   password="pass123")
+
+    curt = miConexiont.cursor()
+    comando = 'SELECT id FROM facturacion_liquidacion WHERE "tipoDoc_id" = ' + "'" + str(registroId.tipoDoc_id) + "' AND documento_id = " + "'" + str(registroId.documento_id) + "'" + ' AND "consecAdmision" = ' + "'" + str(registroId.consecAdmision) + "'" + ' AND convenio_id = ' + str(convenioId)
+    curt.execute(comando)
+
+    cabezoteLiquidacion = []
+
+    for id in curt.fetchall():
+              cabezoteLiquidacion.append({'id': id})
+
+    miConexiont.close()
+
+    if (cabezoteLiquidacion == []):
+    # Si no existe liquidacion CABEZOTE se debe crear con los totales, abonos, anticipos, procedimiento, suministros etc
+        miConexiont = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432",  user="postgres", password="pass123")
+        curt = miConexiont.cursor()
+        comando = 'INSERT INTO facturacion_liquidacion ("tipoDoc_id", documento_id, "consecAdmision", fecha, "totalCopagos", "totalCuotaModeradora", "totalProcedimientos" , "totalSuministros" , "totalLiquidacion", "valorApagar", anticipos, "fechaRegistro", "estadoRegistro", convenio_id,  "usuarioRegistro_id", "totalAbonos") VALUES (' + "'" + str(
+                       registroId.tipoDoc_id) + "','" + str(registroId.documento_id) + "','" + str(registroId.consecAdmision) + "','" + str(
+                        fechaRegistro) + "'," + '0,0,0,0,0,0,0,' + "'" + str(fechaRegistro) + "','" + str(
+                        estadoReg) + "'," + str(convenioId) + ',' + "'" + str(username_id) + "',0)"
+        curt.execute(comando)
+        miConexiont.commit()
+        miConexiont.close()
+        liquidacionU = Liquidacion.objects.all().aggregate(maximo=Coalesce(Max('id'), 0))
+        liquidacionIdFinal = (liquidacionU['maximo']) + 1
+    else:
+        liquidacionIdFinal = cabezoteLiquidacion[0]['id']
+        liquidacionIdFinal = str(liquidacionIdFinal)
+        print("liquidacionIdFinal = ", liquidacionIdFinal)
+
+    liquidacionIdFinal = str(liquidacionIdFinal)
+    liquidacionIdFinal = liquidacionIdFinal.replace("(", ' ')
+    liquidacionIdFinal = liquidacionIdFinal.replace(")", ' ')
+    liquidacionIdFinal = liquidacionIdFinal.replace(",", ' ')
+
+                # Fin validacion de Liquidacion cabezote
+
+    ## Segundo apunto el liquidacionIdFinal al nuevo cabezote 
+
+    ## falta usuarioRegistro_id
+    miConexion3 = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",  password="pass123")
+    cur3 = miConexion3.cursor()
+    comando = 'UPDATE facturacion_liquidaciondetalle SET liquidacion_id = ' + str(liquidacionIdFinal) + ' WHERE liquidacion_id = ' + str(liquidacionId)
+    print(comando)
+    cur3.execute(comando)
+    miConexion3.commit()
+    miConexion3.close()
+
+    return JsonResponse({'success': True, 'message': 'Convenio actualizado satisfactoriamente!'})
 
