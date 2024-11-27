@@ -318,13 +318,39 @@ $(document).ready(function () {
         --------------------------------------------
         --------------------------------------------*/
 
-  $('body').on('click', '.createAplicarAbono', function () {
+  $('body').on('click', '#createAplicarAbono', function () {
          alert("EntreAplicaque Abono");
-         $('#post_id').val('');
-         $('#postFormModalApliqueParcial').trigger("reset");
-         $('#modelHeadingAplique').html("Aplicar abono a Factura");
-	  alert("Voy a abrir modal");
-	 $('#crearModalApliqueParcial').modal('show');
+       
+	   var abonoId = $(this).data('pk');
+
+	  $.ajax({
+                data: {'abonoId': abonoId},
+	        url: "/buscoAbono/",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+		            $('#post_id').val('');
+		              $('#postFormModalApliqueParcial').trigger("reset");
+		         $('#modelHeadingAplique').html("Aplicar abono a Factura");
+			  alert("Voy a abrir modal " );
+			// OJO PERO ANTES CARGAR LA DATA QUE BIEBE DEL VIEE A LA MODAL
+			$('#aabonoId').val(data.id);
+			$('#AtipoPago').val(data.tipoPago);
+			$('#aformaPago').val(data.formaPago);
+			$('#avalorAbono').val(data.valorAbono);
+			$('#aSaldo').val(data.saldo);
+			$('#adescripcionAbono').val(data.descripcionAbono);
+			$('#avalorEnCurso').val(data.valorEnCurso);
+			 $('#crearAplique').modal('show');
+                },
+                error: function (data) {
+                        $('.success-msg').css('display','block');
+                        $('.success-msg').text(data.error);
+                }
+            });
+
+
+      
 	});
 
        /*------------------------------------------

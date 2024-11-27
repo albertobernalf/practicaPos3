@@ -99,3 +99,17 @@
 
 
 
+
+          <!-- Otra Modal  -->
+
+         <div class="modal fade" id="crearModalApliqueParcial" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+		            <h4 class="modal-title" id="modelHeadingAplique"></h4>
+                        </div>
+                        <div class="modal-body">
+ 			 </div> 
+                    </div>            
+                </div>        
+                </div>  

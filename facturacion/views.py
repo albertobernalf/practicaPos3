@@ -1527,3 +1527,36 @@ def TrasladarConvenio(request):
 
     return JsonResponse({'success': True, 'message': 'Convenio actualizado satisfactoriamente!'})
 
+def BuscoAbono(request):
+    print ("Entre a BuscoAbono" )
+    abonoId = request.POST["abonoId"]
+
+
+    # Abro Conexion
+
+    miConexionx = psycopg2.connect(host="192.168.79.129", database="vulner", port="5432", user="postgres",password="pass123")
+    cur = miConexionx.cursor()
+
+    comando = 'select pag.id id, pag.fecha, pag.consec, pag.valor, pag.descripcion, pag."estadoReg", pag."tipoPago_id" , pag."formaPago_id",  pag.saldo, pag."totalAplicado", pag."valorEnCurso" FROM cartera_pagos pag where pag.id = ' + "'" + str(abonoId) + "'" 
+
+    print(comando)
+
+    cur.execute(comando)
+
+    abonoPaciente = []
+
+    for id, fecha , consec, valor, descripcion, estadoReg, tipoPago_id, formaPago_id, saldo, totalaplicado, saldoEnCurso in cur.fetchall():
+            abonoPaciente.append( {"id": id,"consec":consec, "valor" : valor, "descripcion":descripcion, "estadoReg":estadoReg, "tipoPago_id":tipoPago_id,
+                     "formaPago_id": formaPago_id, "saldo": saldo, "totalAplicado": totalAplicado, "valorEnCurso":valorEnCurso
+                                 })
+
+
+    miConexionx.close()
+    print(abonoPaciente)
+
+    # Cierro Conexion    
+
+    return JsonResponse({'pk':abonoPaciente[0]['id'],'id':abonoPaciente[0]['id'], 'consec':abonoPaciente[0]['consec'],'valor':abonoPaciente[0]['valor'],
+		          'descripcion':abonoPaciente[0]['descripcion'],'estadoReg':abonoPaciente[0]['estadoReg'],'tipoPago_id':abonoPaciente[0]['tipoPago_id'],  'formaPago_id':abonoPaciente[0]['formaPago_id'],
+                             'totalAplicado':abonoPaciente[0]['totalaplicado'] , 'valorEnCurso':abonoPaciente[0]['valorEnCurso']       })
+
