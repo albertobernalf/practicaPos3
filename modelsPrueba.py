@@ -320,11 +320,33 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
 	-- Ojo al Anular un registro de la liquidacion No actualiza totalLiquidacion , nu valorApagar
 	- Ojo clocar nombre y aplepllidos e ingresod e paciuenten la pantaalla abonos
     	-- falta actualizar el liquidacion-id en Traslados d econvenios
- 
+         -- Ojo la tabla conveniospacienteIngresos algo asip no tiene consecAdmision Gravisisimo . VERIFICAR
+          -- Ojo el query: buscar convenio depacientes en factiracion.views esta sin consecadmision ARREGÑARLO
+ 	-- Ojo probar : import pickle
+        -- ojo duplico la radiologia mas no el labopratorio en HC
+        -- Creo ya es momento dep probar con nuevos datos el software
+        -- Voy a hacer el script de borrado general
+       -- Ojo vberificar todos los refresh del programa de facturacion..
+
+
+
 -----------------------------------------------------------------------------------------------------------------------
 --  GLOSAS
 -----------------------------------------------------------------------------------------------------------------------
+IDEAS MODULOS SUBSIGUIENTES:
+En admisiones, autorizacion para el manejop de datos . CLausulas
 
+Modulos:
+        PRIMER MODULO:
+	Radicacion (Lista Radicaciones,Crea Radicacion, adhiere Facturas a las Radic)
+      --> Glosas (crea la glosa , creo de radiaccion), detalla la glosa a travez de facturas
+       SEGUNDO MODULO:
+       -- NotasDebito (creo nuevas generarla, crearlas)
+       --> NotasCredito (unas de glosas, otras adicionales)
+       TERCER MODULO:
+       --> Rips , (entregas querys automaticos)
+       CUARTO MODULO:
+       --> Cartera, (Consultas, reportes)
 
 
 -----------------------------------------------------------------------------------------------------------------------

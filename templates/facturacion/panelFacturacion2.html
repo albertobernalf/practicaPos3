@@ -139,8 +139,7 @@ function RefrescarPantalla() {
                                         <div class="alert alert-success success-msg" style="display:none"></div>
                                         <table  id= "tablaLiquidacion" class="display nowrap table table table-bordered  tablaLiquidacion table-hover table-sm dtr-inline" style="width:100%;">
                                            <thead>
-                                            <tr>
-                                         
+                                            <tr>                                      
                                                 <th>id</th>
                                                 <th>TipoDoc</th>
                                                 <th>Documento</th>
@@ -198,8 +197,6 @@ function RefrescarPantalla() {
 			 </div>
 		 </div>
 </article>
-
-
 
 
 <article id="Facturacion">
@@ -943,15 +940,12 @@ function RefrescarPantalla() {
 <article id="Abonos">
 
             <center><h3>Abonos</h3></center>
-
-
-
         
 	 <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
 
                         <!-- DESDE AQUIP DATATABLE  -->
 
- 		 <form id="FormaAbonosPaciente" name="FormaAbonosPaciente" class="form-horizontal">
+ 	<!--  <form id="FormaAbonosPaciente" name="FormaAbonosPaciente" class="form-horizontal">   ESTO NO VA AQUIP -->
                           
                                <!-- INICIO TABLE DE  EL DATATABLE  -->
                                 <div class="row">
@@ -978,6 +972,7 @@ function RefrescarPantalla() {
                                                                 <th>Descripcion              </th>
                                                                 <th>totalAplicado            </th>
                                                                 <th>Saldo                    </th>
+                                                                <th>Valor en curso</th>
                                                                 <th>Estado</th>
 							      <th>Editar Borrar</th>                                     
                                                             </tr>
@@ -995,7 +990,7 @@ function RefrescarPantalla() {
                                 </div> <!-- termina el ROW -->
                                 <!-- FIN TABLE DE  EL DATATABLE  -->
                    
-	   </form>
+	   <!-- </form>  ESTO NO VA AQUIP -->
 
                         <!-- HASTA AQUI DATATABLE -->
             <!-- Espacio Modales  -->
@@ -1076,13 +1071,13 @@ function RefrescarPantalla() {
                               
                                 <input type="hidden" name="post_id" id="post_id">
 				 <input type="hidden" id="liquidacionIdA" name="liquidacionIdA" value="0" >
-				<input type="hidden" name="aabonoId" id="aabonoId">
+				<input type="text" name="aabonoId" id="aabonoId">
 
                                 <div class="col">
 				 <div class="form-group row">
                                     <label for="AtipoPago" class="col-sm-2 control-label">Tipo Pago:</label>
                                     <select class="form-select  h-100 w-200" aria-label="" id="AtipoPago"
-                                            name="AtipoPago" readonly>
+                                            name="AtipoPago" disabled>
                                         {% for tiposPagos in TiposPagos %}
                                         <option value="{{tiposPagos.id}}"> {{tiposPagos.nombre}}</option>
                                         {% endfor %}
@@ -1094,7 +1089,7 @@ function RefrescarPantalla() {
 				  <div class="form-group row">
                                     <label for="aformaPago" class="col-sm-2 control-label">Forma Pago:</label>
                                     <select class="form-select  h-100 w-200" aria-label="" id="aformaPago"
-                                            name="aformaPago" readonly >
+                                            name="aformaPago" disabled >
                                         {% for formasPagos in FormasPagos %}
                                         <option value="{{formasPagos.id}}"> {{formasPagos.nombre}}</option>
                                         {% endfor %}
@@ -1120,7 +1115,14 @@ function RefrescarPantalla() {
                                 <div class="col">
 					<div class="form-group row">
                                     Descripcion:
-                                    <input type="text" id="adescripcionAbono" name="adescripcionAbono" value="0" readonly> </input>
+                                    <input type="text" id="aDescripcionAbono" name="aDescripcionAbono" value="0" readonly> </input>
+					</div>
+                                </div>
+
+				<div class="col">
+					<div class="form-group row">
+                                    TotalAplicado:
+                                    <input type="text" id="atotalAplicado" name="atotalAplicado" value="0" readonly > </input>
 					</div>
                                 </div>
 

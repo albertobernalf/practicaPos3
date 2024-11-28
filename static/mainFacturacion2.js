@@ -318,11 +318,10 @@ $(document).ready(function () {
         --------------------------------------------
         --------------------------------------------*/
 
-  $('body').on('click', '#createAplicarAbono', function () {
-         alert("EntreAplicaque Abono");
-       
-	   var abonoId = $(this).data('pk');
-
+  $('body').on('click', '.createAplicarAbono', function () {
+             
+    var abonoId = $(this).data('pk');	
+      
 	  $.ajax({
                 data: {'abonoId': abonoId},
 	        url: "/buscoAbono/",
@@ -332,15 +331,47 @@ $(document).ready(function () {
 		            $('#post_id').val('');
 		              $('#postFormModalApliqueParcial').trigger("reset");
 		         $('#modelHeadingAplique').html("Aplicar abono a Factura");
-			  alert("Voy a abrir modal " );
-			// OJO PERO ANTES CARGAR LA DATA QUE BIEBE DEL VIEE A LA MODAL
+			
 			$('#aabonoId').val(data.id);
-			$('#AtipoPago').val(data.tipoPago);
-			$('#aformaPago').val(data.formaPago);
-			$('#avalorAbono').val(data.valorAbono);
+			
+			$('#avalorAbono').val(data.valor);
 			$('#aSaldo').val(data.saldo);
-			$('#adescripcionAbono').val(data.descripcionAbono);
+			$('#atotalAplicado').val(data.totalAplicado);
+			$('#aDescripcionAbono').val(data.descripcion);
 			$('#avalorEnCurso').val(data.valorEnCurso);
+
+
+  var options = '<option value="=================="></option>';
+
+                     const $id477 = document.querySelector("#AtipoPago");
+
+ 	      		     $("#AtipoPago").empty();
+
+	                 $.each(data['TiposPagos'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id477.appendChild(option);
+ 	      		      });
+
+
+
+                     const $id437 = document.querySelector("#aformaPago");
+
+ 	      		     $("#aformaPago").empty();
+
+	                 $.each(data['FormasPagos'], function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id437.appendChild(option);
+ 	      		      });
+			$('#AtipoPago').val(data.tipoPago_id);
+			$('#aformaPago').val(data.formaPago_id);
+
+
 			 $('#crearAplique').modal('show');
                 },
                 error: function (data) {
@@ -361,7 +392,7 @@ $(document).ready(function () {
 
 	$('#saveBtnApliqueAbonosFacturacion').click(function (e) {
 		e.preventDefault();
-		alert("Entre a Aplicar Abono a Factura");
+
 
 		  $.ajax({
                 data: $('#postFormModalApliqueParcial').serialize(),
@@ -371,11 +402,12 @@ $(document).ready(function () {
                 success: function (data) {
 		  $("#mensajes").html(data.message);
                   $('#postFormModalApliqueParcial').trigger("reset");
-    		  $('#crearModalApliqueParcial').modal('hide');
+    		  $('#crearAplique').modal('hide');
 	 	  var tableA = $('#tablaAbonosFacturacion').DataTable();
 	          tableA.ajax.reload();
 	 	  var tableL = $('#tablaLiquidacionDetalle').DataTable();
 	          tableL.ajax.reload();
+
                 },
                 error: function (data) {
                         $('.success-msg').css('display','block');
@@ -751,7 +783,7 @@ function initTableFacAbonos(data) {
 			  btn = btn + " <button class='btn btn-danger deletePostAbonosFacturacion' data-action='post/" + row.pk + "/delete' data-pk='" + row.pk + "'>" + '<i class="fa fa-trash"></i>' + "</button>";
                         return btn;
                     },
-                    "targets": 7
+                    "targets": 8
                }
             ],
             ajax: {
@@ -769,6 +801,7 @@ function initTableFacAbonos(data) {
                 { data: "fields.descripcion"},
                { data: "fields.totalAplicado"},
                { data: "fields.saldo"},
+               { data: "fields.valorEnCurso"},
 		 { data: "fields.estadoReg"},
 
             ]
