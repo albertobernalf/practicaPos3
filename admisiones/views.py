@@ -1392,32 +1392,34 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         miConexiont.close()
         print(indicadores)
 
-        print("Indicadores = ", indicadores)
-        print("Indicadores PRIMERO = ", indicadores[0]['nombre'])
-
+        
         context['Indicadores'] = indicadores
 
         total = len(indicadores)
 
         print ("total ", total)
 
-        if (0<total):
+        if (total >0):     
+
+          print("Indicadores = ", indicadores)
+          print("Indicadores PRIMERO = ", indicadores[0]['nombre'])
+
+          if (0<total):
             if (indicadores[0]['id'] == 'HOSPITALIZACION' ):
                 context['Hospitalizados'] = indicadores[0]['nombre']
-                print("hospitakizado = ", indicadores[0]['nombre'])
-        if (1 < total):
+                print("hospitalizado = ", indicadores[0]['nombre'])
+          if (1 < total):
             if (indicadores[1]['id'] == 'TRIAGE' ):
                 context['Triage'] = indicadores[1]['nombre']
                 print("Triage = ", indicadores[1]['nombre'])
-        if (2 < total):
+          if (2 < total):
             if (indicadores[2]['id'] == 'URGENCIAS' ):
                 context['Urgencias']= indicadores[2]['nombre']
                 print("URGENCIAS = ", indicadores[2]['nombre'])
-        if (3 < total):
+          if (3 < total):
             if (indicadores[3]['id'] == 'AMBULATORIO' ):
                 context['Ambulatorios'] = indicadores[3]['nombre']
                 print("Ambulatorios = ", indicadores[3]['nombre'])
-
 
 
     # Fin combo Indicadores

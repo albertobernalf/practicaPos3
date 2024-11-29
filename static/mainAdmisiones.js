@@ -47,8 +47,6 @@ $(document).ready(function () {
 
 
     initTableConvenios(data);
-
-
     initTableAbonos(data);
 
 /*
@@ -1019,8 +1017,8 @@ $('#tablaDatos tbody td').click(function(){
 		success: function (Usuarios) {
 			 alert("entre DATOS MODAL de Triage y el  nombre es = " + Usuarios.tipoDoc + " " +  Usuarios.documento);
 		            $('#tipoDoc').val(Usuarios.tipoDoc);
-
        			    $('#busDocumentoSel').val(Usuarios.documento);
+       			    $('#busServicio2').val(Usuarios.servicioNombreIng);
    			    $('#dependenciasIngreso').val(Usuarios.dependenciasIngreso);
     			    $('#busEspecialidad').val(Usuarios.espMedico);
     			    $('#dxIngreso').val(Usuarios.dxIngreso);
@@ -1031,8 +1029,9 @@ $('#tablaDatos tbody td').click(function(){
     			    $('#tiposCotizante').val(Usuarios.cotizante);
     			    $('#remitido').val(Usuarios.remitido);
     			    $('#numManilla').val(Usuarios.numManilla);
+
  
-  		   $('#modalActualizaAdmision').modal({show:true});	
+  		   $('#modalActualizaAdmision').modal('show');	
 
                             alert("ya abri  ventanaoy");
 

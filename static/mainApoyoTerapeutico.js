@@ -1,18 +1,12 @@
 var $ = jQuery;
 console.log('Hola Alberto Hi!')
 
-
-
 $('.editPostar').on('click',function(event)
 {
  	 alert("Entre a editPostt"); 
 	 var post_id = $(this).data('pk');
           alert("pk1 = " + $(this).data('pk'));
-
-
 });
-
-
 
     $(document).ready(function() {
 
@@ -33,16 +27,11 @@ $('.editPostar').on('click',function(event)
 
         data = JSON.stringify(data);
 
-
 	initTableApoyoTerapeutico(data);
-  
 	initTableTerapeuticoConsulta(data);
 	initTableRasgos(data); 
-/*	tableActionsApoyoTerapeutico();  */
 
-	initTableRasgosConsulta(data);   
-
-/*------------------------------------------
+	/*------------------------------------------
         --------------------------------------------
         Delete Post Code Rasgos
         --------------------------------------------

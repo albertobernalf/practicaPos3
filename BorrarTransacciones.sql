@@ -22,29 +22,33 @@ select * from clinico_historiaexamenes where historia_id = 543 order by id;
 
 select * from clinico_examenes where "codigoCups" in ('908501','875603')
 
--- dele te from clinico_historiaresultados;
--- delete from clinico_historiaexamenes;
--- delete from clinico_historia;
--- delete from facturacion_refacturacion;
--- delete from facturacion_facturaciondetalle;
--- delete from facturacion_liquidacion;
--- delete from facturacion_facturacion;
--- delete from facturacion_facturaciondetalle;
--- delete from clinico_historialantecedentes;
--- delete from clinico_historialdiagnosticos;
--- delete from clinico_historialincapacidades;
--- delete from clinico_historialinterconsultas;
--- delete from clinico_historiamedicamentos;
--- delete from clinico_historiaoxigeno;
+-- delete from clinico_historiaresultados; -- ok
+-- delete from clinico_historiaexamenes;  -- ok
 
--- delete from clinico_historiarevisionsistemas;
--- delete from clinico_historiasignosvitales;
--- delete from clinico_historiarevisionsistemas;
--- delete from sitios_historialdependencias;
--- update sitios_dependencias set "tipoDoc_id" = '', documento_id='',consec = '',"fechaLiberacion"='',"fechaOcupacion"='',disponibilidad='L'
--- delete from cartera_pagos;
--- delete from admisiones_furips;
--- delete from admisiones_ingresos;
+-- delete from facturacion_refacturacion; -- ok
+-- delete from facturacion_facturaciondetalle; -- ok
+-- delete from facturacion_liquidaciondetalle; -- ok
+ -- delete from facturacion_liquidacion; -- ok
+-- delete from facturacion_facturacion; -- ok
+-- delete from facturacion_facturaciondetalle; -- ok
+-- delete from clinico_historialantecedentes; -- ok
+-- delete from clinico_historialdiagnosticos; -- ok
+-- delete from clinico_historialincapacidades; -- ok
+-- delete from clinico_historialinterconsultas; -- ok
+-- delete from clinico_historiamedicamentos; -- ok
+-- delete from clinico_historiaoxigeno; -- ok
+-- delete from clinico_historiarevisionsistemas; --ok
+-- delete from clinico_historiasignosvitales; --ok
+-- delete from clinico_historiarevisionsistemas; --ok
+-- delete from clinico_historia; --ok
+-- delete from sitios_historialdependencias; --ok
+-- update sitios_dependencias set "tipoDoc_id" = null, documento_id=null,consec = null,"fechaLiberacion"=null,"fechaOcupacion"=null,disponibilidad='L' --ok
+-- delete from cartera_pagos; --ok
+-- delete from admisiones_furips; --ok
+-- delete from admisiones_ingresos; -- ok
+-- delete from triage_triage - ok
+-- delete from facturacion_conveniospacienteingresos;
+-- delete from facturacion_conveniospaciente;
 
 
 

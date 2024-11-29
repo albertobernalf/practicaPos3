@@ -121,10 +121,8 @@ function AUsuarioTriage()
 		       'correo':correo},
 		success: function (respuesta) {
 
-
                 $('#mensaje1').html('<span> respuesta</span>');
-                $('#usuariosModalTriage').modal('hide');
-		       // window.location.reload();
+                $('#usuariosModalTriage').modal('hide');		     
 
                     },
 	   		    error: function (request, status, error) {

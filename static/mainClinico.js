@@ -44,7 +44,7 @@ $('.editPostar').on('click',function(event)
 
 
 	initTableClinico(data);
-	tableActionsClinico();
+	// tableActionsClinico();
 
 
 	/*--------------------------------------------

@@ -1152,6 +1152,7 @@ def UsuariosModalTriage(request):
 
         tipoDoc = request.POST['tipoDoc']
         documento = request.POST['documento']
+        documento = documento.strip()
         print ("documento = " , documento)
         print("tipodoc = " ,tipoDoc)
 
@@ -1205,20 +1206,20 @@ def grabaUsuariosTriage(request):
     print("contacto = ", contacto)
     municipios  = request.POST['municipios']
     if municipios == '':
-        municipios="."
+        municipios="null"
 
 
     localidades  = request.POST['localidades']
     if localidades == '':
-        localidades="."
+        localidades="null"
 
     estadoCivil  = request.POST['estadoCivil']
     if estadoCivil == '':
-        estadoCivil="."
+        estadoCivil="null"
 
     ocupaciones = request.POST['ocupaciones']
     if ocupaciones == '':
-        ocupaciones="."
+        ocupaciones="null"
 
     correo = request.POST["correo"]
     print("centrosC = ", centrosC)
