@@ -328,6 +328,8 @@ Terminar Clinico, buscar alog de farmacia, inventarios, compras
         -- Voy a hacer el script de borrado general
        -- Ojo vberificar todos los refresh del programa de facturacion..
 
+      -- Ojo Final, final cuando estaba arreglando la ventana Modial de actualizar admision iba a crear la funcion que lee los valores del DOM y bueno
+        hacer el ajax correpondiente
 
 
 -----------------------------------------------------------------------------------------------------------------------
